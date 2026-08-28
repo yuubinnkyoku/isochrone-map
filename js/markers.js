@@ -40,7 +40,7 @@
         '<div class="station-tooltip">' +
           '<div class="tt-name">\uD83C\uDFEB ' + dest.name + '</div>' +
           '<div class="tt-time" style="color:#ff6b6b">' + dest.arrivalTime + '</div>' +
-          '<div class="tt-line">朝の連絡</div>' +
+          '<div class="tt-line">1限開始</div>' +
         '</div>',
         { direction: 'top', offset: [0, -12], className: 'station-tooltip-wrapper', opacity: 1 }
       );
