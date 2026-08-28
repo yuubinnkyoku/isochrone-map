@@ -4,8 +4,6 @@
 
 🌎 **[ページはこちら](https://yuubinnkyoku.github.io/isochrone-map/)**
 
-![demo image](image.png)
-
 > [!IMPORTANT]
 > 高校版への移行作業中です。画面・コードは高校向けに変更済みですが、`data/stations.json` の各駅時刻はまだ中学版の **08:08学校到着基準** で調査した値です。高校版の駅データは、下記の条件で再検索して差し替える必要があります。旧データへ単純に10分を加えることはしません。
 
