@@ -25,7 +25,6 @@
     _peakMarker: null,
     _active: false,
     _stations: [],
-    _worker: null,
     _requestId: 0,
     _container: null,
     _animFrameId: null,
@@ -39,8 +38,6 @@
 
     init: function () {
       this._container = document.getElementById('canvas-3d');
-      this._worker = new Worker('js/worker.js?v=9');
-      this._worker.onmessage = this._onWorkerMessage.bind(this);
     },
 
     _ensureScene: function () {
@@ -92,14 +89,6 @@
       this._renderer.setSize(w, h);
     },
 
-    _onWorkerMessage: function (e) {
-      if (e.data.type === 'GRID_3D_READY') {
-        if (e.data.id !== this._requestId) return;
-        this._pendingGrid = { grid: e.data.grid, cols: e.data.cols, rows: e.data.rows };
-        this._loadMapTiles();
-      }
-    },
-
     setStations: function (stations) {
       this._stations = stations;
       if (this._active) this._requestGrid();
@@ -124,24 +113,22 @@
 
       this._gridExtent = { latMin: latMin, latMax: latMax, lngMin: lngMin, lngMax: lngMax };
 
+      if (!window.PrecomputedGrid || !PrecomputedGrid.ready) return;
       this._requestId++;
-      var stations = [];
-      for (var j = 0; j < this._stations.length; j++) {
-        var st = this._stations[j];
-        stations.push({ lat: st.lat, lng: st.lng, minutes: st.minutes });
-      }
-
-      this._worker.postMessage({
-        type: 'CALC_3D_GRID',
-        id: this._requestId,
-        payload: {
-          latMin: latMin, latMax: latMax,
-          lngMin: lngMin, lngMax: lngMax,
-          cols: 200, rows: 200,
-          stations: stations,
-          halfPower: CONFIG.idwPower / 2
+      var cols = 200, rows = 200;
+      var grid = new Float32Array(cols * rows);
+      var rowStep = (latMax - latMin) / (rows - 1);
+      var colStep = (lngMax - lngMin) / (cols - 1);
+      for (var r = 0; r < rows; r++) {
+        var lat = latMax - r * rowStep;
+        for (var c = 0; c < cols; c++) {
+          var lng = lngMin + c * colStep;
+          var value = PrecomputedGrid.sample(lat, lng);
+          grid[r * cols + c] = value === null ? 0 : value;
         }
-      });
+      }
+      this._pendingGrid = { grid: grid, cols: cols, rows: rows };
+      this._loadMapTiles();
     },
 
     // --- Map tile loading ---

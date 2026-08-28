@@ -21,7 +21,7 @@
   }
 
   var contourOverlay = new ContourOverlay({
-    stations: [],
+    grid: null,
     interval: settings.contourInterval,
     visible: settings.contourEnabled,
   });
@@ -29,7 +29,7 @@
   app.contourOverlay = contourOverlay;
 
   var gradientOverlay = new GradientOverlay({
-    stations: [],
+    grid: null,
     visible: settings.gradientEnabled,
   });
   gradientOverlay.addTo(map);
@@ -39,12 +39,20 @@
   Renderer3D.setFlatPlaneHeight(settings.threeDFlatHeight);
   app.renderer3d = Renderer3D;
 
-  DataManager.load().then(function () {
+  Promise.all([
+    DataManager.load(),
+    PrecomputedGrid.load().catch(function (err) {
+      console.error('事前計算グリッド読み込みエラー:', err);
+      return null;
+    })
+  ]).then(function () {
     var stations = DataManager.stations;
     var meta = DataManager.meta;
 
-    contourOverlay.setStations(stations);
-    gradientOverlay.setStations(stations);
+    if (PrecomputedGrid.ready) {
+      contourOverlay.setGrid(PrecomputedGrid);
+      gradientOverlay.setGrid(PrecomputedGrid);
+    }
     Renderer3D.setStations(stations);
 
     MarkerManager.init(map, stations, meta);
