@@ -13,8 +13,6 @@
   --text-muted: #999;
   --contour-label-bg: rgba(255, 255, 255, 0.82);
   --marker-stroke: #fff;
-  --gakku-fill: rgba(255, 100, 0, 0.10);
-  --gakku-stroke: rgba(255, 120, 0, 0.9);
   --dest-ring-5km-stroke: rgba(255, 107, 107, 0.85);
   --dest-ring-10km-stroke: rgba(255, 140, 102, 0.75);
   --dest-ring-15km-stroke: rgba(255, 184, 107, 0.7);
@@ -37,8 +35,6 @@
   --text-muted: #666;
   --contour-label-bg: rgba(10, 10, 15, 0.75);
   --marker-stroke: #444;
-  --gakku-fill: rgba(255, 140, 40, 0.12);
-  --gakku-stroke: rgba(255, 160, 50, 0.9);
   --dest-ring-5km-stroke: rgba(255, 140, 140, 0.9);
   --dest-ring-10km-stroke: rgba(255, 174, 128, 0.8);
   --dest-ring-15km-stroke: rgba(255, 210, 150, 0.75);
@@ -397,27 +393,6 @@ body {
   color: var(--text-muted);
 }
 
-.legend-gakku {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 8px;
-  padding-top: 8px;
-  border-top: 1px solid var(--ctrl-info-border);
-}
-
-.legend-gakku-swatch {
-  width: 28px;
-  height: 0;
-  border-top: 4px dashed var(--gakku-stroke);
-  flex-shrink: 0;
-}
-
-.legend-gakku-text {
-  font-size: 11px;
-  color: var(--text-secondary);
-}
-
 /* ---- Tooltip ---- */
 .station-tooltip {
   background: var(--bg-panel) !important;
@@ -433,13 +408,6 @@ body {
 
 .station-tooltip::before {
   border: none !important;
-}
-
-.tt-outside {
-  font-size: 10px;
-  color: #999;
-  margin-bottom: 4px;
-  font-weight: 700;
 }
 
 .tt-name {
@@ -511,16 +479,6 @@ body {
 .station-label .sl-detail {
   font-size: 9px;
   font-weight: 400;
-  opacity: 0.6;
-}
-
-.station-label .sl-outside {
-  font-size: 9px;
-  font-weight: 400;
-  color: #999;
-}
-
-.station-label.outside {
   opacity: 0.6;
 }
 
