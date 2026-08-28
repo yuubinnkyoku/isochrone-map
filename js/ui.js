@@ -30,6 +30,7 @@
         contourInterval: CONFIG.defaultContourInterval,
         gradientEnabled: CONFIG.defaultGradientEnabled,
         labelsEnabled: CONFIG.defaultLabelsEnabled,
+        legendEnabled: CONFIG.defaultLegendEnabled,
         radiusRingsEnabled: CONFIG.destinationRings.enabledDefault
       };
     },
@@ -63,6 +64,8 @@
       document.getElementById('toggle-contour').checked = s.contourEnabled;
       document.getElementById('toggle-gradient').checked = s.gradientEnabled;
       document.getElementById('toggle-labels').checked = s.labelsEnabled;
+      document.getElementById('toggle-legend').checked = s.legendEnabled;
+      document.getElementById('legend').style.display = s.legendEnabled ? '' : 'none';
       document.getElementById('toggle-radius-rings').checked = s.radiusRingsEnabled;
       document.getElementById('select-interval').value = String(s.contourInterval);
       document.getElementById('select-tile').value = s.tileId || CONFIG.defaultTile[s.theme];
@@ -97,6 +100,11 @@
       });
       bind('toggle-gradient', 'change', function () { self._settings.gradientEnabled = this.checked; self._buildLegend(); self._commit('gradient', this.checked); });
       bind('toggle-labels', 'change', function () { self._settings.labelsEnabled = this.checked; self._commit('labels', this.checked); });
+      bind('toggle-legend', 'change', function () {
+        self._settings.legendEnabled = this.checked;
+        document.getElementById('legend').style.display = this.checked ? '' : 'none';
+        self._commit('legend', this.checked);
+      });
       bind('toggle-radius-rings', 'change', function () { self._settings.radiusRingsEnabled = this.checked; self._commit('radiusRings', this.checked); });
       bind('toggle-3d', 'change', function () { self._settings.threeDEnabled = this.checked; self._sync3DControlRows(); self._buildLegend(); self._commit('threeD', this.checked); });
       bind('select-3d-mapmode', 'change', function () { self._settings.threeDMapMode = this.value; self._sync3DControlRows(); self._commit('threeDMapMode', this.value); });
@@ -134,6 +142,9 @@
 
     _buildLegend: function () {
       var s = this._settings, r = CONFIG.timeRange;
+      var legend = document.getElementById('legend');
+      legend.style.display = s.legendEnabled ? '' : 'none';
+      if (!s.legendEnabled) return;
       var lines = document.getElementById('legend-lines');
       var title = document.getElementById('legend-title');
       var bar = document.getElementById('legend-grad');
