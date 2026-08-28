@@ -10,14 +10,11 @@
   <meta property="og:title" content="筑附高 08:20 等時線マップ">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://yuubinnkyoku.github.io/isochrone-map/">
-  <meta property="og:image" content="https://yuubinnkyoku.github.io/isochrone-map/ogp.png">
   <meta property="og:description" content="筑波大学附属高等学校の1限開始（08:20）に間に合う最遅出発時刻を等時線マップで可視化">
   <meta property="og:site_name" content="筑附高 08:20 等時線マップ">
-  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="筑附高 08:20 等時線マップ">
   <meta name="twitter:description" content="筑波大学附属高等学校の1限開始（08:20）に間に合う最遅出発時刻を等時線マップで可視化">
-  <meta name="twitter:image" content="https://yuubinnkyoku.github.io/isochrone-map/ogp.png">
-  <meta name="twitter:image:alt" content="筑波大学附属高等学校への通学について、1限開始08:20から逆算した最遅出発時刻を示す等時線マップ。">
   <meta property="og:locale" content="ja_JP">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -27,7 +24,6 @@
 </head>
 <body>
 
-<!-- Title bar -->
 <div class="title-bar">
   <h1>筑附高 <span class="accent">08:20</span> 等時線マップ</h1>
   <div class="subtitle">isochrone map — 1限開始に間に合う最遅出発時刻</div>
@@ -37,10 +33,8 @@
   </div>
 </div>
 
-<!-- Settings gear button -->
 <button class="btn-settings" id="btn-settings" aria-label="設定">&#9881;</button>
 
-<!-- Settings panel -->
 <div class="settings-panel" id="settings-panel">
   <div class="ctrl-section">
     <div class="ctrl-title">テーマ</div>
@@ -119,7 +113,6 @@
   </div>
 </div>
 
-<!-- Legend -->
 <div class="legend" id="legend">
   <div class="legend-title" id="legend-title">出発時刻（5分刻み等時線）</div>
   <div class="legend-lines" id="legend-lines"></div>
@@ -127,13 +120,9 @@
   <div class="legend-gradient-labels" id="legend-grad-labels"></div>
 </div>
 
-<!-- 3D Canvas -->
 <div id="canvas-3d"></div>
-
-<!-- Map -->
 <div id="map"></div>
 
-<!-- Scripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="js/config.js?v=11"></script>
 <script src="js/data.js?v=11"></script>
