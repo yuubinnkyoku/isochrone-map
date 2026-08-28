@@ -14,17 +14,29 @@
       lat: 35.716741,
       lng: 139.7308823,
       name: '筑波大学附属高等学校',
-      arrivalTime: '08:20',
+      classStartTime: '08:20',
+      // 中学版と同様に、校内移動などを見込み2分前の学校到着を検索基準とする。
+      dataTargetTime: '08:18',
+      dataTargetMinutes: 498,
+    },
+
+    // 表示する時刻範囲
+    timeRange: {
+      min: 390,          // 06:30
+      max: 495,          // 08:15
+      contourMin: 390,   // 06:30
+      contourMax: 495,   // 08:15
     },
 
     // カラースケール
     colorStops: [
-      { min: 390, color: [90, 40, 180] },   // 06:30
+      { min: 390, color: [90, 40, 180] },    // 06:30
       { min: 420, color: [50, 100, 220] },   // 07:00
       { min: 440, color: [20, 170, 200] },   // 07:20
       { min: 455, color: [40, 200, 120] },   // 07:35
       { min: 470, color: [240, 200, 40] },   // 07:50
       { min: 485, color: [255, 107, 107] },  // 08:05
+      { min: 495, color: [230, 60, 100] },   // 08:15
     ],
 
     // 等時線デフォルト
@@ -32,8 +44,6 @@
     defaultContourEnabled: true,
     defaultGradientEnabled: false,
     defaultLabelsEnabled: true,
-    // 高校には中学版の市区町村ベースの学区境界を適用しない
-    defaultGakkuEnabled: false,
 
     // 目的地同心円（5km/10km/15km）
     destinationRings: {

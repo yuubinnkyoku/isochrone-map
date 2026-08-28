@@ -5,7 +5,6 @@
 (function () {
   'use strict';
 
-  // IDW補間
   function idw(lat, lng, stations, power) {
     if (!power) power = CONFIG.idwPower;
     var num = 0, den = 0;
@@ -24,7 +23,6 @@
     return den > 0 ? num / den : null;
   }
 
-  // IDW補間 (ピクセル座標版: 地理座標の代わりにコンテナ上のピクセル座標を使用し、ループ内のプロジェクション計算を回避する)
   function idwPx(x, y, pixStations, halfPower) {
     var num = 0, den = 0;
     for (var i = 0; i < pixStations.length; i++) {
@@ -40,18 +38,15 @@
     return den > 0 ? num / den : null;
   }
 
-  // 等時線のブレーク値を生成
   function buildContourBreaks(interval) {
     var breaks = [];
-    for (var m = 400; m <= 485; m += interval) {
-      breaks.push(m);
-    }
+    var min = CONFIG.timeRange.contourMin;
+    var max = CONFIG.timeRange.contourMax;
+    var first = Math.ceil(min / interval) * interval;
+    for (var m = first; m <= max; m += interval) breaks.push(m);
     return breaks;
   }
 
-  // ============================================================
-  // ContourRenderer — マーチングスクエア等時線
-  // ============================================================
   var ContourOverlay = L.Layer.extend({
     options: { pane: 'overlayPane' },
 
@@ -61,11 +56,11 @@
       this._visible = opts.visible !== false;
       this._debounceTimer = null;
       this._requestId = 0;
-      this._worker = new Worker('js/worker.js?v=9');
+      this._worker = new Worker('js/worker.js?v=11');
       this._worker.onmessage = this._onWorkerMessage.bind(this);
     },
 
-    _onWorkerMessage: function(e) {
+    _onWorkerMessage: function (e) {
       if (e.data.type === 'GRID_READY') {
         if (e.data.id !== this._requestId) return;
         this._drawContours(e.data.grid);
@@ -106,7 +101,6 @@
     setVisible: function (v) { this._visible = v; this._render(); },
     setInterval: function (interval) { this._interval = interval; this._render(); },
     setStations: function (stations) { this._stations = stations; this._render(); },
-
     refresh: function () { if (this._map) this._render(); },
 
     _render: function () {
@@ -131,10 +125,9 @@
       var cols = Math.ceil(cvWidth / cell) + 1;
       var rows = Math.ceil(cvHeight / cell) + 1;
       var stations = this._stations;
-
-      // 各駅のコンテナ上のピクセル座標を事前算出（プロジェクションをループ外に出す）
       var halfPower = CONFIG.idwPower / 2;
       var pixStations = new Array(stations.length);
+
       for (var i = 0; i < stations.length; i++) {
         var s = stations[i];
         var p = map.latLngToContainerPoint([s.lat, s.lng]);
@@ -142,37 +135,21 @@
       }
 
       this._requestId++;
-      var reqId = this._requestId;
-
       this._worker.postMessage({
         type: 'CALC_GRID',
-        id: reqId,
-        payload: {
-          cols: cols,
-          rows: rows,
-          cell: cell,
-          pixStations: pixStations,
-          halfPower: halfPower
-        }
+        id: this._requestId,
+        payload: { cols: cols, rows: rows, cell: cell, pixStations: pixStations, halfPower: halfPower }
       });
 
       this._pendingRenderState = {
-        cvWidth: cvWidth,
-        cvHeight: cvHeight,
-        pos: pos,
-        renderZoom: renderZoom,
-        renderTopLeft: renderTopLeft,
-        cell: cell,
-        cols: cols,
-        rows: rows
+        cvWidth: cvWidth, cvHeight: cvHeight, pos: pos,
+        renderZoom: renderZoom, renderTopLeft: renderTopLeft,
+        cell: cell, cols: cols, rows: rows
       };
     },
 
-    _drawContours: function(grid) {
-      if (!this._visible) return;
-      var map = this._map;
-      if (!map) return;
-
+    _drawContours: function (grid) {
+      if (!this._visible || !this._map) return;
       var state = this._pendingRenderState;
       if (!state) return;
 
@@ -182,16 +159,12 @@
       L.DomUtil.setTransform(cv, state.pos, 1);
       this._renderZoom = state.renderZoom;
       this._renderTopLeft = state.renderTopLeft;
-      
+
       var ctx = cv.getContext('2d');
       ctx.clearRect(0, 0, cv.width, cv.height);
-
-      var rows = state.rows;
-      var cols = state.cols;
-      var cell = state.cell;
-      var r, c;
-
+      var rows = state.rows, cols = state.cols, cell = state.cell;
       var breaks = buildContourBreaks(this._interval);
+      var r, c;
 
       for (var bi = 0; bi < breaks.length; bi++) {
         var level = breaks[bi];
@@ -211,14 +184,12 @@
             var x0 = c * cell, y0 = r * cell;
             var lx = function (va, vb) { return x0 + (level - va) / (vb - va) * cell; };
             var ly = function (va, vb) { return y0 + (level - va) / (vb - va) * cell; };
-
-            // Marching squares edge interpolation
             var tTop = [lx(v00, v10), y0];
             var tBot = [lx(v01, v11), y0 + cell];
             var tLft = [x0, ly(v00, v01)];
             var tRgt = [x0 + cell, ly(v10, v11)];
-
             var segs = [];
+
             switch (ci) {
               case 1: case 14: segs.push([tLft, tBot]); break;
               case 2: case 13: segs.push([tBot, tRgt]); break;
@@ -237,7 +208,6 @@
         }
         ctx.stroke();
 
-        // Labels on main contour lines
         if (isMain) {
           var txt = minutesToTimeStr(level);
           ctx.font = '600 11px "JetBrains Mono", monospace';
@@ -261,12 +231,9 @@
           }
         }
       }
-    },
+    }
   });
 
-  // ============================================================
-  // GradientRenderer — IDW グラデーション
-  // ============================================================
   var GradientOverlay = L.Layer.extend({
     options: { pane: 'overlayPane' },
 
@@ -275,11 +242,11 @@
       this._visible = opts.visible || false;
       this._debounceTimer = null;
       this._requestId = 0;
-      this._worker = new Worker('js/worker.js?v=9');
+      this._worker = new Worker('js/worker.js?v=11');
       this._worker.onmessage = this._onWorkerMessage.bind(this);
     },
 
-    _onWorkerMessage: function(e) {
+    _onWorkerMessage: function (e) {
       if (e.data.type === 'GRADIENT_READY') {
         if (e.data.id !== this._requestId) return;
         this._drawGradient(e.data.values);
@@ -319,7 +286,6 @@
 
     setVisible: function (v) { this._visible = v; this._render(); },
     setStations: function (stations) { this._stations = stations; this._render(); },
-
     refresh: function () { if (this._map) this._render(); },
 
     _render: function () {
@@ -341,46 +307,29 @@
       var cvWidth = sz.x + padX * 2;
       var cvHeight = sz.y + padY * 2;
       var step = Math.max(4, Math.floor(Math.min(sz.x, sz.y) / 180));
-      var stations = this._stations;
-      
       var halfPower = CONFIG.idwPower / 2;
-      var pixStations = new Array(stations.length);
-      for (var i = 0; i < stations.length; i++) {
-        var s = stations[i];
+      var pixStations = new Array(this._stations.length);
+
+      for (var i = 0; i < this._stations.length; i++) {
+        var s = this._stations[i];
         var p = map.latLngToContainerPoint([s.lat, s.lng]);
         pixStations[i] = { x: p.x + padX, y: p.y + padY, minutes: s.minutes };
       }
 
       this._requestId++;
-      var reqId = this._requestId;
-
       this._worker.postMessage({
-        type: 'CALC_GRADIENT',
-        id: reqId,
-        payload: {
-          width: cvWidth,
-          height: cvHeight,
-          step: step,
-          pixStations: pixStations,
-          halfPower: halfPower
-        }
+        type: 'CALC_GRADIENT', id: this._requestId,
+        payload: { width: cvWidth, height: cvHeight, step: step, pixStations: pixStations, halfPower: halfPower }
       });
 
       this._pendingRenderState = {
-        cvWidth: cvWidth,
-        cvHeight: cvHeight,
-        pos: pos,
-        renderZoom: renderZoom,
-        renderTopLeft: renderTopLeft,
-        step: step
+        cvWidth: cvWidth, cvHeight: cvHeight, pos: pos,
+        renderZoom: renderZoom, renderTopLeft: renderTopLeft, step: step
       };
     },
 
-    _drawGradient: function(values) {
-      if (!this._visible) return;
-      var map = this._map;
-      if (!map) return;
-
+    _drawGradient: function (values) {
+      if (!this._visible || !this._map) return;
       var state = this._pendingRenderState;
       if (!state) return;
 
@@ -390,10 +339,9 @@
       L.DomUtil.setTransform(cv, state.pos, 1);
       this._renderZoom = state.renderZoom;
       this._renderTopLeft = state.renderTopLeft;
-      
+
       var ctx = cv.getContext('2d');
       ctx.clearRect(0, 0, cv.width, cv.height);
-
       var step = state.step;
       var cols = Math.ceil(cv.width / step) + 1;
       var rows = Math.ceil(cv.height / step) + 1;
@@ -403,13 +351,13 @@
         for (var c = 0; c < cols; c++) {
           var x = c * step;
           var val = values[r * cols + c];
-          if (val && val !== 0) { // Worker might output 0 if val was null
+          if (val && val !== 0) {
             ctx.fillStyle = colorToCSS(minutesToColor(val), 0.28);
             ctx.fillRect(x, y, step, step);
           }
         }
       }
-    },
+    }
   });
 
   window.ContourOverlay = ContourOverlay;
