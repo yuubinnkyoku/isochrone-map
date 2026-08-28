@@ -33,15 +33,22 @@
       contourMax: 495,   // 08:15
     },
 
-    // カラースケール
+    // カラースケール（OKLCH）。
+    // 06:30〜08:10 は10分ごとの OKLab ΔE ≈ 0.082、08:15 は5分なので約半分。
+    // L は時刻とともに単調増加し、全区間を補間しても sRGB gamut 内に収まる。
     colorStops: [
-      { min: 390, color: [90, 40, 180] },    // 06:30
-      { min: 420, color: [50, 100, 220] },   // 07:00
-      { min: 440, color: [20, 170, 200] },   // 07:20
-      { min: 455, color: [40, 200, 120] },   // 07:35
-      { min: 470, color: [240, 200, 40] },   // 07:50
-      { min: 485, color: [255, 107, 107] },  // 08:05
-      { min: 495, color: [230, 60, 100] },   // 08:15
+      { min: 390, oklch: [0.540000, 0.238411, 305.000000] }, // 06:30
+      { min: 400, oklch: [0.555475, 0.219207, 285.303947] }, // 06:40
+      { min: 410, oklch: [0.572314, 0.199036, 263.873272] }, // 06:50
+      { min: 420, oklch: [0.585142, 0.132457, 247.546840] }, // 07:00
+      { min: 430, oklch: [0.612338, 0.091049, 212.933162] }, // 07:10
+      { min: 440, oklch: [0.646014, 0.108620, 170.073247] }, // 07:20
+      { min: 450, oklch: [0.664125, 0.167673, 147.022348] }, // 07:30
+      { min: 460, oklch: [0.685987, 0.137312, 119.198022] }, // 07:40
+      { min: 470, oklch: [0.712719, 0.124130, 85.176296] },  // 07:50
+      { min: 480, oklch: [0.736421, 0.154971, 55.009547] },  // 08:00
+      { min: 490, oklch: [0.760000, 0.121544, 25.000000] },  // 08:10
+      { min: 495, oklch: [0.774432, 0.117747, 6.632483] },   // 08:15
     ],
 
     // 等時線デフォルト
@@ -132,19 +139,47 @@
   };
 
   // ユーティリティ関数
+  function oklchToColor(oklch) {
+    var L = oklch[0], C = oklch[1], h = oklch[2] * Math.PI / 180;
+    var a = C * Math.cos(h), b = C * Math.sin(h);
+
+    // OKLab -> linear sRGB (Björn Ottosson reference transform).
+    var l_ = L + 0.3963377774 * a + 0.2158037573 * b;
+    var m_ = L - 0.1055613458 * a - 0.0638541728 * b;
+    var s_ = L - 0.0894841775 * a - 1.2914855480 * b;
+    var l = l_ * l_ * l_, mm = m_ * m_ * m_, ss = s_ * s_ * s_;
+    var linear = [
+      4.0767416621 * l - 3.3077115913 * mm + 0.2309699292 * ss,
+      -1.2684380046 * l + 2.6097574011 * mm - 0.3413193965 * ss,
+      -0.0041960863 * l - 0.7034186147 * mm + 1.7076147010 * ss,
+    ];
+
+    return linear.map(function (v) {
+      // The configured OKLCH path is in gamut; clamp only for floating-point noise.
+      v = Math.max(0, Math.min(1, v));
+      var srgb = v <= 0.0031308 ? 12.92 * v : 1.055 * Math.pow(v, 1 / 2.4) - 0.055;
+      return Math.round(srgb * 255);
+    });
+  }
+
+  function interpolateHue(h0, h1, t) {
+    var delta = ((h1 - h0 + 540) % 360) - 180;
+    return h0 + delta * t;
+  }
+
   function minutesToColor(m) {
     var stops = CONFIG.colorStops;
-    if (m <= stops[0].min) return stops[0].color.slice();
-    if (m >= stops[stops.length - 1].min) return stops[stops.length - 1].color.slice();
+    if (m <= stops[0].min) return oklchToColor(stops[0].oklch);
+    if (m >= stops[stops.length - 1].min) return oklchToColor(stops[stops.length - 1].oklch);
     for (var i = 0; i < stops.length - 1; i++) {
       if (m >= stops[i].min && m <= stops[i + 1].min) {
         var t = (m - stops[i].min) / (stops[i + 1].min - stops[i].min);
-        var c0 = stops[i].color, c1 = stops[i + 1].color;
-        return [
-          Math.round(c0[0] + (c1[0] - c0[0]) * t),
-          Math.round(c0[1] + (c1[1] - c0[1]) * t),
-          Math.round(c0[2] + (c1[2] - c0[2]) * t),
-        ];
+        var c0 = stops[i].oklch, c1 = stops[i + 1].oklch;
+        return oklchToColor([
+          c0[0] + (c1[0] - c0[0]) * t,
+          c0[1] + (c1[1] - c0[1]) * t,
+          interpolateHue(c0[2], c1[2], t),
+        ]);
       }
     }
     return [128, 128, 128];
