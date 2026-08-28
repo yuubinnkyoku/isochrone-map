@@ -10,6 +10,13 @@
       "source": "国土数値情報 駅別乗降客数 S12-25",
       "year": 2024,
       "license": "CC BY 4.0"
+    },
+    "radiusCoverage": {
+      "center": "筑波大学附属高等学校",
+      "radiusKm": 15,
+      "source": "国土数値情報 鉄道データ N02-25",
+      "stationGroups": 477,
+      "complete": true
     }
   },
   "stations": [
@@ -27,7 +34,7 @@
       "duration": 8,
       "passengers": 78606,
       "passengerYear": 2024,
-      "passengerRank": 132
+      "passengerRank": 134
     },
     {
       "id": "gokokuji",
@@ -43,7 +50,7 @@
       "duration": 5,
       "passengers": 40640,
       "passengerYear": 2024,
-      "passengerRank": 234
+      "passengerRank": 237
     },
     {
       "id": "ikebukuro",
@@ -88,7 +95,7 @@
       "route": "東急東横線→渋谷→東京メトロ半蔵門線→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 28772,
       "passengerYear": 2024,
-      "passengerRank": 325
+      "passengerRank": 329
     },
     {
       "id": "nakameguro",
@@ -102,7 +109,7 @@
       "route": "東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 381738,
       "passengerYear": 2024,
-      "passengerRank": 20
+      "passengerRank": 21
     },
     {
       "id": "yuutenji",
@@ -116,7 +123,7 @@
       "route": "東急東横線→渋谷→東京メトロ半蔵門線→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 29907,
       "passengerYear": 2024,
-      "passengerRank": 314
+      "passengerRank": 318
     },
     {
       "id": "gakugeidaigaku",
@@ -130,7 +137,7 @@
       "route": "東急東横線急行→渋谷→東京メトロ半蔵門線準急→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 72696,
       "passengerYear": 2024,
-      "passengerRank": 145
+      "passengerRank": 147
     },
     {
       "id": "toritsudaigaku",
@@ -144,7 +151,7 @@
       "route": "東急東横線→渋谷→東京メトロ半蔵門線→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 46393,
       "passengerYear": 2024,
-      "passengerRank": 208
+      "passengerRank": 211
     },
     {
       "id": "jiyuugaoka",
@@ -158,7 +165,7 @@
       "route": "東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 136588,
       "passengerYear": 2024,
-      "passengerRank": 73
+      "passengerRank": 74
     },
     {
       "id": "den-enchoufu",
@@ -172,7 +179,7 @@
       "route": "東急東横線→自由が丘→東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 30210,
       "passengerYear": 2024,
-      "passengerRank": 309
+      "passengerRank": 313
     },
     {
       "id": "tamagawa",
@@ -186,7 +193,7 @@
       "route": "東急東横線→自由が丘→東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 21510,
       "passengerYear": 2024,
-      "passengerRank": 383
+      "passengerRank": 388
     },
     {
       "id": "shinmaruko",
@@ -200,7 +207,7 @@
       "route": "東急東横線→自由が丘→東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 26424,
       "passengerYear": 2024,
-      "passengerRank": 348
+      "passengerRank": 352
     },
     {
       "id": "musashikosugi",
@@ -229,7 +236,7 @@
       "route": "東急目黒線→武蔵小杉→東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 59259,
       "passengerYear": 2024,
-      "passengerRank": 170
+      "passengerRank": 173
     },
     {
       "id": "hiyoshi",
@@ -244,7 +251,7 @@
       "route": "東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 226673,
       "passengerYear": 2024,
-      "passengerRank": 43
+      "passengerRank": 44
     },
     {
       "id": "meguro",
@@ -272,7 +279,7 @@
       "route": "東急目黒線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 29015,
       "passengerYear": 2024,
-      "passengerRank": 321
+      "passengerRank": 325
     },
     {
       "id": "musashikoyama",
@@ -286,7 +293,7 @@
       "route": "東急目黒線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 54004,
       "passengerYear": 2024,
-      "passengerRank": 184
+      "passengerRank": 187
     },
     {
       "id": "nishioyama",
@@ -300,7 +307,7 @@
       "route": "東急目黒線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 33007,
       "passengerYear": 2024,
-      "passengerRank": 288
+      "passengerRank": 292
     },
     {
       "id": "sensoku",
@@ -314,7 +321,7 @@
       "route": "東急目黒線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 14288,
       "passengerYear": 2024,
-      "passengerRank": 444
+      "passengerRank": 452
     },
     {
       "id": "oookayama",
@@ -328,7 +335,7 @@
       "route": "東急目黒線急行→武蔵小山→東急目黒線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 47370,
       "passengerYear": 2024,
-      "passengerRank": 205
+      "passengerRank": 208
     },
     {
       "id": "okusawa",
@@ -342,7 +349,7 @@
       "route": "東急目黒線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 12146,
       "passengerYear": 2024,
-      "passengerRank": 465
+      "passengerRank": 473
     },
     {
       "id": "ooichou",
@@ -356,7 +363,7 @@
       "route": "東京臨海高速鉄道りんかい線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 366901,
       "passengerYear": 2024,
-      "passengerRank": 22
+      "passengerRank": 23
     },
     {
       "id": "shitajinmei",
@@ -370,7 +377,7 @@
       "route": "東急大井町線→大井町→東京臨海高速鉄道りんかい線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 9364,
       "passengerYear": 2024,
-      "passengerRank": 484
+      "passengerRank": 494
     },
     {
       "id": "tokoshikouen",
@@ -384,7 +391,7 @@
       "route": "東急大井町線→大井町→東京臨海高速鉄道りんかい線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 13597,
       "passengerYear": 2024,
-      "passengerRank": 451
+      "passengerRank": 459
     },
     {
       "id": "nakanobe",
@@ -398,7 +405,7 @@
       "route": "都営浅草線→五反田→ＪＲ山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 49338,
       "passengerYear": 2024,
-      "passengerRank": 195
+      "passengerRank": 198
     },
     {
       "id": "eharamachi",
@@ -412,7 +419,7 @@
       "route": "東急大井町線→大井町→東京臨海高速鉄道りんかい線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 15179,
       "passengerYear": 2024,
-      "passengerRank": 434
+      "passengerRank": 442
     },
     {
       "id": "hatanodai",
@@ -426,7 +433,7 @@
       "route": "東急池上線→五反田→ＪＲ山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 39338,
       "passengerYear": 2024,
-      "passengerRank": 241
+      "passengerRank": 244
     },
     {
       "id": "kitasenzoku",
@@ -440,7 +447,7 @@
       "route": "東急大井町線→自由が丘→東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 7266,
       "passengerYear": 2024,
-      "passengerRank": 505
+      "passengerRank": 515
     },
     {
       "id": "midorigaoka",
@@ -454,7 +461,7 @@
       "route": "東急大井町線→自由が丘→東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 10090,
       "passengerYear": 2024,
-      "passengerRank": 477
+      "passengerRank": 487
     },
     {
       "id": "kuhonbutsu",
@@ -468,7 +475,7 @@
       "route": "東急大井町線→自由が丘→東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 12729,
       "passengerYear": 2024,
-      "passengerRank": 462
+      "passengerRank": 470
     },
     {
       "id": "oyamadai",
@@ -482,7 +489,7 @@
       "route": "東急大井町線→自由が丘→東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 30971,
       "passengerYear": 2024,
-      "passengerRank": 299
+      "passengerRank": 303
     },
     {
       "id": "todoroki",
@@ -496,7 +503,7 @@
       "route": "東急大井町線→二子玉川→東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 27098,
       "passengerYear": 2024,
-      "passengerRank": 345
+      "passengerRank": 349
     },
     {
       "id": "kaminoge",
@@ -510,7 +517,7 @@
       "route": "東急大井町線→二子玉川→東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 22230,
       "passengerYear": 2024,
-      "passengerRank": 379
+      "passengerRank": 384
     },
     {
       "id": "futagotamagawa",
@@ -524,7 +531,7 @@
       "route": "東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 140353,
       "passengerYear": 2024,
-      "passengerRank": 70
+      "passengerRank": 71
     },
     {
       "id": "mizonokuchi",
@@ -539,7 +546,7 @@
       "route": "東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 195762,
       "passengerYear": 2024,
-      "passengerRank": 49
+      "passengerRank": 50
     },
     {
       "id": "minumadaishinsuikouen",
@@ -553,7 +560,7 @@
       "route": "日暮里・舎人ライナー日暮里行→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "passengers": 13889,
       "passengerYear": 2024,
-      "passengerRank": 447
+      "passengerRank": 455
     },
     {
       "id": "toneri",
@@ -567,7 +574,7 @@
       "route": "日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "passengers": 9542,
       "passengerYear": 2024,
-      "passengerRank": 481
+      "passengerRank": 491
     },
     {
       "id": "tonerikouen",
@@ -581,7 +588,7 @@
       "route": "日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "passengers": 5729,
       "passengerYear": 2024,
-      "passengerRank": 513
+      "passengerRank": 524
     },
     {
       "id": "tanizaike",
@@ -595,7 +602,7 @@
       "route": "日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "passengers": 11064,
       "passengerYear": 2024,
-      "passengerRank": 469
+      "passengerRank": 479
     },
     {
       "id": "nishiaraitaishinishi",
@@ -609,7 +616,7 @@
       "route": "日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "passengers": 12405,
       "passengerYear": 2024,
-      "passengerRank": 464
+      "passengerRank": 472
     },
     {
       "id": "kouhoku",
@@ -623,7 +630,7 @@
       "route": "日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "passengers": 12958,
       "passengerYear": 2024,
-      "passengerRank": 459
+      "passengerRank": 467
     },
     {
       "id": "takano",
@@ -637,7 +644,7 @@
       "route": "日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "passengers": 6635,
       "passengerYear": 2024,
-      "passengerRank": 506
+      "passengerRank": 517
     },
     {
       "id": "ougioohashi",
@@ -651,7 +658,7 @@
       "route": "日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "passengers": 10663,
       "passengerYear": 2024,
-      "passengerRank": 473
+      "passengerRank": 483
     },
     {
       "id": "adachiodai",
@@ -665,7 +672,7 @@
       "route": "日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "passengers": 3685,
       "passengerYear": 2024,
-      "passengerRank": 526
+      "passengerRank": 537
     },
     {
       "id": "kumanomae",
@@ -679,7 +686,7 @@
       "route": "徒歩→熊野前(舎人ライナー)→日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "passengers": 13313,
       "passengerYear": 2024,
-      "passengerRank": 453
+      "passengerRank": 461
     },
     {
       "id": "shakudoshougakkoumae",
@@ -693,7 +700,7 @@
       "route": "日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "passengers": 5630,
       "passengerYear": 2024,
-      "passengerRank": 514
+      "passengerRank": 525
     },
     {
       "id": "nishinippori",
@@ -707,7 +714,7 @@
       "route": "ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "passengers": 353501,
       "passengerYear": 2024,
-      "passengerRank": 24
+      "passengerRank": 25
     },
     {
       "id": "nippori",
@@ -721,7 +728,7 @@
       "route": "ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "passengers": 348027,
       "passengerYear": 2024,
-      "passengerRank": 25
+      "passengerRank": 26
     },
     {
       "id": "ikejirioohashi",
@@ -735,7 +742,7 @@
       "route": "東急田園都市線→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 63191,
       "passengerYear": 2024,
-      "passengerRank": 161
+      "passengerRank": 164
     },
     {
       "id": "sangenjaya",
@@ -749,7 +756,7 @@
       "route": "東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 167214,
       "passengerYear": 2024,
-      "passengerRank": 58
+      "passengerRank": 59
     },
     {
       "id": "komazawadaigaku",
@@ -763,7 +770,7 @@
       "route": "東急田園都市線→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 74266,
       "passengerYear": 2024,
-      "passengerRank": 141
+      "passengerRank": 143
     },
     {
       "id": "sakurashinmachi",
@@ -777,7 +784,7 @@
       "route": "東急田園都市線→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 68296,
       "passengerYear": 2024,
-      "passengerRank": 151
+      "passengerRank": 154
     },
     {
       "id": "youga",
@@ -791,7 +798,7 @@
       "route": "東急田園都市線→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 65061,
       "passengerYear": 2024,
-      "passengerRank": 159
+      "passengerRank": 162
     },
     {
       "id": "futakoshinchi",
@@ -805,7 +812,7 @@
       "route": "東急田園都市線→二子玉川→東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 20845,
       "passengerYear": 2024,
-      "passengerRank": 390
+      "passengerRank": 396
     },
     {
       "id": "takatsu",
@@ -819,7 +826,7 @@
       "route": "東急田園都市線→二子玉川→東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 28557,
       "passengerYear": 2024,
-      "passengerRank": 326
+      "passengerRank": 330
     },
     {
       "id": "kajigatani",
@@ -833,7 +840,7 @@
       "route": "東急田園都市線→溝の口→東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 36095,
       "passengerYear": 2024,
-      "passengerRank": 270
+      "passengerRank": 274
     },
     {
       "id": "miyazakidai",
@@ -847,7 +854,7 @@
       "route": "東急田園都市線→溝の口→東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 47972,
       "passengerYear": 2024,
-      "passengerRank": 202
+      "passengerRank": 205
     },
     {
       "id": "miyamaedaira",
@@ -861,7 +868,7 @@
       "route": "東急田園都市線→溝の口→東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 46121,
       "passengerYear": 2024,
-      "passengerRank": 210
+      "passengerRank": 213
     },
     {
       "id": "saginuma",
@@ -875,7 +882,7 @@
       "route": "東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 59568,
       "passengerYear": 2024,
-      "passengerRank": 165
+      "passengerRank": 168
     },
     {
       "id": "tamapuraaza",
@@ -890,7 +897,7 @@
       "route": "東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 78780,
       "passengerYear": 2024,
-      "passengerRank": 131
+      "passengerRank": 133
     },
     {
       "id": "asakadai",
@@ -904,7 +911,7 @@
       "route": "東武東上線急行→和光市→東京メトロ有楽町線新木場行→護国寺→徒歩5分",
       "passengers": 152331,
       "passengerYear": 2024,
-      "passengerRank": 62
+      "passengerRank": 63
     },
     {
       "id": "asaka",
@@ -918,7 +925,7 @@
       "route": "東武東上線急行→和光市→東京メトロ有楽町線新木場行→護国寺→徒歩5分",
       "passengers": 67537,
       "passengerYear": 2024,
-      "passengerRank": 153
+      "passengerRank": 156
     },
     {
       "id": "wakoushi",
@@ -932,7 +939,7 @@
       "route": "東京メトロ有楽町線新木場行→護国寺→徒歩5分",
       "passengers": 343898,
       "passengerYear": 2024,
-      "passengerRank": 26
+      "passengerRank": 27
     },
     {
       "id": "narimasu",
@@ -946,7 +953,7 @@
       "route": "東武東上線急行→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 53301,
       "passengerYear": 2024,
-      "passengerRank": 185
+      "passengerRank": 188
     },
     {
       "id": "akatsuka",
@@ -960,7 +967,7 @@
       "route": "徒歩→地下鉄赤塚→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 14727,
       "passengerYear": 2024,
-      "passengerRank": 439
+      "passengerRank": 447
     },
     {
       "id": "toubunerima",
@@ -974,7 +981,7 @@
       "route": "東武東上線→上板橋→東武東上線準急→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 56181,
       "passengerYear": 2024,
-      "passengerRank": 177
+      "passengerRank": 180
     },
     {
       "id": "kamiitabashi",
@@ -988,7 +995,7 @@
       "route": "東武東上線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 51233,
       "passengerYear": 2024,
-      "passengerRank": 188
+      "passengerRank": 191
     },
     {
       "id": "tokiwadai",
@@ -1002,7 +1009,7 @@
       "route": "東武東上線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 43271,
       "passengerYear": 2024,
-      "passengerRank": 222
+      "passengerRank": 225
     },
     {
       "id": "nakaitabashi",
@@ -1016,7 +1023,7 @@
       "route": "東武東上線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 27781,
       "passengerYear": 2024,
-      "passengerRank": 335
+      "passengerRank": 339
     },
     {
       "id": "ooyama",
@@ -1030,7 +1037,7 @@
       "route": "東武東上線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 48683,
       "passengerYear": 2024,
-      "passengerRank": 199
+      "passengerRank": 202
     },
     {
       "id": "shitaitahashi",
@@ -1044,7 +1051,7 @@
       "route": "東武東上線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 16048,
       "passengerYear": 2024,
-      "passengerRank": 428
+      "passengerRank": 436
     },
     {
       "id": "kitaikefukuro",
@@ -1058,7 +1065,7 @@
       "route": "東武東上線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 10356,
       "passengerYear": 2024,
-      "passengerRank": 475
+      "passengerRank": 485
     },
     {
       "id": "yubiougi",
@@ -1073,7 +1080,7 @@
       "route": "ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 19130,
       "passengerYear": 2024,
-      "passengerRank": 407
+      "passengerRank": 414
     },
     {
       "id": "nishioomiya",
@@ -1088,7 +1095,7 @@
       "route": "ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 25212,
       "passengerYear": 2024,
-      "passengerRank": 359
+      "passengerRank": 363
     },
     {
       "id": "nisshin",
@@ -1103,7 +1110,7 @@
       "route": "ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 24980,
       "passengerYear": 2024,
-      "passengerRank": 362
+      "passengerRank": 366
     },
     {
       "id": "kitayono",
@@ -1118,7 +1125,7 @@
       "route": "ＪＲ埼京線→武蔵浦和→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 22262,
       "passengerYear": 2024,
-      "passengerRank": 378
+      "passengerRank": 383
     },
     {
       "id": "yonohonchou",
@@ -1133,7 +1140,7 @@
       "route": "ＪＲ埼京線→武蔵浦和→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 29304,
       "passengerYear": 2024,
-      "passengerRank": 319
+      "passengerRank": 323
     },
     {
       "id": "minamiyono",
@@ -1148,7 +1155,7 @@
       "route": "ＪＲ埼京線→武蔵浦和→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 38218,
       "passengerYear": 2024,
-      "passengerRank": 248
+      "passengerRank": 251
     },
     {
       "id": "nakaurawa",
@@ -1163,7 +1170,7 @@
       "route": "ＪＲ埼京線→武蔵浦和→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 25542,
       "passengerYear": 2024,
-      "passengerRank": 356
+      "passengerRank": 360
     },
     {
       "id": "musashiurawa",
@@ -1178,7 +1185,7 @@
       "route": "ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 100744,
       "passengerYear": 2024,
-      "passengerRank": 99
+      "passengerRank": 100
     },
     {
       "id": "kitadota",
@@ -1193,7 +1200,7 @@
       "route": "ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 44370,
       "passengerYear": 2024,
-      "passengerRank": 216
+      "passengerRank": 219
     },
     {
       "id": "toda",
@@ -1208,7 +1215,7 @@
       "route": "ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 42074,
       "passengerYear": 2024,
-      "passengerRank": 229
+      "passengerRank": 232
     },
     {
       "id": "todakouen",
@@ -1223,7 +1230,7 @@
       "route": "ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 65930,
       "passengerYear": 2024,
-      "passengerRank": 156
+      "passengerRank": 159
     },
     {
       "id": "kitaakabane",
@@ -1238,7 +1245,7 @@
       "route": "ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 36982,
       "passengerYear": 2024,
-      "passengerRank": 260
+      "passengerRank": 264
     },
     {
       "id": "akabane",
@@ -1254,7 +1261,7 @@
       "route": "ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 188334,
       "passengerYear": 2024,
-      "passengerRank": 50
+      "passengerRank": 51
     },
     {
       "id": "juujou",
@@ -1269,7 +1276,7 @@
       "route": "ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 67506,
       "passengerYear": 2024,
-      "passengerRank": 154
+      "passengerRank": 157
     },
     {
       "id": "itabashi",
@@ -1284,7 +1291,7 @@
       "route": "ＪＲ埼京線→池袋→東京メトロ丸ノ内線荻窪行→茗荷谷→徒歩8分",
       "passengers": 65264,
       "passengerYear": 2024,
-      "passengerRank": 158
+      "passengerRank": 161
     },
     {
       "id": "toudaimiya",
@@ -1299,7 +1306,7 @@
       "route": "ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 64474,
       "passengerYear": 2024,
-      "passengerRank": 160
+      "passengerRank": 163
     },
     {
       "id": "doro",
@@ -1314,7 +1321,7 @@
       "route": "ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 30412,
       "passengerYear": 2024,
-      "passengerRank": 307
+      "passengerRank": 311
     },
     {
       "id": "oomiya",
@@ -1345,7 +1352,7 @@
       "route": "ＪＲ高崎線→赤羽→ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 107440,
       "passengerYear": 2024,
-      "passengerRank": 93
+      "passengerRank": 94
     },
     {
       "id": "yono",
@@ -1360,7 +1367,7 @@
       "route": "ＪＲ京浜東北・根岸線→浦和→ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 51106,
       "passengerYear": 2024,
-      "passengerRank": 189
+      "passengerRank": 192
     },
     {
       "id": "kitaurawa",
@@ -1375,7 +1382,7 @@
       "route": "ＪＲ京浜東北・根岸線→浦和→ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 96364,
       "passengerYear": 2024,
-      "passengerRank": 106
+      "passengerRank": 107
     },
     {
       "id": "urawa",
@@ -1391,7 +1398,7 @@
       "route": "ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 181878,
       "passengerYear": 2024,
-      "passengerRank": 54
+      "passengerRank": 55
     },
     {
       "id": "minamiurawa",
@@ -1406,7 +1413,7 @@
       "route": "ＪＲ京浜東北線→赤羽→ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 110620,
       "passengerYear": 2024,
-      "passengerRank": 88
+      "passengerRank": 89
     },
     {
       "id": "warabi",
@@ -1421,7 +1428,7 @@
       "route": "ＪＲ京浜東北線→赤羽→ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 111724,
       "passengerYear": 2024,
-      "passengerRank": 86
+      "passengerRank": 87
     },
     {
       "id": "nishikawakuchi",
@@ -1436,7 +1443,7 @@
       "route": "ＪＲ京浜東北線→赤羽→ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 109948,
       "passengerYear": 2024,
-      "passengerRank": 89
+      "passengerRank": 90
     },
     {
       "id": "kawaguchi",
@@ -1451,7 +1458,7 @@
       "route": "ＪＲ京浜東北線→赤羽→ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 150122,
       "passengerYear": 2024,
-      "passengerRank": 64
+      "passengerRank": 65
     },
     {
       "id": "higashijuujou",
@@ -1466,7 +1473,7 @@
       "route": "ＪＲ京浜東北線→赤羽→ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 45690,
       "passengerYear": 2024,
-      "passengerRank": 211
+      "passengerRank": 214
     },
     {
       "id": "kaminakasato",
@@ -1481,7 +1488,7 @@
       "route": "ＪＲ京浜東北・根岸線→田端→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "passengers": 14482,
       "passengerYear": 2024,
-      "passengerRank": 443
+      "passengerRank": 451
     },
     {
       "id": "oku",
@@ -1496,7 +1503,7 @@
       "route": "ＪＲ高崎線→赤羽→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 20858,
       "passengerYear": 2024,
-      "passengerRank": 389
+      "passengerRank": 395
     },
     {
       "id": "higashiiwatsuki",
@@ -1511,7 +1518,7 @@
       "route": "東武アーバンパークライン→大宮(埼玉県)→ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 19454,
       "passengerYear": 2024,
-      "passengerRank": 400
+      "passengerRank": 407
     },
     {
       "id": "iwatsuki",
@@ -1526,7 +1533,7 @@
       "route": "東武アーバンパークライン→大宮(埼玉県)→ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 35091,
       "passengerYear": 2024,
-      "passengerRank": 278
+      "passengerRank": 282
     },
     {
       "id": "shichiri",
@@ -1541,7 +1548,7 @@
       "route": "東武アーバンパークライン→大宮(埼玉県)→ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 18353,
       "passengerYear": 2024,
-      "passengerRank": 413
+      "passengerRank": 420
     },
     {
       "id": "oowada",
@@ -1556,7 +1563,7 @@
       "route": "東武アーバンパークライン→大宮(埼玉県)→ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 18986,
       "passengerYear": 2024,
-      "passengerRank": 408
+      "passengerRank": 415
     },
     {
       "id": "oomiyakouen",
@@ -1571,7 +1578,7 @@
       "route": "東武アーバンパークライン→大宮(埼玉県)→ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 8941,
       "passengerYear": 2024,
-      "passengerRank": 491
+      "passengerRank": 501
     },
     {
       "id": "hokudaimiya",
@@ -1586,7 +1593,7 @@
       "route": "東武アーバンパークライン→大宮(埼玉県)→ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 6499,
       "passengerYear": 2024,
-      "passengerRank": 507
+      "passengerRank": 518
     },
     {
       "id": "yoshinohara",
@@ -1601,7 +1608,7 @@
       "route": "埼玉新都市交通ニューシャトル→大宮(埼玉県)→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 3671,
       "passengerYear": 2024,
-      "passengerRank": 527
+      "passengerRank": 538
     },
     {
       "id": "imahane",
@@ -1616,7 +1623,7 @@
       "route": "埼玉新都市交通ニューシャトル→大宮(埼玉県)→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 4798,
       "passengerYear": 2024,
-      "passengerRank": 518
+      "passengerRank": 529
     },
     {
       "id": "touguuhara",
@@ -1631,7 +1638,7 @@
       "route": "埼玉新都市交通ニューシャトル→大宮(埼玉県)→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 4658,
       "passengerYear": 2024,
-      "passengerRank": 519
+      "passengerRank": 530
     },
     {
       "id": "kamomiya",
@@ -1646,7 +1653,7 @@
       "route": "埼玉新都市交通ニューシャトル→大宮(埼玉県)→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 6354,
       "passengerYear": 2024,
-      "passengerRank": 508
+      "passengerRank": 519
     },
     {
       "id": "tetsudouhakubutsukan",
@@ -1661,7 +1668,7 @@
       "route": "埼玉新都市交通ニューシャトル→大宮(埼玉県)→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 10730,
       "passengerYear": 2024,
-      "passengerRank": 472
+      "passengerRank": 482
     },
     {
       "id": "miyahara",
@@ -1676,7 +1683,7 @@
       "route": "ＪＲ高崎線→大宮(埼玉県)→ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 42824,
       "passengerYear": 2024,
-      "passengerRank": 227
+      "passengerRank": 230
     },
     {
       "id": "hokufunaka",
@@ -1690,7 +1697,7 @@
       "route": "ＪＲ武蔵野線→北朝霞→徒歩→朝霞台→東武東上線急行→和光市→東京メトロ有楽町線新木場行→護国寺→徒歩5分",
       "passengers": 25152,
       "passengerYear": 2024,
-      "passengerRank": 361
+      "passengerRank": 365
     },
     {
       "id": "shinkodaira",
@@ -1704,7 +1711,7 @@
       "route": "ＪＲ武蔵野線→北朝霞→徒歩→朝霞台→東武東上線急行→和光市→東京メトロ有楽町線新木場行→護国寺→徒歩5分",
       "passengers": 22178,
       "passengerYear": 2024,
-      "passengerRank": 380
+      "passengerRank": 385
     },
     {
       "id": "higashitokorozawa",
@@ -1718,7 +1725,7 @@
       "route": "ＪＲ武蔵野線→北朝霞→徒歩→朝霞台→東武東上線急行→和光市→東京メトロ有楽町線新木場行→護国寺→徒歩5分",
       "passengers": 31078,
       "passengerYear": 2024,
-      "passengerRank": 297
+      "passengerRank": 301
     },
     {
       "id": "niiza",
@@ -1732,7 +1739,7 @@
       "route": "ＪＲ武蔵野線→北朝霞→徒歩→朝霞台→東武東上線急行→和光市→東京メトロ有楽町線新木場行→護国寺→徒歩5分",
       "passengers": 40180,
       "passengerYear": 2024,
-      "passengerRank": 235
+      "passengerRank": 238
     },
     {
       "id": "nishiurawa",
@@ -1746,7 +1753,7 @@
       "route": "ＪＲ武蔵野線→武蔵浦和→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 27786,
       "passengerYear": 2024,
-      "passengerRank": 334
+      "passengerRank": 338
     },
     {
       "id": "higashiurawa",
@@ -1760,7 +1767,7 @@
       "route": "ＪＲ武蔵野線→武蔵浦和→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 54654,
       "passengerYear": 2024,
-      "passengerRank": 183
+      "passengerRank": 186
     },
     {
       "id": "koshigayareikutaun",
@@ -1774,7 +1781,7 @@
       "route": "ＪＲ武蔵野線→武蔵浦和→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 59534,
       "passengerYear": 2024,
-      "passengerRank": 167
+      "passengerRank": 170
     },
     {
       "id": "shinzousato",
@@ -1788,7 +1795,7 @@
       "route": "ＪＲ武蔵野線→南流山→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "passengers": 27290,
       "passengerYear": 2024,
-      "passengerRank": 343
+      "passengerRank": 347
     },
     {
       "id": "misato",
@@ -1802,7 +1809,7 @@
       "route": "ＪＲ武蔵野線→南流山→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "passengers": 26538,
       "passengerYear": 2024,
-      "passengerRank": 347
+      "passengerRank": 351
     },
     {
       "id": "ichikawaoono",
@@ -1816,7 +1823,7 @@
       "route": "ＪＲ武蔵野線→南流山→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "passengers": 22360,
       "passengerYear": 2024,
-      "passengerRank": 377
+      "passengerRank": 382
     },
     {
       "id": "shin-akitsu",
@@ -1830,7 +1837,7 @@
       "route": "ＪＲ武蔵野線→北朝霞→徒歩→朝霞台→東武東上線急行→和光市→東京メトロ有楽町線新木場行→護国寺→徒歩5分",
       "passengers": 74644,
       "passengerYear": 2024,
-      "passengerRank": 137
+      "passengerRank": 139
     },
     {
       "id": "hokuchoukasumi",
@@ -1844,7 +1851,7 @@
       "route": "徒歩→朝霞台→東武東上線急行→和光市→東京メトロ有楽町線新木場行→護国寺→徒歩5分",
       "passengers": 136010,
       "passengerYear": 2024,
-      "passengerRank": 74
+      "passengerRank": 75
     },
     {
       "id": "minami-koshigaya",
@@ -1858,7 +1865,7 @@
       "route": "徒歩→新越谷→東武スカイツリーライン区間急行→北千住→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "passengers": 144284,
       "passengerYear": 2024,
-      "passengerRank": 68
+      "passengerRank": 69
     },
     {
       "id": "shinpachihashira",
@@ -1872,7 +1879,7 @@
       "route": "徒歩→八柱→京成松戸線→松戸→ＪＲ常磐線(上野東京ライン)→北千住→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "passengers": 47424,
       "passengerYear": 2024,
-      "passengerRank": 204
+      "passengerRank": 207
     },
     {
       "id": "kashiwatanaka",
@@ -1886,7 +1893,7 @@
       "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "passengers": 16066,
       "passengerYear": 2024,
-      "passengerRank": 427
+      "passengerRank": 435
     },
     {
       "id": "kashiwanoha-campus",
@@ -1900,7 +1907,7 @@
       "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "passengers": 39740,
       "passengerYear": 2024,
-      "passengerRank": 239
+      "passengerRank": 242
     },
     {
       "id": "nagareyamaootakanomori",
@@ -1914,7 +1921,7 @@
       "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "passengers": 150953,
       "passengerYear": 2024,
-      "passengerRank": 63
+      "passengerRank": 64
     },
     {
       "id": "nagareyamasentorarupaaku",
@@ -1928,7 +1935,7 @@
       "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "passengers": 11233,
       "passengerYear": 2024,
-      "passengerRank": 467
+      "passengerRank": 477
     },
     {
       "id": "minami-nagareyama",
@@ -1942,7 +1949,7 @@
       "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "passengers": 152479,
       "passengerYear": 2024,
-      "passengerRank": 61
+      "passengerRank": 62
     },
     {
       "id": "misatochuuou",
@@ -1956,7 +1963,7 @@
       "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "passengers": 30722,
       "passengerYear": 2024,
-      "passengerRank": 303
+      "passengerRank": 307
     },
     {
       "id": "yashio",
@@ -1970,7 +1977,7 @@
       "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "passengers": 50219,
       "passengerYear": 2024,
-      "passengerRank": 192
+      "passengerRank": 195
     },
     {
       "id": "rokumachi",
@@ -1984,7 +1991,7 @@
       "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "passengers": 34213,
       "passengerYear": 2024,
-      "passengerRank": 283
+      "passengerRank": 287
     },
     {
       "id": "aoi",
@@ -1998,7 +2005,7 @@
       "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "passengers": 13288,
       "passengerYear": 2024,
-      "passengerRank": 454
+      "passengerRank": 462
     },
     {
       "id": "asakusa-tx",
@@ -2012,7 +2019,7 @@
       "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "passengers": 24412,
       "passengerYear": 2024,
-      "passengerRank": 365
+      "passengerRank": 369
     },
     {
       "id": "nagareyama",
@@ -2026,7 +2033,7 @@
       "route": "徒歩→流山駅/京成バス千葉ウエスト→京成バス千葉ウエスト・松７１→南流山駅/京成バス千葉ウエスト→徒歩→南流山→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "passengers": 2422,
       "passengerYear": 2024,
-      "passengerRank": 542
+      "passengerRank": 553
     },
     {
       "id": "heiwadai",
@@ -2040,7 +2047,7 @@
       "route": "流鉄流山線→馬橋→ＪＲ常磐線→松戸→ＪＲ常磐線快速→日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "passengers": 2350,
       "passengerYear": 2024,
-      "passengerRank": 543
+      "passengerRank": 554
     },
     {
       "id": "hirekesaki",
@@ -2054,7 +2061,7 @@
       "route": "流鉄流山線→馬橋→ＪＲ常磐線→松戸→ＪＲ常磐線快速→日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "passengers": 1124,
       "passengerYear": 2024,
-      "passengerRank": 553
+      "passengerRank": 564
     },
     {
       "id": "koganejoushi",
@@ -2068,7 +2075,7 @@
       "route": "流鉄流山線→馬橋→ＪＲ常磐線→松戸→ＪＲ常磐線快速→日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "passengers": 1651,
       "passengerYear": 2024,
-      "passengerRank": 548
+      "passengerRank": 559
     },
     {
       "id": "otsuka",
@@ -2082,7 +2089,7 @@
       "searchDate": "2026-08-28",
       "passengers": 108702,
       "passengerYear": 2024,
-      "passengerRank": 90
+      "passengerRank": 91
     },
     {
       "id": "mejiro",
@@ -2096,7 +2103,7 @@
       "searchDate": "2026-08-28",
       "passengers": 67082,
       "passengerYear": 2024,
-      "passengerRank": 155
+      "passengerRank": 158
     },
     {
       "id": "shinjuku",
@@ -2153,7 +2160,7 @@
       "searchDate": "2026-08-28",
       "passengers": 188319,
       "passengerYear": 2024,
-      "passengerRank": 51
+      "passengerRank": 52
     },
     {
       "id": "tokyo",
@@ -2182,7 +2189,7 @@
       "searchDate": "2026-08-28",
       "passengers": 98492,
       "passengerYear": 2024,
-      "passengerRank": 103
+      "passengerRank": 104
     },
     {
       "id": "kanda",
@@ -2196,7 +2203,7 @@
       "searchDate": "2026-08-28",
       "passengers": 237297,
       "passengerYear": 2024,
-      "passengerRank": 39
+      "passengerRank": 40
     },
     {
       "id": "akihabara",
@@ -2225,7 +2232,7 @@
       "searchDate": "2026-08-28",
       "passengers": 124751,
       "passengerYear": 2024,
-      "passengerRank": 80
+      "passengerRank": 81
     },
     {
       "id": "yoyogi",
@@ -2239,7 +2246,7 @@
       "searchDate": "2026-08-28",
       "passengers": 136902,
       "passengerYear": 2024,
-      "passengerRank": 72
+      "passengerRank": 73
     },
     {
       "id": "tabata",
@@ -2253,7 +2260,7 @@
       "searchDate": "2026-08-28",
       "passengers": 80958,
       "passengerYear": 2024,
-      "passengerRank": 122
+      "passengerRank": 124
     },
     {
       "id": "shimbashi",
@@ -2281,7 +2288,7 @@
       "searchDate": "2026-08-28",
       "passengers": 125968,
       "passengerYear": 2024,
-      "passengerRank": 79
+      "passengerRank": 80
     },
     {
       "id": "ueno",
@@ -2310,7 +2317,7 @@
       "searchDate": "2026-08-28",
       "passengers": 134814,
       "passengerYear": 2024,
-      "passengerRank": 76
+      "passengerRank": 77
     },
     {
       "id": "hamamatsucho",
@@ -2324,7 +2331,7 @@
       "searchDate": "2026-08-28",
       "passengers": 267804,
       "passengerYear": 2024,
-      "passengerRank": 35
+      "passengerRank": 36
     },
     {
       "id": "uguisudani",
@@ -2338,7 +2345,7 @@
       "searchDate": "2026-08-28",
       "passengers": 48920,
       "passengerYear": 2024,
-      "passengerRank": 196
+      "passengerRank": 199
     },
     {
       "id": "ebisu",
@@ -2352,7 +2359,7 @@
       "searchDate": "2026-08-28",
       "passengers": 356771,
       "passengerYear": 2024,
-      "passengerRank": 23
+      "passengerRank": 24
     },
     {
       "id": "tamachi",
@@ -2366,7 +2373,7 @@
       "searchDate": "2026-08-28",
       "passengers": 251710,
       "passengerYear": 2024,
-      "passengerRank": 36
+      "passengerRank": 37
     },
     {
       "id": "osaki",
@@ -2380,7 +2387,7 @@
       "searchDate": "2026-08-28",
       "passengers": 290388,
       "passengerYear": 2024,
-      "passengerRank": 32
+      "passengerRank": 33
     },
     {
       "id": "takanawa-gateway",
@@ -2394,7 +2401,7 @@
       "searchDate": "2026-08-28",
       "passengers": 28418,
       "passengerYear": 2024,
-      "passengerRank": 328
+      "passengerRank": 332
     },
     {
       "id": "shinagawa",
@@ -2423,7 +2430,7 @@
       "searchDate": "2026-08-28",
       "passengers": 375542,
       "passengerYear": 2024,
-      "passengerRank": 21
+      "passengerRank": 22
     },
     {
       "id": "tokyo23-003849",
@@ -2437,7 +2444,7 @@
       "duration": 46,
       "passengers": 14678,
       "passengerYear": 2024,
-      "passengerRank": 441
+      "passengerRank": 449
     },
     {
       "id": "tokyo23-004020",
@@ -2451,7 +2458,7 @@
       "duration": 52,
       "passengers": 8814,
       "passengerYear": 2024,
-      "passengerRank": 493
+      "passengerRank": 503
     },
     {
       "id": "tokyo23-003908",
@@ -2465,7 +2472,7 @@
       "duration": 37,
       "passengers": 229107,
       "passengerYear": 2024,
-      "passengerRank": 42
+      "passengerRank": 43
     },
     {
       "id": "tokyo23-003874",
@@ -2479,7 +2486,7 @@
       "duration": 41,
       "passengers": 55782,
       "passengerYear": 2024,
-      "passengerRank": 180
+      "passengerRank": 183
     },
     {
       "id": "tokyo23-004021",
@@ -2493,7 +2500,7 @@
       "duration": 51,
       "passengers": 7592,
       "passengerYear": 2024,
-      "passengerRank": 504
+      "passengerRank": 514
     },
     {
       "id": "tokyo23-003931",
@@ -2507,7 +2514,7 @@
       "duration": 41,
       "passengers": 9582,
       "passengerYear": 2024,
-      "passengerRank": 480
+      "passengerRank": 490
     },
     {
       "id": "tokyo23-003830",
@@ -2521,7 +2528,7 @@
       "duration": 37,
       "passengers": 17148,
       "passengerYear": 2024,
-      "passengerRank": 420
+      "passengerRank": 427
     },
     {
       "id": "tokyo23-003861",
@@ -2535,7 +2542,7 @@
       "duration": 47,
       "passengers": 79689,
       "passengerYear": 2024,
-      "passengerRank": 129
+      "passengerRank": 131
     },
     {
       "id": "tokyo23-003988",
@@ -2549,7 +2556,7 @@
       "duration": 46,
       "passengers": 55873,
       "passengerYear": 2024,
-      "passengerRank": 179
+      "passengerRank": 182
     },
     {
       "id": "tokyo23-004053",
@@ -2563,7 +2570,7 @@
       "duration": 50,
       "passengers": 30793,
       "passengerYear": 2024,
-      "passengerRank": 301
+      "passengerRank": 305
     },
     {
       "id": "tokyo23-003989",
@@ -2577,7 +2584,7 @@
       "duration": 54,
       "passengers": 4002,
       "passengerYear": 2024,
-      "passengerRank": 523
+      "passengerRank": 534
     },
     {
       "id": "tokyo23-003957",
@@ -2591,7 +2598,7 @@
       "duration": 48,
       "passengers": 7784,
       "passengerYear": 2024,
-      "passengerRank": 501
+      "passengerRank": 511
     },
     {
       "id": "tokyo23-004036",
@@ -2605,7 +2612,7 @@
       "duration": 46,
       "passengers": 80513,
       "passengerYear": 2024,
-      "passengerRank": 124
+      "passengerRank": 126
     },
     {
       "id": "tokyo23-003901",
@@ -2619,7 +2626,7 @@
       "duration": 43,
       "passengers": 8765,
       "passengerYear": 2024,
-      "passengerRank": 494
+      "passengerRank": 504
     },
     {
       "id": "tokyo23-003846",
@@ -2633,7 +2640,7 @@
       "duration": 39,
       "passengers": 91172,
       "passengerYear": 2024,
-      "passengerRank": 113
+      "passengerRank": 114
     },
     {
       "id": "tokyo23-003880",
@@ -2647,7 +2654,7 @@
       "duration": 38,
       "passengers": 8030,
       "passengerYear": 2024,
-      "passengerRank": 498
+      "passengerRank": 508
     },
     {
       "id": "tokyo23-003899",
@@ -2661,7 +2668,7 @@
       "duration": 42,
       "passengers": 15426,
       "passengerYear": 2024,
-      "passengerRank": 431
+      "passengerRank": 439
     },
     {
       "id": "tokyo23-003915",
@@ -2675,7 +2682,7 @@
       "duration": 49,
       "passengers": 3113,
       "passengerYear": 2024,
-      "passengerRank": 533
+      "passengerRank": 544
     },
     {
       "id": "tokyo23-004017",
@@ -2689,7 +2696,7 @@
       "duration": 49,
       "passengers": 9531,
       "passengerYear": 2024,
-      "passengerRank": 483
+      "passengerRank": 493
     },
     {
       "id": "tokyo23-003862",
@@ -2703,7 +2710,7 @@
       "duration": 43,
       "passengers": 36224,
       "passengerYear": 2024,
-      "passengerRank": 269
+      "passengerRank": 273
     },
     {
       "id": "tokyo23-003945",
@@ -2717,7 +2724,7 @@
       "duration": 43,
       "passengers": 32280,
       "passengerYear": 2024,
-      "passengerRank": 292
+      "passengerRank": 296
     },
     {
       "id": "tokyo23-003914",
@@ -2731,7 +2738,7 @@
       "duration": 40,
       "passengers": 9179,
       "passengerYear": 2024,
-      "passengerRank": 487
+      "passengerRank": 497
     },
     {
       "id": "tokyo23-004024",
@@ -2745,7 +2752,7 @@
       "duration": 48,
       "passengers": 47616,
       "passengerYear": 2024,
-      "passengerRank": 203
+      "passengerRank": 206
     },
     {
       "id": "tokyo23-003970",
@@ -2759,7 +2766,7 @@
       "duration": 41,
       "passengers": 82232,
       "passengerYear": 2024,
-      "passengerRank": 121
+      "passengerRank": 123
     },
     {
       "id": "tokyo23-003832",
@@ -2773,7 +2780,7 @@
       "duration": 53,
       "passengers": 14016,
       "passengerYear": 2024,
-      "passengerRank": 445
+      "passengerRank": 453
     },
     {
       "id": "tokyo23-003996",
@@ -2787,7 +2794,7 @@
       "duration": 47,
       "passengers": 7606,
       "passengerYear": 2024,
-      "passengerRank": 503
+      "passengerRank": 513
     },
     {
       "id": "tokyo23-004006",
@@ -2801,7 +2808,7 @@
       "duration": 45,
       "passengers": 734,
       "passengerYear": 2024,
-      "passengerRank": 560
+      "passengerRank": 571
     },
     {
       "id": "tokyo23-003960",
@@ -2815,7 +2822,7 @@
       "duration": 45,
       "passengers": 27512,
       "passengerYear": 2024,
-      "passengerRank": 341
+      "passengerRank": 345
     },
     {
       "id": "tokyo23-003716",
@@ -2829,7 +2836,7 @@
       "duration": 25,
       "passengers": 117531,
       "passengerYear": 2024,
-      "passengerRank": 83
+      "passengerRank": 84
     },
     {
       "id": "tokyo23-003792",
@@ -2843,7 +2850,7 @@
       "duration": 32,
       "passengers": 56104,
       "passengerYear": 2024,
-      "passengerRank": 178
+      "passengerRank": 181
     },
     {
       "id": "tokyo23-003721",
@@ -2857,7 +2864,7 @@
       "duration": 30,
       "passengers": 99358,
       "passengerYear": 2024,
-      "passengerRank": 101
+      "passengerRank": 102
     },
     {
       "id": "tokyo23-003797",
@@ -2871,7 +2878,7 @@
       "duration": 34,
       "passengers": 166605,
       "passengerYear": 2024,
-      "passengerRank": 59
+      "passengerRank": 60
     },
     {
       "id": "tokyo23-003927",
@@ -2885,7 +2892,7 @@
       "duration": 32,
       "passengers": 91189,
       "passengerYear": 2024,
-      "passengerRank": 112
+      "passengerRank": 113
     },
     {
       "id": "tokyo23-003796",
@@ -2899,7 +2906,7 @@
       "duration": 30,
       "passengers": 31022,
       "passengerYear": 2024,
-      "passengerRank": 298
+      "passengerRank": 302
     },
     {
       "id": "tokyo23-003692",
@@ -2913,7 +2920,7 @@
       "duration": 28,
       "passengers": 36068,
       "passengerYear": 2024,
-      "passengerRank": 271
+      "passengerRank": 275
     },
     {
       "id": "tokyo23-003833",
@@ -2927,7 +2934,7 @@
       "duration": 26,
       "passengers": 36625,
       "passengerYear": 2024,
-      "passengerRank": 265
+      "passengerRank": 269
     },
     {
       "id": "tokyo23-003703",
@@ -2941,7 +2948,7 @@
       "duration": 28,
       "passengers": 36522,
       "passengerYear": 2024,
-      "passengerRank": 266
+      "passengerRank": 270
     },
     {
       "id": "tokyo23-003756",
@@ -2955,7 +2962,7 @@
       "duration": 26,
       "passengers": 216753,
       "passengerYear": 2024,
-      "passengerRank": 44
+      "passengerRank": 45
     },
     {
       "id": "tokyo23-003889",
@@ -2969,7 +2976,7 @@
       "duration": 28,
       "passengers": 100940,
       "passengerYear": 2024,
-      "passengerRank": 98
+      "passengerRank": 99
     },
     {
       "id": "tokyo23-003676",
@@ -2983,7 +2990,7 @@
       "duration": 32,
       "passengers": 25398,
       "passengerYear": 2024,
-      "passengerRank": 358
+      "passengerRank": 362
     },
     {
       "id": "tokyo23-003838",
@@ -2997,7 +3004,7 @@
       "duration": 28,
       "passengers": 140168,
       "passengerYear": 2024,
-      "passengerRank": 71
+      "passengerRank": 72
     },
     {
       "id": "tokyo23-003753",
@@ -3011,7 +3018,7 @@
       "duration": 28,
       "passengers": 74355,
       "passengerYear": 2024,
-      "passengerRank": 139
+      "passengerRank": 141
     },
     {
       "id": "tokyo23-003706",
@@ -3025,7 +3032,7 @@
       "duration": 29,
       "passengers": 21447,
       "passengerYear": 2024,
-      "passengerRank": 385
+      "passengerRank": 390
     },
     {
       "id": "tokyo23-003860",
@@ -3039,7 +3046,7 @@
       "duration": 30,
       "passengers": 59492,
       "passengerYear": 2024,
-      "passengerRank": 168
+      "passengerRank": 171
     },
     {
       "id": "tokyo23-003886",
@@ -3053,7 +3060,7 @@
       "duration": 36,
       "passengers": 23281,
       "passengerYear": 2024,
-      "passengerRank": 373
+      "passengerRank": 377
     },
     {
       "id": "tokyo23-003773",
@@ -3067,7 +3074,7 @@
       "duration": 30,
       "passengers": 112343,
       "passengerYear": 2024,
-      "passengerRank": 85
+      "passengerRank": 86
     },
     {
       "id": "tokyo23-003823",
@@ -3081,7 +3088,7 @@
       "duration": 25,
       "passengers": 230271,
       "passengerYear": 2024,
-      "passengerRank": 41
+      "passengerRank": 42
     },
     {
       "id": "tokyo23-003801",
@@ -3095,7 +3102,7 @@
       "duration": 25,
       "passengers": 33805,
       "passengerYear": 2024,
-      "passengerRank": 284
+      "passengerRank": 288
     },
     {
       "id": "tokyo23-003675",
@@ -3109,7 +3116,7 @@
       "duration": 27,
       "passengers": 46299,
       "passengerYear": 2024,
-      "passengerRank": 209
+      "passengerRank": 212
     },
     {
       "id": "tokyo23-003668",
@@ -3123,7 +3130,7 @@
       "duration": 31,
       "passengers": 50414,
       "passengerYear": 2024,
-      "passengerRank": 191
+      "passengerRank": 194
     },
     {
       "id": "tokyo23-003568",
@@ -3151,7 +3158,7 @@
       "duration": 34,
       "passengers": 97406,
       "passengerYear": 2024,
-      "passengerRank": 104
+      "passengerRank": 105
     },
     {
       "id": "tokyo23-003688",
@@ -3165,7 +3172,7 @@
       "duration": 39,
       "passengers": 19307,
       "passengerYear": 2024,
-      "passengerRank": 404
+      "passengerRank": 411
     },
     {
       "id": "tokyo23-003679",
@@ -3179,7 +3186,7 @@
       "duration": 38,
       "passengers": 20570,
       "passengerYear": 2024,
-      "passengerRank": 394
+      "passengerRank": 400
     },
     {
       "id": "tokyo23-003638",
@@ -3193,7 +3200,7 @@
       "duration": 37,
       "passengers": 33550,
       "passengerYear": 2024,
-      "passengerRank": 286
+      "passengerRank": 290
     },
     {
       "id": "tokyo23-003489",
@@ -3207,7 +3214,7 @@
       "duration": 35,
       "passengers": 19709,
       "passengerYear": 2024,
-      "passengerRank": 398
+      "passengerRank": 404
     },
     {
       "id": "tokyo23-003549",
@@ -3221,7 +3228,7 @@
       "duration": 35,
       "passengers": 92396,
       "passengerYear": 2024,
-      "passengerRank": 111
+      "passengerRank": 112
     },
     {
       "id": "tokyo23-003475",
@@ -3235,7 +3242,7 @@
       "duration": 37,
       "passengers": 18003,
       "passengerYear": 2024,
-      "passengerRank": 416
+      "passengerRank": 423
     },
     {
       "id": "tokyo23-003523",
@@ -3249,7 +3256,7 @@
       "duration": 29,
       "passengers": 26664,
       "passengerYear": 2024,
-      "passengerRank": 346
+      "passengerRank": 350
     },
     {
       "id": "tokyo23-003453",
@@ -3263,7 +3270,7 @@
       "duration": 42,
       "passengers": 17816,
       "passengerYear": 2024,
-      "passengerRank": 417
+      "passengerRank": 424
     },
     {
       "id": "tokyo23-003473",
@@ -3277,7 +3284,7 @@
       "duration": 40,
       "passengers": 23415,
       "passengerYear": 2024,
-      "passengerRank": 371
+      "passengerRank": 375
     },
     {
       "id": "tokyo23-003451",
@@ -3291,7 +3298,7 @@
       "duration": 35,
       "passengers": 30388,
       "passengerYear": 2024,
-      "passengerRank": 308
+      "passengerRank": 312
     },
     {
       "id": "tokyo23-003153",
@@ -3305,7 +3312,7 @@
       "duration": 35,
       "passengers": 15187,
       "passengerYear": 2024,
-      "passengerRank": 433
+      "passengerRank": 441
     },
     {
       "id": "tokyo23-003253",
@@ -3319,7 +3326,7 @@
       "duration": 36,
       "passengers": 789,
       "passengerYear": 2024,
-      "passengerRank": 558
+      "passengerRank": 569
     },
     {
       "id": "tokyo23-003246",
@@ -3333,7 +3340,7 @@
       "duration": 37,
       "passengers": 2628,
       "passengerYear": 2024,
-      "passengerRank": 536
+      "passengerRank": 547
     },
     {
       "id": "tokyo23-003107",
@@ -3347,7 +3354,7 @@
       "duration": 32,
       "passengers": 43438,
       "passengerYear": 2024,
-      "passengerRank": 220
+      "passengerRank": 223
     },
     {
       "id": "tokyo23-003276",
@@ -3361,7 +3368,7 @@
       "duration": 29,
       "passengers": 1610,
       "passengerYear": 2024,
-      "passengerRank": 549
+      "passengerRank": 560
     },
     {
       "id": "tokyo23-003236",
@@ -3375,7 +3382,7 @@
       "duration": 29,
       "passengers": 178128,
       "passengerYear": 2024,
-      "passengerRank": 55
+      "passengerRank": 56
     },
     {
       "id": "tokyo23-003207",
@@ -3389,7 +3396,7 @@
       "duration": 32,
       "passengers": 36275,
       "passengerYear": 2024,
-      "passengerRank": 268
+      "passengerRank": 272
     },
     {
       "id": "tokyo23-003239",
@@ -3403,7 +3410,7 @@
       "duration": 32,
       "passengers": 9239,
       "passengerYear": 2024,
-      "passengerRank": 486
+      "passengerRank": 496
     },
     {
       "id": "tokyo23-003279",
@@ -3417,7 +3424,7 @@
       "duration": 27,
       "passengers": 8976,
       "passengerYear": 2024,
-      "passengerRank": 490
+      "passengerRank": 500
     },
     {
       "id": "tokyo23-003289",
@@ -3431,7 +3438,7 @@
       "duration": 26,
       "passengers": 2515,
       "passengerYear": 2024,
-      "passengerRank": 538
+      "passengerRank": 549
     },
     {
       "id": "tokyo23-003141",
@@ -3445,7 +3452,7 @@
       "duration": 37,
       "passengers": 94035,
       "passengerYear": 2024,
-      "passengerRank": 110
+      "passengerRank": 111
     },
     {
       "id": "tokyo23-003256",
@@ -3459,7 +3466,7 @@
       "duration": 30,
       "passengers": 993,
       "passengerYear": 2024,
-      "passengerRank": 555
+      "passengerRank": 566
     },
     {
       "id": "tokyo23-003657",
@@ -3473,7 +3480,7 @@
       "duration": 21,
       "passengers": 201105,
       "passengerYear": 2024,
-      "passengerRank": 46
+      "passengerRank": 47
     },
     {
       "id": "tokyo23-003772",
@@ -3487,7 +3494,7 @@
       "duration": 29,
       "passengers": 35289,
       "passengerYear": 2024,
-      "passengerRank": 274
+      "passengerRank": 278
     },
     {
       "id": "tokyo23-003729",
@@ -3501,7 +3508,7 @@
       "duration": 25,
       "passengers": 73487,
       "passengerYear": 2024,
-      "passengerRank": 143
+      "passengerRank": 145
     },
     {
       "id": "tokyo23-003728",
@@ -3515,7 +3522,7 @@
       "duration": 21,
       "passengers": 295458,
       "passengerYear": 2024,
-      "passengerRank": 31
+      "passengerRank": 32
     },
     {
       "id": "tokyo23-003799",
@@ -3529,7 +3536,7 @@
       "duration": 29,
       "passengers": 40907,
       "passengerYear": 2024,
-      "passengerRank": 232
+      "passengerRank": 235
     },
     {
       "id": "tokyo23-003719",
@@ -3557,7 +3564,7 @@
       "duration": 23,
       "passengers": 37295,
       "passengerYear": 2024,
-      "passengerRank": 259
+      "passengerRank": 263
     },
     {
       "id": "tokyo23-003655",
@@ -3571,7 +3578,7 @@
       "duration": 26,
       "passengers": 39177,
       "passengerYear": 2024,
-      "passengerRank": 244
+      "passengerRank": 247
     },
     {
       "id": "tokyo23-003671",
@@ -3585,7 +3592,7 @@
       "duration": 15,
       "passengers": 279416,
       "passengerYear": 2024,
-      "passengerRank": 33
+      "passengerRank": 34
     },
     {
       "id": "tokyo23-003615",
@@ -3599,7 +3606,7 @@
       "duration": 17,
       "passengers": 231276,
       "passengerYear": 2024,
-      "passengerRank": 40
+      "passengerRank": 41
     },
     {
       "id": "tokyo23-003645",
@@ -3613,7 +3620,7 @@
       "duration": 25,
       "passengers": 87057,
       "passengerYear": 2024,
-      "passengerRank": 115
+      "passengerRank": 116
     },
     {
       "id": "tokyo23-003802",
@@ -3627,7 +3634,7 @@
       "duration": 29,
       "passengers": 132278,
       "passengerYear": 2024,
-      "passengerRank": 78
+      "passengerRank": 79
     },
     {
       "id": "tokyo23-003586",
@@ -3641,7 +3648,7 @@
       "duration": 27,
       "passengers": 27833,
       "passengerYear": 2024,
-      "passengerRank": 332
+      "passengerRank": 336
     },
     {
       "id": "tokyo23-003787",
@@ -3655,7 +3662,7 @@
       "duration": 21,
       "passengers": 13129,
       "passengerYear": 2024,
-      "passengerRank": 456
+      "passengerRank": 464
     },
     {
       "id": "tokyo23-003782",
@@ -3669,7 +3676,7 @@
       "duration": 19,
       "passengers": 75272,
       "passengerYear": 2024,
-      "passengerRank": 135
+      "passengerRank": 137
     },
     {
       "id": "tokyo23-003661",
@@ -3683,7 +3690,7 @@
       "duration": 19,
       "passengers": 57894,
       "passengerYear": 2024,
-      "passengerRank": 173
+      "passengerRank": 176
     },
     {
       "id": "tokyo23-003651",
@@ -3697,7 +3704,7 @@
       "duration": 24,
       "passengers": 203106,
       "passengerYear": 2024,
-      "passengerRank": 45
+      "passengerRank": 46
     },
     {
       "id": "tokyo23-003691",
@@ -3711,7 +3718,7 @@
       "duration": 23,
       "passengers": 42156,
       "passengerYear": 2024,
-      "passengerRank": 228
+      "passengerRank": 231
     },
     {
       "id": "tokyo23-003805",
@@ -3725,7 +3732,7 @@
       "duration": 27,
       "passengers": 132884,
       "passengerYear": 2024,
-      "passengerRank": 77
+      "passengerRank": 78
     },
     {
       "id": "tokyo23-003595",
@@ -3739,7 +3746,7 @@
       "duration": 13,
       "passengers": 314792,
       "passengerYear": 2024,
-      "passengerRank": 28
+      "passengerRank": 29
     },
     {
       "id": "tokyo23-003737",
@@ -3753,7 +3760,7 @@
       "duration": 17,
       "passengers": 56238,
       "passengerYear": 2024,
-      "passengerRank": 176
+      "passengerRank": 179
     },
     {
       "id": "tokyo23-003399",
@@ -3767,7 +3774,7 @@
       "duration": 34,
       "passengers": 46924,
       "passengerYear": 2024,
-      "passengerRank": 207
+      "passengerRank": 210
     },
     {
       "id": "tokyo23-003545",
@@ -3781,7 +3788,7 @@
       "duration": 25,
       "passengers": 25666,
       "passengerYear": 2024,
-      "passengerRank": 353
+      "passengerRank": 357
     },
     {
       "id": "tokyo23-003543",
@@ -3795,7 +3802,7 @@
       "duration": 20,
       "passengers": 34438,
       "passengerYear": 2024,
-      "passengerRank": 282
+      "passengerRank": 286
     },
     {
       "id": "tokyo23-003521",
@@ -3809,7 +3816,7 @@
       "duration": 29,
       "passengers": 48475,
       "passengerYear": 2024,
-      "passengerRank": 200
+      "passengerRank": 203
     },
     {
       "id": "tokyo23-003560",
@@ -3823,7 +3830,7 @@
       "duration": 26,
       "passengers": 41623,
       "passengerYear": 2024,
-      "passengerRank": 231
+      "passengerRank": 234
     },
     {
       "id": "tokyo23-003469",
@@ -3837,7 +3844,7 @@
       "duration": 32,
       "passengers": 38480,
       "passengerYear": 2024,
-      "passengerRank": 246
+      "passengerRank": 249
     },
     {
       "id": "tokyo23-003556",
@@ -3851,7 +3858,7 @@
       "duration": 22,
       "passengers": 84215,
       "passengerYear": 2024,
-      "passengerRank": 118
+      "passengerRank": 119
     },
     {
       "id": "tokyo23-003522",
@@ -3865,7 +3872,7 @@
       "duration": 34,
       "passengers": 197745,
       "passengerYear": 2024,
-      "passengerRank": 48
+      "passengerRank": 49
     },
     {
       "id": "tokyo23-003636",
@@ -3879,7 +3886,7 @@
       "duration": 25,
       "passengers": 147750,
       "passengerYear": 2024,
-      "passengerRank": 65
+      "passengerRank": 66
     },
     {
       "id": "tokyo23-003530",
@@ -3893,7 +3900,7 @@
       "duration": 35,
       "passengers": 36681,
       "passengerYear": 2024,
-      "passengerRank": 264
+      "passengerRank": 268
     },
     {
       "id": "tokyo23-003519",
@@ -3907,7 +3914,7 @@
       "duration": 33,
       "passengers": 18891,
       "passengerYear": 2024,
-      "passengerRank": 409
+      "passengerRank": 416
     },
     {
       "id": "tokyo23-003571",
@@ -3921,7 +3928,7 @@
       "duration": 24,
       "passengers": 53056,
       "passengerYear": 2024,
-      "passengerRank": 186
+      "passengerRank": 189
     },
     {
       "id": "tokyo23-004125",
@@ -3935,7 +3942,7 @@
       "duration": 44,
       "passengers": 8977,
       "passengerYear": 2024,
-      "passengerRank": 489
+      "passengerRank": 499
     },
     {
       "id": "tokyo23-004182",
@@ -3949,7 +3956,7 @@
       "duration": 43,
       "passengers": 37378,
       "passengerYear": 2024,
-      "passengerRank": 258
+      "passengerRank": 262
     },
     {
       "id": "tokyo23-004127",
@@ -3963,7 +3970,7 @@
       "duration": 46,
       "passengers": 7648,
       "passengerYear": 2024,
-      "passengerRank": 502
+      "passengerRank": 512
     },
     {
       "id": "tokyo23-004268",
@@ -3977,7 +3984,7 @@
       "duration": 51,
       "passengers": 13644,
       "passengerYear": 2024,
-      "passengerRank": 450
+      "passengerRank": 458
     },
     {
       "id": "tokyo23-004123",
@@ -3991,7 +3998,7 @@
       "duration": 44,
       "passengers": 54707,
       "passengerYear": 2024,
-      "passengerRank": 182
+      "passengerRank": 185
     },
     {
       "id": "tokyo23-004161",
@@ -4005,7 +4012,7 @@
       "duration": 46,
       "passengers": 21299,
       "passengerYear": 2024,
-      "passengerRank": 386
+      "passengerRank": 391
     },
     {
       "id": "tokyo23-004155",
@@ -4019,7 +4026,7 @@
       "duration": 49,
       "passengers": 19370,
       "passengerYear": 2024,
-      "passengerRank": 402
+      "passengerRank": 409
     },
     {
       "id": "tokyo23-004153",
@@ -4033,7 +4040,7 @@
       "duration": 45,
       "passengers": 15099,
       "passengerYear": 2024,
-      "passengerRank": 435
+      "passengerRank": 443
     },
     {
       "id": "tokyo23-004244",
@@ -4047,7 +4054,7 @@
       "duration": 47,
       "passengers": 17669,
       "passengerYear": 2024,
-      "passengerRank": 418
+      "passengerRank": 425
     },
     {
       "id": "tokyo23-004181",
@@ -4061,7 +4068,7 @@
       "duration": 50,
       "passengers": 12777,
       "passengerYear": 2024,
-      "passengerRank": 461
+      "passengerRank": 469
     },
     {
       "id": "tokyo23-004235",
@@ -4075,7 +4082,7 @@
       "duration": 41,
       "passengers": 39232,
       "passengerYear": 2024,
-      "passengerRank": 242
+      "passengerRank": 245
     },
     {
       "id": "tokyo23-004184",
@@ -4089,7 +4096,7 @@
       "duration": 47,
       "passengers": 35970,
       "passengerYear": 2024,
-      "passengerRank": 272
+      "passengerRank": 276
     },
     {
       "id": "tokyo23-004220",
@@ -4103,7 +4110,7 @@
       "duration": 48,
       "passengers": 9677,
       "passengerYear": 2024,
-      "passengerRank": 479
+      "passengerRank": 489
     },
     {
       "id": "tokyo23-003524",
@@ -4131,7 +4138,7 @@
       "duration": 27,
       "passengers": 32508,
       "passengerYear": 2024,
-      "passengerRank": 291
+      "passengerRank": 295
     },
     {
       "id": "tokyo23-003477",
@@ -4145,7 +4152,7 @@
       "duration": 40,
       "passengers": 19929,
       "passengerYear": 2024,
-      "passengerRank": 397
+      "passengerRank": 403
     },
     {
       "id": "tokyo23-003422",
@@ -4159,7 +4166,7 @@
       "duration": 42,
       "passengers": 14618,
       "passengerYear": 2024,
-      "passengerRank": 442
+      "passengerRank": 450
     },
     {
       "id": "tokyo23-003525",
@@ -4173,7 +4180,7 @@
       "duration": 44,
       "passengers": 11154,
       "passengerYear": 2024,
-      "passengerRank": 468
+      "passengerRank": 478
     },
     {
       "id": "tokyo23-003526",
@@ -4201,7 +4208,7 @@
       "duration": 44,
       "passengers": 29890,
       "passengerYear": 2024,
-      "passengerRank": 315
+      "passengerRank": 319
     },
     {
       "id": "tokyo23-003538",
@@ -4215,7 +4222,7 @@
       "duration": 36,
       "passengers": 21482,
       "passengerYear": 2024,
-      "passengerRank": 384
+      "passengerRank": 389
     },
     {
       "id": "tokyo23-003548",
@@ -4229,7 +4236,7 @@
       "duration": 42,
       "passengers": 7938,
       "passengerYear": 2024,
-      "passengerRank": 500
+      "passengerRank": 510
     },
     {
       "id": "tokyo23-003442",
@@ -4243,7 +4250,7 @@
       "duration": 45,
       "passengers": 19220,
       "passengerYear": 2024,
-      "passengerRank": 406
+      "passengerRank": 413
     },
     {
       "id": "tokyo23-003709",
@@ -4257,7 +4264,7 @@
       "duration": 33,
       "passengers": 24573,
       "passengerYear": 2024,
-      "passengerRank": 364
+      "passengerRank": 368
     },
     {
       "id": "tokyo23-003639",
@@ -4271,7 +4278,7 @@
       "duration": 30,
       "passengers": 299028,
       "passengerYear": 2024,
-      "passengerRank": 29
+      "passengerRank": 30
     },
     {
       "id": "tokyo23-003355",
@@ -4285,7 +4292,7 @@
       "duration": 43,
       "passengers": 12929,
       "passengerYear": 2024,
-      "passengerRank": 460
+      "passengerRank": 468
     },
     {
       "id": "tokyo23-004310",
@@ -4299,7 +4306,7 @@
       "duration": 59,
       "passengers": 31438,
       "passengerYear": 2024,
-      "passengerRank": 295
+      "passengerRank": 299
     },
     {
       "id": "tokyo23-004292",
@@ -4313,7 +4320,7 @@
       "duration": 62,
       "passengers": 15640,
       "passengerYear": 2024,
-      "passengerRank": 430
+      "passengerRank": 438
     },
     {
       "id": "tokyo23-004331",
@@ -4327,7 +4334,7 @@
       "duration": 53,
       "passengers": 61303,
       "passengerYear": 2024,
-      "passengerRank": 164
+      "passengerRank": 167
     },
     {
       "id": "tokyo23-004399",
@@ -4341,7 +4348,7 @@
       "duration": 60,
       "passengers": 16205,
       "passengerYear": 2024,
-      "passengerRank": 426
+      "passengerRank": 434
     },
     {
       "id": "tokyo23-004305",
@@ -4355,7 +4362,7 @@
       "duration": 61,
       "passengers": 15216,
       "passengerYear": 2024,
-      "passengerRank": 432
+      "passengerRank": 440
     },
     {
       "id": "tokyo23-004264",
@@ -4369,7 +4376,7 @@
       "duration": 47,
       "passengers": 165460,
       "passengerYear": 2024,
-      "passengerRank": 60
+      "passengerRank": 61
     },
     {
       "id": "tokyo23-004307",
@@ -4383,7 +4390,7 @@
       "duration": 49,
       "passengers": 21817,
       "passengerYear": 2024,
-      "passengerRank": 382
+      "passengerRank": 387
     },
     {
       "id": "tokyo23-004356",
@@ -4397,7 +4404,7 @@
       "duration": 58,
       "passengers": 30660,
       "passengerYear": 2024,
-      "passengerRank": 304
+      "passengerRank": 308
     },
     {
       "id": "tokyo23-004373",
@@ -4411,7 +4418,7 @@
       "duration": 55,
       "passengers": 30427,
       "passengerYear": 2024,
-      "passengerRank": 305
+      "passengerRank": 309
     },
     {
       "id": "tokyo23-004294",
@@ -4425,7 +4432,7 @@
       "duration": 49,
       "passengers": 44102,
       "passengerYear": 2024,
-      "passengerRank": 217
+      "passengerRank": 220
     },
     {
       "id": "tokyo23-004273",
@@ -4439,7 +4446,7 @@
       "duration": 61,
       "passengers": 23587,
       "passengerYear": 2024,
-      "passengerRank": 369
+      "passengerRank": 373
     },
     {
       "id": "tokyo23-004348",
@@ -4453,7 +4460,7 @@
       "duration": 54,
       "passengers": 1749,
       "passengerYear": 2024,
-      "passengerRank": 545
+      "passengerRank": 556
     },
     {
       "id": "tokyo23-004393",
@@ -4467,7 +4474,7 @@
       "duration": 61,
       "passengers": 4366,
       "passengerYear": 2024,
-      "passengerRank": 521
+      "passengerRank": 532
     },
     {
       "id": "tokyo23-004312",
@@ -4481,7 +4488,7 @@
       "duration": 51,
       "passengers": 5862,
       "passengerYear": 2024,
-      "passengerRank": 512
+      "passengerRank": 523
     },
     {
       "id": "tokyo23-004319",
@@ -4495,7 +4502,7 @@
       "duration": 50,
       "passengers": 16426,
       "passengerYear": 2024,
-      "passengerRank": 425
+      "passengerRank": 433
     },
     {
       "id": "tokyo23-004317",
@@ -4509,7 +4516,7 @@
       "duration": 58,
       "passengers": 25710,
       "passengerYear": 2024,
-      "passengerRank": 352
+      "passengerRank": 356
     },
     {
       "id": "tokyo23-004309",
@@ -4523,7 +4530,7 @@
       "duration": 59,
       "passengers": 35181,
       "passengerYear": 2024,
-      "passengerRank": 277
+      "passengerRank": 281
     },
     {
       "id": "tokyo23-004279",
@@ -4537,7 +4544,7 @@
       "duration": 58,
       "passengers": 10289,
       "passengerYear": 2024,
-      "passengerRank": 476
+      "passengerRank": 486
     },
     {
       "id": "tokyo23-004239",
@@ -4551,7 +4558,7 @@
       "duration": 56,
       "passengers": 17037,
       "passengerYear": 2024,
-      "passengerRank": 421
+      "passengerRank": 428
     },
     {
       "id": "tokyo23-004285",
@@ -4565,7 +4572,7 @@
       "duration": 49,
       "passengers": 15693,
       "passengerYear": 2024,
-      "passengerRank": 429
+      "passengerRank": 437
     },
     {
       "id": "tokyo23-004329",
@@ -4579,7 +4586,7 @@
       "duration": 56,
       "passengers": 25506,
       "passengerYear": 2024,
-      "passengerRank": 357
+      "passengerRank": 361
     },
     {
       "id": "tokyo23-004247",
@@ -4593,7 +4600,7 @@
       "duration": 57,
       "passengers": 14877,
       "passengerYear": 2024,
-      "passengerRank": 438
+      "passengerRank": 446
     },
     {
       "id": "tokyo23-004364",
@@ -4607,7 +4614,7 @@
       "duration": 63,
       "passengers": 20698,
       "passengerYear": 2024,
-      "passengerRank": 392
+      "passengerRank": 398
     },
     {
       "id": "tokyo23-004349",
@@ -4621,7 +4628,7 @@
       "duration": 56,
       "passengers": 28346,
       "passengerYear": 2024,
-      "passengerRank": 329
+      "passengerRank": 333
     },
     {
       "id": "tokyo23-004372",
@@ -4635,7 +4642,7 @@
       "duration": 62,
       "passengers": 21124,
       "passengerYear": 2024,
-      "passengerRank": 387
+      "passengerRank": 392
     },
     {
       "id": "tokyo23-004368",
@@ -4649,7 +4656,7 @@
       "duration": 63,
       "passengers": 111697,
       "passengerYear": 2024,
-      "passengerRank": 87
+      "passengerRank": 88
     },
     {
       "id": "tokyo23-004361",
@@ -4663,7 +4670,7 @@
       "duration": 64,
       "passengers": 24342,
       "passengerYear": 2024,
-      "passengerRank": 366
+      "passengerRank": 370
     },
     {
       "id": "tokyo23-004382",
@@ -4677,7 +4684,7 @@
       "duration": 58,
       "passengers": 47320,
       "passengerYear": 2024,
-      "passengerRank": 206
+      "passengerRank": 209
     },
     {
       "id": "tokyo23-004330",
@@ -4705,7 +4712,7 @@
       "duration": 57,
       "passengers": 8254,
       "passengerYear": 2024,
-      "passengerRank": 497
+      "passengerRank": 507
     },
     {
       "id": "tokyo23-004270",
@@ -4719,7 +4726,7 @@
       "duration": 52,
       "passengers": 43636,
       "passengerYear": 2024,
-      "passengerRank": 219
+      "passengerRank": 222
     },
     {
       "id": "tokyo23-004232",
@@ -4733,7 +4740,7 @@
       "duration": 54,
       "passengers": 14880,
       "passengerYear": 2024,
-      "passengerRank": 437
+      "passengerRank": 445
     },
     {
       "id": "tokyo23-004367",
@@ -4747,7 +4754,7 @@
       "duration": 58,
       "passengers": 30842,
       "passengerYear": 2024,
-      "passengerRank": 300
+      "passengerRank": 304
     },
     {
       "id": "tokyo23-004259",
@@ -4761,7 +4768,7 @@
       "duration": 58,
       "passengers": 22365,
       "passengerYear": 2024,
-      "passengerRank": 376
+      "passengerRank": 381
     },
     {
       "id": "tokyo23-004248",
@@ -4775,7 +4782,7 @@
       "duration": 50,
       "passengers": 26346,
       "passengerYear": 2024,
-      "passengerRank": 350
+      "passengerRank": 354
     },
     {
       "id": "tokyo23-004299",
@@ -4789,7 +4796,7 @@
       "duration": 60,
       "passengers": 19463,
       "passengerYear": 2024,
-      "passengerRank": 399
+      "passengerRank": 406
     },
     {
       "id": "tokyo23-003415",
@@ -4803,7 +4810,7 @@
       "duration": 19,
       "passengers": 31304,
       "passengerYear": 2024,
-      "passengerRank": 296
+      "passengerRank": 300
     },
     {
       "id": "tokyo23-003434",
@@ -4817,7 +4824,7 @@
       "duration": 31,
       "passengers": 28507,
       "passengerYear": 2024,
-      "passengerRank": 327
+      "passengerRank": 331
     },
     {
       "id": "tokyo23-003542",
@@ -4831,7 +4838,7 @@
       "duration": 13,
       "passengers": 104894,
       "passengerYear": 2024,
-      "passengerRank": 95
+      "passengerRank": 96
     },
     {
       "id": "tokyo23-003529",
@@ -4845,7 +4852,7 @@
       "duration": 21,
       "passengers": 65361,
       "passengerYear": 2024,
-      "passengerRank": 157
+      "passengerRank": 160
     },
     {
       "id": "tokyo23-003546",
@@ -4859,7 +4866,7 @@
       "duration": 15,
       "passengers": 70357,
       "passengerYear": 2024,
-      "passengerRank": 149
+      "passengerRank": 152
     },
     {
       "id": "tokyo23-003441",
@@ -4873,7 +4880,7 @@
       "duration": 22,
       "passengers": 21070,
       "passengerYear": 2024,
-      "passengerRank": 388
+      "passengerRank": 393
     },
     {
       "id": "tokyo23-003481",
@@ -4887,7 +4894,7 @@
       "duration": 20,
       "passengers": 27311,
       "passengerYear": 2024,
-      "passengerRank": 342
+      "passengerRank": 346
     },
     {
       "id": "tokyo23-003483",
@@ -4901,7 +4908,7 @@
       "duration": 29,
       "passengers": 27937,
       "passengerYear": 2024,
-      "passengerRank": 331
+      "passengerRank": 335
     },
     {
       "id": "tokyo23-003580",
@@ -4915,7 +4922,7 @@
       "duration": 21,
       "passengers": 182490,
       "passengerYear": 2024,
-      "passengerRank": 53
+      "passengerRank": 54
     },
     {
       "id": "tokyo23-003534",
@@ -4929,7 +4936,7 @@
       "duration": 10,
       "passengers": 49844,
       "passengerYear": 2024,
-      "passengerRank": 193
+      "passengerRank": 196
     },
     {
       "id": "tokyo23-003558",
@@ -4943,7 +4950,7 @@
       "duration": 27,
       "passengers": 37913,
       "passengerYear": 2024,
-      "passengerRank": 252
+      "passengerRank": 256
     },
     {
       "id": "tokyo23-003461",
@@ -4957,7 +4964,7 @@
       "duration": 24,
       "passengers": 48388,
       "passengerYear": 2024,
-      "passengerRank": 201
+      "passengerRank": 204
     },
     {
       "id": "tokyo23-003491",
@@ -4971,7 +4978,7 @@
       "duration": 29,
       "passengers": 11882,
       "passengerYear": 2024,
-      "passengerRank": 466
+      "passengerRank": 475
     },
     {
       "id": "tokyo23-003495",
@@ -4985,7 +4992,7 @@
       "duration": 31,
       "passengers": 45031,
       "passengerYear": 2024,
-      "passengerRank": 215
+      "passengerRank": 218
     },
     {
       "id": "tokyo23-003774",
@@ -4999,7 +5006,7 @@
       "duration": 24,
       "passengers": 43682,
       "passengerYear": 2024,
-      "passengerRank": 218
+      "passengerRank": 221
     },
     {
       "id": "tokyo23-003713",
@@ -5013,7 +5020,7 @@
       "duration": 26,
       "passengers": 42890,
       "passengerYear": 2024,
-      "passengerRank": 226
+      "passengerRank": 229
     },
     {
       "id": "tokyo23-003775",
@@ -5027,7 +5034,7 @@
       "duration": 30,
       "passengers": 13711,
       "passengerYear": 2024,
-      "passengerRank": 448
+      "passengerRank": 456
     },
     {
       "id": "tokyo23-003604",
@@ -5041,7 +5048,7 @@
       "duration": 32,
       "passengers": 51544,
       "passengerYear": 2024,
-      "passengerRank": 187
+      "passengerRank": 190
     },
     {
       "id": "tokyo23-003689",
@@ -5055,7 +5062,7 @@
       "duration": 25,
       "passengers": 199171,
       "passengerYear": 2024,
-      "passengerRank": 47
+      "passengerRank": 48
     },
     {
       "id": "tokyo23-003707",
@@ -5069,7 +5076,7 @@
       "duration": 28,
       "passengers": 48832,
       "passengerYear": 2024,
-      "passengerRank": 197
+      "passengerRank": 200
     },
     {
       "id": "tokyo23-003669",
@@ -5083,7 +5090,7 @@
       "duration": 31,
       "passengers": 36754,
       "passengerYear": 2024,
-      "passengerRank": 262
+      "passengerRank": 266
     },
     {
       "id": "tokyo23-003570",
@@ -5097,7 +5104,7 @@
       "duration": 23,
       "passengers": 79978,
       "passengerYear": 2024,
-      "passengerRank": 127
+      "passengerRank": 129
     },
     {
       "id": "tokyo23-003514",
@@ -5111,7 +5118,7 @@
       "duration": 17,
       "passengers": 3179,
       "passengerYear": 2024,
-      "passengerRank": 532
+      "passengerRank": 543
     },
     {
       "id": "tokyo23-003673",
@@ -5125,7 +5132,7 @@
       "duration": 23,
       "passengers": 36403,
       "passengerYear": 2024,
-      "passengerRank": 267
+      "passengerRank": 271
     },
     {
       "id": "tokyo23-003612",
@@ -5139,7 +5146,7 @@
       "duration": 26,
       "passengers": 68375,
       "passengerYear": 2024,
-      "passengerRank": 150
+      "passengerRank": 153
     },
     {
       "id": "tokyo23-003618",
@@ -5153,7 +5160,7 @@
       "duration": 24,
       "passengers": 19954,
       "passengerYear": 2024,
-      "passengerRank": 395
+      "passengerRank": 401
     },
     {
       "id": "tokyo23-003602",
@@ -5167,7 +5174,7 @@
       "duration": 22,
       "passengers": 13686,
       "passengerYear": 2024,
-      "passengerRank": 449
+      "passengerRank": 457
     },
     {
       "id": "tokyo23-003578",
@@ -5181,7 +5188,7 @@
       "duration": 21,
       "passengers": 40020,
       "passengerYear": 2024,
-      "passengerRank": 238
+      "passengerRank": 241
     },
     {
       "id": "tokyo23-003623",
@@ -5195,7 +5202,7 @@
       "duration": 26,
       "passengers": 28849,
       "passengerYear": 2024,
-      "passengerRank": 324
+      "passengerRank": 328
     },
     {
       "id": "tokyo23-003448",
@@ -5209,7 +5216,7 @@
       "duration": 38,
       "passengers": 27118,
       "passengerYear": 2024,
-      "passengerRank": 344
+      "passengerRank": 348
     },
     {
       "id": "tokyo23-003662",
@@ -5223,7 +5230,7 @@
       "duration": 32,
       "passengers": 85481,
       "passengerYear": 2024,
-      "passengerRank": 116
+      "passengerRank": 117
     },
     {
       "id": "tokyo23-003696",
@@ -5237,7 +5244,7 @@
       "duration": 35,
       "passengers": 32776,
       "passengerYear": 2024,
-      "passengerRank": 289
+      "passengerRank": 293
     },
     {
       "id": "tokyo23-003544",
@@ -5251,7 +5258,7 @@
       "duration": 24,
       "passengers": 37411,
       "passengerYear": 2024,
-      "passengerRank": 257
+      "passengerRank": 261
     },
     {
       "id": "tokyo23-003648",
@@ -5265,7 +5272,7 @@
       "duration": 29,
       "passengers": 147390,
       "passengerYear": 2024,
-      "passengerRank": 66
+      "passengerRank": 67
     },
     {
       "id": "tokyo23-003690",
@@ -5279,7 +5286,7 @@
       "duration": 33,
       "passengers": 49779,
       "passengerYear": 2024,
-      "passengerRank": 194
+      "passengerRank": 197
     },
     {
       "id": "tokyo23-003509",
@@ -5293,7 +5300,7 @@
       "duration": 21,
       "passengers": 822,
       "passengerYear": 2024,
-      "passengerRank": 557
+      "passengerRank": 568
     },
     {
       "id": "tokyo23-003437",
@@ -5307,7 +5314,7 @@
       "duration": 49,
       "passengers": 18819,
       "passengerYear": 2024,
-      "passengerRank": 410
+      "passengerRank": 417
     },
     {
       "id": "tokyo23-003444",
@@ -5321,7 +5328,7 @@
       "duration": 43,
       "passengers": 22499,
       "passengerYear": 2024,
-      "passengerRank": 375
+      "passengerRank": 380
     },
     {
       "id": "tokyo23-003710",
@@ -5335,7 +5342,7 @@
       "duration": 53,
       "passengers": 38168,
       "passengerYear": 2024,
-      "passengerRank": 249
+      "passengerRank": 252
     },
     {
       "id": "tokyo23-003440",
@@ -5349,7 +5356,7 @@
       "duration": 45,
       "passengers": 18679,
       "passengerYear": 2024,
-      "passengerRank": 411
+      "passengerRank": 418
     },
     {
       "id": "tokyo23-003836",
@@ -5363,7 +5370,7 @@
       "duration": 47,
       "passengers": 37716,
       "passengerYear": 2024,
-      "passengerRank": 254
+      "passengerRank": 258
     },
     {
       "id": "tokyo23-003619",
@@ -5377,7 +5384,7 @@
       "duration": 45,
       "passengers": 27693,
       "passengerYear": 2024,
-      "passengerRank": 339
+      "passengerRank": 343
     },
     {
       "id": "tokyo23-003736",
@@ -5391,7 +5398,7 @@
       "duration": 51,
       "passengers": 13091,
       "passengerYear": 2024,
-      "passengerRank": 457
+      "passengerRank": 465
     },
     {
       "id": "tokyo23-003632",
@@ -5405,7 +5412,7 @@
       "duration": 41,
       "passengers": 35288,
       "passengerYear": 2024,
-      "passengerRank": 275
+      "passengerRank": 279
     },
     {
       "id": "tokyo23-003751",
@@ -5419,7 +5426,7 @@
       "duration": 42,
       "passengers": 40171,
       "passengerYear": 2024,
-      "passengerRank": 236
+      "passengerRank": 239
     },
     {
       "id": "tokyo23-003628",
@@ -5433,7 +5440,7 @@
       "duration": 39,
       "passengers": 33021,
       "passengerYear": 2024,
-      "passengerRank": 287
+      "passengerRank": 291
     },
     {
       "id": "tokyo23-003794",
@@ -5447,7 +5454,7 @@
       "duration": 43,
       "passengers": 30039,
       "passengerYear": 2024,
-      "passengerRank": 312
+      "passengerRank": 316
     },
     {
       "id": "tokyo23-003763",
@@ -5461,7 +5468,7 @@
       "duration": 47,
       "passengers": 27565,
       "passengerYear": 2024,
-      "passengerRank": 340
+      "passengerRank": 344
     },
     {
       "id": "tokyo23-003575",
@@ -5475,7 +5482,7 @@
       "duration": 39,
       "passengers": 250115,
       "passengerYear": 2024,
-      "passengerRank": 37
+      "passengerRank": 38
     },
     {
       "id": "tokyo23-003777",
@@ -5489,7 +5496,7 @@
       "duration": 46,
       "passengers": 17596,
       "passengerYear": 2024,
-      "passengerRank": 419
+      "passengerRank": 426
     },
     {
       "id": "tokyo23-003579",
@@ -5503,7 +5510,7 @@
       "duration": 42,
       "passengers": 85340,
       "passengerYear": 2024,
-      "passengerRank": 117
+      "passengerRank": 118
     },
     {
       "id": "tokyo23-003574",
@@ -5517,7 +5524,7 @@
       "duration": 37,
       "passengers": 84048,
       "passengerYear": 2024,
-      "passengerRank": 119
+      "passengerRank": 120
     },
     {
       "id": "tokyo23-003752",
@@ -5531,7 +5538,7 @@
       "duration": 49,
       "passengers": 37789,
       "passengerYear": 2024,
-      "passengerRank": 253
+      "passengerRank": 257
     },
     {
       "id": "tokyo23-003573",
@@ -5545,7 +5552,7 @@
       "duration": 35,
       "passengers": 95432,
       "passengerYear": 2024,
-      "passengerRank": 108
+      "passengerRank": 109
     },
     {
       "id": "tokyo23-003163",
@@ -5559,7 +5566,7 @@
       "duration": 31,
       "passengers": 50698,
       "passengerYear": 2024,
-      "passengerRank": 190
+      "passengerRank": 193
     },
     {
       "id": "tokyo23-003158",
@@ -5573,7 +5580,7 @@
       "duration": 35,
       "passengers": 30055,
       "passengerYear": 2024,
-      "passengerRank": 311
+      "passengerRank": 315
     },
     {
       "id": "tokyo23-003165",
@@ -5587,7 +5594,7 @@
       "duration": 33,
       "passengers": 30150,
       "passengerYear": 2024,
-      "passengerRank": 310
+      "passengerRank": 314
     },
     {
       "id": "tokyo23-003268",
@@ -5601,7 +5608,7 @@
       "duration": 26,
       "passengers": 24762,
       "passengerYear": 2024,
-      "passengerRank": 363
+      "passengerRank": 367
     },
     {
       "id": "tokyo23-003112",
@@ -5615,7 +5622,7 @@
       "duration": 43,
       "passengers": 9534,
       "passengerYear": 2024,
-      "passengerRank": 482
+      "passengerRank": 492
     },
     {
       "id": "tokyo23-003193",
@@ -5629,7 +5636,7 @@
       "duration": 31,
       "passengers": 25190,
       "passengerYear": 2024,
-      "passengerRank": 360
+      "passengerRank": 364
     },
     {
       "id": "tokyo23-003245",
@@ -5643,7 +5650,7 @@
       "duration": 27,
       "passengers": 34519,
       "passengerYear": 2024,
-      "passengerRank": 281
+      "passengerRank": 285
     },
     {
       "id": "tokyo23-003216",
@@ -5657,7 +5664,7 @@
       "duration": 30,
       "passengers": 37555,
       "passengerYear": 2024,
-      "passengerRank": 255
+      "passengerRank": 259
     },
     {
       "id": "tokyo23-003140",
@@ -5671,7 +5678,7 @@
       "duration": 37,
       "passengers": 19363,
       "passengerYear": 2024,
-      "passengerRank": 403
+      "passengerRank": 410
     },
     {
       "id": "tokyo23-003128",
@@ -5685,7 +5692,7 @@
       "duration": 39,
       "passengers": 25605,
       "passengerYear": 2024,
-      "passengerRank": 354
+      "passengerRank": 358
     },
     {
       "id": "tokyo23-003104",
@@ -5699,7 +5706,7 @@
       "duration": 45,
       "passengers": 12970,
       "passengerYear": 2024,
-      "passengerRank": 458
+      "passengerRank": 466
     },
     {
       "id": "tokyo23-003117",
@@ -5713,7 +5720,7 @@
       "duration": 41,
       "passengers": 27789,
       "passengerYear": 2024,
-      "passengerRank": 333
+      "passengerRank": 337
     },
     {
       "id": "tokyo23-003724",
@@ -5727,7 +5734,7 @@
       "duration": 46,
       "passengers": 43043,
       "passengerYear": 2024,
-      "passengerRank": 224
+      "passengerRank": 227
     },
     {
       "id": "tokyo23-003303",
@@ -5741,7 +5748,7 @@
       "duration": 55,
       "passengers": 18036,
       "passengerYear": 2024,
-      "passengerRank": 415
+      "passengerRank": 422
     },
     {
       "id": "tokyo23-003360",
@@ -5755,7 +5762,7 @@
       "duration": 42,
       "passengers": 120166,
       "passengerYear": 2024,
-      "passengerRank": 82
+      "passengerRank": 83
     },
     {
       "id": "tokyo23-003561",
@@ -5769,7 +5776,7 @@
       "duration": 36,
       "passengers": 62126,
       "passengerYear": 2024,
-      "passengerRank": 163
+      "passengerRank": 166
     },
     {
       "id": "tokyo23-003331",
@@ -5783,7 +5790,7 @@
       "duration": 60,
       "passengers": 6229,
       "passengerYear": 2024,
-      "passengerRank": 510
+      "passengerRank": 521
     },
     {
       "id": "tokyo23-003667",
@@ -5797,7 +5804,7 @@
       "duration": 49,
       "passengers": 55028,
       "passengerYear": 2024,
-      "passengerRank": 181
+      "passengerRank": 184
     },
     {
       "id": "tokyo23-003565",
@@ -5811,7 +5818,7 @@
       "duration": 51,
       "passengers": 39512,
       "passengerYear": 2024,
-      "passengerRank": 240
+      "passengerRank": 243
     },
     {
       "id": "tokyo23-003745",
@@ -5825,7 +5832,7 @@
       "duration": 44,
       "passengers": 58409,
       "passengerYear": 2024,
-      "passengerRank": 172
+      "passengerRank": 175
     },
     {
       "id": "tokyo23-003894",
@@ -5839,7 +5846,7 @@
       "duration": 47,
       "passengers": 99258,
       "passengerYear": 2024,
-      "passengerRank": 102
+      "passengerRank": 103
     },
     {
       "id": "tokyo23-004012",
@@ -5853,7 +5860,7 @@
       "duration": 42,
       "passengers": 29022,
       "passengerYear": 2024,
-      "passengerRank": 320
+      "passengerRank": 324
     },
     {
       "id": "tokyo23-003890",
@@ -5867,7 +5874,7 @@
       "duration": 45,
       "passengers": 96546,
       "passengerYear": 2024,
-      "passengerRank": 105
+      "passengerRank": 106
     },
     {
       "id": "tokyo23-004144",
@@ -5881,7 +5888,7 @@
       "duration": 49,
       "passengers": 9267,
       "passengerYear": 2024,
-      "passengerRank": 485
+      "passengerRank": 495
     },
     {
       "id": "tokyo23-003635",
@@ -5895,7 +5902,7 @@
       "duration": 33,
       "passengers": 135911,
       "passengerYear": 2024,
-      "passengerRank": 75
+      "passengerRank": 76
     },
     {
       "id": "tokyo23-003610",
@@ -5909,7 +5916,7 @@
       "duration": 40,
       "passengers": 4434,
       "passengerYear": 2024,
-      "passengerRank": 520
+      "passengerRank": 531
     },
     {
       "id": "tokyo23-003704",
@@ -5923,7 +5930,7 @@
       "duration": 35,
       "passengers": 74853,
       "passengerYear": 2024,
-      "passengerRank": 136
+      "passengerRank": 138
     },
     {
       "id": "tokyo23-003854",
@@ -5937,7 +5944,7 @@
       "duration": 40,
       "passengers": 59562,
       "passengerYear": 2024,
-      "passengerRank": 166
+      "passengerRank": 169
     },
     {
       "id": "tokyo23-004065",
@@ -5951,7 +5958,7 @@
       "duration": 46,
       "passengers": 70461,
       "passengerYear": 2024,
-      "passengerRank": 148
+      "passengerRank": 151
     },
     {
       "id": "tokyo23-003698",
@@ -5965,7 +5972,7 @@
       "duration": 39,
       "passengers": 31661,
       "passengerYear": 2024,
-      "passengerRank": 294
+      "passengerRank": 298
     },
     {
       "id": "tokyo23-004001",
@@ -5979,7 +5986,7 @@
       "duration": 38,
       "passengers": 16534,
       "passengerYear": 2024,
-      "passengerRank": 424
+      "passengerRank": 431
     },
     {
       "id": "tokyo23-003997",
@@ -5993,7 +6000,7 @@
       "duration": 36,
       "passengers": 296274,
       "passengerYear": 2024,
-      "passengerRank": 30
+      "passengerRank": 31
     },
     {
       "id": "tokyo23-003981",
@@ -6007,7 +6014,7 @@
       "duration": 37,
       "passengers": 10511,
       "passengerYear": 2024,
-      "passengerRank": 474
+      "passengerRank": 484
     },
     {
       "id": "tokyo23-004064",
@@ -6021,7 +6028,7 @@
       "duration": 42,
       "passengers": 9102,
       "passengerYear": 2024,
-      "passengerRank": 488
+      "passengerRank": 498
     },
     {
       "id": "tokyo23-004037",
@@ -6035,7 +6042,7 @@
       "duration": 41,
       "passengers": 8868,
       "passengerYear": 2024,
-      "passengerRank": 492
+      "passengerRank": 502
     },
     {
       "id": "tokyo23-003840",
@@ -6049,7 +6056,7 @@
       "duration": 35,
       "passengers": 72289,
       "passengerYear": 2024,
-      "passengerRank": 146
+      "passengerRank": 148
     },
     {
       "id": "tokyo23-004108",
@@ -6063,7 +6070,7 @@
       "duration": 48,
       "passengers": 45645,
       "passengerYear": 2024,
-      "passengerRank": 213
+      "passengerRank": 216
     },
     {
       "id": "tokyo23-004087",
@@ -6077,7 +6084,7 @@
       "duration": 45,
       "passengers": 19291,
       "passengerYear": 2024,
-      "passengerRank": 405
+      "passengerRank": 412
     },
     {
       "id": "tokyo23-004128",
@@ -6091,7 +6098,7 @@
       "duration": 51,
       "passengers": 3503,
       "passengerYear": 2024,
-      "passengerRank": 528
+      "passengerRank": 539
     },
     {
       "id": "tokyo23-003695",
@@ -6105,7 +6112,7 @@
       "duration": 41,
       "passengers": 30424,
       "passengerYear": 2024,
-      "passengerRank": 306
+      "passengerRank": 310
     },
     {
       "id": "tokyo23-003839",
@@ -6119,7 +6126,7 @@
       "duration": 37,
       "passengers": 114708,
       "passengerYear": 2024,
-      "passengerRank": 84
+      "passengerRank": 85
     },
     {
       "id": "tokyo23-004034",
@@ -6133,7 +6140,7 @@
       "duration": 44,
       "passengers": 14700,
       "passengerYear": 2024,
-      "passengerRank": 440
+      "passengerRank": 448
     },
     {
       "id": "tokyo23-003711",
@@ -6147,7 +6154,7 @@
       "duration": 31,
       "passengers": 74094,
       "passengerYear": 2024,
-      "passengerRank": 142
+      "passengerRank": 144
     },
     {
       "id": "tokyo23-003754",
@@ -6161,7 +6168,7 @@
       "duration": 32,
       "passengers": 80796,
       "passengerYear": 2024,
-      "passengerRank": 123
+      "passengerRank": 125
     },
     {
       "id": "tokyo23-003928",
@@ -6175,7 +6182,7 @@
       "duration": 39,
       "passengers": 30732,
       "passengerYear": 2024,
-      "passengerRank": 302
+      "passengerRank": 306
     },
     {
       "id": "tokyo23-003702",
@@ -6189,7 +6196,7 @@
       "duration": 37,
       "passengers": 27698,
       "passengerYear": 2024,
-      "passengerRank": 338
+      "passengerRank": 342
     },
     {
       "id": "tokyo23-003951",
@@ -6203,7 +6210,7 @@
       "duration": 31,
       "passengers": 246184,
       "passengerYear": 2024,
-      "passengerRank": 38
+      "passengerRank": 39
     },
     {
       "id": "tokyo23-003859",
@@ -6217,7 +6224,7 @@
       "duration": 36,
       "passengers": 10880,
       "passengerYear": 2024,
-      "passengerRank": 471
+      "passengerRank": 481
     },
     {
       "id": "tokyo23-003999",
@@ -6231,7 +6238,7 @@
       "duration": 33,
       "passengers": 27776,
       "passengerYear": 2024,
-      "passengerRank": 336
+      "passengerRank": 340
     },
     {
       "id": "tokyo23-003818",
@@ -6245,7 +6252,7 @@
       "duration": 33,
       "passengers": 143409,
       "passengerYear": 2024,
-      "passengerRank": 69
+      "passengerRank": 70
     },
     {
       "id": "tokyo23-004119",
@@ -6259,7 +6266,7 @@
       "duration": 47,
       "passengers": 2455,
       "passengerYear": 2024,
-      "passengerRank": 539
+      "passengerRank": 550
     },
     {
       "id": "tokyo23-003847",
@@ -6273,7 +6280,7 @@
       "duration": 38,
       "passengers": 269075,
       "passengerYear": 2024,
-      "passengerRank": 34
+      "passengerRank": 35
     },
     {
       "id": "tokyo23-003837",
@@ -6287,7 +6294,7 @@
       "duration": 36,
       "passengers": 18567,
       "passengerYear": 2024,
-      "passengerRank": 412
+      "passengerRank": 419
     },
     {
       "id": "tokyo23-003845",
@@ -6301,7 +6308,7 @@
       "duration": 32,
       "passengers": 28862,
       "passengerYear": 2024,
-      "passengerRank": 323
+      "passengerRank": 327
     },
     {
       "id": "tokyo23-003764",
@@ -6315,7 +6322,7 @@
       "duration": 31,
       "passengers": 59407,
       "passengerYear": 2024,
-      "passengerRank": 169
+      "passengerRank": 172
     },
     {
       "id": "tokyo23-003780",
@@ -6329,7 +6336,7 @@
       "duration": 32,
       "passengers": 23768,
       "passengerYear": 2024,
-      "passengerRank": 368
+      "passengerRank": 372
     },
     {
       "id": "tokyo23-003767",
@@ -6343,7 +6350,7 @@
       "duration": 26,
       "passengers": 34572,
       "passengerYear": 2024,
-      "passengerRank": 280
+      "passengerRank": 284
     },
     {
       "id": "tokyo23-003750",
@@ -6357,7 +6364,7 @@
       "duration": 32,
       "passengers": 3926,
       "passengerYear": 2024,
-      "passengerRank": 524
+      "passengerRank": 535
     },
     {
       "id": "tokyo23-003778",
@@ -6371,7 +6378,7 @@
       "duration": 33,
       "passengers": 13182,
       "passengerYear": 2024,
-      "passengerRank": 455
+      "passengerRank": 463
     },
     {
       "id": "tokyo23-003791",
@@ -6385,7 +6392,7 @@
       "duration": 34,
       "passengers": 29965,
       "passengerYear": 2024,
-      "passengerRank": 313
+      "passengerRank": 317
     },
     {
       "id": "tokyo23-003969",
@@ -6399,7 +6406,7 @@
       "duration": 38,
       "passengers": 58660,
       "passengerYear": 2024,
-      "passengerRank": 171
+      "passengerRank": 174
     },
     {
       "id": "tokyo23-003844",
@@ -6413,7 +6420,7 @@
       "duration": 30,
       "passengers": 105665,
       "passengerYear": 2024,
-      "passengerRank": 94
+      "passengerRank": 95
     },
     {
       "id": "tokyo23-003938",
@@ -6427,7 +6434,7 @@
       "duration": 36,
       "passengers": 10963,
       "passengerYear": 2024,
-      "passengerRank": 470
+      "passengerRank": 480
     },
     {
       "id": "tokyo23-003806",
@@ -6441,7 +6448,7 @@
       "duration": 35,
       "passengers": 73199,
       "passengerYear": 2024,
-      "passengerRank": 144
+      "passengerRank": 146
     },
     {
       "id": "tokyo23-004091",
@@ -6455,7 +6462,7 @@
       "duration": 49,
       "passengers": 13435,
       "passengerYear": 2024,
-      "passengerRank": 452
+      "passengerRank": 460
     },
     {
       "id": "tokyo23-003946",
@@ -6469,7 +6476,7 @@
       "duration": 36,
       "passengers": 94252,
       "passengerYear": 2024,
-      "passengerRank": 109
+      "passengerRank": 110
     },
     {
       "id": "tokyo23-003986",
@@ -6483,7 +6490,7 @@
       "duration": 37,
       "passengers": 107560,
       "passengerYear": 2024,
-      "passengerRank": 92
+      "passengerRank": 93
     },
     {
       "id": "tokyo23-003868",
@@ -6497,7 +6504,7 @@
       "duration": 30,
       "passengers": 39194,
       "passengerYear": 2024,
-      "passengerRank": 243
+      "passengerRank": 246
     },
     {
       "id": "tokyo23-003892",
@@ -6511,7 +6518,7 @@
       "duration": 31,
       "passengers": 183792,
       "passengerYear": 2024,
-      "passengerRank": 52
+      "passengerRank": 53
     },
     {
       "id": "tokyo23-003884",
@@ -6525,7 +6532,7 @@
       "duration": 26,
       "passengers": 74305,
       "passengerYear": 2024,
-      "passengerRank": 140
+      "passengerRank": 142
     },
     {
       "id": "tokyo23-003842",
@@ -6539,7 +6546,7 @@
       "duration": 31,
       "passengers": 38025,
       "passengerYear": 2024,
-      "passengerRank": 250
+      "passengerRank": 254
     },
     {
       "id": "tokyo23-004112",
@@ -6553,7 +6560,7 @@
       "duration": 50,
       "passengers": 19936,
       "passengerYear": 2024,
-      "passengerRank": 396
+      "passengerRank": 402
     },
     {
       "id": "tokyo23-003834",
@@ -6567,7 +6574,7 @@
       "duration": 28,
       "passengers": 74637,
       "passengerYear": 2024,
-      "passengerRank": 138
+      "passengerRank": 140
     },
     {
       "id": "tokyo23-003939",
@@ -6581,7 +6588,7 @@
       "duration": 36,
       "passengers": 101853,
       "passengerYear": 2024,
-      "passengerRank": 97
+      "passengerRank": 98
     },
     {
       "id": "tokyo23-003911",
@@ -6595,7 +6602,7 @@
       "duration": 33,
       "passengers": 43230,
       "passengerYear": 2024,
-      "passengerRank": 223
+      "passengerRank": 226
     },
     {
       "id": "tokyo23-003979",
@@ -6609,7 +6616,7 @@
       "duration": 41,
       "passengers": 2441,
       "passengerYear": 2024,
-      "passengerRank": 541
+      "passengerRank": 552
     },
     {
       "id": "tokyo23-003887",
@@ -6623,7 +6630,7 @@
       "duration": 36,
       "passengers": 45681,
       "passengerYear": 2024,
-      "passengerRank": 212
+      "passengerRank": 215
     },
     {
       "id": "tokyo23-004042",
@@ -6637,7 +6644,7 @@
       "duration": 41,
       "passengers": 33601,
       "passengerYear": 2024,
-      "passengerRank": 285
+      "passengerRank": 289
     },
     {
       "id": "tokyo23-003810",
@@ -6651,7 +6658,7 @@
       "duration": 24,
       "passengers": 82631,
       "passengerYear": 2024,
-      "passengerRank": 120
+      "passengerRank": 121
     },
     {
       "id": "tokyo23-004044",
@@ -6665,7 +6672,7 @@
       "duration": 34,
       "passengers": 16791,
       "passengerYear": 2024,
-      "passengerRank": 422
+      "passengerRank": 429
     },
     {
       "id": "tokyo23-004025",
@@ -6679,7 +6686,7 @@
       "duration": 31,
       "passengers": 36926,
       "passengerYear": 2024,
-      "passengerRank": 261
+      "passengerRank": 265
     },
     {
       "id": "tokyo23-003900",
@@ -6693,7 +6700,7 @@
       "duration": 33,
       "passengers": 107982,
       "passengerYear": 2024,
-      "passengerRank": 91
+      "passengerRank": 92
     },
     {
       "id": "tokyo23-003958",
@@ -6707,7 +6714,7 @@
       "duration": 39,
       "passengers": 5132,
       "passengerYear": 2024,
-      "passengerRank": 516
+      "passengerRank": 527
     },
     {
       "id": "tokyo23-003962",
@@ -6721,7 +6728,7 @@
       "duration": 35,
       "passengers": 28023,
       "passengerYear": 2024,
-      "passengerRank": 330
+      "passengerRank": 334
     },
     {
       "id": "tokyo23-004030",
@@ -6735,7 +6742,7 @@
       "duration": 43,
       "passengers": 5032,
       "passengerYear": 2024,
-      "passengerRank": 517
+      "passengerRank": 528
     },
     {
       "id": "tokyo23-003835",
@@ -6749,7 +6756,7 @@
       "duration": 29,
       "passengers": 96029,
       "passengerYear": 2024,
-      "passengerRank": 107
+      "passengerRank": 108
     },
     {
       "id": "tokyo23-003866",
@@ -6763,7 +6770,7 @@
       "duration": 32,
       "passengers": 56595,
       "passengerYear": 2024,
-      "passengerRank": 175
+      "passengerRank": 178
     },
     {
       "id": "tokyo23-003883",
@@ -6777,7 +6784,7 @@
       "duration": 28,
       "passengers": 176901,
       "passengerYear": 2024,
-      "passengerRank": 56
+      "passengerRank": 57
     },
     {
       "id": "tokyo23-003822",
@@ -6791,7 +6798,7 @@
       "duration": 34,
       "passengers": 77718,
       "passengerYear": 2024,
-      "passengerRank": 133
+      "passengerRank": 135
     },
     {
       "id": "tokyo23-003788",
@@ -6805,7 +6812,7 @@
       "duration": 28,
       "passengers": 89214,
       "passengerYear": 2024,
-      "passengerRank": 114
+      "passengerRank": 115
     },
     {
       "id": "tokyo23-003954",
@@ -6819,7 +6826,7 @@
       "duration": 35,
       "passengers": 37465,
       "passengerYear": 2024,
-      "passengerRank": 256
+      "passengerRank": 260
     },
     {
       "id": "tokyo23-003812",
@@ -6833,7 +6840,7 @@
       "duration": 25,
       "passengers": 124550,
       "passengerYear": 2024,
-      "passengerRank": 81
+      "passengerRank": 82
     },
     {
       "id": "tokyo23-004079",
@@ -6847,7 +6854,7 @@
       "duration": 47,
       "passengers": 13969,
       "passengerYear": 2024,
-      "passengerRank": 446
+      "passengerRank": 454
     },
     {
       "id": "tokyo23-003941",
@@ -6861,7 +6868,7 @@
       "duration": 29,
       "passengers": 70951,
       "passengerYear": 2024,
-      "passengerRank": 147
+      "passengerRank": 149
     },
     {
       "id": "tokyo23-003929",
@@ -6875,7 +6882,7 @@
       "duration": 38,
       "passengers": 35206,
       "passengerYear": 2024,
-      "passengerRank": 276
+      "passengerRank": 280
     },
     {
       "id": "tokyo23-003427",
@@ -6889,7 +6896,7 @@
       "duration": 40,
       "passengers": 41728,
       "passengerYear": 2024,
-      "passengerRank": 230
+      "passengerRank": 233
     },
     {
       "id": "tokyo23-003345",
@@ -6903,7 +6910,7 @@
       "duration": 32,
       "passengers": 38455,
       "passengerYear": 2024,
-      "passengerRank": 247
+      "passengerRank": 250
     },
     {
       "id": "tokyo23-003225",
@@ -6917,7 +6924,7 @@
       "duration": 39,
       "passengers": 56838,
       "passengerYear": 2024,
-      "passengerRank": 174
+      "passengerRank": 177
     },
     {
       "id": "tokyo23-003186",
@@ -6931,7 +6938,7 @@
       "duration": 29,
       "passengers": 40077,
       "passengerYear": 2024,
-      "passengerRank": 237
+      "passengerRank": 240
     },
     {
       "id": "tokyo23-003263",
@@ -6945,7 +6952,7 @@
       "duration": 38,
       "passengers": 80236,
       "passengerYear": 2024,
-      "passengerRank": 125
+      "passengerRank": 127
     },
     {
       "id": "tokyo23-003349",
@@ -6959,7 +6966,7 @@
       "duration": 34,
       "passengers": 27732,
       "passengerYear": 2024,
-      "passengerRank": 337
+      "passengerRank": 341
     },
     {
       "id": "tokyo23-003294",
@@ -6973,7 +6980,7 @@
       "duration": 20,
       "passengers": 317839,
       "passengerYear": 2024,
-      "passengerRank": 27
+      "passengerRank": 28
     },
     {
       "id": "tokyo23-003228",
@@ -6987,7 +6994,7 @@
       "duration": 26,
       "passengers": 42893,
       "passengerYear": 2024,
-      "passengerRank": 225
+      "passengerRank": 228
     },
     {
       "id": "tokyo23-003311",
@@ -7001,7 +7008,7 @@
       "duration": 25,
       "passengers": 9867,
       "passengerYear": 2024,
-      "passengerRank": 478
+      "passengerRank": 488
     },
     {
       "id": "tokyo23-003367",
@@ -7015,7 +7022,7 @@
       "duration": 35,
       "passengers": 28904,
       "passengerYear": 2024,
-      "passengerRank": 322
+      "passengerRank": 326
     },
     {
       "id": "tokyo23-003321",
@@ -7029,7 +7036,7 @@
       "duration": 28,
       "passengers": 15032,
       "passengerYear": 2024,
-      "passengerRank": 436
+      "passengerRank": 444
     },
     {
       "id": "tokyo23-003419",
@@ -7043,7 +7050,7 @@
       "duration": 45,
       "passengers": 29438,
       "passengerYear": 2024,
-      "passengerRank": 318
+      "passengerRank": 322
     },
     {
       "id": "tokyo23-003261",
@@ -7057,7 +7064,7 @@
       "duration": 23,
       "passengers": 37978,
       "passengerYear": 2024,
-      "passengerRank": 251
+      "passengerRank": 255
     },
     {
       "id": "tokyo23-003337",
@@ -7071,7 +7078,7 @@
       "duration": 26,
       "passengers": 32177,
       "passengerYear": 2024,
-      "passengerRank": 293
+      "passengerRank": 297
     },
     {
       "id": "tokyo23-003292",
@@ -7085,7 +7092,7 @@
       "duration": 35,
       "passengers": 76732,
       "passengerYear": 2024,
-      "passengerRank": 134
+      "passengerRank": 136
     },
     {
       "id": "tokyo23-003328",
@@ -7099,7 +7106,7 @@
       "duration": 29,
       "passengers": 173987,
       "passengerYear": 2024,
-      "passengerRank": 57
+      "passengerRank": 58
     },
     {
       "id": "tokyo23-003243",
@@ -7113,7 +7120,7 @@
       "duration": 37,
       "passengers": 22655,
       "passengerYear": 2024,
-      "passengerRank": 374
+      "passengerRank": 379
     },
     {
       "id": "tokyo23-003314",
@@ -7127,7 +7134,7 @@
       "duration": 36,
       "passengers": 26372,
       "passengerYear": 2024,
-      "passengerRank": 349
+      "passengerRank": 353
     },
     {
       "id": "tokyo23-003305",
@@ -7141,7 +7148,7 @@
       "duration": 30,
       "passengers": 29508,
       "passengerYear": 2024,
-      "passengerRank": 317
+      "passengerRank": 321
     },
     {
       "id": "tokyo23-003370",
@@ -7155,7 +7162,7 @@
       "duration": 40,
       "passengers": 3266,
       "passengerYear": 2024,
-      "passengerRank": 530
+      "passengerRank": 541
     },
     {
       "id": "tokyo23-003359",
@@ -7169,7 +7176,7 @@
       "duration": 31,
       "passengers": 24202,
       "passengerYear": 2024,
-      "passengerRank": 367
+      "passengerRank": 371
     },
     {
       "id": "tokyo23-003363",
@@ -7183,7 +7190,7 @@
       "duration": 30,
       "passengers": 79673,
       "passengerYear": 2024,
-      "passengerRank": 130
+      "passengerRank": 132
     },
     {
       "id": "tokyo23-003259",
@@ -7197,7 +7204,7 @@
       "duration": 49,
       "passengers": 3101,
       "passengerYear": 2024,
-      "passengerRank": 534
+      "passengerRank": 545
     },
     {
       "id": "tokyo23-003255",
@@ -7211,7 +7218,7 @@
       "duration": 48,
       "passengers": 3186,
       "passengerYear": 2024,
-      "passengerRank": 531
+      "passengerRank": 542
     },
     {
       "id": "tokyo23-003339",
@@ -7225,7 +7232,7 @@
       "duration": 42,
       "passengers": 5882,
       "passengerYear": 2024,
-      "passengerRank": 511
+      "passengerRank": 522
     },
     {
       "id": "tokyo23-003284",
@@ -7239,7 +7246,7 @@
       "duration": 44,
       "passengers": 1563,
       "passengerYear": 2024,
-      "passengerRank": 550
+      "passengerRank": 561
     },
     {
       "id": "tokyo23-003302",
@@ -7253,7 +7260,7 @@
       "duration": 32,
       "passengers": 80085,
       "passengerYear": 2024,
-      "passengerRank": 126
+      "passengerRank": 128
     },
     {
       "id": "tokyo23-003291",
@@ -7267,7 +7274,7 @@
       "duration": 43,
       "passengers": 775,
       "passengerYear": 2024,
-      "passengerRank": 559
+      "passengerRank": 570
     },
     {
       "id": "tokyo23-003299",
@@ -7281,7 +7288,7 @@
       "duration": 36,
       "passengers": 8555,
       "passengerYear": 2024,
-      "passengerRank": 496
+      "passengerRank": 506
     },
     {
       "id": "tokyo23-003357",
@@ -7295,7 +7302,7 @@
       "duration": 44,
       "passengers": 699,
       "passengerYear": 2024,
-      "passengerRank": 561
+      "passengerRank": 572
     },
     {
       "id": "tokyo23-003306",
@@ -7309,7 +7316,7 @@
       "duration": 43,
       "passengers": 473,
       "passengerYear": 2024,
-      "passengerRank": 562
+      "passengerRank": 573
     },
     {
       "id": "tokyo23-003322",
@@ -7323,7 +7330,7 @@
       "duration": 44,
       "passengers": 845,
       "passengerYear": 2024,
-      "passengerRank": 556
+      "passengerRank": 567
     },
     {
       "id": "tokyo23-003350",
@@ -7337,7 +7344,7 @@
       "duration": 45,
       "passengers": 1689,
       "passengerYear": 2024,
-      "passengerRank": 547
+      "passengerRank": 558
     },
     {
       "id": "tokyo23-003252",
@@ -7351,7 +7358,7 @@
       "duration": 38,
       "passengers": 3350,
       "passengerYear": 2024,
-      "passengerRank": 529
+      "passengerRank": 540
     },
     {
       "id": "tokyo23-003254",
@@ -7365,7 +7372,7 @@
       "duration": 47,
       "passengers": 2207,
       "passengerYear": 2024,
-      "passengerRank": 544
+      "passengerRank": 555
     },
     {
       "id": "tokyo23-003274",
@@ -7379,7 +7386,7 @@
       "duration": 45,
       "passengers": 32727,
       "passengerYear": 2024,
-      "passengerRank": 290
+      "passengerRank": 294
     },
     {
       "id": "tokyo23-003199",
@@ -7393,7 +7400,7 @@
       "duration": 44,
       "passengers": 79818,
       "passengerYear": 2024,
-      "passengerRank": 128
+      "passengerRank": 130
     },
     {
       "id": "tokyo23-003323",
@@ -7407,7 +7414,7 @@
       "duration": 48,
       "passengers": 34621,
       "passengerYear": 2024,
-      "passengerRank": 279
+      "passengerRank": 283
     },
     {
       "id": "tokyo23-003195",
@@ -7421,7 +7428,7 @@
       "duration": 49,
       "passengers": 23574,
       "passengerYear": 2024,
-      "passengerRank": 370
+      "passengerRank": 374
     },
     {
       "id": "tokyo23-003248",
@@ -7435,7 +7442,7 @@
       "duration": 48,
       "passengers": 102056,
       "passengerYear": 2024,
-      "passengerRank": 96
+      "passengerRank": 97
     },
     {
       "id": "tokyo23-003376",
@@ -7449,7 +7456,7 @@
       "duration": 46,
       "passengers": 18180,
       "passengerYear": 2024,
-      "passengerRank": 414
+      "passengerRank": 421
     },
     {
       "id": "tokyo23-003273",
@@ -7463,7 +7470,7 @@
       "duration": 44,
       "passengers": 22096,
       "passengerYear": 2024,
-      "passengerRank": 381
+      "passengerRank": 386
     },
     {
       "id": "tokyo23-003486",
@@ -7477,7 +7484,7 @@
       "duration": 39,
       "passengers": 146776,
       "passengerYear": 2024,
-      "passengerRank": 67
+      "passengerRank": 68
     },
     {
       "id": "tokyo23-003244",
@@ -7491,7 +7498,7 @@
       "duration": 52,
       "passengers": 5520,
       "passengerYear": 2024,
-      "passengerRank": 515
+      "passengerRank": 526
     },
     {
       "id": "tokyo23-003232",
@@ -7505,7 +7512,7 @@
       "duration": 54,
       "passengers": 8624,
       "passengerYear": 2024,
-      "passengerRank": 495
+      "passengerRank": 505
     },
     {
       "id": "tokyo23-003191",
@@ -7519,7 +7526,7 @@
       "duration": 46,
       "passengers": 99396,
       "passengerYear": 2024,
-      "passengerRank": 100
+      "passengerRank": 101
     },
     {
       "id": "tokyo23-003280",
@@ -7533,7 +7540,7 @@
       "duration": 46,
       "passengers": 48727,
       "passengerYear": 2024,
-      "passengerRank": 198
+      "passengerRank": 201
     },
     {
       "id": "tokyo23-003324",
@@ -7547,7 +7554,7 @@
       "duration": 18,
       "passengers": 39136,
       "passengerYear": 2024,
-      "passengerRank": 245
+      "passengerRank": 248
     },
     {
       "id": "tokyo23-003407",
@@ -7561,7 +7568,7 @@
       "duration": 18,
       "passengers": 1460,
       "passengerYear": 2024,
-      "passengerRank": 551
+      "passengerRank": 562
     },
     {
       "id": "tokyo23-003378",
@@ -7575,7 +7582,7 @@
       "duration": 16,
       "passengers": 7990,
       "passengerYear": 2024,
-      "passengerRank": 499
+      "passengerRank": 509
     },
     {
       "id": "tokyo23-003490",
@@ -7589,7 +7596,7 @@
       "duration": 19,
       "passengers": 1716,
       "passengerYear": 2024,
-      "passengerRank": 546
+      "passengerRank": 557
     },
     {
       "id": "tokyo23-003351",
@@ -7603,7 +7610,7 @@
       "duration": 22,
       "passengers": 1180,
       "passengerYear": 2024,
-      "passengerRank": 552
+      "passengerRank": 563
     },
     {
       "id": "tokyo23-003319",
@@ -7617,7 +7624,7 @@
       "duration": 24,
       "passengers": 2450,
       "passengerYear": 2024,
-      "passengerRank": 540
+      "passengerRank": 551
     },
     {
       "id": "tokyo23-003431",
@@ -7631,7 +7638,7 @@
       "duration": 11,
       "passengers": 25769,
       "passengerYear": 2024,
-      "passengerRank": 351
+      "passengerRank": 355
     },
     {
       "id": "tokyo23-003310",
@@ -7645,7 +7652,7 @@
       "duration": 25,
       "passengers": 2649,
       "passengerYear": 2024,
-      "passengerRank": 535
+      "passengerRank": 546
     },
     {
       "id": "tokyo23-003432",
@@ -7659,7 +7666,7 @@
       "duration": 10,
       "passengers": 45348,
       "passengerYear": 2024,
-      "passengerRank": 214
+      "passengerRank": 217
     },
     {
       "id": "tokyo23-003436",
@@ -7673,7 +7680,7 @@
       "duration": 14,
       "passengers": 3743,
       "passengerYear": 2024,
-      "passengerRank": 525
+      "passengerRank": 536
     },
     {
       "id": "tokyo23-003393",
@@ -7687,7 +7694,7 @@
       "duration": 23,
       "passengers": 25544,
       "passengerYear": 2024,
-      "passengerRank": 355
+      "passengerRank": 359
     },
     {
       "id": "tokyo23-003426",
@@ -7701,7 +7708,7 @@
       "duration": 21,
       "passengers": 20617,
       "passengerYear": 2024,
-      "passengerRank": 393
+      "passengerRank": 399
     },
     {
       "id": "tokyo23-003293",
@@ -7715,7 +7722,7 @@
       "duration": 24,
       "passengers": 29560,
       "passengerYear": 2024,
-      "passengerRank": 316
+      "passengerRank": 320
     },
     {
       "id": "tokyo23-003361",
@@ -7729,7 +7736,7 @@
       "duration": 16,
       "passengers": 40890,
       "passengerYear": 2024,
-      "passengerRank": 233
+      "passengerRank": 236
     },
     {
       "id": "tokyo23-003443",
@@ -7743,7 +7750,7 @@
       "duration": 16,
       "passengers": 1067,
       "passengerYear": 2024,
-      "passengerRank": 554
+      "passengerRank": 565
     },
     {
       "id": "tokyo23-003471",
@@ -7757,7 +7764,7 @@
       "duration": 22,
       "passengers": 19401,
       "passengerYear": 2024,
-      "passengerRank": 401
+      "passengerRank": 408
     },
     {
       "id": "tokyo23-003468",
@@ -7771,7 +7778,7 @@
       "duration": 18,
       "passengers": 2564,
       "passengerYear": 2024,
-      "passengerRank": 537
+      "passengerRank": 548
     },
     {
       "id": "tokyo23-003200",
@@ -7785,7 +7792,7 @@
       "duration": 43,
       "passengers": 36724,
       "passengerYear": 2024,
-      "passengerRank": 263
+      "passengerRank": 267
     },
     {
       "id": "tokyo23-003290",
@@ -7799,7 +7806,7 @@
       "duration": 41,
       "passengers": 23344,
       "passengerYear": 2024,
-      "passengerRank": 372
+      "passengerRank": 376
     },
     {
       "id": "tokyo23-003260",
@@ -7827,7 +7834,7 @@
       "duration": 46,
       "passengers": 43371,
       "passengerYear": 2024,
-      "passengerRank": 221
+      "passengerRank": 224
     },
     {
       "id": "tokyo23-003301",
@@ -7841,7 +7848,7 @@
       "duration": 40,
       "passengers": 16762,
       "passengerYear": 2024,
-      "passengerRank": 423
+      "passengerRank": 430
     },
     {
       "id": "tokyo23-003297",
@@ -7855,7 +7862,7 @@
       "duration": 41,
       "passengers": 4217,
       "passengerYear": 2024,
-      "passengerRank": 522
+      "passengerRank": 533
     },
     {
       "id": "tokyo23-003150",
@@ -7869,7 +7876,7 @@
       "duration": 48,
       "passengers": 12621,
       "passengerYear": 2024,
-      "passengerRank": 463
+      "passengerRank": 471
     },
     {
       "id": "tokyo23-003224",
@@ -7883,7 +7890,7 @@
       "duration": 41,
       "passengers": 6261,
       "passengerYear": 2024,
-      "passengerRank": 509
+      "passengerRank": 520
     },
     {
       "id": "tokyo23-003176",
@@ -7897,7 +7904,7 @@
       "duration": 45,
       "passengers": 35416,
       "passengerYear": 2024,
-      "passengerRank": 273
+      "passengerRank": 277
     },
     {
       "id": "tokyo23-003288",
@@ -7911,7 +7918,7 @@
       "duration": 39,
       "passengers": 20820,
       "passengerYear": 2024,
-      "passengerRank": 391
+      "passengerRank": 397
     },
     {
       "id": "tokyo23-003101",
@@ -7925,7 +7932,7 @@
       "duration": 48,
       "passengers": 67699,
       "passengerYear": 2024,
-      "passengerRank": 152
+      "passengerRank": 155
     },
     {
       "id": "tokyo23-003214",
@@ -7953,7 +7960,161 @@
       "duration": 43,
       "passengers": 62984,
       "passengerYear": 2024,
-      "passengerRank": 162
+      "passengerRank": 165
+    },
+    {
+      "id": "n02-003642",
+      "station": "井の頭公園",
+      "lat": 35.697295,
+      "lng": 139.58312,
+      "minutes": 444,
+      "line": "井の頭線",
+      "route": "京王井の頭線→吉祥寺→JR中央・青梅線快速→四ツ谷→JR総武線→市ケ谷→東京メトロ有楽町線→護国寺→徒歩5分",
+      "searchDate": "2026-08-28",
+      "duration": 52,
+      "passengers": 6657,
+      "passengerYear": 2024,
+      "passengerRank": 516
+    },
+    {
+      "id": "n02-003584",
+      "station": "吉祥寺",
+      "lat": 35.702804,
+      "lng": 139.580118,
+      "minutes": 452,
+      "line": "中央線 / 井の頭線",
+      "route": "東京メトロ東西線→高田馬場→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "searchDate": "2026-08-28",
+      "duration": 45,
+      "passengers": 383705,
+      "passengerYear": 2024,
+      "passengerRank": 20
+    },
+    {
+      "id": "n02-003674",
+      "station": "三鷹台",
+      "lat": 35.69205,
+      "lng": 139.589295,
+      "minutes": 442,
+      "line": "井の頭線",
+      "route": "京王井の頭線→吉祥寺→JR中央・青梅線快速→四ツ谷→JR総武線→市ケ谷→東京メトロ有楽町線→護国寺→徒歩5分",
+      "searchDate": "2026-08-28",
+      "duration": 54,
+      "passengers": 19570,
+      "passengerYear": 2024,
+      "passengerRank": 405
+    },
+    {
+      "id": "n02-003903",
+      "station": "仙川",
+      "lat": 35.66237,
+      "lng": 139.585223,
+      "minutes": 441,
+      "line": "京王線",
+      "route": "京王線区間急行→市ケ谷→東京メトロ有楽町線→護国寺→徒歩5分",
+      "searchDate": "2026-08-28",
+      "duration": 47,
+      "passengers": 70712,
+      "passengerYear": 2024,
+      "passengerRank": 150
+    },
+    {
+      "id": "n02-003054",
+      "station": "南鳩ヶ谷",
+      "lat": 35.81608,
+      "lng": 139.736095,
+      "minutes": 451,
+      "line": "埼玉高速鉄道",
+      "route": "埼玉高速鉄道→後楽園→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
+      "searchDate": "2026-08-28",
+      "duration": 43,
+      "passengers": 16500,
+      "passengerYear": 2024,
+      "passengerRank": 432
+    },
+    {
+      "id": "n02-003036",
+      "station": "鳩ヶ谷",
+      "lat": 35.8308,
+      "lng": 139.73616,
+      "minutes": 448,
+      "line": "埼玉高速鉄道",
+      "route": "埼玉高速鉄道→後楽園→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
+      "searchDate": "2026-08-28",
+      "duration": 46,
+      "passengers": 23200,
+      "passengerYear": 2024,
+      "passengerRank": 378
+    },
+    {
+      "id": "n02-003092",
+      "station": "川口元郷",
+      "lat": 35.79996,
+      "lng": 139.729863,
+      "minutes": 453,
+      "line": "埼玉高速鉄道",
+      "route": "埼玉高速鉄道→後楽園→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
+      "searchDate": "2026-08-28",
+      "duration": 41,
+      "passengers": 20900,
+      "passengerYear": 2024,
+      "passengerRank": 394
+    },
+    {
+      "id": "n02-003017",
+      "station": "新井宿",
+      "lat": 35.84295,
+      "lng": 139.738115,
+      "minutes": 444,
+      "line": "埼玉高速鉄道",
+      "route": "埼玉高速鉄道→後楽園→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
+      "searchDate": "2026-08-28",
+      "duration": 50,
+      "passengers": 12000,
+      "passengerYear": 2024,
+      "passengerRank": 474
+    },
+    {
+      "id": "n02-004251",
+      "station": "大井競馬場前",
+      "lat": 35.59503,
+      "lng": 139.7472,
+      "minutes": 449,
+      "line": "東京モノレール",
+      "route": "東京モノレール→浜松町→JR山手線内回り→有楽町→東京メトロ有楽町線→護国寺→徒歩5分",
+      "searchDate": "2026-08-28",
+      "duration": 47,
+      "passengers": 11828,
+      "passengerYear": 2024,
+      "passengerRank": 476
+    },
+    {
+      "id": "n02-003059",
+      "station": "谷塚",
+      "lat": 35.81486,
+      "lng": 139.801465,
+      "minutes": 438,
+      "line": "伊勢崎線",
+      "route": "東武スカイツリーライン→北千住→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
+      "searchDate": "2026-08-28",
+      "duration": 54,
+      "passengers": 38080,
+      "passengerYear": 2024,
+      "passengerRank": 253
+    },
+    {
+      "id": "n02-003040",
+      "station": "草加",
+      "lat": 35.82838,
+      "lng": 139.803455,
+      "minutes": 443,
+      "line": "伊勢崎線",
+      "route": "東武スカイツリーライン区間急行→北千住→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
+      "searchDate": "2026-08-28",
+      "duration": 49,
+      "passengers": 82501,
+      "passengerYear": 2024,
+      "passengerRank": 122
     }
   ]
 }
