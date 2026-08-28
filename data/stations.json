@@ -1,11 +1,11 @@
 {
   "meta": {
     "version": 2,
-    "lastUpdated": "2026-03-18",
-    "targetArrival": "08:08",
-    "targetStation": "茗荷谷・護国寺",
-    "targetMinutes": 488,
-    "searchMode": "Yahoo乗換案内・急いでモード・平日"
+    "lastUpdated": "2026-08-28",
+    "targetArrival": "08:18",
+    "targetStation": "筑波大学附属高等学校",
+    "targetMinutes": 498,
+    "searchMode": "Yahoo乗換案内・急いでモード・平日・施設直接指定"
   },
   "stations": [
     {
@@ -13,35 +13,37 @@
       "station": "茗荷谷",
       "lat": 35.716989,
       "lng": 139.737184,
-      "minutes": 478,
+      "minutes": 490,
       "major": true,
       "line": "丸ノ内線",
-      "route": "徒歩10分",
-      "searchDate": "2026-03-10",
-      "outside": false
+      "route": "徒歩8分",
+      "searchDate": "2026-08-28",
+      "outside": false,
+      "duration": 8
     },
     {
       "id": "gokokuji",
       "station": "護国寺",
       "lat": 35.719044,
       "lng": 139.72754,
-      "minutes": 480,
+      "minutes": 493,
       "major": true,
       "line": "有楽町線",
-      "route": "徒歩8分",
-      "searchDate": "2026-03-10",
-      "outside": false
+      "route": "徒歩5分",
+      "searchDate": "2026-08-28",
+      "outside": false,
+      "duration": 5
     },
     {
       "id": "ikebukuro",
       "station": "池袋",
       "lat": 35.730256,
       "lng": 139.711085,
-      "minutes": 475,
+      "minutes": 484,
       "major": true,
       "line": "有楽町線",
-      "route": "有楽町線→護国寺",
-      "searchDate": "2026-03-10",
+      "route": "東京メトロ有楽町線→護国寺→徒歩5分",
+      "searchDate": "2026-08-28",
       "outside": false,
       "duration": 13
     },
@@ -50,1560 +52,1881 @@
       "station": "渋谷",
       "lat": 35.658871,
       "lng": 139.701238,
-      "minutes": 458,
+      "minutes": 465,
       "line": "半蔵門線",
-      "searchDate": "2025-11-03",
+      "searchDate": "2026-08-28",
       "major": true,
-      "duration": 30
+      "duration": 31,
+      "route": "東京メトロ半蔵門線→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "daikanyama",
       "station": "代官山",
       "lat": 35.648193,
       "lng": 139.703284,
-      "minutes": 450,
+      "minutes": 456,
       "line": "東横線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 36,
+      "route": "東急東横線→渋谷→東京メトロ半蔵門線→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "nakameguro",
       "station": "中目黒",
       "lat": 35.643854,
       "lng": 139.698621,
-      "minutes": 448,
+      "minutes": 458,
       "line": "東横線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 36,
+      "route": "東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "yuutenji",
       "station": "祐天寺",
       "lat": 35.637163,
       "lng": 139.690758,
-      "minutes": 445,
+      "minutes": 451,
       "line": "東横線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 41,
+      "route": "東急東横線→渋谷→東京メトロ半蔵門線→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "gakugeidaigaku",
       "station": "学芸大学",
       "lat": 35.628786,
       "lng": 139.68522,
-      "minutes": 443,
+      "minutes": 448,
       "line": "東横線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 44,
+      "route": "東急東横線急行→渋谷→東京メトロ半蔵門線準急→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "toritsudaigaku",
       "station": "都立大学",
       "lat": 35.617835,
       "lng": 139.676393,
-      "minutes": 438,
+      "minutes": 444,
       "line": "東横線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 48,
+      "route": "東急東横線→渋谷→東京メトロ半蔵門線→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "jiyuugaoka",
       "station": "自由が丘",
       "lat": 35.607224,
       "lng": 139.668664,
-      "minutes": 440,
+      "minutes": 450,
       "line": "東横線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 44,
+      "route": "東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "den-enchoufu",
       "station": "田園調布",
       "lat": 35.596815,
       "lng": 139.667356,
-      "minutes": 437,
+      "minutes": 445,
       "line": "東横線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 49,
+      "route": "東急東横線→自由が丘→東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "tamagawa",
       "station": "多摩川",
       "lat": 35.589591,
       "lng": 139.668723,
-      "minutes": 435,
+      "minutes": 443,
       "line": "東横線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 51,
+      "route": "東急東横線→自由が丘→東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "shinmaruko",
       "station": "新丸子",
       "lat": 35.58049,
       "lng": 139.661964,
-      "minutes": 433,
+      "minutes": 441,
       "line": "東横線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 53,
+      "route": "東急東横線→自由が丘→東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "musashikosugi",
       "station": "武蔵小杉",
       "lat": 35.57669,
       "lng": 139.65963,
-      "minutes": 439,
+      "minutes": 449,
       "line": "東横線",
-      "searchDate": "2025-11-03",
-      "major": true
+      "searchDate": "2026-08-28",
+      "major": true,
+      "duration": 45,
+      "route": "ＪＲ特急成田エクスプレス7号→東京→東京メトロ丸ノ内線→茗荷谷→徒歩8分"
     },
     {
       "id": "motosumiyoshi",
       "station": "元住吉",
       "lat": 35.565698,
       "lng": 139.654668,
-      "minutes": 430,
+      "minutes": 439,
       "line": "東横線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 55,
+      "route": "東急目黒線→武蔵小杉→東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "hiyoshi",
       "station": "日吉",
       "lat": 35.5539,
       "lng": 139.646944,
-      "minutes": 428,
+      "minutes": 438,
       "line": "東横線",
-      "searchDate": "2025-11-03",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 56,
+      "route": "東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "meguro",
       "station": "目黒",
       "lat": 35.633923,
       "lng": 139.715775,
-      "minutes": 449,
+      "minutes": 459,
       "line": "目黒線",
-      "searchDate": "2025-11-03",
-      "duration": 39
+      "searchDate": "2026-08-28",
+      "duration": 38,
+      "route": "ＪＲ山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "fudoumae",
       "station": "不動前",
       "lat": 35.626526,
       "lng": 139.71469,
-      "minutes": 445,
+      "minutes": 452,
       "line": "目黒線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 40,
+      "route": "東急目黒線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "musashikoyama",
       "station": "武蔵小山",
       "lat": 35.620538,
       "lng": 139.704524,
-      "minutes": 443,
+      "minutes": 450,
       "line": "目黒線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 42,
+      "route": "東急目黒線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "nishioyama",
       "station": "西小山",
       "lat": 35.615455,
       "lng": 139.698694,
-      "minutes": 441,
+      "minutes": 445,
       "line": "目黒線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 47,
+      "route": "東急目黒線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "sensoku",
       "station": "洗足",
       "lat": 35.61043,
       "lng": 139.694367,
-      "minutes": 439,
+      "minutes": 443,
       "line": "目黒線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 49,
+      "route": "東急目黒線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "oookayama",
       "station": "大岡山",
       "lat": 35.607456,
       "lng": 139.685909,
-      "minutes": 437,
+      "minutes": 445,
       "line": "目黒線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 47,
+      "route": "東急目黒線急行→武蔵小山→東急目黒線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "okusawa",
       "station": "奥沢",
       "lat": 35.603947,
       "lng": 139.672355,
-      "minutes": 435,
+      "minutes": 439,
       "line": "目黒線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 53,
+      "route": "東急目黒線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "ooichou",
       "station": "大井町",
       "lat": 35.606257,
       "lng": 139.73485,
-      "minutes": 446,
+      "minutes": 454,
       "line": "大井町線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 40,
+      "route": "東京臨海高速鉄道りんかい線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "shitajinmei",
       "station": "下神明",
       "lat": 35.608704,
       "lng": 139.726256,
-      "minutes": 437,
+      "minutes": 445,
       "line": "大井町線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 49,
+      "route": "東急大井町線→大井町→東京臨海高速鉄道りんかい線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "tokoshikouen",
       "station": "戸越公園",
       "lat": 35.608856,
       "lng": 139.718159,
-      "minutes": 436,
+      "minutes": 444,
       "line": "大井町線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 50,
+      "route": "東急大井町線→大井町→東京臨海高速鉄道りんかい線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "nakanobe",
       "station": "中延",
       "lat": 35.60571,
       "lng": 139.712526,
-      "minutes": 438,
+      "minutes": 449,
       "line": "大井町線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 48,
+      "route": "都営浅草線→五反田→ＪＲ山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "eharamachi",
       "station": "荏原町",
       "lat": 35.60382,
       "lng": 139.707571,
-      "minutes": 433,
+      "minutes": 441,
       "line": "大井町線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 53,
+      "route": "東急大井町線→大井町→東京臨海高速鉄道りんかい線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "hatanodai",
       "station": "旗の台",
       "lat": 35.604923,
       "lng": 139.702286,
-      "minutes": 433,
+      "minutes": 445,
       "line": "大井町線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 52,
+      "route": "東急池上線→五反田→ＪＲ山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "kitasenzoku",
       "station": "北千束",
       "lat": 35.606311,
       "lng": 139.693303,
-      "minutes": 434,
+      "minutes": 443,
       "line": "大井町線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 51,
+      "route": "東急大井町線→自由が丘→東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "midorigaoka",
       "station": "緑が丘",
       "lat": 35.60638,
       "lng": 139.679482,
-      "minutes": 433,
+      "minutes": 446,
       "line": "大井町線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 48,
+      "route": "東急大井町線→自由が丘→東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "kuhonbutsu",
       "station": "九品仏",
       "lat": 35.60538,
       "lng": 139.660992,
-      "minutes": 432,
+      "minutes": 447,
       "line": "大井町線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 47,
+      "route": "東急大井町線→自由が丘→東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "oyamadai",
       "station": "尾山台",
       "lat": 35.606971,
       "lng": 139.653862,
-      "minutes": 430,
+      "minutes": 445,
       "line": "大井町線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 49,
+      "route": "東急大井町線→自由が丘→東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "todoroki",
       "station": "等々力",
       "lat": 35.608369,
       "lng": 139.647938,
-      "minutes": 430,
+      "minutes": 444,
       "line": "大井町線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 52,
+      "route": "東急大井町線→二子玉川→東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "kaminoge",
       "station": "上野毛",
       "lat": 35.611957,
       "lng": 139.638917,
-      "minutes": 432,
+      "minutes": 446,
       "line": "大井町線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 50,
+      "route": "東急大井町線→二子玉川→東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "futagotamagawa",
       "station": "二子玉川",
       "lat": 35.611788,
       "lng": 139.626685,
-      "minutes": 441,
+      "minutes": 451,
       "line": "大井町線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 45,
+      "route": "東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "mizonokuchi",
       "station": "溝の口",
       "lat": 35.59984,
       "lng": 139.610487,
-      "minutes": 436,
+      "minutes": 446,
       "line": "大井町線",
-      "searchDate": "2025-11-03",
-      "major": true
+      "searchDate": "2026-08-28",
+      "major": true,
+      "duration": 50,
+      "route": "東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "minumadaishinsuikouen",
       "station": "見沼代親水公園",
       "lat": 35.814544,
       "lng": 139.770719,
-      "minutes": 428,
+      "minutes": 438,
       "line": "日暮里・舎人ライナー",
-      "searchDate": "2025-11-03",
-      "note": "経験上7:12でも間に合う"
+      "searchDate": "2026-08-28",
+      "duration": 56,
+      "route": "日暮里・舎人ライナー日暮里行→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分"
     },
     {
       "id": "toneri",
       "station": "舎人",
       "lat": 35.8057,
       "lng": 139.770108,
-      "minutes": 431,
+      "minutes": 440,
       "line": "日暮里・舎人ライナー",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 54,
+      "route": "日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分"
     },
     {
       "id": "tonerikouen",
       "station": "舎人公園",
       "lat": 35.79623,
       "lng": 139.770183,
-      "minutes": 433,
+      "minutes": 442,
       "line": "日暮里・舎人ライナー",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 52,
+      "route": "日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分"
     },
     {
       "id": "tanizaike",
       "station": "谷在家",
       "lat": 35.788774,
       "lng": 139.770043,
-      "minutes": 434,
+      "minutes": 444,
       "line": "日暮里・舎人ライナー",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 50,
+      "route": "日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分"
     },
     {
       "id": "nishiaraitaishinishi",
       "station": "西新井大師西",
       "lat": 35.781505,
       "lng": 139.770094,
-      "minutes": 436,
+      "minutes": 446,
       "line": "日暮里・舎人ライナー",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 48,
+      "route": "日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分"
     },
     {
       "id": "kouhoku",
       "station": "江北",
       "lat": 35.774021,
       "lng": 139.770306,
-      "minutes": 438,
+      "minutes": 448,
       "line": "日暮里・舎人ライナー",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 46,
+      "route": "日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分"
     },
     {
       "id": "takano",
       "station": "高野",
       "lat": 35.768359,
       "lng": 139.770679,
-      "minutes": 440,
+      "minutes": 449,
       "line": "日暮里・舎人ライナー",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 45,
+      "route": "日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分"
     },
     {
       "id": "ougioohashi",
       "station": "扇大橋",
       "lat": 35.763897,
       "lng": 139.770808,
-      "minutes": 441,
+      "minutes": 451,
       "line": "日暮里・舎人ライナー",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 43,
+      "route": "日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分"
     },
     {
       "id": "adachiodai",
       "station": "足立小台",
       "lat": 35.754658,
       "lng": 139.770381,
-      "minutes": 444,
+      "minutes": 453,
       "line": "日暮里・舎人ライナー",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 41,
+      "route": "日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分"
     },
     {
       "id": "kumanomae",
       "station": "熊野前",
       "lat": 35.749212,
       "lng": 139.769204,
-      "minutes": 446,
+      "minutes": 449,
       "line": "日暮里・舎人ライナー",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 45,
+      "route": "徒歩→熊野前(舎人ライナー)→日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分"
     },
     {
       "id": "shakudoshougakkoumae",
       "station": "赤土小学校前",
       "lat": 35.742454,
       "lng": 139.768989,
-      "minutes": 448,
+      "minutes": 457,
       "line": "日暮里・舎人ライナー",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 37,
+      "route": "日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分"
     },
     {
       "id": "nishinippori",
       "station": "西日暮里",
       "lat": 35.731954,
       "lng": 139.766857,
-      "minutes": 458,
+      "minutes": 467,
       "line": "山手線(舎人ライナー沿線)",
-      "searchDate": "2025-11-03",
-      "duration": 30
+      "searchDate": "2026-08-28",
+      "duration": 27,
+      "route": "ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分"
     },
     {
       "id": "nippori",
       "station": "日暮里",
       "lat": 35.727908,
       "lng": 139.771287,
-      "minutes": 457,
+      "minutes": 466,
       "line": "山手線(舎人ライナー沿線)",
-      "searchDate": "2025-11-03",
-      "duration": 31
+      "searchDate": "2026-08-28",
+      "duration": 28,
+      "route": "ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分"
     },
     {
       "id": "ikejirioohashi",
       "station": "池尻大橋",
       "lat": 35.650603,
       "lng": 139.684319,
-      "minutes": 454,
+      "minutes": 459,
       "line": "田園都市線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 33,
+      "route": "東急田園都市線→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "sangenjaya",
       "station": "三軒茶屋",
       "lat": 35.643716,
       "lng": 139.670156,
-      "minutes": 451,
+      "minutes": 459,
       "line": "田園都市線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 37,
+      "route": "東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "komazawadaigaku",
       "station": "駒沢大学",
       "lat": 35.633471,
       "lng": 139.661702,
-      "minutes": 448,
+      "minutes": 453,
       "line": "田園都市線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 39,
+      "route": "東急田園都市線→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "sakurashinmachi",
       "station": "桜新町",
       "lat": 35.631666,
       "lng": 139.644779,
-      "minutes": 446,
+      "minutes": 451,
       "line": "田園都市線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 41,
+      "route": "東急田園都市線→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "youga",
       "station": "用賀",
       "lat": 35.626436,
       "lng": 139.633928,
-      "minutes": 440,
+      "minutes": 445,
       "line": "田園都市線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 47,
+      "route": "東急田園都市線→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "futakoshinchi",
       "station": "二子新地",
       "lat": 35.606994,
       "lng": 139.622338,
-      "minutes": 436,
+      "minutes": 446,
       "line": "田園都市線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 50,
+      "route": "東急田園都市線→二子玉川→東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "takatsu",
       "station": "高津",
       "lat": 35.603248,
       "lng": 139.616934,
-      "minutes": 434,
+      "minutes": 444,
       "line": "田園都市線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 52,
+      "route": "東急田園都市線→二子玉川→東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "kajigatani",
       "station": "梶が谷",
       "lat": 35.593963,
       "lng": 139.605885,
-      "minutes": 430,
+      "minutes": 440,
       "line": "田園都市線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 56,
+      "route": "東急田園都市線→溝の口→東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "miyazakidai",
       "station": "宮崎台",
       "lat": 35.587228,
       "lng": 139.591313,
-      "minutes": 425,
+      "minutes": 435,
       "line": "田園都市線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 61,
+      "route": "東急田園都市線→溝の口→東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "miyamaedaira",
       "station": "宮前平",
       "lat": 35.584951,
       "lng": 139.581983,
-      "minutes": 424,
+      "minutes": 434,
       "line": "田園都市線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 62,
+      "route": "東急田園都市線→溝の口→東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "saginuma",
       "station": "鷺沼",
       "lat": 35.579762,
       "lng": 139.573268,
-      "minutes": 430,
+      "minutes": 440,
       "line": "田園都市線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 56,
+      "route": "東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "tamapuraaza",
       "station": "たまプラーザ",
       "lat": 35.577427,
       "lng": 139.558447,
-      "minutes": 427,
+      "minutes": 437,
       "line": "田園都市線",
-      "searchDate": "2025-11-03",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 59,
+      "route": "東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "asakadai",
       "station": "朝霞台",
       "lat": 35.814328,
       "lng": 139.587189,
-      "minutes": 443,
+      "minutes": 454,
       "line": "東武東上線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 43,
+      "route": "東武東上線急行→和光市→東京メトロ有楽町線新木場行→護国寺→徒歩5分"
     },
     {
       "id": "asaka",
       "station": "朝霞",
       "lat": 35.796736,
       "lng": 139.600321,
-      "minutes": 446,
+      "minutes": 458,
       "line": "東武東上線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 39,
+      "route": "東武東上線急行→和光市→東京メトロ有楽町線新木場行→護国寺→徒歩5分"
     },
     {
       "id": "wakoushi",
       "station": "和光市",
       "lat": 35.788507,
       "lng": 139.612434,
-      "minutes": 451,
+      "minutes": 462,
       "line": "東武東上線",
-      "searchDate": "2025-11-03",
-      "note": "有楽町線7:31"
+      "searchDate": "2026-08-28",
+      "duration": 35,
+      "route": "東京メトロ有楽町線新木場行→護国寺→徒歩5分"
     },
     {
       "id": "narimasu",
       "station": "成増",
       "lat": 35.777723,
       "lng": 139.632708,
-      "minutes": 452,
+      "minutes": 464,
       "line": "東武東上線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 33,
+      "route": "東武東上線急行→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "akatsuka",
       "station": "赤塚",
       "lat": 35.770558,
       "lng": 139.644482,
-      "minutes": 452,
+      "minutes": 463,
       "line": "東武東上線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 34,
+      "route": "徒歩→地下鉄赤塚→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "toubunerima",
       "station": "東武練馬",
       "lat": 35.768698,
       "lng": 139.661964,
-      "minutes": 454,
+      "minutes": 459,
       "line": "東武東上線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 32,
+      "route": "東武東上線→上板橋→東武東上線準急→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "kamiitabashi",
       "station": "上板橋",
       "lat": 35.763596,
       "lng": 139.67641,
-      "minutes": 459,
+      "minutes": 466,
       "line": "東武東上線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 28,
+      "route": "東武東上線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "tokiwadai",
       "station": "ときわ台",
       "lat": 35.758771,
       "lng": 139.689015,
-      "minutes": 462,
+      "minutes": 468,
       "line": "東武東上線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 26,
+      "route": "東武東上線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "nakaitabashi",
       "station": "中板橋",
       "lat": 35.756214,
       "lng": 139.694628,
-      "minutes": 464,
+      "minutes": 470,
       "line": "東武東上線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 24,
+      "route": "東武東上線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "ooyama",
       "station": "大山",
       "lat": 35.748398,
       "lng": 139.702589,
-      "minutes": 466,
+      "minutes": 472,
       "line": "東武東上線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 22,
+      "route": "東武東上線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "shitaitahashi",
       "station": "下板橋",
       "lat": 35.745721,
       "lng": 139.714785,
-      "minutes": 468,
+      "minutes": 474,
       "line": "東武東上線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 20,
+      "route": "東武東上線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "kitaikefukuro",
       "station": "北池袋",
       "lat": 35.741283,
       "lng": 139.716749,
-      "minutes": 470,
+      "minutes": 476,
       "line": "東武東上線",
-      "searchDate": "2025-11-03"
+      "searchDate": "2026-08-28",
+      "duration": 18,
+      "route": "東武東上線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "yubiougi",
       "station": "指扇",
       "lat": 35.917023,
       "lng": 139.564951,
-      "minutes": 420,
+      "minutes": 436,
       "line": "埼京線",
-      "searchDate": "2025-11-04",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 55,
+      "route": "ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "nishioomiya",
       "station": "西大宮",
       "lat": 35.922297,
       "lng": 139.57985,
-      "minutes": 423,
+      "minutes": 438,
       "line": "埼京線",
-      "searchDate": "2025-11-04",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 53,
+      "route": "ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "nisshin",
       "station": "日進",
       "lat": 35.931555,
       "lng": 139.606111,
-      "minutes": 426,
+      "minutes": 442,
       "line": "埼京線",
-      "searchDate": "2025-11-04",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 49,
+      "route": "ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "kitayono",
       "station": "北与野",
       "lat": 35.890678,
       "lng": 139.628521,
-      "minutes": 429,
+      "minutes": 441,
       "line": "埼京線",
-      "searchDate": "2025-11-04",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 50,
+      "route": "ＪＲ埼京線→武蔵浦和→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "yonohonchou",
       "station": "与野本町",
       "lat": 35.880968,
       "lng": 139.626075,
-      "minutes": 431,
+      "minutes": 442,
       "line": "埼京線",
-      "searchDate": "2025-11-04",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 49,
+      "route": "ＪＲ埼京線→武蔵浦和→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "minamiyono",
       "station": "南与野",
       "lat": 35.867456,
       "lng": 139.631117,
-      "minutes": 438,
+      "minutes": 445,
       "line": "埼京線",
-      "searchDate": "2025-11-04",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 46,
+      "route": "ＪＲ埼京線→武蔵浦和→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "nakaurawa",
       "station": "中浦和",
       "lat": 35.853769,
       "lng": 139.6375,
-      "minutes": 440,
+      "minutes": 447,
       "line": "埼京線",
-      "searchDate": "2025-11-04",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 44,
+      "route": "ＪＲ埼京線→武蔵浦和→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "musashiurawa",
       "station": "武蔵浦和",
       "lat": 35.846047,
       "lng": 139.647974,
-      "minutes": 444,
+      "minutes": 454,
       "line": "埼京線",
-      "searchDate": "2025-11-04",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 37,
+      "route": "ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "kitadota",
       "station": "北戸田",
       "lat": 35.826883,
       "lng": 139.661201,
-      "minutes": 447,
+      "minutes": 452,
       "line": "埼京線",
-      "searchDate": "2025-11-04",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 42,
+      "route": "ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "toda",
       "station": "戸田",
       "lat": 35.817665,
       "lng": 139.669548,
-      "minutes": 449,
+      "minutes": 454,
       "line": "埼京線",
-      "searchDate": "2025-11-04",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 40,
+      "route": "ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "todakouen",
       "station": "戸田公園",
       "lat": 35.807906,
       "lng": 139.678203,
-      "minutes": 452,
+      "minutes": 459,
       "line": "埼京線",
-      "searchDate": "2025-11-04",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 35,
+      "route": "ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "ukimafunato",
       "station": "浮間船渡",
       "lat": 35.791209,
       "lng": 139.691341,
-      "minutes": 455,
+      "minutes": 462,
       "line": "埼京線",
-      "searchDate": "2025-11-04",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 32,
+      "route": "ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "kitaakabane",
       "station": "北赤羽",
       "lat": 35.787007,
       "lng": 139.70569,
-      "minutes": 457,
+      "minutes": 465,
       "line": "埼京線",
-      "searchDate": "2025-11-04",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 29,
+      "route": "ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "akabane",
       "station": "赤羽",
       "lat": 35.778026,
       "lng": 139.720928,
-      "minutes": 460,
+      "minutes": 468,
       "line": "埼京線",
-      "searchDate": "2025-11-04",
+      "searchDate": "2026-08-28",
       "major": true,
-      "outside": true
+      "outside": true,
+      "duration": 26,
+      "route": "ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "juujou",
       "station": "十条",
       "lat": 35.760321,
       "lng": 139.722233,
-      "minutes": 463,
+      "minutes": 471,
       "line": "埼京線",
-      "searchDate": "2025-11-04",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 23,
+      "route": "ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "itabashi",
       "station": "板橋",
       "lat": 35.745435,
       "lng": 139.719507,
-      "minutes": 466,
+      "minutes": 474,
       "line": "埼京線",
-      "searchDate": "2025-11-04",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 20,
+      "route": "ＪＲ埼京線→池袋→東京メトロ丸ノ内線荻窪行→茗荷谷→徒歩8分"
     },
     {
       "id": "toudaimiya",
       "station": "東大宮",
       "lat": 35.948751,
       "lng": 139.640291,
-      "minutes": 434,
+      "minutes": 440,
       "line": "宇都宮線・京浜東北線東大宮-上中里・尾久",
-      "searchDate": "2025-11-04",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 54,
+      "route": "ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "doro",
       "station": "土呂",
       "lat": 35.931997,
       "lng": 139.63214,
-      "minutes": 437,
+      "minutes": 443,
       "line": "宇都宮線・京浜東北線東大宮-上中里・尾久",
-      "searchDate": "2025-11-04",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 51,
+      "route": "ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "oomiya",
       "station": "大宮",
       "lat": 35.906439,
       "lng": 139.62405,
-      "minutes": 442,
+      "minutes": 449,
       "line": "宇都宮線・京浜東北線東大宮-上中里・尾久",
-      "searchDate": "2025-11-04",
+      "searchDate": "2026-08-28",
       "major": true,
-      "outside": true
+      "outside": true,
+      "duration": 45,
+      "route": "ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "saitamashintoshin",
       "station": "さいたま新都心",
       "lat": 35.893867,
       "lng": 139.633587,
-      "minutes": 444,
+      "minutes": 451,
       "line": "宇都宮線・京浜東北線東大宮-上中里・尾久",
-      "searchDate": "2025-11-04",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 43,
+      "route": "ＪＲ高崎線→赤羽→ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "yono",
       "station": "与野",
       "lat": 35.884393,
       "lng": 139.639085,
-      "minutes": 442,
+      "minutes": 449,
       "line": "宇都宮線・京浜東北線東大宮-上中里・尾久",
-      "searchDate": "2025-11-04",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 45,
+      "route": "ＪＲ京浜東北・根岸線→浦和→ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "kitaurawa",
       "station": "北浦和",
       "lat": 35.872053,
       "lng": 139.645951,
-      "minutes": 444,
+      "minutes": 451,
       "line": "宇都宮線・京浜東北線東大宮-上中里・尾久",
-      "searchDate": "2025-11-04",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 43,
+      "route": "ＪＲ京浜東北・根岸線→浦和→ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "urawa",
       "station": "浦和",
       "lat": 35.858496,
       "lng": 139.657109,
-      "minutes": 449,
+      "minutes": 456,
       "line": "宇都宮線・京浜東北線東大宮-上中里・尾久",
-      "searchDate": "2025-11-04",
+      "searchDate": "2026-08-28",
       "major": true,
-      "outside": true
+      "outside": true,
+      "duration": 38,
+      "route": "ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "minamiurawa",
       "station": "南浦和",
       "lat": 35.847648,
       "lng": 139.669125,
-      "minutes": 443,
+      "minutes": 451,
       "line": "宇都宮線・京浜東北線東大宮-上中里・尾久",
-      "searchDate": "2025-11-04",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 43,
+      "route": "ＪＲ京浜東北線→赤羽→ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "warabi",
       "station": "蕨",
       "lat": 35.827959,
       "lng": 139.690357,
-      "minutes": 446,
+      "minutes": 455,
       "line": "宇都宮線・京浜東北線東大宮-上中里・尾久",
-      "searchDate": "2025-11-04",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 39,
+      "route": "ＪＲ京浜東北線→赤羽→ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "nishikawakuchi",
       "station": "西川口",
       "lat": 35.815514,
       "lng": 139.704312,
-      "minutes": 449,
+      "minutes": 458,
       "line": "宇都宮線・京浜東北線東大宮-上中里・尾久",
-      "searchDate": "2025-11-04",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 36,
+      "route": "ＪＲ京浜東北線→赤羽→ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "kawaguchi",
       "station": "川口",
       "lat": 35.801869,
       "lng": 139.717472,
-      "minutes": 452,
+      "minutes": 461,
       "line": "宇都宮線・京浜東北線東大宮-上中里・尾久",
-      "searchDate": "2025-11-04",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 33,
+      "route": "ＪＲ京浜東北線→赤羽→ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "higashijuujou",
       "station": "東十条",
       "lat": 35.763803,
       "lng": 139.726858,
-      "minutes": 453,
+      "minutes": 461,
       "line": "宇都宮線・京浜東北線東大宮-上中里・尾久",
-      "searchDate": "2025-11-04",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 33,
+      "route": "ＪＲ京浜東北線→赤羽→ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "kaminakasato",
       "station": "上中里",
       "lat": 35.74728,
       "lng": 139.745769,
-      "minutes": 453,
+      "minutes": 464,
       "line": "宇都宮線・京浜東北線東大宮-上中里・尾久",
-      "searchDate": "2025-11-04",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 30,
+      "route": "ＪＲ京浜東北・根岸線→田端→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分"
     },
     {
       "id": "oku",
       "station": "尾久",
       "lat": 35.74683,
       "lng": 139.753846,
-      "minutes": 449,
+      "minutes": 456,
       "line": "宇都宮線・京浜東北線東大宮-上中里・尾久",
-      "searchDate": "2025-11-04",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 35,
+      "route": "ＪＲ高崎線→赤羽→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "higashiiwatsuki",
       "station": "東岩槻",
       "lat": 35.963273,
       "lng": 139.712192,
-      "minutes": 420,
+      "minutes": 425,
       "line": "東武野田線　大宮-東岩槻",
-      "searchDate": "2025-11-04",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 69,
+      "route": "東武アーバンパークライン→大宮(埼玉県)→ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "iwatsuki",
       "station": "岩槻",
       "lat": 35.950239,
       "lng": 139.693197,
-      "minutes": 423,
+      "minutes": 428,
       "line": "東武野田線　大宮-東岩槻",
-      "searchDate": "2025-11-04",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 66,
+      "route": "東武アーバンパークライン→大宮(埼玉県)→ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "shichiri",
       "station": "七里",
       "lat": 35.936464,
       "lng": 139.665948,
-      "minutes": 427,
+      "minutes": 432,
       "line": "東武野田線　大宮-東岩槻",
-      "searchDate": "2025-11-04",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 62,
+      "route": "東武アーバンパークライン→大宮(埼玉県)→ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "oowada",
       "station": "大和田",
       "lat": 35.929359,
       "lng": 139.65051,
-      "minutes": 430,
+      "minutes": 435,
       "line": "東武野田線　大宮-東岩槻",
-      "searchDate": "2025-11-04",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 59,
+      "route": "東武アーバンパークライン→大宮(埼玉県)→ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "oomiyakouen",
       "station": "大宮公園",
       "lat": 35.92374,
       "lng": 139.632903,
-      "minutes": 432,
+      "minutes": 437,
       "line": "東武野田線　大宮-東岩槻",
-      "searchDate": "2025-11-04",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 57,
+      "route": "東武アーバンパークライン→大宮(埼玉県)→ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "hokudaimiya",
       "station": "北大宮",
       "lat": 35.91716,
       "lng": 139.624726,
-      "minutes": 434,
+      "minutes": 439,
       "line": "東武野田線　大宮-東岩槻",
-      "searchDate": "2025-11-04",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 55,
+      "route": "東武アーバンパークライン→大宮(埼玉県)→ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "yoshinohara",
       "station": "吉野原",
       "lat": 35.957065,
       "lng": 139.620862,
-      "minutes": 426,
+      "minutes": 431,
       "line": "NEW SHUTTLE　大宮-吉野原",
-      "searchDate": "2025-11-04",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 60,
+      "route": "埼玉新都市交通ニューシャトル→大宮(埼玉県)→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "imahane",
       "station": "今羽",
       "lat": 35.949941,
       "lng": 139.619443,
-      "minutes": 428,
+      "minutes": 433,
       "line": "NEW SHUTTLE　大宮-吉野原",
-      "searchDate": "2025-11-04",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 58,
+      "route": "埼玉新都市交通ニューシャトル→大宮(埼玉県)→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "touguuhara",
       "station": "東宮原",
       "lat": 35.94262,
       "lng": 139.618054,
-      "minutes": 429,
+      "minutes": 434,
       "line": "NEW SHUTTLE　大宮-吉野原",
-      "searchDate": "2025-11-04",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 57,
+      "route": "埼玉新都市交通ニューシャトル→大宮(埼玉県)→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "kamomiya",
       "station": "加茂宮",
       "lat": 35.93568,
       "lng": 139.616688,
-      "minutes": 431,
+      "minutes": 436,
       "line": "NEW SHUTTLE　大宮-吉野原",
-      "searchDate": "2025-11-04",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 55,
+      "route": "埼玉新都市交通ニューシャトル→大宮(埼玉県)→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "tetsudouhakubutsukan",
       "station": "鉄道博物館",
       "lat": 35.920271,
       "lng": 139.617796,
-      "minutes": 434,
+      "minutes": 439,
       "line": "NEW SHUTTLE　大宮-吉野原",
-      "searchDate": "2025-11-04",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 52,
+      "route": "埼玉新都市交通ニューシャトル→大宮(埼玉県)→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "miyahara",
       "station": "宮原",
       "lat": 35.940256,
       "lng": 139.609455,
-      "minutes": 433,
+      "minutes": 443,
       "line": "高崎線 大宮-宮原",
-      "searchDate": "2025-11-04",
-      "outside": true
+      "searchDate": "2026-08-28",
+      "outside": true,
+      "duration": 51,
+      "route": "ＪＲ高崎線→大宮(埼玉県)→ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "hokufunaka",
       "station": "北府中",
       "lat": 35.68088,
       "lng": 139.471792,
-      "minutes": 417,
+      "minutes": 426,
       "line": "武蔵野線 府中本町-市川塩浜・南船橋(正式には西船橋以南は京葉線)",
-      "searchDate": "2025-11-04"
+      "searchDate": "2026-08-28",
+      "duration": 71,
+      "route": "ＪＲ武蔵野線→北朝霞→徒歩→朝霞台→東武東上線急行→和光市→東京メトロ有楽町線新木場行→護国寺→徒歩5分"
     },
     {
       "id": "shinkodaira",
       "station": "新小平",
       "lat": 35.73128,
       "lng": 139.470745,
-      "minutes": 424,
+      "minutes": 433,
       "line": "武蔵野線 府中本町-市川塩浜・南船橋(正式には西船橋以南は京葉線)",
-      "searchDate": "2025-11-04"
+      "searchDate": "2026-08-28",
+      "duration": 64,
+      "route": "ＪＲ武蔵野線→北朝霞→徒歩→朝霞台→東武東上線急行→和光市→東京メトロ有楽町線新木場行→護国寺→徒歩5分"
     },
     {
       "id": "higashitokorozawa",
       "station": "東所沢",
       "lat": 35.79461,
       "lng": 139.513878,
-      "minutes": 425,
+      "minutes": 442,
       "line": "武蔵野線 府中本町-市川塩浜・南船橋(正式には西船橋以南は京葉線)",
-      "searchDate": "2025-11-04"
+      "searchDate": "2026-08-28",
+      "duration": 55,
+      "route": "ＪＲ武蔵野線→北朝霞→徒歩→朝霞台→東武東上線急行→和光市→東京メトロ有楽町線新木場行→護国寺→徒歩5分"
     },
     {
       "id": "niiza",
       "station": "新座",
       "lat": 35.80381,
       "lng": 139.556328,
-      "minutes": 428,
+      "minutes": 445,
       "line": "武蔵野線 府中本町-市川塩浜・南船橋(正式には西船橋以南は京葉線)",
-      "searchDate": "2025-11-04"
+      "searchDate": "2026-08-28",
+      "duration": 52,
+      "route": "ＪＲ武蔵野線→北朝霞→徒歩→朝霞台→東武東上線急行→和光市→東京メトロ有楽町線新木場行→護国寺→徒歩5分"
     },
     {
       "id": "nishiurawa",
       "station": "西浦和",
       "lat": 35.844139,
       "lng": 139.627707,
-      "minutes": 437,
+      "minutes": 445,
       "line": "武蔵野線 府中本町-市川塩浜・南船橋(正式には西船橋以南は京葉線)",
-      "searchDate": "2025-11-04"
+      "searchDate": "2026-08-28",
+      "duration": 46,
+      "route": "ＪＲ武蔵野線→武蔵浦和→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "higashiurawa",
       "station": "東浦和",
       "lat": 35.864079,
       "lng": 139.704627,
-      "minutes": 435,
+      "minutes": 441,
       "line": "武蔵野線 府中本町-市川塩浜・南船橋(正式には西船橋以南は京葉線)",
-      "searchDate": "2025-11-04"
+      "searchDate": "2026-08-28",
+      "duration": 50,
+      "route": "ＪＲ武蔵野線→武蔵浦和→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "koshigayareikutaun",
       "station": "越谷レイクタウン",
       "lat": 35.876176,
       "lng": 139.8221,
-      "minutes": 422,
+      "minutes": 427,
       "line": "武蔵野線 府中本町-市川塩浜・南船橋(正式には西船橋以南は京葉線)",
-      "searchDate": "2025-11-04"
+      "searchDate": "2026-08-28",
+      "duration": 64,
+      "route": "ＪＲ武蔵野線→武蔵浦和→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
     },
     {
       "id": "shinzousato",
       "station": "新三郷",
       "lat": 35.858667,
       "lng": 139.869341,
-      "minutes": 418,
+      "minutes": 431,
       "line": "武蔵野線 府中本町-市川塩浜・南船橋(正式には西船橋以南は京葉線)",
-      "searchDate": "2025-11-04"
+      "searchDate": "2026-08-28",
+      "duration": 61,
+      "route": "ＪＲ武蔵野線→南流山→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分"
     },
     {
       "id": "misato",
       "station": "三郷",
       "lat": 35.845004,
       "lng": 139.886341,
-      "minutes": 421,
+      "minutes": 434,
       "line": "武蔵野線 府中本町-市川塩浜・南船橋(正式には西船橋以南は京葉線)",
-      "searchDate": "2025-11-04"
+      "searchDate": "2026-08-28",
+      "duration": 58,
+      "route": "ＪＲ武蔵野線→南流山→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分"
     },
     {
       "id": "ichikawaoono",
       "station": "市川大野",
       "lat": 35.755432,
       "lng": 139.951227,
-      "minutes": 415,
+      "minutes": 425,
       "line": "武蔵野線 府中本町-市川塩浜・南船橋(正式には西船橋以南は京葉線)",
-      "searchDate": "2025-11-04"
+      "searchDate": "2026-08-28",
+      "duration": 67,
+      "route": "ＪＲ武蔵野線→南流山→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分"
     },
     {
       "id": "shin-akitsu",
       "station": "新秋津",
       "lat": 35.778331,
       "lng": 139.493592,
-      "minutes": 439,
+      "minutes": 438,
       "line": "武蔵野線 府中本町-市川塩浜・南船橋(正式には西船橋以南は京葉線)",
-      "searchDate": "2025-11-04",
-      "note": "武蔵野線07:11発、秋津乗換のため実質07:19"
+      "searchDate": "2026-08-28",
+      "duration": 59,
+      "route": "ＪＲ武蔵野線→北朝霞→徒歩→朝霞台→東武東上線急行→和光市→東京メトロ有楽町線新木場行→護国寺→徒歩5分"
     },
     {
       "id": "hokuchoukasumi",
       "station": "北朝霞",
       "lat": 35.815475,
       "lng": 139.587322,
-      "minutes": 442,
+      "minutes": 451,
       "line": "武蔵野線 府中本町-市川塩浜・南船橋(正式には西船橋以南は京葉線)",
-      "searchDate": "2025-11-04",
-      "note": "武蔵野線07:20発だが朝霞台乗換のため実質07:22"
+      "searchDate": "2026-08-28",
+      "duration": 46,
+      "route": "徒歩→朝霞台→東武東上線急行→和光市→東京メトロ有楽町線新木場行→護国寺→徒歩5分"
     },
     {
       "id": "minami-koshigaya",
       "station": "南越谷",
       "lat": 35.876106,
       "lng": 139.790499,
-      "minutes": 430,
+      "minutes": 434,
       "line": "武蔵野線 府中本町-市川塩浜・南船橋(正式には西船橋以南は京葉線)",
-      "searchDate": "2025-11-04",
-      "note": "武蔵野線07:06発だが新越谷乗換のため実質07:10"
+      "searchDate": "2026-08-28",
+      "duration": 58,
+      "route": "徒歩→新越谷→東武スカイツリーライン区間急行→北千住→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分"
     },
     {
       "id": "shinpachihashira",
       "station": "新八柱",
       "lat": 35.792013,
       "lng": 139.938393,
-      "minutes": 422,
+      "minutes": 433,
       "line": "武蔵野線 府中本町-市川塩浜・南船橋(正式には西船橋以南は京葉線)",
-      "searchDate": "2025-11-04",
-      "note": "武蔵野線07:00発だが八柱乗換のため実質07:02"
+      "searchDate": "2026-08-28",
+      "duration": 59,
+      "route": "徒歩→八柱→京成松戸線→松戸→ＪＲ常磐線(上野東京ライン)→北千住→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分"
     },
     {
       "id": "kashiwatanaka",
       "station": "柏たなか",
       "lat": 35.9109,
       "lng": 139.957533,
-      "minutes": 420,
+      "minutes": 432,
       "line": "つくばエクスプレス",
-      "searchDate": "2026-03-14"
+      "searchDate": "2026-08-28",
+      "duration": 60,
+      "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分"
     },
     {
       "id": "kashiwanoha-campus",
       "station": "柏の葉キャンパス",
       "lat": 35.89308,
       "lng": 139.952454,
-      "minutes": 422,
+      "minutes": 434,
       "line": "つくばエクスプレス",
-      "searchDate": "2026-03-14"
+      "searchDate": "2026-08-28",
+      "duration": 58,
+      "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分"
     },
     {
       "id": "nagareyamaootakanomori",
       "station": "流山おおたかの森",
       "lat": 35.872051,
       "lng": 139.925898,
-      "minutes": 425,
+      "minutes": 438,
       "line": "つくばエクスプレス",
-      "searchDate": "2026-03-14"
+      "searchDate": "2026-08-28",
+      "duration": 54,
+      "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分"
     },
     {
       "id": "nagareyamasentorarupaaku",
       "station": "流山セントラルパーク",
       "lat": 35.854552,
       "lng": 139.915223,
-      "minutes": 428,
+      "minutes": 441,
       "line": "つくばエクスプレス",
-      "searchDate": "2026-03-14"
+      "searchDate": "2026-08-28",
+      "duration": 51,
+      "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分"
     },
     {
       "id": "minami-nagareyama",
       "station": "南流山",
       "lat": 35.838035,
       "lng": 139.903865,
-      "minutes": 430,
+      "minutes": 443,
       "line": "つくばエクスプレス",
-      "searchDate": "2026-03-14"
+      "searchDate": "2026-08-28",
+      "duration": 49,
+      "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分"
     },
     {
       "id": "misatochuuou",
       "station": "三郷中央",
       "lat": 35.824514,
       "lng": 139.878344,
-      "minutes": 434,
+      "minutes": 447,
       "line": "つくばエクスプレス",
-      "searchDate": "2026-03-14"
+      "searchDate": "2026-08-28",
+      "duration": 45,
+      "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分"
     },
     {
       "id": "yashio",
       "station": "八潮",
       "lat": 35.807905,
       "lng": 139.845017,
-      "minutes": 437,
+      "minutes": 450,
       "line": "つくばエクスプレス",
-      "searchDate": "2026-03-14"
+      "searchDate": "2026-08-28",
+      "duration": 42,
+      "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分"
     },
     {
       "id": "rokumachi",
       "station": "六町",
       "lat": 35.784963,
       "lng": 139.821816,
-      "minutes": 441,
+      "minutes": 454,
       "line": "つくばエクスプレス",
-      "searchDate": "2026-03-14"
+      "searchDate": "2026-08-28",
+      "duration": 38,
+      "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分"
     },
     {
       "id": "aoi",
       "station": "青井",
       "lat": 35.771782,
       "lng": 139.82038,
-      "minutes": 443,
+      "minutes": 456,
       "line": "つくばエクスプレス",
-      "searchDate": "2026-03-14"
+      "searchDate": "2026-08-28",
+      "duration": 36,
+      "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分"
     },
     {
       "id": "asakusa-tx",
       "station": "浅草(tx)",
       "lat": 35.713817,
       "lng": 139.792389,
-      "minutes": 456,
+      "minutes": 465,
       "line": "つくばエクスプレス",
-      "searchDate": "2026-03-14"
+      "searchDate": "2026-08-28",
+      "duration": 27,
+      "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分"
     },
     {
       "id": "nagareyama",
       "station": "流山",
       "lat": 35.855771,
       "lng": 139.901766,
-      "minutes": 405,
+      "minutes": 421,
       "line": "流 鉄 流 山 線",
-      "searchDate": "2026-03-14"
+      "searchDate": "2026-08-28",
+      "duration": 71,
+      "route": "徒歩→流山駅/京成バス千葉ウエスト→京成バス千葉ウエスト・松７１→南流山駅/京成バス千葉ウエスト→徒歩→南流山→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分"
     },
     {
       "id": "heiwadai",
       "station": "平和台",
       "lat": 35.85123,
       "lng": 139.901108,
-      "minutes": 406,
+      "minutes": 421,
       "line": "流 鉄 流 山 線",
-      "searchDate": "2026-03-14"
+      "searchDate": "2026-08-28",
+      "duration": 69,
+      "route": "流鉄流山線→馬橋→ＪＲ常磐線→松戸→ＪＲ常磐線快速→日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分"
     },
     {
       "id": "hirekesaki",
       "station": "鰭ヶ崎",
       "lat": 35.840948,
       "lng": 139.911121,
-      "minutes": 422,
+      "minutes": 424,
       "line": "流 鉄 流 山 線",
-      "searchDate": "2026-03-14",
-      "note": "流鉄6:49発だが南流山徒歩の方が早く実質07:02"
+      "searchDate": "2026-08-28",
+      "duration": 66,
+      "route": "流鉄流山線→馬橋→ＪＲ常磐線→松戸→ＪＲ常磐線快速→日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分"
     },
     {
       "id": "koganejoushi",
       "station": "小金城趾",
       "lat": 35.83601,
       "lng": 139.916887,
-      "minutes": 411,
+      "minutes": 426,
       "line": "流 鉄 流 山 線",
-      "searchDate": "2026-03-14"
+      "searchDate": "2026-08-28",
+      "duration": 64,
+      "route": "流鉄流山線→馬橋→ＪＲ常磐線→松戸→ＪＲ常磐線快速→日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分"
     },
     {
       "id": "otsuka",
       "station": "大塚",
       "lat": 35.7314,
       "lng": 139.728,
-      "minutes": 470,
+      "minutes": 478,
       "line": "山手線",
-      "duration": 18
+      "duration": 16,
+      "route": "徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
+      "searchDate": "2026-08-28"
     },
     {
       "id": "mejiro",
       "station": "目白",
       "lat": 35.7212,
       "lng": 139.7066,
-      "minutes": 467,
+      "minutes": 477,
       "line": "山手線",
-      "duration": 21
+      "duration": 20,
+      "route": "ＪＲ山手線外回り→池袋→東京メトロ丸ノ内線方南町行→茗荷谷→徒歩8分",
+      "searchDate": "2026-08-28"
     },
     {
       "id": "shinjuku",
       "station": "新宿",
       "lat": 35.6909,
       "lng": 139.7003,
-      "minutes": 466,
+      "minutes": 471,
       "line": "山手線",
       "major": true,
-      "duration": 22
+      "duration": 26,
+      "route": "ＪＲ山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "searchDate": "2026-08-28"
     },
     {
       "id": "takadanobaba",
       "station": "高田馬場",
       "lat": 35.7123,
       "lng": 139.7038,
-      "minutes": 465,
+      "minutes": 476,
       "line": "山手線",
-      "duration": 23
+      "duration": 21,
+      "route": "ＪＲ山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "searchDate": "2026-08-28"
     },
     {
       "id": "yurakucho",
       "station": "有楽町",
       "lat": 35.675,
       "lng": 139.7633,
-      "minutes": 465,
+      "minutes": 473,
       "line": "山手線",
-      "duration": 23
+      "duration": 23,
+      "route": "東京メトロ有楽町線→護国寺→徒歩5分",
+      "searchDate": "2026-08-28"
     },
     {
       "id": "sugamo",
       "station": "巣鴨",
       "lat": 35.7334,
       "lng": 139.7393,
-      "minutes": 464,
+      "minutes": 475,
       "line": "山手線",
-      "duration": 24
+      "duration": 21,
+      "route": "都営三田線→千石→徒歩→千石一丁目(文京区)/都営バス→都営バス・上５８→音羽二丁目/都営バス→徒歩4分",
+      "searchDate": "2026-08-28"
     },
     {
       "id": "tokyo",
       "station": "東京",
       "lat": 35.6812,
       "lng": 139.7671,
-      "minutes": 463,
+      "minutes": 475,
       "line": "山手線",
       "major": true,
-      "duration": 22
+      "duration": 22,
+      "route": "東京メトロ丸ノ内線→茗荷谷→徒歩8分",
+      "searchDate": "2026-08-28"
     },
     {
       "id": "shin-okubo",
       "station": "新大久保",
       "lat": 35.7013,
       "lng": 139.7001,
-      "minutes": 463,
+      "minutes": 473,
       "line": "山手線",
-      "duration": 25
+      "duration": 24,
+      "route": "ＪＲ山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "searchDate": "2026-08-28"
     },
     {
       "id": "kanda",
       "station": "神田",
       "lat": 35.6917,
       "lng": 139.7706,
-      "minutes": 462,
+      "minutes": 472,
       "line": "山手線",
-      "duration": 21
+      "duration": 22,
+      "route": "ＪＲ中央線快速→御茶ノ水→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
+      "searchDate": "2026-08-28"
     },
     {
       "id": "akihabara",
       "station": "秋葉原",
       "lat": 35.6983,
       "lng": 139.7731,
-      "minutes": 462,
+      "minutes": 472,
       "line": "山手線",
       "major": true,
-      "duration": 23
+      "duration": 22,
+      "route": "ＪＲ総武線→御茶ノ水→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
+      "searchDate": "2026-08-28"
     },
     {
       "id": "komagome",
       "station": "駒込",
       "lat": 35.7365,
       "lng": 139.747,
-      "minutes": 462,
+      "minutes": 471,
       "line": "山手線",
-      "duration": 23
+      "duration": 23,
+      "route": "ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
+      "searchDate": "2026-08-28"
     },
     {
       "id": "yoyogi",
       "station": "代々木",
       "lat": 35.683,
       "lng": 139.702,
-      "minutes": 461,
+      "minutes": 469,
       "line": "山手線",
-      "duration": 27
+      "duration": 28,
+      "route": "ＪＲ山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "searchDate": "2026-08-28"
     },
     {
       "id": "tabata",
       "station": "田端",
       "lat": 35.738,
       "lng": 139.7608,
-      "minutes": 460,
+      "minutes": 469,
       "line": "山手線",
-      "duration": 28
+      "duration": 25,
+      "route": "ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
+      "searchDate": "2026-08-28"
     },
     {
       "id": "shimbashi",
       "station": "新橋",
       "lat": 35.6664,
       "lng": 139.7583,
-      "minutes": 458,
+      "minutes": 466,
       "line": "山手線",
-      "duration": 30
+      "duration": 31,
+      "route": "ＪＲ東海道本線(上野東京ライン)→東京→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
+      "searchDate": "2026-08-28"
     },
     {
       "id": "okachimachi",
       "station": "御徒町",
       "lat": 35.7075,
       "lng": 139.7747,
-      "minutes": 457,
+      "minutes": 467,
       "line": "山手線",
-      "duration": 28
+      "duration": 27,
+      "route": "ＪＲ京浜東北・根岸線→秋葉原→ＪＲ総武線→御茶ノ水→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
+      "searchDate": "2026-08-28"
     },
     {
       "id": "ueno",
       "station": "上野",
       "lat": 35.7138,
       "lng": 139.7773,
-      "minutes": 456,
+      "minutes": 465,
       "line": "山手線",
       "major": true,
-      "duration": 29
+      "duration": 29,
+      "route": "ＪＲ京浜東北・根岸線→秋葉原→ＪＲ総武線→御茶ノ水→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
+      "searchDate": "2026-08-28"
     },
     {
       "id": "harajuku",
       "station": "原宿",
       "lat": 35.6702,
       "lng": 139.7027,
-      "minutes": 456,
+      "minutes": 466,
       "line": "山手線",
-      "duration": 32
+      "duration": 31,
+      "route": "ＪＲ山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "searchDate": "2026-08-28"
     },
     {
       "id": "hamamatsucho",
       "station": "浜松町",
       "lat": 35.6553,
       "lng": 139.7571,
-      "minutes": 456,
+      "minutes": 462,
       "line": "山手線",
-      "duration": 32
+      "duration": 32,
+      "route": "ＪＲ山手線内回り→東京→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
+      "searchDate": "2026-08-28"
     },
     {
       "id": "uguisudani",
       "station": "鶯谷",
       "lat": 35.7205,
       "lng": 139.778,
-      "minutes": 455,
+      "minutes": 464,
       "line": "山手線",
-      "duration": 33
+      "duration": 30,
+      "route": "ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
+      "searchDate": "2026-08-28"
     },
     {
       "id": "ebisu",
       "station": "恵比寿",
       "lat": 35.6467,
       "lng": 139.7101,
-      "minutes": 455,
+      "minutes": 462,
       "line": "山手線",
-      "duration": 30
+      "duration": 32,
+      "route": "ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "searchDate": "2026-08-28"
     },
     {
       "id": "tamachi",
       "station": "田町",
       "lat": 35.6457,
       "lng": 139.7476,
-      "minutes": 454,
+      "minutes": 459,
       "line": "山手線",
-      "duration": 34
+      "duration": 35,
+      "route": "ＪＲ山手線内回り→東京→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
+      "searchDate": "2026-08-28"
     },
     {
       "id": "osaki",
       "station": "大崎",
       "lat": 35.6198,
       "lng": 139.7282,
-      "minutes": 451,
+      "minutes": 458,
       "line": "山手線",
-      "duration": 34
+      "duration": 36,
+      "route": "ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "searchDate": "2026-08-28"
     },
     {
       "id": "takanawa-gateway",
       "station": "高輪ゲートウェイ",
       "lat": 35.6355,
       "lng": 139.7407,
-      "minutes": 451,
+      "minutes": 457,
       "line": "山手線",
-      "duration": 37
+      "duration": 37,
+      "route": "ＪＲ山手線内回り→東京→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
+      "searchDate": "2026-08-28"
     },
     {
       "id": "shinagawa",
       "station": "品川",
       "lat": 35.6284,
       "lng": 139.7387,
-      "minutes": 450,
+      "minutes": 461,
       "line": "山手線",
       "major": true,
-      "duration": 35
+      "duration": 36,
+      "route": "ＪＲ東海道本線(上野東京ライン)→東京→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
+      "searchDate": "2026-08-28"
     },
     {
       "id": "gotanda",
       "station": "五反田",
       "lat": 35.6264,
       "lng": 139.7234,
-      "minutes": 446,
+      "minutes": 457,
       "line": "山手線",
-      "duration": 39
+      "duration": 40,
+      "route": "ＪＲ山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "searchDate": "2026-08-28"
     }
   ]
 }
