@@ -13,8 +13,8 @@
     destination: {
       lat: 35.716741,
       lng: 139.7308823,
-      name: '筑波大学附属中学校',
-      arrivalTime: '08:10',
+      name: '筑波大学附属高等学校',
+      arrivalTime: '08:20',
     },
 
     // カラースケール
@@ -32,7 +32,8 @@
     defaultContourEnabled: true,
     defaultGradientEnabled: false,
     defaultLabelsEnabled: true,
-    defaultGakkuEnabled: true,
+    // 高校には中学版の市区町村ベースの学区境界を適用しない
+    defaultGakkuEnabled: false,
 
     // 目的地同心円（5km/10km/15km）
     destinationRings: {
