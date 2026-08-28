@@ -31,7 +31,7 @@
 - **駅検索・駅名ラベル**
 - **ダークモード**
 
-高校には中学版の市区町村ベースの学区境界を適用しないため、旧学区表示機能と学区データは削除しています。
+高校には中学版の市区町村ベースの学区境界を適用しないため、旧学区表示機能・学区データ・中学版専用の一時データ生成スクリプトは削除しています。
 
 ## 技術スタック
 
@@ -51,26 +51,24 @@ isochrone-map/
 │   └── style.css
 ├── data/
 │   └── stations.json      # 駅ごとの出発時刻・経路データ
-├── js/
-│   ├── config.js
-│   ├── data.js
-│   ├── main.js
-│   ├── map.js
-│   ├── markers.js
-│   ├── renderer.js
-│   ├── renderer3d.js
-│   ├── ui.js
-│   ├── worker.js
-│   └── devtools.js
-├── add_duration.py        # 旧データ用補助スクリプト（再調査後は要見直し）
-└── update.py              # 旧経路データ用補助スクリプト（再調査後は要見直し）
+└── js/
+    ├── config.js
+    ├── data.js
+    ├── main.js
+    ├── map.js
+    ├── markers.js
+    ├── renderer.js
+    ├── renderer3d.js
+    ├── ui.js
+    ├── worker.js
+    └── devtools.js
 ```
 
-## データ更新時の注意
+## 駅データ更新時の注意
 
 現在の `stations.json` の `meta.targetArrival` は旧中学版の値です。駅データを高校版へ更新するときは、各駅の `minutes`・`route`・`duration`・`searchDate` とあわせて、メタデータを **08:18 / 498分** に更新します。
 
-`add_duration.py` と `update.py` は旧データの前提を含むため、新しい駅データに対してそのまま実行しないでください。
+サイト側は旧データを検出すると「再調査前」と表示するようにしてあります。`meta.targetArrival` が `08:18` になれば、その注意表示は自動的に消えます。
 
 ## ライセンス / 免責事項
 
