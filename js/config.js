@@ -24,7 +24,7 @@
     timeRange: {
       min: 390,          // 06:30
       max: 495,          // 08:15
-      contourMin: 400,   // 06:40
+      contourMin: 390,   // 06:30
       contourMax: 495,   // 08:15
     },
 
