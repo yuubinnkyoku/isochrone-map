@@ -14,7 +14,8 @@
 
     _loadStations: function () {
       var self = this;
-      return fetch('data/stations.json')
+      var dataVersion = (window.CONFIG && CONFIG.dataVersion) || 1;
+      return fetch('data/stations.json?v=' + encodeURIComponent(dataVersion), { cache: 'no-cache' })
         .then(function (res) {
           if (!res.ok) throw new Error('stations.json: ' + res.status);
           return res.json();
