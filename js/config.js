@@ -11,6 +11,8 @@
 
     // stations.json cache-buster. Bump when station data changes.
     dataVersion: 12,
+    // Precomputed IDW grid cache-buster.
+    gridVersion: 1,
 
     // 目的地
     destination: {
@@ -80,7 +82,7 @@
     idwPower: 2.5,
 
     // 描画デバウンス
-    renderDebounceMs: 150,
+    renderDebounceMs: 50,
 
     // Canvas描画パディング（ビューポートに対する割合）
     canvasPadding: 0.5,

@@ -1,42 +1,8 @@
 // ============================================================
-// renderer.js — IDW補間 → マーチングスクエア → Canvas等時線描画
-//               IDW補間 → Canvas グラデーション描画
+// renderer.js — precomputed IDW grid -> contours / gradient Canvas
 // ============================================================
 (function () {
   'use strict';
-
-  function idw(lat, lng, stations, power) {
-    if (!power) power = CONFIG.idwPower;
-    var num = 0, den = 0;
-    var cosLat = Math.cos(lat * Math.PI / 180);
-    var halfPower = power / 2;
-    for (var i = 0; i < stations.length; i++) {
-      var s = stations[i];
-      var dlat = lat - s.lat;
-      var dlng = (lng - s.lng) * cosLat;
-      var distSq = dlat * dlat + dlng * dlng;
-      if (distSq < 0.00000025) return s.minutes;
-      var w = 1 / Math.pow(distSq, halfPower);
-      num += w * s.minutes;
-      den += w;
-    }
-    return den > 0 ? num / den : null;
-  }
-
-  function idwPx(x, y, pixStations, halfPower) {
-    var num = 0, den = 0;
-    for (var i = 0; i < pixStations.length; i++) {
-      var s = pixStations[i];
-      var dx = x - s.x;
-      var dy = y - s.y;
-      var distSq = dx * dx + dy * dy;
-      if (distSq < 0.1) return s.minutes;
-      var w = 1 / Math.pow(distSq, halfPower);
-      num += w * s.minutes;
-      den += w;
-    }
-    return den > 0 ? num / den : null;
-  }
 
   function buildContourBreaks(interval) {
     var breaks = [];
@@ -47,24 +13,64 @@
     return breaks;
   }
 
+  function buildRenderState(map, step) {
+    var sz = map.getSize();
+    var pad = CONFIG.canvasPadding;
+    var padX = Math.round(sz.x * pad);
+    var padY = Math.round(sz.y * pad);
+    var width = sz.x + padX * 2;
+    var height = sz.y + padY * 2;
+    return {
+      cvWidth: width,
+      cvHeight: height,
+      pos: map.containerPointToLayerPoint([-padX, -padY]),
+      renderZoom: map.getZoom(),
+      renderTopLeft: map.containerPointToLatLng([-padX, -padY]),
+      padX: padX,
+      padY: padY,
+      step: step,
+      cols: Math.ceil(width / step) + 1,
+      rows: Math.ceil(height / step) + 1,
+    };
+  }
+
+  // Web Mercator is separable: longitude depends only on x and latitude only on y.
+  // Convert one coordinate per column/row, then bilinearly sample the static grid.
+  function sampleCanvasGrid(map, state, gridData) {
+    var cols = state.cols;
+    var rows = state.rows;
+    var step = state.step;
+    var lngs = new Float64Array(cols);
+    var lats = new Float64Array(rows);
+    var c, r;
+
+    for (c = 0; c < cols; c++) {
+      lngs[c] = map.containerPointToLatLng([c * step - state.padX, 0]).lng;
+    }
+    for (r = 0; r < rows; r++) {
+      lats[r] = map.containerPointToLatLng([0, r * step - state.padY]).lat;
+    }
+
+    var values = new Float32Array(cols * rows);
+    for (r = 0; r < rows; r++) {
+      var lat = lats[r];
+      var base = r * cols;
+      for (c = 0; c < cols; c++) {
+        var value = gridData.sample(lat, lngs[c]);
+        values[base + c] = value === null ? NaN : value;
+      }
+    }
+    return values;
+  }
+
   var ContourOverlay = L.Layer.extend({
     options: { pane: 'overlayPane' },
 
     initialize: function (opts) {
-      this._stations = opts.stations || [];
+      this._gridData = opts.grid || null;
       this._interval = opts.interval || 5;
       this._visible = opts.visible !== false;
       this._debounceTimer = null;
-      this._requestId = 0;
-      this._worker = new Worker('js/worker.js?v=11');
-      this._worker.onmessage = this._onWorkerMessage.bind(this);
-    },
-
-    _onWorkerMessage: function (e) {
-      if (e.data.type === 'GRID_READY') {
-        if (e.data.id !== this._requestId) return;
-        this._drawContours(e.data.grid);
-      }
     },
 
     onAdd: function (map) {
@@ -100,59 +106,29 @@
 
     setVisible: function (v) { this._visible = v; this._render(); },
     setInterval: function (interval) { this._interval = interval; this._render(); },
-    setStations: function (stations) { this._stations = stations; this._render(); },
+    setGrid: function (grid) { this._gridData = grid; this._render(); },
     refresh: function () { if (this._map) this._render(); },
+
+    _clear: function () {
+      if (!this._cv) return;
+      this._cv.getContext('2d').clearRect(0, 0, this._cv.width, this._cv.height);
+    },
 
     _render: function () {
       var map = this._map;
       if (!map) return;
-      var sz = map.getSize();
-      var pad = CONFIG.canvasPadding;
-      var padX = Math.round(sz.x * pad), padY = Math.round(sz.y * pad);
-      var pos = map.containerPointToLayerPoint([-padX, -padY]);
-      var renderZoom = map.getZoom();
-      var renderTopLeft = map.containerPointToLatLng([-padX, -padY]);
-
-      if (!this._visible || this._stations.length === 0) {
-        var ctx = this._cv.getContext('2d');
-        ctx.clearRect(0, 0, this._cv.width, this._cv.height);
+      if (!this._visible || !this._gridData || !this._gridData.ready) {
+        this._clear();
         return;
       }
 
-      var cvWidth = sz.x + padX * 2;
-      var cvHeight = sz.y + padY * 2;
-      var cell = CONFIG.gridSize(map.getZoom());
-      var cols = Math.ceil(cvWidth / cell) + 1;
-      var rows = Math.ceil(cvHeight / cell) + 1;
-      var stations = this._stations;
-      var halfPower = CONFIG.idwPower / 2;
-      var pixStations = new Array(stations.length);
-
-      for (var i = 0; i < stations.length; i++) {
-        var s = stations[i];
-        var p = map.latLngToContainerPoint([s.lat, s.lng]);
-        pixStations[i] = { x: p.x + padX, y: p.y + padY, minutes: s.minutes };
-      }
-
-      this._requestId++;
-      this._worker.postMessage({
-        type: 'CALC_GRID',
-        id: this._requestId,
-        payload: { cols: cols, rows: rows, cell: cell, pixStations: pixStations, halfPower: halfPower }
-      });
-
-      this._pendingRenderState = {
-        cvWidth: cvWidth, cvHeight: cvHeight, pos: pos,
-        renderZoom: renderZoom, renderTopLeft: renderTopLeft,
-        cell: cell, cols: cols, rows: rows
-      };
+      var state = buildRenderState(map, CONFIG.gridSize(map.getZoom()));
+      var values = sampleCanvasGrid(map, state, this._gridData);
+      this._drawContours(values, state);
     },
 
-    _drawContours: function (grid) {
+    _drawContours: function (grid, state) {
       if (!this._visible || !this._map) return;
-      var state = this._pendingRenderState;
-      if (!state) return;
-
       var cv = this._cv;
       cv.width = state.cvWidth;
       cv.height = state.cvHeight;
@@ -162,7 +138,7 @@
 
       var ctx = cv.getContext('2d');
       ctx.clearRect(0, 0, cv.width, cv.height);
-      var rows = state.rows, cols = state.cols, cell = state.cell;
+      var rows = state.rows, cols = state.cols, cell = state.step;
       var breaks = buildContourBreaks(this._interval);
       var r, c;
 
@@ -178,6 +154,7 @@
           for (c = 0; c < cols - 1; c++) {
             var v00 = grid[r * cols + c], v10 = grid[r * cols + c + 1];
             var v01 = grid[(r + 1) * cols + c], v11 = grid[(r + 1) * cols + c + 1];
+            if (!Number.isFinite(v00) || !Number.isFinite(v10) || !Number.isFinite(v01) || !Number.isFinite(v11)) continue;
             var ci = (v00 >= level ? 8 : 0) | (v10 >= level ? 4 : 0) | (v11 >= level ? 2 : 0) | (v01 >= level ? 1 : 0);
             if (ci === 0 || ci === 15) continue;
 
@@ -216,6 +193,7 @@
           for (r = rowStep; r < rows - 1 && placed < 3; r += rowStep) {
             for (c = 0; c < cols - 1 && placed < 3; c++) {
               var v = grid[r * cols + c], vn = grid[r * cols + c + 1];
+              if (!Number.isFinite(v) || !Number.isFinite(vn)) continue;
               if ((v < level) !== (vn < level)) {
                 var px = c * cell, py = r * cell;
                 var tw = ctx.measureText(txt).width;
@@ -238,19 +216,9 @@
     options: { pane: 'overlayPane' },
 
     initialize: function (opts) {
-      this._stations = opts.stations || [];
+      this._gridData = opts.grid || null;
       this._visible = opts.visible || false;
       this._debounceTimer = null;
-      this._requestId = 0;
-      this._worker = new Worker('js/worker.js?v=11');
-      this._worker.onmessage = this._onWorkerMessage.bind(this);
-    },
-
-    _onWorkerMessage: function (e) {
-      if (e.data.type === 'GRADIENT_READY') {
-        if (e.data.id !== this._requestId) return;
-        this._drawGradient(e.data.values);
-      }
     },
 
     onAdd: function (map) {
@@ -285,54 +253,31 @@
     },
 
     setVisible: function (v) { this._visible = v; this._render(); },
-    setStations: function (stations) { this._stations = stations; this._render(); },
+    setGrid: function (grid) { this._gridData = grid; this._render(); },
     refresh: function () { if (this._map) this._render(); },
+
+    _clear: function () {
+      if (!this._cv) return;
+      this._cv.getContext('2d').clearRect(0, 0, this._cv.width, this._cv.height);
+    },
 
     _render: function () {
       var map = this._map;
       if (!map) return;
-      var sz = map.getSize();
-      var pad = CONFIG.canvasPadding;
-      var padX = Math.round(sz.x * pad), padY = Math.round(sz.y * pad);
-      var pos = map.containerPointToLayerPoint([-padX, -padY]);
-      var renderZoom = map.getZoom();
-      var renderTopLeft = map.containerPointToLatLng([-padX, -padY]);
-
-      if (!this._visible || this._stations.length === 0) {
-        var ctx = this._cv.getContext('2d');
-        ctx.clearRect(0, 0, this._cv.width, this._cv.height);
+      if (!this._visible || !this._gridData || !this._gridData.ready) {
+        this._clear();
         return;
       }
 
-      var cvWidth = sz.x + padX * 2;
-      var cvHeight = sz.y + padY * 2;
+      var sz = map.getSize();
       var step = Math.max(4, Math.floor(Math.min(sz.x, sz.y) / 180));
-      var halfPower = CONFIG.idwPower / 2;
-      var pixStations = new Array(this._stations.length);
-
-      for (var i = 0; i < this._stations.length; i++) {
-        var s = this._stations[i];
-        var p = map.latLngToContainerPoint([s.lat, s.lng]);
-        pixStations[i] = { x: p.x + padX, y: p.y + padY, minutes: s.minutes };
-      }
-
-      this._requestId++;
-      this._worker.postMessage({
-        type: 'CALC_GRADIENT', id: this._requestId,
-        payload: { width: cvWidth, height: cvHeight, step: step, pixStations: pixStations, halfPower: halfPower }
-      });
-
-      this._pendingRenderState = {
-        cvWidth: cvWidth, cvHeight: cvHeight, pos: pos,
-        renderZoom: renderZoom, renderTopLeft: renderTopLeft, step: step
-      };
+      var state = buildRenderState(map, step);
+      var values = sampleCanvasGrid(map, state, this._gridData);
+      this._drawGradient(values, state);
     },
 
-    _drawGradient: function (values) {
+    _drawGradient: function (values, state) {
       if (!this._visible || !this._map) return;
-      var state = this._pendingRenderState;
-      if (!state) return;
-
       var cv = this._cv;
       cv.width = state.cvWidth;
       cv.height = state.cvHeight;
@@ -343,15 +288,15 @@
       var ctx = cv.getContext('2d');
       ctx.clearRect(0, 0, cv.width, cv.height);
       var step = state.step;
-      var cols = Math.ceil(cv.width / step) + 1;
-      var rows = Math.ceil(cv.height / step) + 1;
+      var cols = state.cols;
+      var rows = state.rows;
 
       for (var r = 0; r < rows; r++) {
         var y = r * step;
         for (var c = 0; c < cols; c++) {
           var x = c * step;
           var val = values[r * cols + c];
-          if (val && val !== 0) {
+          if (Number.isFinite(val)) {
             ctx.fillStyle = colorToCSS(minutesToColor(val), 0.28);
             ctx.fillRect(x, y, step, step);
           }

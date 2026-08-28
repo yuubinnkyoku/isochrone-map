@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "algorithm": "IDW on Web Mercator coordinates",
+  "idwPower": 2.5,
+  "stationCount": 563,
+  "stationDataSha256": "449d3ef449d58ff42645e94b8f20075e15728302e5223de8d93bbbe13cf19317",
+  "rows": 1625,
+  "cols": 1689,
+  "north": 36.564,
+  "south": 34.94,
+  "west": 138.87,
+  "east": 140.558,
+  "latStep": 0.001,
+  "lngStep": 0.001,
+  "valueType": "uint16-le",
+  "scale": 100,
+  "nodata": 65535
+}

@@ -30,6 +30,7 @@
 - **等時線表示**: 3分 / 5分 / 10分間隔で最遅出発時刻の等時線を描画
 - **グラデーション表示**: 最遅出発時刻を連続的に色分け
 - **3D表示**: 補間した時刻を地形状に表示
+- **事前計算IDWグリッド**: 563駅とのIDW補間は更新時に `scripts/build_precomputed_grid.mjs` で約100m間隔の静的グリッドへ変換し、ブラウザでは双線形補間のみ実行
 - **地図切替**: 国土地理院・OpenStreetMapなど
 - **距離比較**: 筑附高を中心とする5km・10km・15km円
 - **駅検索・駅名ラベル**: 縮小時は主要駅のみ、中間ズームでは国土数値情報「駅別乗降客数」（2024年）の上位駅から段階表示し、十分拡大すると全駅を表示
@@ -54,19 +55,23 @@ isochrone-map/
 ├── css/
 │   └── style.css
 ├── data/
-│   └── stations.json      # 駅ごとの出発時刻・経路・乗降客数データ
+│   ├── stations.json      # 駅ごとの出発時刻・経路・乗降客数データ
+│   ├── idw-grid.bin.gz    # 事前計算済みIDWグリッド（通常読み込み用）
+│   ├── idw-grid.bin       # 非圧縮フォールバック
+│   └── idw-grid.meta.json # グリッド範囲・解像度・元データSHA
 ├── scripts/
-│   └── update_passenger_counts.py  # 国土数値情報 S12-25 から乗降客数を更新
+│   ├── update_passenger_counts.py  # 国土数値情報 S12-25 から乗降客数を更新
+│   └── build_precomputed_grid.mjs  # IDWグリッドを再生成
 └── js/
     ├── config.js
     ├── data.js
     ├── main.js
     ├── map.js
     ├── markers.js
+    ├── precomputed-grid.js
     ├── renderer.js
     ├── renderer3d.js
     ├── ui.js
-    ├── worker.js
     └── devtools.js
 ```
 
@@ -77,6 +82,17 @@ isochrone-map/
 東京23区の駅母集団は国土数値情報を基準にしています。同名駅については座標を照合し、別地域の同名駅をYahoo!乗換案内が選択していないことを確認します。
 
 駅別乗降客数は `python3 scripts/update_passenger_counts.py` で国土数値情報 S12-25 を取得・照合して更新できます。2024年値がない駅は推定せず `null` とし、利用者数による中間ズームの優先表示対象から外します。
+
+
+### IDWグリッドの再生成
+
+駅の `minutes` や座標を変更した場合は、駅データ更新後に次を実行します。
+
+```bash
+node scripts/build_precomputed_grid.mjs
+```
+
+`data/idw-grid.bin`、`data/idw-grid.bin.gz`、`data/idw-grid.meta.json` が再生成されます。通常のブラウザはgzip版を読み込み、非対応環境のみ非圧縮版へフォールバックします。グリッドは駅群の外側に約0.6度の余白を取り、緯度経度0.001度（東京付近で約90〜110m）間隔でIDWを事前計算しています。値は0.01分単位の16bit整数として保存し、表示時は4近傍から双線形補間します。これによりパン・ズームのたびに全駅を走査する必要がありません。
 
 ## ライセンス / 免責事項
 
