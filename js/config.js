@@ -9,6 +9,9 @@
     defaultCenter: [35.72, 139.72],
     defaultZoom: 11,
 
+    // stations.json cache-buster. Bump when station data changes.
+    dataVersion: 12,
+
     // 目的地
     destination: {
       lat: 35.716741,
@@ -44,6 +47,20 @@
     defaultContourEnabled: true,
     defaultGradientEnabled: false,
     defaultLabelsEnabled: true,
+
+    // 駅名ラベル表示。中間ズームでは2024年の駅別乗降客数順位で段階表示し、
+    // さらに画面上で衝突する一般駅ラベルを利用者数の少ない順に省く。
+    stationLabels: {
+      majorOnlyMaxZoom: 11,
+      rankLimits: {
+        12: 80,
+        13: 220,
+        14: 420,
+      },
+      allLabelsMinZoom: 15,
+      collisionMaxZoom: 14,
+      collisionBox: { width: 120, height: 40, gap: 3 },
+    },
 
     // 目的地同心円（5km/10km/15km）
     destinationRings: {

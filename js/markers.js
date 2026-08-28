@@ -111,7 +111,12 @@
         var routeHtml = s.route ? '<div class="tt-line">' + s.route + '</div>' : '';
         var noteHtml = s.note ? '<div class="tt-detail">' + s.note + '</div>' : '';
         var searchDateHtml = s.searchDate ? '<div class="tt-detail">検索日: ' + s.searchDate + '</div>' : '';
-        var details = (routeHtml || noteHtml || searchDateHtml) ? '<div class="tt-divider"></div>' + routeHtml + noteHtml + searchDateHtml : '';
+        var passengerHtml = Number.isFinite(s.passengers)
+          ? '<div class="tt-detail">1日乗降客数: ' + s.passengers.toLocaleString('ja-JP') + '人（' + s.passengerYear + '）</div>'
+          : '';
+        var details = (routeHtml || noteHtml || searchDateHtml || passengerHtml)
+          ? '<div class="tt-divider"></div>' + routeHtml + noteHtml + searchDateHtml + passengerHtml
+          : '';
 
         marker.bindTooltip(
           '<div class="station-tooltip">' +
@@ -141,21 +146,85 @@
       });
     },
 
+    _getLabelRankLimit: function (zoom) {
+      var config = CONFIG.stationLabels || {};
+      if (zoom >= (config.allLabelsMinZoom || 15)) return Infinity;
+      if (zoom <= (config.majorOnlyMaxZoom || 11)) return 0;
+      var limits = config.rankLimits || {};
+      return limits[zoom] || 0;
+    },
+
+    _labelBox: function (item) {
+      var config = CONFIG.stationLabels || {};
+      var boxConfig = config.collisionBox || {};
+      var width = boxConfig.width || 120;
+      var height = boxConfig.height || 40;
+      var gap = boxConfig.gap || 0;
+      var point = this._map.latLngToContainerPoint(item.marker.getLatLng());
+      // label iconAnchor [-8, 15]: the label begins 8px to the right and 15px above the station.
+      return {
+        left: point.x + 8 - gap,
+        right: point.x + 8 + width + gap,
+        top: point.y - 15 - gap,
+        bottom: point.y - 15 + height + gap
+      };
+    },
+
+    _boxesOverlap: function (a, b) {
+      return !(a.right < b.left || a.left > b.right || a.bottom < b.top || a.top > b.bottom);
+    },
+
+    _setLabelVisible: function (item, visible, showDetail) {
+      if (visible && !this._map.hasLayer(item.label)) item.label.addTo(this._map);
+      if (!visible && this._map.hasLayer(item.label)) this._map.removeLayer(item.label);
+      if (visible && item.label._icon) {
+        var detail = item.label._icon.querySelector('.sl-detail');
+        if (detail) detail.style.display = showDetail ? '' : 'none';
+      }
+    },
+
     _updateDisplay: function () {
       var z = this._map.getZoom();
       var self = this;
+      var labelConfig = CONFIG.stationLabels || {};
+      var allLabelsMinZoom = labelConfig.allLabelsMinZoom || 15;
+      var collisionMaxZoom = labelConfig.collisionMaxZoom || 14;
+      var rankLimit = this._getLabelRankLimit(z);
+
       this._markers.forEach(function (item) {
         var r = item.isMajor ? (z <= 10 ? 5 : z === 11 ? 6 : z <= 13 ? 7 : 8) : (z <= 10 ? 3 : z === 11 ? 4 : z <= 13 ? 5 : 6);
         item.marker.setRadius(r);
+        self._setLabelVisible(item, false, false);
+      });
 
-        var showLabel = self._labelsEnabled && (z >= 12 || (z <= 11 && item.isMajor));
-        if (showLabel && !self._map.hasLayer(item.label)) item.label.addTo(self._map);
-        if (!showLabel && self._map.hasLayer(item.label)) self._map.removeLayer(item.label);
+      if (!this._labelsEnabled) return;
 
-        if (showLabel && item.label._icon) {
-          var detail = item.label._icon.querySelector('.sl-detail');
-          if (detail) detail.style.display = z >= 14 ? '' : 'none';
-        }
+      var candidates = this._markers.filter(function (item) {
+        if (z >= allLabelsMinZoom) return true;
+        if (item.isMajor) return true;
+        return Number.isFinite(item.data.passengerRank) && item.data.passengerRank <= rankLimit;
+      });
+
+      // Major stations first, then stations with more passengers. This ordering also
+      // determines which label survives when two medium-zoom labels collide.
+      candidates.sort(function (a, b) {
+        if (a.isMajor !== b.isMajor) return a.isMajor ? -1 : 1;
+        var ar = Number.isFinite(a.data.passengerRank) ? a.data.passengerRank : Infinity;
+        var br = Number.isFinite(b.data.passengerRank) ? b.data.passengerRank : Infinity;
+        if (ar !== br) return ar - br;
+        return a.data.station.localeCompare(b.data.station, 'ja');
+      });
+
+      var occupied = [];
+      var useCollision = z <= collisionMaxZoom && z > (labelConfig.majorOnlyMaxZoom || 11);
+      candidates.forEach(function (item) {
+        var box = self._labelBox(item);
+        var collides = useCollision && !item.isMajor && occupied.some(function (other) {
+          return self._boxesOverlap(box, other);
+        });
+        if (collides) return;
+        self._setLabelVisible(item, true, z >= allLabelsMinZoom);
+        occupied.push(box);
       });
     },
 

@@ -5,7 +5,12 @@
     "targetArrival": "08:18",
     "targetStation": "筑波大学附属高等学校",
     "targetMinutes": 498,
-    "searchMode": "Yahoo乗換案内・急いでモード・平日・施設直接指定"
+    "searchMode": "Yahoo乗換案内・急いでモード・平日・施設直接指定",
+    "passengerData": {
+      "source": "国土数値情報 駅別乗降客数 S12-25",
+      "year": 2024,
+      "license": "CC BY 4.0"
+    }
   },
   "stations": [
     {
@@ -19,7 +24,10 @@
       "route": "徒歩8分",
       "searchDate": "2026-08-28",
       "outside": false,
-      "duration": 8
+      "duration": 8,
+      "passengers": 78606,
+      "passengerYear": 2024,
+      "passengerRank": 132
     },
     {
       "id": "gokokuji",
@@ -32,7 +40,10 @@
       "route": "徒歩5分",
       "searchDate": "2026-08-28",
       "outside": false,
-      "duration": 5
+      "duration": 5,
+      "passengers": 40640,
+      "passengerYear": 2024,
+      "passengerRank": 234
     },
     {
       "id": "ikebukuro",
@@ -45,7 +56,10 @@
       "route": "東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
       "outside": false,
-      "duration": 13
+      "duration": 13,
+      "passengers": 2364011,
+      "passengerYear": 2024,
+      "passengerRank": 3
     },
     {
       "id": "shibuya",
@@ -57,7 +71,10 @@
       "searchDate": "2026-08-28",
       "major": true,
       "duration": 31,
-      "route": "東京メトロ半蔵門線→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東京メトロ半蔵門線→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 2897703,
+      "passengerYear": 2024,
+      "passengerRank": 1
     },
     {
       "id": "daikanyama",
@@ -68,7 +85,10 @@
       "line": "東横線",
       "searchDate": "2026-08-28",
       "duration": 36,
-      "route": "東急東横線→渋谷→東京メトロ半蔵門線→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急東横線→渋谷→東京メトロ半蔵門線→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 28772,
+      "passengerYear": 2024,
+      "passengerRank": 325
     },
     {
       "id": "nakameguro",
@@ -79,7 +99,10 @@
       "line": "東横線",
       "searchDate": "2026-08-28",
       "duration": 36,
-      "route": "東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 381738,
+      "passengerYear": 2024,
+      "passengerRank": 20
     },
     {
       "id": "yuutenji",
@@ -90,7 +113,10 @@
       "line": "東横線",
       "searchDate": "2026-08-28",
       "duration": 41,
-      "route": "東急東横線→渋谷→東京メトロ半蔵門線→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急東横線→渋谷→東京メトロ半蔵門線→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 29907,
+      "passengerYear": 2024,
+      "passengerRank": 314
     },
     {
       "id": "gakugeidaigaku",
@@ -101,7 +127,10 @@
       "line": "東横線",
       "searchDate": "2026-08-28",
       "duration": 44,
-      "route": "東急東横線急行→渋谷→東京メトロ半蔵門線準急→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急東横線急行→渋谷→東京メトロ半蔵門線準急→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 72696,
+      "passengerYear": 2024,
+      "passengerRank": 145
     },
     {
       "id": "toritsudaigaku",
@@ -112,7 +141,10 @@
       "line": "東横線",
       "searchDate": "2026-08-28",
       "duration": 48,
-      "route": "東急東横線→渋谷→東京メトロ半蔵門線→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急東横線→渋谷→東京メトロ半蔵門線→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 46393,
+      "passengerYear": 2024,
+      "passengerRank": 208
     },
     {
       "id": "jiyuugaoka",
@@ -123,7 +155,10 @@
       "line": "東横線",
       "searchDate": "2026-08-28",
       "duration": 44,
-      "route": "東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 136588,
+      "passengerYear": 2024,
+      "passengerRank": 73
     },
     {
       "id": "den-enchoufu",
@@ -134,7 +169,10 @@
       "line": "東横線",
       "searchDate": "2026-08-28",
       "duration": 49,
-      "route": "東急東横線→自由が丘→東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急東横線→自由が丘→東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 30210,
+      "passengerYear": 2024,
+      "passengerRank": 309
     },
     {
       "id": "tamagawa",
@@ -145,7 +183,10 @@
       "line": "東横線",
       "searchDate": "2026-08-28",
       "duration": 51,
-      "route": "東急東横線→自由が丘→東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急東横線→自由が丘→東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 21510,
+      "passengerYear": 2024,
+      "passengerRank": 383
     },
     {
       "id": "shinmaruko",
@@ -156,7 +197,10 @@
       "line": "東横線",
       "searchDate": "2026-08-28",
       "duration": 53,
-      "route": "東急東横線→自由が丘→東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急東横線→自由が丘→東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 26424,
+      "passengerYear": 2024,
+      "passengerRank": 348
     },
     {
       "id": "musashikosugi",
@@ -168,7 +212,10 @@
       "searchDate": "2026-08-28",
       "major": true,
       "duration": 45,
-      "route": "ＪＲ特急成田エクスプレス7号→東京→東京メトロ丸ノ内線→茗荷谷→徒歩8分"
+      "route": "ＪＲ特急成田エクスプレス7号→東京→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
+      "passengers": 431702,
+      "passengerYear": 2024,
+      "passengerRank": 14
     },
     {
       "id": "motosumiyoshi",
@@ -179,7 +226,10 @@
       "line": "東横線",
       "searchDate": "2026-08-28",
       "duration": 55,
-      "route": "東急目黒線→武蔵小杉→東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急目黒線→武蔵小杉→東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 59259,
+      "passengerYear": 2024,
+      "passengerRank": 170
     },
     {
       "id": "hiyoshi",
@@ -191,7 +241,10 @@
       "searchDate": "2026-08-28",
       "outside": true,
       "duration": 56,
-      "route": "東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 226673,
+      "passengerYear": 2024,
+      "passengerRank": 43
     },
     {
       "id": "meguro",
@@ -202,7 +255,10 @@
       "line": "目黒線",
       "searchDate": "2026-08-28",
       "duration": 38,
-      "route": "ＪＲ山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "ＪＲ山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 565824,
+      "passengerYear": 2024,
+      "passengerRank": 11
     },
     {
       "id": "fudoumae",
@@ -213,7 +269,10 @@
       "line": "目黒線",
       "searchDate": "2026-08-28",
       "duration": 40,
-      "route": "東急目黒線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急目黒線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 29015,
+      "passengerYear": 2024,
+      "passengerRank": 321
     },
     {
       "id": "musashikoyama",
@@ -224,7 +283,10 @@
       "line": "目黒線",
       "searchDate": "2026-08-28",
       "duration": 42,
-      "route": "東急目黒線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急目黒線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 54004,
+      "passengerYear": 2024,
+      "passengerRank": 184
     },
     {
       "id": "nishioyama",
@@ -235,7 +297,10 @@
       "line": "目黒線",
       "searchDate": "2026-08-28",
       "duration": 47,
-      "route": "東急目黒線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急目黒線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 33007,
+      "passengerYear": 2024,
+      "passengerRank": 288
     },
     {
       "id": "sensoku",
@@ -246,7 +311,10 @@
       "line": "目黒線",
       "searchDate": "2026-08-28",
       "duration": 49,
-      "route": "東急目黒線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急目黒線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 14288,
+      "passengerYear": 2024,
+      "passengerRank": 444
     },
     {
       "id": "oookayama",
@@ -257,7 +325,10 @@
       "line": "目黒線",
       "searchDate": "2026-08-28",
       "duration": 47,
-      "route": "東急目黒線急行→武蔵小山→東急目黒線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急目黒線急行→武蔵小山→東急目黒線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 47370,
+      "passengerYear": 2024,
+      "passengerRank": 205
     },
     {
       "id": "okusawa",
@@ -268,7 +339,10 @@
       "line": "目黒線",
       "searchDate": "2026-08-28",
       "duration": 53,
-      "route": "東急目黒線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急目黒線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 12146,
+      "passengerYear": 2024,
+      "passengerRank": 465
     },
     {
       "id": "ooichou",
@@ -279,7 +353,10 @@
       "line": "大井町線",
       "searchDate": "2026-08-28",
       "duration": 40,
-      "route": "東京臨海高速鉄道りんかい線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東京臨海高速鉄道りんかい線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 366901,
+      "passengerYear": 2024,
+      "passengerRank": 22
     },
     {
       "id": "shitajinmei",
@@ -290,7 +367,10 @@
       "line": "大井町線",
       "searchDate": "2026-08-28",
       "duration": 49,
-      "route": "東急大井町線→大井町→東京臨海高速鉄道りんかい線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急大井町線→大井町→東京臨海高速鉄道りんかい線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 9364,
+      "passengerYear": 2024,
+      "passengerRank": 484
     },
     {
       "id": "tokoshikouen",
@@ -301,7 +381,10 @@
       "line": "大井町線",
       "searchDate": "2026-08-28",
       "duration": 50,
-      "route": "東急大井町線→大井町→東京臨海高速鉄道りんかい線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急大井町線→大井町→東京臨海高速鉄道りんかい線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 13597,
+      "passengerYear": 2024,
+      "passengerRank": 451
     },
     {
       "id": "nakanobe",
@@ -312,7 +395,10 @@
       "line": "大井町線",
       "searchDate": "2026-08-28",
       "duration": 48,
-      "route": "都営浅草線→五反田→ＪＲ山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "都営浅草線→五反田→ＪＲ山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 49338,
+      "passengerYear": 2024,
+      "passengerRank": 195
     },
     {
       "id": "eharamachi",
@@ -323,7 +409,10 @@
       "line": "大井町線",
       "searchDate": "2026-08-28",
       "duration": 53,
-      "route": "東急大井町線→大井町→東京臨海高速鉄道りんかい線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急大井町線→大井町→東京臨海高速鉄道りんかい線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 15179,
+      "passengerYear": 2024,
+      "passengerRank": 434
     },
     {
       "id": "hatanodai",
@@ -334,7 +423,10 @@
       "line": "大井町線",
       "searchDate": "2026-08-28",
       "duration": 52,
-      "route": "東急池上線→五反田→ＪＲ山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急池上線→五反田→ＪＲ山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 39338,
+      "passengerYear": 2024,
+      "passengerRank": 241
     },
     {
       "id": "kitasenzoku",
@@ -345,7 +437,10 @@
       "line": "大井町線",
       "searchDate": "2026-08-28",
       "duration": 51,
-      "route": "東急大井町線→自由が丘→東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急大井町線→自由が丘→東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 7266,
+      "passengerYear": 2024,
+      "passengerRank": 505
     },
     {
       "id": "midorigaoka",
@@ -356,7 +451,10 @@
       "line": "大井町線",
       "searchDate": "2026-08-28",
       "duration": 48,
-      "route": "東急大井町線→自由が丘→東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急大井町線→自由が丘→東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 10090,
+      "passengerYear": 2024,
+      "passengerRank": 477
     },
     {
       "id": "kuhonbutsu",
@@ -367,7 +465,10 @@
       "line": "大井町線",
       "searchDate": "2026-08-28",
       "duration": 47,
-      "route": "東急大井町線→自由が丘→東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急大井町線→自由が丘→東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 12729,
+      "passengerYear": 2024,
+      "passengerRank": 462
     },
     {
       "id": "oyamadai",
@@ -378,7 +479,10 @@
       "line": "大井町線",
       "searchDate": "2026-08-28",
       "duration": 49,
-      "route": "東急大井町線→自由が丘→東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急大井町線→自由が丘→東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 30971,
+      "passengerYear": 2024,
+      "passengerRank": 299
     },
     {
       "id": "todoroki",
@@ -389,7 +493,10 @@
       "line": "大井町線",
       "searchDate": "2026-08-28",
       "duration": 52,
-      "route": "東急大井町線→二子玉川→東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急大井町線→二子玉川→東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 27098,
+      "passengerYear": 2024,
+      "passengerRank": 345
     },
     {
       "id": "kaminoge",
@@ -400,7 +507,10 @@
       "line": "大井町線",
       "searchDate": "2026-08-28",
       "duration": 50,
-      "route": "東急大井町線→二子玉川→東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急大井町線→二子玉川→東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 22230,
+      "passengerYear": 2024,
+      "passengerRank": 379
     },
     {
       "id": "futagotamagawa",
@@ -411,7 +521,10 @@
       "line": "大井町線",
       "searchDate": "2026-08-28",
       "duration": 45,
-      "route": "東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 140353,
+      "passengerYear": 2024,
+      "passengerRank": 70
     },
     {
       "id": "mizonokuchi",
@@ -423,7 +536,10 @@
       "searchDate": "2026-08-28",
       "major": true,
       "duration": 50,
-      "route": "東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 195762,
+      "passengerYear": 2024,
+      "passengerRank": 49
     },
     {
       "id": "minumadaishinsuikouen",
@@ -434,7 +550,10 @@
       "line": "日暮里・舎人ライナー",
       "searchDate": "2026-08-28",
       "duration": 56,
-      "route": "日暮里・舎人ライナー日暮里行→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分"
+      "route": "日暮里・舎人ライナー日暮里行→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
+      "passengers": 13889,
+      "passengerYear": 2024,
+      "passengerRank": 447
     },
     {
       "id": "toneri",
@@ -445,7 +564,10 @@
       "line": "日暮里・舎人ライナー",
       "searchDate": "2026-08-28",
       "duration": 54,
-      "route": "日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分"
+      "route": "日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
+      "passengers": 9542,
+      "passengerYear": 2024,
+      "passengerRank": 481
     },
     {
       "id": "tonerikouen",
@@ -456,7 +578,10 @@
       "line": "日暮里・舎人ライナー",
       "searchDate": "2026-08-28",
       "duration": 52,
-      "route": "日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分"
+      "route": "日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
+      "passengers": 5729,
+      "passengerYear": 2024,
+      "passengerRank": 513
     },
     {
       "id": "tanizaike",
@@ -467,7 +592,10 @@
       "line": "日暮里・舎人ライナー",
       "searchDate": "2026-08-28",
       "duration": 50,
-      "route": "日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分"
+      "route": "日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
+      "passengers": 11064,
+      "passengerYear": 2024,
+      "passengerRank": 469
     },
     {
       "id": "nishiaraitaishinishi",
@@ -478,7 +606,10 @@
       "line": "日暮里・舎人ライナー",
       "searchDate": "2026-08-28",
       "duration": 48,
-      "route": "日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分"
+      "route": "日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
+      "passengers": 12405,
+      "passengerYear": 2024,
+      "passengerRank": 464
     },
     {
       "id": "kouhoku",
@@ -489,7 +620,10 @@
       "line": "日暮里・舎人ライナー",
       "searchDate": "2026-08-28",
       "duration": 46,
-      "route": "日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分"
+      "route": "日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
+      "passengers": 12958,
+      "passengerYear": 2024,
+      "passengerRank": 459
     },
     {
       "id": "takano",
@@ -500,7 +634,10 @@
       "line": "日暮里・舎人ライナー",
       "searchDate": "2026-08-28",
       "duration": 45,
-      "route": "日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分"
+      "route": "日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
+      "passengers": 6635,
+      "passengerYear": 2024,
+      "passengerRank": 506
     },
     {
       "id": "ougioohashi",
@@ -511,7 +648,10 @@
       "line": "日暮里・舎人ライナー",
       "searchDate": "2026-08-28",
       "duration": 43,
-      "route": "日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分"
+      "route": "日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
+      "passengers": 10663,
+      "passengerYear": 2024,
+      "passengerRank": 473
     },
     {
       "id": "adachiodai",
@@ -522,7 +662,10 @@
       "line": "日暮里・舎人ライナー",
       "searchDate": "2026-08-28",
       "duration": 41,
-      "route": "日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分"
+      "route": "日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
+      "passengers": 3685,
+      "passengerYear": 2024,
+      "passengerRank": 526
     },
     {
       "id": "kumanomae",
@@ -533,7 +676,10 @@
       "line": "日暮里・舎人ライナー",
       "searchDate": "2026-08-28",
       "duration": 45,
-      "route": "徒歩→熊野前(舎人ライナー)→日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分"
+      "route": "徒歩→熊野前(舎人ライナー)→日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
+      "passengers": 13313,
+      "passengerYear": 2024,
+      "passengerRank": 453
     },
     {
       "id": "shakudoshougakkoumae",
@@ -544,7 +690,10 @@
       "line": "日暮里・舎人ライナー",
       "searchDate": "2026-08-28",
       "duration": 37,
-      "route": "日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分"
+      "route": "日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
+      "passengers": 5630,
+      "passengerYear": 2024,
+      "passengerRank": 514
     },
     {
       "id": "nishinippori",
@@ -555,7 +704,10 @@
       "line": "山手線(舎人ライナー沿線)",
       "searchDate": "2026-08-28",
       "duration": 27,
-      "route": "ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分"
+      "route": "ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
+      "passengers": 353501,
+      "passengerYear": 2024,
+      "passengerRank": 24
     },
     {
       "id": "nippori",
@@ -566,7 +718,10 @@
       "line": "山手線(舎人ライナー沿線)",
       "searchDate": "2026-08-28",
       "duration": 28,
-      "route": "ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分"
+      "route": "ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
+      "passengers": 348027,
+      "passengerYear": 2024,
+      "passengerRank": 25
     },
     {
       "id": "ikejirioohashi",
@@ -577,7 +732,10 @@
       "line": "田園都市線",
       "searchDate": "2026-08-28",
       "duration": 33,
-      "route": "東急田園都市線→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急田園都市線→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 63191,
+      "passengerYear": 2024,
+      "passengerRank": 161
     },
     {
       "id": "sangenjaya",
@@ -588,7 +746,10 @@
       "line": "田園都市線",
       "searchDate": "2026-08-28",
       "duration": 37,
-      "route": "東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 167214,
+      "passengerYear": 2024,
+      "passengerRank": 58
     },
     {
       "id": "komazawadaigaku",
@@ -599,7 +760,10 @@
       "line": "田園都市線",
       "searchDate": "2026-08-28",
       "duration": 39,
-      "route": "東急田園都市線→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急田園都市線→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 74266,
+      "passengerYear": 2024,
+      "passengerRank": 141
     },
     {
       "id": "sakurashinmachi",
@@ -610,7 +774,10 @@
       "line": "田園都市線",
       "searchDate": "2026-08-28",
       "duration": 41,
-      "route": "東急田園都市線→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急田園都市線→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 68296,
+      "passengerYear": 2024,
+      "passengerRank": 151
     },
     {
       "id": "youga",
@@ -621,7 +788,10 @@
       "line": "田園都市線",
       "searchDate": "2026-08-28",
       "duration": 47,
-      "route": "東急田園都市線→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急田園都市線→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 65061,
+      "passengerYear": 2024,
+      "passengerRank": 159
     },
     {
       "id": "futakoshinchi",
@@ -632,7 +802,10 @@
       "line": "田園都市線",
       "searchDate": "2026-08-28",
       "duration": 50,
-      "route": "東急田園都市線→二子玉川→東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急田園都市線→二子玉川→東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 20845,
+      "passengerYear": 2024,
+      "passengerRank": 390
     },
     {
       "id": "takatsu",
@@ -643,7 +816,10 @@
       "line": "田園都市線",
       "searchDate": "2026-08-28",
       "duration": 52,
-      "route": "東急田園都市線→二子玉川→東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急田園都市線→二子玉川→東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 28557,
+      "passengerYear": 2024,
+      "passengerRank": 326
     },
     {
       "id": "kajigatani",
@@ -654,7 +830,10 @@
       "line": "田園都市線",
       "searchDate": "2026-08-28",
       "duration": 56,
-      "route": "東急田園都市線→溝の口→東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急田園都市線→溝の口→東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 36095,
+      "passengerYear": 2024,
+      "passengerRank": 270
     },
     {
       "id": "miyazakidai",
@@ -665,7 +844,10 @@
       "line": "田園都市線",
       "searchDate": "2026-08-28",
       "duration": 61,
-      "route": "東急田園都市線→溝の口→東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急田園都市線→溝の口→東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 47972,
+      "passengerYear": 2024,
+      "passengerRank": 202
     },
     {
       "id": "miyamaedaira",
@@ -676,7 +858,10 @@
       "line": "田園都市線",
       "searchDate": "2026-08-28",
       "duration": 62,
-      "route": "東急田園都市線→溝の口→東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急田園都市線→溝の口→東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 46121,
+      "passengerYear": 2024,
+      "passengerRank": 210
     },
     {
       "id": "saginuma",
@@ -687,7 +872,10 @@
       "line": "田園都市線",
       "searchDate": "2026-08-28",
       "duration": 56,
-      "route": "東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 59568,
+      "passengerYear": 2024,
+      "passengerRank": 165
     },
     {
       "id": "tamapuraaza",
@@ -699,7 +887,10 @@
       "searchDate": "2026-08-28",
       "outside": true,
       "duration": 59,
-      "route": "東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 78780,
+      "passengerYear": 2024,
+      "passengerRank": 131
     },
     {
       "id": "asakadai",
@@ -710,7 +901,10 @@
       "line": "東武東上線",
       "searchDate": "2026-08-28",
       "duration": 43,
-      "route": "東武東上線急行→和光市→東京メトロ有楽町線新木場行→護国寺→徒歩5分"
+      "route": "東武東上線急行→和光市→東京メトロ有楽町線新木場行→護国寺→徒歩5分",
+      "passengers": 152331,
+      "passengerYear": 2024,
+      "passengerRank": 62
     },
     {
       "id": "asaka",
@@ -721,7 +915,10 @@
       "line": "東武東上線",
       "searchDate": "2026-08-28",
       "duration": 39,
-      "route": "東武東上線急行→和光市→東京メトロ有楽町線新木場行→護国寺→徒歩5分"
+      "route": "東武東上線急行→和光市→東京メトロ有楽町線新木場行→護国寺→徒歩5分",
+      "passengers": 67537,
+      "passengerYear": 2024,
+      "passengerRank": 153
     },
     {
       "id": "wakoushi",
@@ -732,7 +929,10 @@
       "line": "東武東上線",
       "searchDate": "2026-08-28",
       "duration": 35,
-      "route": "東京メトロ有楽町線新木場行→護国寺→徒歩5分"
+      "route": "東京メトロ有楽町線新木場行→護国寺→徒歩5分",
+      "passengers": 343898,
+      "passengerYear": 2024,
+      "passengerRank": 26
     },
     {
       "id": "narimasu",
@@ -743,7 +943,10 @@
       "line": "東武東上線",
       "searchDate": "2026-08-28",
       "duration": 33,
-      "route": "東武東上線急行→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東武東上線急行→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 53301,
+      "passengerYear": 2024,
+      "passengerRank": 185
     },
     {
       "id": "akatsuka",
@@ -754,7 +957,10 @@
       "line": "東武東上線",
       "searchDate": "2026-08-28",
       "duration": 34,
-      "route": "徒歩→地下鉄赤塚→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "徒歩→地下鉄赤塚→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 14727,
+      "passengerYear": 2024,
+      "passengerRank": 439
     },
     {
       "id": "toubunerima",
@@ -765,7 +971,10 @@
       "line": "東武東上線",
       "searchDate": "2026-08-28",
       "duration": 32,
-      "route": "東武東上線→上板橋→東武東上線準急→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東武東上線→上板橋→東武東上線準急→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 56181,
+      "passengerYear": 2024,
+      "passengerRank": 177
     },
     {
       "id": "kamiitabashi",
@@ -776,7 +985,10 @@
       "line": "東武東上線",
       "searchDate": "2026-08-28",
       "duration": 28,
-      "route": "東武東上線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東武東上線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 51233,
+      "passengerYear": 2024,
+      "passengerRank": 188
     },
     {
       "id": "tokiwadai",
@@ -787,7 +999,10 @@
       "line": "東武東上線",
       "searchDate": "2026-08-28",
       "duration": 26,
-      "route": "東武東上線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東武東上線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 43271,
+      "passengerYear": 2024,
+      "passengerRank": 222
     },
     {
       "id": "nakaitabashi",
@@ -798,7 +1013,10 @@
       "line": "東武東上線",
       "searchDate": "2026-08-28",
       "duration": 24,
-      "route": "東武東上線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東武東上線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 27781,
+      "passengerYear": 2024,
+      "passengerRank": 335
     },
     {
       "id": "ooyama",
@@ -809,7 +1027,10 @@
       "line": "東武東上線",
       "searchDate": "2026-08-28",
       "duration": 22,
-      "route": "東武東上線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東武東上線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 48683,
+      "passengerYear": 2024,
+      "passengerRank": 199
     },
     {
       "id": "shitaitahashi",
@@ -820,7 +1041,10 @@
       "line": "東武東上線",
       "searchDate": "2026-08-28",
       "duration": 20,
-      "route": "東武東上線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東武東上線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 16048,
+      "passengerYear": 2024,
+      "passengerRank": 428
     },
     {
       "id": "kitaikefukuro",
@@ -831,7 +1055,10 @@
       "line": "東武東上線",
       "searchDate": "2026-08-28",
       "duration": 18,
-      "route": "東武東上線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東武東上線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 10356,
+      "passengerYear": 2024,
+      "passengerRank": 475
     },
     {
       "id": "yubiougi",
@@ -843,7 +1070,10 @@
       "searchDate": "2026-08-28",
       "outside": true,
       "duration": 55,
-      "route": "ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 19130,
+      "passengerYear": 2024,
+      "passengerRank": 407
     },
     {
       "id": "nishioomiya",
@@ -855,7 +1085,10 @@
       "searchDate": "2026-08-28",
       "outside": true,
       "duration": 53,
-      "route": "ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 25212,
+      "passengerYear": 2024,
+      "passengerRank": 359
     },
     {
       "id": "nisshin",
@@ -867,7 +1100,10 @@
       "searchDate": "2026-08-28",
       "outside": true,
       "duration": 49,
-      "route": "ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 24980,
+      "passengerYear": 2024,
+      "passengerRank": 362
     },
     {
       "id": "kitayono",
@@ -879,7 +1115,10 @@
       "searchDate": "2026-08-28",
       "outside": true,
       "duration": 50,
-      "route": "ＪＲ埼京線→武蔵浦和→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "ＪＲ埼京線→武蔵浦和→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 22262,
+      "passengerYear": 2024,
+      "passengerRank": 378
     },
     {
       "id": "yonohonchou",
@@ -891,7 +1130,10 @@
       "searchDate": "2026-08-28",
       "outside": true,
       "duration": 49,
-      "route": "ＪＲ埼京線→武蔵浦和→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "ＪＲ埼京線→武蔵浦和→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 29304,
+      "passengerYear": 2024,
+      "passengerRank": 319
     },
     {
       "id": "minamiyono",
@@ -903,7 +1145,10 @@
       "searchDate": "2026-08-28",
       "outside": true,
       "duration": 46,
-      "route": "ＪＲ埼京線→武蔵浦和→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "ＪＲ埼京線→武蔵浦和→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 38218,
+      "passengerYear": 2024,
+      "passengerRank": 248
     },
     {
       "id": "nakaurawa",
@@ -915,7 +1160,10 @@
       "searchDate": "2026-08-28",
       "outside": true,
       "duration": 44,
-      "route": "ＪＲ埼京線→武蔵浦和→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "ＪＲ埼京線→武蔵浦和→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 25542,
+      "passengerYear": 2024,
+      "passengerRank": 356
     },
     {
       "id": "musashiurawa",
@@ -927,7 +1175,10 @@
       "searchDate": "2026-08-28",
       "outside": true,
       "duration": 37,
-      "route": "ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 100744,
+      "passengerYear": 2024,
+      "passengerRank": 99
     },
     {
       "id": "kitadota",
@@ -939,7 +1190,10 @@
       "searchDate": "2026-08-28",
       "outside": true,
       "duration": 42,
-      "route": "ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 44370,
+      "passengerYear": 2024,
+      "passengerRank": 216
     },
     {
       "id": "toda",
@@ -951,7 +1205,10 @@
       "searchDate": "2026-08-28",
       "outside": true,
       "duration": 40,
-      "route": "ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 42074,
+      "passengerYear": 2024,
+      "passengerRank": 229
     },
     {
       "id": "todakouen",
@@ -963,19 +1220,10 @@
       "searchDate": "2026-08-28",
       "outside": true,
       "duration": 35,
-      "route": "ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
-    },
-    {
-      "id": "ukimafunato",
-      "station": "浮間船渡",
-      "lat": 35.791209,
-      "lng": 139.691341,
-      "minutes": 462,
-      "line": "埼京線",
-      "searchDate": "2026-08-28",
-      "outside": true,
-      "duration": 32,
-      "route": "ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 65930,
+      "passengerYear": 2024,
+      "passengerRank": 156
     },
     {
       "id": "kitaakabane",
@@ -987,7 +1235,10 @@
       "searchDate": "2026-08-28",
       "outside": true,
       "duration": 29,
-      "route": "ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 36982,
+      "passengerYear": 2024,
+      "passengerRank": 260
     },
     {
       "id": "akabane",
@@ -1000,7 +1251,10 @@
       "major": true,
       "outside": true,
       "duration": 26,
-      "route": "ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 188334,
+      "passengerYear": 2024,
+      "passengerRank": 50
     },
     {
       "id": "juujou",
@@ -1012,7 +1266,10 @@
       "searchDate": "2026-08-28",
       "outside": true,
       "duration": 23,
-      "route": "ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 67506,
+      "passengerYear": 2024,
+      "passengerRank": 154
     },
     {
       "id": "itabashi",
@@ -1024,7 +1281,10 @@
       "searchDate": "2026-08-28",
       "outside": true,
       "duration": 20,
-      "route": "ＪＲ埼京線→池袋→東京メトロ丸ノ内線荻窪行→茗荷谷→徒歩8分"
+      "route": "ＪＲ埼京線→池袋→東京メトロ丸ノ内線荻窪行→茗荷谷→徒歩8分",
+      "passengers": 65264,
+      "passengerYear": 2024,
+      "passengerRank": 158
     },
     {
       "id": "toudaimiya",
@@ -1036,7 +1296,10 @@
       "searchDate": "2026-08-28",
       "outside": true,
       "duration": 54,
-      "route": "ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 64474,
+      "passengerYear": 2024,
+      "passengerRank": 160
     },
     {
       "id": "doro",
@@ -1048,7 +1311,10 @@
       "searchDate": "2026-08-28",
       "outside": true,
       "duration": 51,
-      "route": "ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 30412,
+      "passengerYear": 2024,
+      "passengerRank": 307
     },
     {
       "id": "oomiya",
@@ -1061,7 +1327,10 @@
       "major": true,
       "outside": true,
       "duration": 45,
-      "route": "ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 685073,
+      "passengerYear": 2024,
+      "passengerRank": 9
     },
     {
       "id": "saitamashintoshin",
@@ -1073,7 +1342,10 @@
       "searchDate": "2026-08-28",
       "outside": true,
       "duration": 43,
-      "route": "ＪＲ高崎線→赤羽→ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "ＪＲ高崎線→赤羽→ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 107440,
+      "passengerYear": 2024,
+      "passengerRank": 93
     },
     {
       "id": "yono",
@@ -1085,7 +1357,10 @@
       "searchDate": "2026-08-28",
       "outside": true,
       "duration": 45,
-      "route": "ＪＲ京浜東北・根岸線→浦和→ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "ＪＲ京浜東北・根岸線→浦和→ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 51106,
+      "passengerYear": 2024,
+      "passengerRank": 189
     },
     {
       "id": "kitaurawa",
@@ -1097,7 +1372,10 @@
       "searchDate": "2026-08-28",
       "outside": true,
       "duration": 43,
-      "route": "ＪＲ京浜東北・根岸線→浦和→ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "ＪＲ京浜東北・根岸線→浦和→ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 96364,
+      "passengerYear": 2024,
+      "passengerRank": 106
     },
     {
       "id": "urawa",
@@ -1110,7 +1388,10 @@
       "major": true,
       "outside": true,
       "duration": 38,
-      "route": "ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 181878,
+      "passengerYear": 2024,
+      "passengerRank": 54
     },
     {
       "id": "minamiurawa",
@@ -1122,7 +1403,10 @@
       "searchDate": "2026-08-28",
       "outside": true,
       "duration": 43,
-      "route": "ＪＲ京浜東北線→赤羽→ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "ＪＲ京浜東北線→赤羽→ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 110620,
+      "passengerYear": 2024,
+      "passengerRank": 88
     },
     {
       "id": "warabi",
@@ -1134,7 +1418,10 @@
       "searchDate": "2026-08-28",
       "outside": true,
       "duration": 39,
-      "route": "ＪＲ京浜東北線→赤羽→ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "ＪＲ京浜東北線→赤羽→ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 111724,
+      "passengerYear": 2024,
+      "passengerRank": 86
     },
     {
       "id": "nishikawakuchi",
@@ -1146,7 +1433,10 @@
       "searchDate": "2026-08-28",
       "outside": true,
       "duration": 36,
-      "route": "ＪＲ京浜東北線→赤羽→ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "ＪＲ京浜東北線→赤羽→ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 109948,
+      "passengerYear": 2024,
+      "passengerRank": 89
     },
     {
       "id": "kawaguchi",
@@ -1158,7 +1448,10 @@
       "searchDate": "2026-08-28",
       "outside": true,
       "duration": 33,
-      "route": "ＪＲ京浜東北線→赤羽→ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "ＪＲ京浜東北線→赤羽→ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 150122,
+      "passengerYear": 2024,
+      "passengerRank": 64
     },
     {
       "id": "higashijuujou",
@@ -1170,7 +1463,10 @@
       "searchDate": "2026-08-28",
       "outside": true,
       "duration": 33,
-      "route": "ＪＲ京浜東北線→赤羽→ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "ＪＲ京浜東北線→赤羽→ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 45690,
+      "passengerYear": 2024,
+      "passengerRank": 211
     },
     {
       "id": "kaminakasato",
@@ -1182,7 +1478,10 @@
       "searchDate": "2026-08-28",
       "outside": true,
       "duration": 30,
-      "route": "ＪＲ京浜東北・根岸線→田端→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分"
+      "route": "ＪＲ京浜東北・根岸線→田端→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
+      "passengers": 14482,
+      "passengerYear": 2024,
+      "passengerRank": 443
     },
     {
       "id": "oku",
@@ -1194,7 +1493,10 @@
       "searchDate": "2026-08-28",
       "outside": true,
       "duration": 35,
-      "route": "ＪＲ高崎線→赤羽→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "ＪＲ高崎線→赤羽→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 20858,
+      "passengerYear": 2024,
+      "passengerRank": 389
     },
     {
       "id": "higashiiwatsuki",
@@ -1206,7 +1508,10 @@
       "searchDate": "2026-08-28",
       "outside": true,
       "duration": 69,
-      "route": "東武アーバンパークライン→大宮(埼玉県)→ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東武アーバンパークライン→大宮(埼玉県)→ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 19454,
+      "passengerYear": 2024,
+      "passengerRank": 400
     },
     {
       "id": "iwatsuki",
@@ -1218,7 +1523,10 @@
       "searchDate": "2026-08-28",
       "outside": true,
       "duration": 66,
-      "route": "東武アーバンパークライン→大宮(埼玉県)→ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東武アーバンパークライン→大宮(埼玉県)→ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 35091,
+      "passengerYear": 2024,
+      "passengerRank": 278
     },
     {
       "id": "shichiri",
@@ -1230,7 +1538,10 @@
       "searchDate": "2026-08-28",
       "outside": true,
       "duration": 62,
-      "route": "東武アーバンパークライン→大宮(埼玉県)→ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東武アーバンパークライン→大宮(埼玉県)→ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 18353,
+      "passengerYear": 2024,
+      "passengerRank": 413
     },
     {
       "id": "oowada",
@@ -1242,7 +1553,10 @@
       "searchDate": "2026-08-28",
       "outside": true,
       "duration": 59,
-      "route": "東武アーバンパークライン→大宮(埼玉県)→ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東武アーバンパークライン→大宮(埼玉県)→ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 18986,
+      "passengerYear": 2024,
+      "passengerRank": 408
     },
     {
       "id": "oomiyakouen",
@@ -1254,7 +1568,10 @@
       "searchDate": "2026-08-28",
       "outside": true,
       "duration": 57,
-      "route": "東武アーバンパークライン→大宮(埼玉県)→ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東武アーバンパークライン→大宮(埼玉県)→ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 8941,
+      "passengerYear": 2024,
+      "passengerRank": 491
     },
     {
       "id": "hokudaimiya",
@@ -1266,7 +1583,10 @@
       "searchDate": "2026-08-28",
       "outside": true,
       "duration": 55,
-      "route": "東武アーバンパークライン→大宮(埼玉県)→ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "東武アーバンパークライン→大宮(埼玉県)→ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 6499,
+      "passengerYear": 2024,
+      "passengerRank": 507
     },
     {
       "id": "yoshinohara",
@@ -1278,7 +1598,10 @@
       "searchDate": "2026-08-28",
       "outside": true,
       "duration": 60,
-      "route": "埼玉新都市交通ニューシャトル→大宮(埼玉県)→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "埼玉新都市交通ニューシャトル→大宮(埼玉県)→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 3671,
+      "passengerYear": 2024,
+      "passengerRank": 527
     },
     {
       "id": "imahane",
@@ -1290,7 +1613,10 @@
       "searchDate": "2026-08-28",
       "outside": true,
       "duration": 58,
-      "route": "埼玉新都市交通ニューシャトル→大宮(埼玉県)→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "埼玉新都市交通ニューシャトル→大宮(埼玉県)→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 4798,
+      "passengerYear": 2024,
+      "passengerRank": 518
     },
     {
       "id": "touguuhara",
@@ -1302,7 +1628,10 @@
       "searchDate": "2026-08-28",
       "outside": true,
       "duration": 57,
-      "route": "埼玉新都市交通ニューシャトル→大宮(埼玉県)→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "埼玉新都市交通ニューシャトル→大宮(埼玉県)→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 4658,
+      "passengerYear": 2024,
+      "passengerRank": 519
     },
     {
       "id": "kamomiya",
@@ -1314,7 +1643,10 @@
       "searchDate": "2026-08-28",
       "outside": true,
       "duration": 55,
-      "route": "埼玉新都市交通ニューシャトル→大宮(埼玉県)→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "埼玉新都市交通ニューシャトル→大宮(埼玉県)→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 6354,
+      "passengerYear": 2024,
+      "passengerRank": 508
     },
     {
       "id": "tetsudouhakubutsukan",
@@ -1326,7 +1658,10 @@
       "searchDate": "2026-08-28",
       "outside": true,
       "duration": 52,
-      "route": "埼玉新都市交通ニューシャトル→大宮(埼玉県)→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "埼玉新都市交通ニューシャトル→大宮(埼玉県)→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 10730,
+      "passengerYear": 2024,
+      "passengerRank": 472
     },
     {
       "id": "miyahara",
@@ -1338,7 +1673,10 @@
       "searchDate": "2026-08-28",
       "outside": true,
       "duration": 51,
-      "route": "ＪＲ高崎線→大宮(埼玉県)→ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "ＪＲ高崎線→大宮(埼玉県)→ＪＲ湘南新宿ライン→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 42824,
+      "passengerYear": 2024,
+      "passengerRank": 227
     },
     {
       "id": "hokufunaka",
@@ -1349,7 +1687,10 @@
       "line": "武蔵野線 府中本町-市川塩浜・南船橋(正式には西船橋以南は京葉線)",
       "searchDate": "2026-08-28",
       "duration": 71,
-      "route": "ＪＲ武蔵野線→北朝霞→徒歩→朝霞台→東武東上線急行→和光市→東京メトロ有楽町線新木場行→護国寺→徒歩5分"
+      "route": "ＪＲ武蔵野線→北朝霞→徒歩→朝霞台→東武東上線急行→和光市→東京メトロ有楽町線新木場行→護国寺→徒歩5分",
+      "passengers": 25152,
+      "passengerYear": 2024,
+      "passengerRank": 361
     },
     {
       "id": "shinkodaira",
@@ -1360,7 +1701,10 @@
       "line": "武蔵野線 府中本町-市川塩浜・南船橋(正式には西船橋以南は京葉線)",
       "searchDate": "2026-08-28",
       "duration": 64,
-      "route": "ＪＲ武蔵野線→北朝霞→徒歩→朝霞台→東武東上線急行→和光市→東京メトロ有楽町線新木場行→護国寺→徒歩5分"
+      "route": "ＪＲ武蔵野線→北朝霞→徒歩→朝霞台→東武東上線急行→和光市→東京メトロ有楽町線新木場行→護国寺→徒歩5分",
+      "passengers": 22178,
+      "passengerYear": 2024,
+      "passengerRank": 380
     },
     {
       "id": "higashitokorozawa",
@@ -1371,7 +1715,10 @@
       "line": "武蔵野線 府中本町-市川塩浜・南船橋(正式には西船橋以南は京葉線)",
       "searchDate": "2026-08-28",
       "duration": 55,
-      "route": "ＪＲ武蔵野線→北朝霞→徒歩→朝霞台→東武東上線急行→和光市→東京メトロ有楽町線新木場行→護国寺→徒歩5分"
+      "route": "ＪＲ武蔵野線→北朝霞→徒歩→朝霞台→東武東上線急行→和光市→東京メトロ有楽町線新木場行→護国寺→徒歩5分",
+      "passengers": 31078,
+      "passengerYear": 2024,
+      "passengerRank": 297
     },
     {
       "id": "niiza",
@@ -1382,7 +1729,10 @@
       "line": "武蔵野線 府中本町-市川塩浜・南船橋(正式には西船橋以南は京葉線)",
       "searchDate": "2026-08-28",
       "duration": 52,
-      "route": "ＪＲ武蔵野線→北朝霞→徒歩→朝霞台→東武東上線急行→和光市→東京メトロ有楽町線新木場行→護国寺→徒歩5分"
+      "route": "ＪＲ武蔵野線→北朝霞→徒歩→朝霞台→東武東上線急行→和光市→東京メトロ有楽町線新木場行→護国寺→徒歩5分",
+      "passengers": 40180,
+      "passengerYear": 2024,
+      "passengerRank": 235
     },
     {
       "id": "nishiurawa",
@@ -1393,7 +1743,10 @@
       "line": "武蔵野線 府中本町-市川塩浜・南船橋(正式には西船橋以南は京葉線)",
       "searchDate": "2026-08-28",
       "duration": 46,
-      "route": "ＪＲ武蔵野線→武蔵浦和→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "ＪＲ武蔵野線→武蔵浦和→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 27786,
+      "passengerYear": 2024,
+      "passengerRank": 334
     },
     {
       "id": "higashiurawa",
@@ -1404,7 +1757,10 @@
       "line": "武蔵野線 府中本町-市川塩浜・南船橋(正式には西船橋以南は京葉線)",
       "searchDate": "2026-08-28",
       "duration": 50,
-      "route": "ＪＲ武蔵野線→武蔵浦和→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "ＪＲ武蔵野線→武蔵浦和→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 54654,
+      "passengerYear": 2024,
+      "passengerRank": 183
     },
     {
       "id": "koshigayareikutaun",
@@ -1415,7 +1771,10 @@
       "line": "武蔵野線 府中本町-市川塩浜・南船橋(正式には西船橋以南は京葉線)",
       "searchDate": "2026-08-28",
       "duration": 64,
-      "route": "ＪＲ武蔵野線→武蔵浦和→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分"
+      "route": "ＪＲ武蔵野線→武蔵浦和→ＪＲ埼京線通勤快速→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
+      "passengers": 59534,
+      "passengerYear": 2024,
+      "passengerRank": 167
     },
     {
       "id": "shinzousato",
@@ -1426,7 +1785,10 @@
       "line": "武蔵野線 府中本町-市川塩浜・南船橋(正式には西船橋以南は京葉線)",
       "searchDate": "2026-08-28",
       "duration": 61,
-      "route": "ＪＲ武蔵野線→南流山→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分"
+      "route": "ＪＲ武蔵野線→南流山→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
+      "passengers": 27290,
+      "passengerYear": 2024,
+      "passengerRank": 343
     },
     {
       "id": "misato",
@@ -1437,7 +1799,10 @@
       "line": "武蔵野線 府中本町-市川塩浜・南船橋(正式には西船橋以南は京葉線)",
       "searchDate": "2026-08-28",
       "duration": 58,
-      "route": "ＪＲ武蔵野線→南流山→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分"
+      "route": "ＪＲ武蔵野線→南流山→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
+      "passengers": 26538,
+      "passengerYear": 2024,
+      "passengerRank": 347
     },
     {
       "id": "ichikawaoono",
@@ -1448,7 +1813,10 @@
       "line": "武蔵野線 府中本町-市川塩浜・南船橋(正式には西船橋以南は京葉線)",
       "searchDate": "2026-08-28",
       "duration": 67,
-      "route": "ＪＲ武蔵野線→南流山→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分"
+      "route": "ＪＲ武蔵野線→南流山→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
+      "passengers": 22360,
+      "passengerYear": 2024,
+      "passengerRank": 377
     },
     {
       "id": "shin-akitsu",
@@ -1459,7 +1827,10 @@
       "line": "武蔵野線 府中本町-市川塩浜・南船橋(正式には西船橋以南は京葉線)",
       "searchDate": "2026-08-28",
       "duration": 59,
-      "route": "ＪＲ武蔵野線→北朝霞→徒歩→朝霞台→東武東上線急行→和光市→東京メトロ有楽町線新木場行→護国寺→徒歩5分"
+      "route": "ＪＲ武蔵野線→北朝霞→徒歩→朝霞台→東武東上線急行→和光市→東京メトロ有楽町線新木場行→護国寺→徒歩5分",
+      "passengers": 74644,
+      "passengerYear": 2024,
+      "passengerRank": 137
     },
     {
       "id": "hokuchoukasumi",
@@ -1470,7 +1841,10 @@
       "line": "武蔵野線 府中本町-市川塩浜・南船橋(正式には西船橋以南は京葉線)",
       "searchDate": "2026-08-28",
       "duration": 46,
-      "route": "徒歩→朝霞台→東武東上線急行→和光市→東京メトロ有楽町線新木場行→護国寺→徒歩5分"
+      "route": "徒歩→朝霞台→東武東上線急行→和光市→東京メトロ有楽町線新木場行→護国寺→徒歩5分",
+      "passengers": 136010,
+      "passengerYear": 2024,
+      "passengerRank": 74
     },
     {
       "id": "minami-koshigaya",
@@ -1481,7 +1855,10 @@
       "line": "武蔵野線 府中本町-市川塩浜・南船橋(正式には西船橋以南は京葉線)",
       "searchDate": "2026-08-28",
       "duration": 58,
-      "route": "徒歩→新越谷→東武スカイツリーライン区間急行→北千住→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分"
+      "route": "徒歩→新越谷→東武スカイツリーライン区間急行→北千住→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
+      "passengers": 144284,
+      "passengerYear": 2024,
+      "passengerRank": 68
     },
     {
       "id": "shinpachihashira",
@@ -1492,7 +1869,10 @@
       "line": "武蔵野線 府中本町-市川塩浜・南船橋(正式には西船橋以南は京葉線)",
       "searchDate": "2026-08-28",
       "duration": 59,
-      "route": "徒歩→八柱→京成松戸線→松戸→ＪＲ常磐線(上野東京ライン)→北千住→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分"
+      "route": "徒歩→八柱→京成松戸線→松戸→ＪＲ常磐線(上野東京ライン)→北千住→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
+      "passengers": 47424,
+      "passengerYear": 2024,
+      "passengerRank": 204
     },
     {
       "id": "kashiwatanaka",
@@ -1503,7 +1883,10 @@
       "line": "つくばエクスプレス",
       "searchDate": "2026-08-28",
       "duration": 60,
-      "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分"
+      "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
+      "passengers": 16066,
+      "passengerYear": 2024,
+      "passengerRank": 427
     },
     {
       "id": "kashiwanoha-campus",
@@ -1514,7 +1897,10 @@
       "line": "つくばエクスプレス",
       "searchDate": "2026-08-28",
       "duration": 58,
-      "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分"
+      "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
+      "passengers": 39740,
+      "passengerYear": 2024,
+      "passengerRank": 239
     },
     {
       "id": "nagareyamaootakanomori",
@@ -1525,7 +1911,10 @@
       "line": "つくばエクスプレス",
       "searchDate": "2026-08-28",
       "duration": 54,
-      "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分"
+      "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
+      "passengers": 150953,
+      "passengerYear": 2024,
+      "passengerRank": 63
     },
     {
       "id": "nagareyamasentorarupaaku",
@@ -1536,7 +1925,10 @@
       "line": "つくばエクスプレス",
       "searchDate": "2026-08-28",
       "duration": 51,
-      "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分"
+      "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
+      "passengers": 11233,
+      "passengerYear": 2024,
+      "passengerRank": 467
     },
     {
       "id": "minami-nagareyama",
@@ -1547,7 +1939,10 @@
       "line": "つくばエクスプレス",
       "searchDate": "2026-08-28",
       "duration": 49,
-      "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分"
+      "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
+      "passengers": 152479,
+      "passengerYear": 2024,
+      "passengerRank": 61
     },
     {
       "id": "misatochuuou",
@@ -1558,7 +1953,10 @@
       "line": "つくばエクスプレス",
       "searchDate": "2026-08-28",
       "duration": 45,
-      "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分"
+      "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
+      "passengers": 30722,
+      "passengerYear": 2024,
+      "passengerRank": 303
     },
     {
       "id": "yashio",
@@ -1569,7 +1967,10 @@
       "line": "つくばエクスプレス",
       "searchDate": "2026-08-28",
       "duration": 42,
-      "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分"
+      "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
+      "passengers": 50219,
+      "passengerYear": 2024,
+      "passengerRank": 192
     },
     {
       "id": "rokumachi",
@@ -1580,7 +1981,10 @@
       "line": "つくばエクスプレス",
       "searchDate": "2026-08-28",
       "duration": 38,
-      "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分"
+      "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
+      "passengers": 34213,
+      "passengerYear": 2024,
+      "passengerRank": 283
     },
     {
       "id": "aoi",
@@ -1591,7 +1995,10 @@
       "line": "つくばエクスプレス",
       "searchDate": "2026-08-28",
       "duration": 36,
-      "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分"
+      "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
+      "passengers": 13288,
+      "passengerYear": 2024,
+      "passengerRank": 454
     },
     {
       "id": "asakusa-tx",
@@ -1602,7 +2009,10 @@
       "line": "つくばエクスプレス",
       "searchDate": "2026-08-28",
       "duration": 27,
-      "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分"
+      "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
+      "passengers": 24412,
+      "passengerYear": 2024,
+      "passengerRank": 365
     },
     {
       "id": "nagareyama",
@@ -1613,7 +2023,10 @@
       "line": "流 鉄 流 山 線",
       "searchDate": "2026-08-28",
       "duration": 71,
-      "route": "徒歩→流山駅/京成バス千葉ウエスト→京成バス千葉ウエスト・松７１→南流山駅/京成バス千葉ウエスト→徒歩→南流山→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分"
+      "route": "徒歩→流山駅/京成バス千葉ウエスト→京成バス千葉ウエスト・松７１→南流山駅/京成バス千葉ウエスト→徒歩→南流山→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
+      "passengers": 2422,
+      "passengerYear": 2024,
+      "passengerRank": 542
     },
     {
       "id": "heiwadai",
@@ -1624,7 +2037,10 @@
       "line": "流鉄流山線",
       "searchDate": "2026-08-28",
       "duration": 69,
-      "route": "流鉄流山線→馬橋→ＪＲ常磐線→松戸→ＪＲ常磐線快速→日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分"
+      "route": "流鉄流山線→馬橋→ＪＲ常磐線→松戸→ＪＲ常磐線快速→日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
+      "passengers": 2350,
+      "passengerYear": 2024,
+      "passengerRank": 543
     },
     {
       "id": "hirekesaki",
@@ -1635,7 +2051,10 @@
       "line": "流 鉄 流 山 線",
       "searchDate": "2026-08-28",
       "duration": 66,
-      "route": "流鉄流山線→馬橋→ＪＲ常磐線→松戸→ＪＲ常磐線快速→日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分"
+      "route": "流鉄流山線→馬橋→ＪＲ常磐線→松戸→ＪＲ常磐線快速→日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
+      "passengers": 1124,
+      "passengerYear": 2024,
+      "passengerRank": 553
     },
     {
       "id": "koganejoushi",
@@ -1646,7 +2065,10 @@
       "line": "流 鉄 流 山 線",
       "searchDate": "2026-08-28",
       "duration": 64,
-      "route": "流鉄流山線→馬橋→ＪＲ常磐線→松戸→ＪＲ常磐線快速→日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分"
+      "route": "流鉄流山線→馬橋→ＪＲ常磐線→松戸→ＪＲ常磐線快速→日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
+      "passengers": 1651,
+      "passengerYear": 2024,
+      "passengerRank": 548
     },
     {
       "id": "otsuka",
@@ -1657,7 +2079,10 @@
       "line": "山手線",
       "duration": 16,
       "route": "徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
-      "searchDate": "2026-08-28"
+      "searchDate": "2026-08-28",
+      "passengers": 108702,
+      "passengerYear": 2024,
+      "passengerRank": 90
     },
     {
       "id": "mejiro",
@@ -1668,7 +2093,10 @@
       "line": "山手線",
       "duration": 20,
       "route": "ＪＲ山手線外回り→池袋→東京メトロ丸ノ内線方南町行→茗荷谷→徒歩8分",
-      "searchDate": "2026-08-28"
+      "searchDate": "2026-08-28",
+      "passengers": 67082,
+      "passengerYear": 2024,
+      "passengerRank": 155
     },
     {
       "id": "shinjuku",
@@ -1680,7 +2108,10 @@
       "major": true,
       "duration": 26,
       "route": "ＪＲ山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
-      "searchDate": "2026-08-28"
+      "searchDate": "2026-08-28",
+      "passengers": 2713386,
+      "passengerYear": 2024,
+      "passengerRank": 2
     },
     {
       "id": "takadanobaba",
@@ -1691,7 +2122,10 @@
       "line": "山手線",
       "duration": 21,
       "route": "ＪＲ山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
-      "searchDate": "2026-08-28"
+      "searchDate": "2026-08-28",
+      "passengers": 809212,
+      "passengerYear": 2024,
+      "passengerRank": 7
     },
     {
       "id": "yurakucho",
@@ -1702,7 +2136,10 @@
       "line": "山手線",
       "duration": 23,
       "route": "東京メトロ有楽町線→護国寺→徒歩5分",
-      "searchDate": "2026-08-28"
+      "searchDate": "2026-08-28",
+      "passengers": 392785,
+      "passengerYear": 2024,
+      "passengerRank": 18
     },
     {
       "id": "sugamo",
@@ -1713,7 +2150,10 @@
       "line": "山手線",
       "duration": 21,
       "route": "都営三田線→千石→徒歩→千石一丁目(文京区)/都営バス→都営バス・上５８→音羽二丁目/都営バス→徒歩4分",
-      "searchDate": "2026-08-28"
+      "searchDate": "2026-08-28",
+      "passengers": 188319,
+      "passengerYear": 2024,
+      "passengerRank": 51
     },
     {
       "id": "tokyo",
@@ -1725,7 +2165,10 @@
       "major": true,
       "duration": 22,
       "route": "東京メトロ丸ノ内線→茗荷谷→徒歩8分",
-      "searchDate": "2026-08-28"
+      "searchDate": "2026-08-28",
+      "passengers": 1262604,
+      "passengerYear": 2024,
+      "passengerRank": 5
     },
     {
       "id": "shin-okubo",
@@ -1736,7 +2179,10 @@
       "line": "山手線",
       "duration": 24,
       "route": "ＪＲ山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
-      "searchDate": "2026-08-28"
+      "searchDate": "2026-08-28",
+      "passengers": 98492,
+      "passengerYear": 2024,
+      "passengerRank": 103
     },
     {
       "id": "kanda",
@@ -1747,7 +2193,10 @@
       "line": "山手線",
       "duration": 22,
       "route": "ＪＲ中央線快速→御茶ノ水→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
-      "searchDate": "2026-08-28"
+      "searchDate": "2026-08-28",
+      "passengers": 237297,
+      "passengerYear": 2024,
+      "passengerRank": 39
     },
     {
       "id": "akihabara",
@@ -1759,7 +2208,10 @@
       "major": true,
       "duration": 22,
       "route": "ＪＲ総武線→御茶ノ水→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
-      "searchDate": "2026-08-28"
+      "searchDate": "2026-08-28",
+      "passengers": 678406,
+      "passengerYear": 2024,
+      "passengerRank": 10
     },
     {
       "id": "komagome",
@@ -1770,7 +2222,10 @@
       "line": "山手線",
       "duration": 23,
       "route": "ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
-      "searchDate": "2026-08-28"
+      "searchDate": "2026-08-28",
+      "passengers": 124751,
+      "passengerYear": 2024,
+      "passengerRank": 80
     },
     {
       "id": "yoyogi",
@@ -1781,7 +2236,10 @@
       "line": "山手線",
       "duration": 28,
       "route": "ＪＲ山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
-      "searchDate": "2026-08-28"
+      "searchDate": "2026-08-28",
+      "passengers": 136902,
+      "passengerYear": 2024,
+      "passengerRank": 72
     },
     {
       "id": "tabata",
@@ -1792,7 +2250,10 @@
       "line": "山手線",
       "duration": 25,
       "route": "ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
-      "searchDate": "2026-08-28"
+      "searchDate": "2026-08-28",
+      "passengers": 80958,
+      "passengerYear": 2024,
+      "passengerRank": 122
     },
     {
       "id": "shimbashi",
@@ -1803,7 +2264,10 @@
       "line": "山手線",
       "duration": 31,
       "route": "ＪＲ東海道本線(上野東京ライン)→東京→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
-      "searchDate": "2026-08-28"
+      "searchDate": "2026-08-28",
+      "passengers": 787769,
+      "passengerYear": 2024,
+      "passengerRank": 8
     },
     {
       "id": "okachimachi",
@@ -1814,7 +2278,10 @@
       "line": "山手線",
       "duration": 27,
       "route": "ＪＲ京浜東北・根岸線→秋葉原→ＪＲ総武線→御茶ノ水→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
-      "searchDate": "2026-08-28"
+      "searchDate": "2026-08-28",
+      "passengers": 125968,
+      "passengerYear": 2024,
+      "passengerRank": 79
     },
     {
       "id": "ueno",
@@ -1826,7 +2293,10 @@
       "major": true,
       "duration": 29,
       "route": "ＪＲ京浜東北・根岸線→秋葉原→ＪＲ総武線→御茶ノ水→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
-      "searchDate": "2026-08-28"
+      "searchDate": "2026-08-28",
+      "passengers": 529457,
+      "passengerYear": 2024,
+      "passengerRank": 12
     },
     {
       "id": "harajuku",
@@ -1837,7 +2307,10 @@
       "line": "山手線",
       "duration": 31,
       "route": "ＪＲ山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
-      "searchDate": "2026-08-28"
+      "searchDate": "2026-08-28",
+      "passengers": 134814,
+      "passengerYear": 2024,
+      "passengerRank": 76
     },
     {
       "id": "hamamatsucho",
@@ -1848,7 +2321,10 @@
       "line": "山手線",
       "duration": 32,
       "route": "ＪＲ山手線内回り→東京→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
-      "searchDate": "2026-08-28"
+      "searchDate": "2026-08-28",
+      "passengers": 267804,
+      "passengerYear": 2024,
+      "passengerRank": 35
     },
     {
       "id": "uguisudani",
@@ -1859,7 +2335,10 @@
       "line": "山手線",
       "duration": 30,
       "route": "ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
-      "searchDate": "2026-08-28"
+      "searchDate": "2026-08-28",
+      "passengers": 48920,
+      "passengerYear": 2024,
+      "passengerRank": 196
     },
     {
       "id": "ebisu",
@@ -1870,7 +2349,10 @@
       "line": "山手線",
       "duration": 32,
       "route": "ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
-      "searchDate": "2026-08-28"
+      "searchDate": "2026-08-28",
+      "passengers": 356771,
+      "passengerYear": 2024,
+      "passengerRank": 23
     },
     {
       "id": "tamachi",
@@ -1881,7 +2363,10 @@
       "line": "山手線",
       "duration": 35,
       "route": "ＪＲ山手線内回り→東京→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
-      "searchDate": "2026-08-28"
+      "searchDate": "2026-08-28",
+      "passengers": 251710,
+      "passengerYear": 2024,
+      "passengerRank": 36
     },
     {
       "id": "osaki",
@@ -1892,7 +2377,10 @@
       "line": "山手線",
       "duration": 36,
       "route": "ＪＲ埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
-      "searchDate": "2026-08-28"
+      "searchDate": "2026-08-28",
+      "passengers": 290388,
+      "passengerYear": 2024,
+      "passengerRank": 32
     },
     {
       "id": "takanawa-gateway",
@@ -1903,7 +2391,10 @@
       "line": "山手線",
       "duration": 37,
       "route": "ＪＲ山手線内回り→東京→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
-      "searchDate": "2026-08-28"
+      "searchDate": "2026-08-28",
+      "passengers": 28418,
+      "passengerYear": 2024,
+      "passengerRank": 328
     },
     {
       "id": "shinagawa",
@@ -1915,7 +2406,10 @@
       "major": true,
       "duration": 36,
       "route": "ＪＲ東海道本線(上野東京ライン)→東京→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
-      "searchDate": "2026-08-28"
+      "searchDate": "2026-08-28",
+      "passengers": 892969,
+      "passengerYear": 2024,
+      "passengerRank": 6
     },
     {
       "id": "gotanda",
@@ -1926,7 +2420,10 @@
       "line": "山手線",
       "duration": 40,
       "route": "ＪＲ山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
-      "searchDate": "2026-08-28"
+      "searchDate": "2026-08-28",
+      "passengers": 375542,
+      "passengerYear": 2024,
+      "passengerRank": 21
     },
     {
       "id": "tokyo23-003849",
@@ -1937,7 +2434,10 @@
       "line": "京王線",
       "route": "京王線→新宿→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 46
+      "duration": 46,
+      "passengers": 14678,
+      "passengerYear": 2024,
+      "passengerRank": 441
     },
     {
       "id": "tokyo23-004020",
@@ -1948,7 +2448,10 @@
       "line": "世田谷線",
       "route": "東急世田谷線→三軒茶屋→東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 52
+      "duration": 52,
+      "passengers": 8814,
+      "passengerYear": 2024,
+      "passengerRank": 493
     },
     {
       "id": "tokyo23-003908",
@@ -1959,7 +2462,10 @@
       "line": "井の頭線 / 小田原線",
       "route": "小田急小田原線通勤準急→表参道→東京メトロ半蔵門線→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 37
+      "duration": 37,
+      "passengers": 229107,
+      "passengerYear": 2024,
+      "passengerRank": 42
     },
     {
       "id": "tokyo23-003874",
@@ -1970,7 +2476,10 @@
       "line": "世田谷線 / 京王線",
       "route": "京王線→新宿→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 41
+      "duration": 41,
+      "passengers": 55782,
+      "passengerYear": 2024,
+      "passengerRank": 180
     },
     {
       "id": "tokyo23-004021",
@@ -1981,7 +2490,10 @@
       "line": "世田谷線",
       "route": "東急世田谷線→三軒茶屋→東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 51
+      "duration": 51,
+      "passengers": 7592,
+      "passengerYear": 2024,
+      "passengerRank": 504
     },
     {
       "id": "tokyo23-003931",
@@ -1992,7 +2504,10 @@
       "line": "小田原線",
       "route": "小田急小田原線→下北沢→小田急小田原線通勤準急→表参道→東京メトロ半蔵門線→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 41
+      "duration": 41,
+      "passengers": 9582,
+      "passengerYear": 2024,
+      "passengerRank": 480
     },
     {
       "id": "tokyo23-003830",
@@ -2003,7 +2518,10 @@
       "line": "京王線",
       "route": "京王線→新宿→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 37
+      "duration": 37,
+      "passengers": 17148,
+      "passengerYear": 2024,
+      "passengerRank": 420
     },
     {
       "id": "tokyo23-003861",
@@ -2014,7 +2532,10 @@
       "line": "京王線",
       "route": "京王線特急→新宿→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 47
+      "duration": 47,
+      "passengers": 79689,
+      "passengerYear": 2024,
+      "passengerRank": 129
     },
     {
       "id": "tokyo23-003988",
@@ -2025,7 +2546,10 @@
       "line": "小田原線",
       "route": "小田急小田原線→経堂→小田急小田原線通勤準急→表参道→東京メトロ半蔵門線→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 46
+      "duration": 46,
+      "passengers": 55873,
+      "passengerYear": 2024,
+      "passengerRank": 179
     },
     {
       "id": "tokyo23-004053",
@@ -2036,7 +2560,10 @@
       "line": "小田原線",
       "route": "小田急小田原線→成城学園前→小田急小田原線通勤準急→表参道→東京メトロ半蔵門線→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 50
+      "duration": 50,
+      "passengers": 30793,
+      "passengerYear": 2024,
+      "passengerRank": 301
     },
     {
       "id": "tokyo23-003989",
@@ -2047,7 +2574,10 @@
       "line": "世田谷線",
       "route": "東急世田谷線→三軒茶屋→東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 54
+      "duration": 54,
+      "passengers": 4002,
+      "passengerYear": 2024,
+      "passengerRank": 523
     },
     {
       "id": "tokyo23-003957",
@@ -2058,7 +2588,10 @@
       "line": "世田谷線",
       "route": "徒歩→豪徳寺→小田急小田原線→下北沢→小田急小田原線通勤準急→表参道→東京メトロ半蔵門線→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 48
+      "duration": 48,
+      "passengers": 7784,
+      "passengerYear": 2024,
+      "passengerRank": 501
     },
     {
       "id": "tokyo23-004036",
@@ -2069,7 +2602,10 @@
       "line": "小田原線",
       "route": "小田急小田原線通勤準急→表参道→東京メトロ半蔵門線→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 46
+      "duration": 46,
+      "passengers": 80513,
+      "passengerYear": 2024,
+      "passengerRank": 124
     },
     {
       "id": "tokyo23-003901",
@@ -2080,7 +2616,10 @@
       "line": "井の頭線",
       "route": "京王井の頭線→明大前→京王線→新宿→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 43
+      "duration": 43,
+      "passengers": 8765,
+      "passengerYear": 2024,
+      "passengerRank": 494
     },
     {
       "id": "tokyo23-003846",
@@ -2091,7 +2630,10 @@
       "line": "井の頭線 / 京王線",
       "route": "京王線→新宿→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 39
+      "duration": 39,
+      "passengers": 91172,
+      "passengerYear": 2024,
+      "passengerRank": 113
     },
     {
       "id": "tokyo23-003880",
@@ -2102,7 +2644,10 @@
       "line": "小田原線",
       "route": "小田急小田原線→代々木上原→東京メトロ千代田線→表参道→東京メトロ半蔵門線→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 38
+      "duration": 38,
+      "passengers": 8030,
+      "passengerYear": 2024,
+      "passengerRank": 498
     },
     {
       "id": "tokyo23-003899",
@@ -2113,7 +2658,10 @@
       "line": "井の頭線",
       "route": "京王井の頭線→明大前→京王線→新宿→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 42
+      "duration": 42,
+      "passengers": 15426,
+      "passengerYear": 2024,
+      "passengerRank": 431
     },
     {
       "id": "tokyo23-003915",
@@ -2124,7 +2672,10 @@
       "line": "世田谷線",
       "route": "東急世田谷線→下高井戸→京王線→笹塚→京王新線→市ケ谷→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 49
+      "duration": 49,
+      "passengers": 3113,
+      "passengerYear": 2024,
+      "passengerRank": 533
     },
     {
       "id": "tokyo23-004017",
@@ -2135,7 +2686,10 @@
       "line": "世田谷線",
       "route": "東急世田谷線→三軒茶屋→東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 49
+      "duration": 49,
+      "passengers": 9531,
+      "passengerYear": 2024,
+      "passengerRank": 483
     },
     {
       "id": "tokyo23-003862",
@@ -2146,7 +2700,10 @@
       "line": "京王線",
       "route": "京王線→新宿→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 43
+      "duration": 43,
+      "passengers": 36224,
+      "passengerYear": 2024,
+      "passengerRank": 269
     },
     {
       "id": "tokyo23-003945",
@@ -2157,7 +2714,10 @@
       "line": "小田原線",
       "route": "小田急小田原線→下北沢→小田急小田原線通勤準急→表参道→東京メトロ半蔵門線→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 43
+      "duration": 43,
+      "passengers": 32280,
+      "passengerYear": 2024,
+      "passengerRank": 292
     },
     {
       "id": "tokyo23-003914",
@@ -2168,7 +2728,10 @@
       "line": "井の頭線",
       "route": "京王井の頭線→渋谷→JR埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 40
+      "duration": 40,
+      "passengers": 9179,
+      "passengerYear": 2024,
+      "passengerRank": 487
     },
     {
       "id": "tokyo23-004024",
@@ -2179,7 +2742,10 @@
       "line": "小田原線",
       "route": "小田急小田原線→経堂→小田急小田原線通勤準急→表参道→東京メトロ半蔵門線→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 48
+      "duration": 48,
+      "passengers": 47616,
+      "passengerYear": 2024,
+      "passengerRank": 203
     },
     {
       "id": "tokyo23-003970",
@@ -2190,7 +2756,10 @@
       "line": "小田原線",
       "route": "小田急小田原線通勤準急→表参道→東京メトロ半蔵門線→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 41
+      "duration": 41,
+      "passengers": 82232,
+      "passengerYear": 2024,
+      "passengerRank": 121
     },
     {
       "id": "tokyo23-003832",
@@ -2201,7 +2770,10 @@
       "line": "京王線",
       "route": "京王線→新宿→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 53
+      "duration": 53,
+      "passengers": 14016,
+      "passengerYear": 2024,
+      "passengerRank": 445
     },
     {
       "id": "tokyo23-003996",
@@ -2212,7 +2784,10 @@
       "line": "世田谷線",
       "route": "東急世田谷線→三軒茶屋→東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 47
+      "duration": 47,
+      "passengers": 7606,
+      "passengerYear": 2024,
+      "passengerRank": 503
     },
     {
       "id": "tokyo23-004006",
@@ -2223,7 +2798,10 @@
       "line": "世田谷線",
       "route": "東急世田谷線→三軒茶屋→東急田園都市線急行→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 45
+      "duration": 45,
+      "passengers": 734,
+      "passengerYear": 2024,
+      "passengerRank": 560
     },
     {
       "id": "tokyo23-003960",
@@ -2234,7 +2812,10 @@
       "line": "小田原線",
       "route": "小田急小田原線→下北沢→小田急小田原線通勤準急→表参道→東京メトロ半蔵門線→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 45
+      "duration": 45,
+      "passengers": 27512,
+      "passengerYear": 2024,
+      "passengerRank": 341
     },
     {
       "id": "tokyo23-003716",
@@ -2245,7 +2826,10 @@
       "line": "半蔵門線 / 銀座線",
       "route": "東京メトロ半蔵門線→大手町(東京都)→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 25
+      "duration": 25,
+      "passengers": 117531,
+      "passengerYear": 2024,
+      "passengerRank": 83
     },
     {
       "id": "tokyo23-003792",
@@ -2256,7 +2840,10 @@
       "line": "銀座線",
       "route": "東京メトロ銀座線→銀座→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 32
+      "duration": 32,
+      "passengers": 56104,
+      "passengerYear": 2024,
+      "passengerRank": 178
     },
     {
       "id": "tokyo23-003721",
@@ -2267,7 +2854,10 @@
       "line": "浅草線 / 日比谷線",
       "route": "東京メトロ日比谷線→秋葉原→JR総武線→御茶ノ水→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 30
+      "duration": 30,
+      "passengers": 99358,
+      "passengerYear": 2024,
+      "passengerRank": 101
     },
     {
       "id": "tokyo23-003797",
@@ -2278,7 +2868,10 @@
       "line": "日比谷線 / 京葉線",
       "route": "JR武蔵野線→東京→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 34
+      "duration": 34,
+      "passengers": 166605,
+      "passengerYear": 2024,
+      "passengerRank": 59
     },
     {
       "id": "tokyo23-003927",
@@ -2289,7 +2882,10 @@
       "line": "大江戸線",
       "route": "都営大江戸線→月島→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 32
+      "duration": 32,
+      "passengers": 91189,
+      "passengerYear": 2024,
+      "passengerRank": 112
     },
     {
       "id": "tokyo23-003796",
@@ -2300,7 +2896,10 @@
       "line": "浅草線",
       "route": "都営浅草線→日本橋(東京都)→東京メトロ東西線→大手町(東京都)→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 30
+      "duration": 30,
+      "passengers": 31022,
+      "passengerYear": 2024,
+      "passengerRank": 298
     },
     {
       "id": "tokyo23-003692",
@@ -2311,7 +2910,10 @@
       "line": "日比谷線",
       "route": "東京メトロ日比谷線→秋葉原→JR総武線→御茶ノ水→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 28
+      "duration": 28,
+      "passengers": 36068,
+      "passengerYear": 2024,
+      "passengerRank": 271
     },
     {
       "id": "tokyo23-003833",
@@ -2322,7 +2924,10 @@
       "line": "有楽町線",
       "route": "東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 26
+      "duration": 26,
+      "passengers": 36625,
+      "passengerYear": 2024,
+      "passengerRank": 265
     },
     {
       "id": "tokyo23-003703",
@@ -2333,7 +2938,10 @@
       "line": "総武線",
       "route": "JR総武線快速→東京→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 28
+      "duration": 28,
+      "passengers": 36522,
+      "passengerYear": 2024,
+      "passengerRank": 266
     },
     {
       "id": "tokyo23-003756",
@@ -2344,7 +2952,10 @@
       "line": "浅草線 / 銀座線 / 東西線",
       "route": "東京メトロ東西線→大手町(東京都)→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 26
+      "duration": 26,
+      "passengers": 216753,
+      "passengerYear": 2024,
+      "passengerRank": 44
     },
     {
       "id": "tokyo23-003889",
@@ -2355,7 +2966,10 @@
       "line": "大江戸線 / 有楽町線",
       "route": "東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 28
+      "duration": 28,
+      "passengers": 100940,
+      "passengerYear": 2024,
+      "passengerRank": 98
     },
     {
       "id": "tokyo23-003676",
@@ -2366,7 +2980,10 @@
       "line": "浅草線",
       "route": "同駅内徒歩→馬喰横山→都営新宿線→小川町(東京都)→同駅内徒歩→淡路町→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 32
+      "duration": 32,
+      "passengers": 25398,
+      "passengerYear": 2024,
+      "passengerRank": 358
     },
     {
       "id": "tokyo23-003838",
@@ -2377,7 +2994,10 @@
       "line": "浅草線 / 日比谷線",
       "route": "東京メトロ日比谷線→銀座→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 28
+      "duration": 28,
+      "passengers": 140168,
+      "passengerYear": 2024,
+      "passengerRank": 71
     },
     {
       "id": "tokyo23-003753",
@@ -2388,7 +3008,10 @@
       "line": "半蔵門線",
       "route": "東京メトロ半蔵門線→大手町(東京都)→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 28
+      "duration": 28,
+      "passengers": 74355,
+      "passengerYear": 2024,
+      "passengerRank": 139
     },
     {
       "id": "tokyo23-003706",
@@ -2399,7 +3022,10 @@
       "line": "新宿線",
       "route": "都営新宿線→小川町(東京都)→同駅内徒歩→淡路町→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 29
+      "duration": 29,
+      "passengers": 21447,
+      "passengerYear": 2024,
+      "passengerRank": 385
     },
     {
       "id": "tokyo23-003860",
@@ -2410,7 +3036,10 @@
       "line": "日比谷線",
       "route": "東京メトロ日比谷線→銀座→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 30
+      "duration": 30,
+      "passengers": 59492,
+      "passengerYear": 2024,
+      "passengerRank": 168
     },
     {
       "id": "tokyo23-003886",
@@ -2421,7 +3050,10 @@
       "line": "大江戸線",
       "route": "都営大江戸線→月島→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 36
+      "duration": 36,
+      "passengers": 23281,
+      "passengerYear": 2024,
+      "passengerRank": 373
     },
     {
       "id": "tokyo23-003773",
@@ -2432,7 +3064,10 @@
       "line": "日比谷線 / 東西線",
       "route": "東京メトロ東西線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 30
+      "duration": 30,
+      "passengers": 112343,
+      "passengerYear": 2024,
+      "passengerRank": 85
     },
     {
       "id": "tokyo23-003823",
@@ -2443,7 +3078,10 @@
       "line": "日比谷線 / 銀座線 / 丸ノ内線",
       "route": "東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 25
+      "duration": 25,
+      "passengers": 230271,
+      "passengerYear": 2024,
+      "passengerRank": 41
     },
     {
       "id": "tokyo23-003801",
@@ -2454,7 +3092,10 @@
       "line": "有楽町線",
       "route": "東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 25
+      "duration": 25,
+      "passengers": 33805,
+      "passengerYear": 2024,
+      "passengerRank": 284
     },
     {
       "id": "tokyo23-003675",
@@ -2465,7 +3106,10 @@
       "line": "新宿線",
       "route": "都営新宿線→小川町(東京都)→同駅内徒歩→淡路町→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 27
+      "duration": 27,
+      "passengers": 46299,
+      "passengerYear": 2024,
+      "passengerRank": 209
     },
     {
       "id": "tokyo23-003668",
@@ -2476,7 +3120,10 @@
       "line": "総武線",
       "route": "徒歩→馬喰横山→都営新宿線→小川町(東京都)→同駅内徒歩→淡路町→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 31
+      "duration": 31,
+      "passengers": 50414,
+      "passengerYear": 2024,
+      "passengerRank": 191
     },
     {
       "id": "tokyo23-003568",
@@ -2487,7 +3134,10 @@
       "line": "東西線 / 中央線",
       "route": "東京メトロ東西線快速→高田馬場→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 32
+      "duration": 32,
+      "passengers": 406312,
+      "passengerYear": 2024,
+      "passengerRank": 16
     },
     {
       "id": "tokyo23-003643",
@@ -2498,7 +3148,10 @@
       "line": "大江戸線 / 丸ノ内線",
       "route": "東京メトロ丸ノ内線→新宿三丁目→東京メトロ副都心線通勤急行→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 34
+      "duration": 34,
+      "passengers": 97406,
+      "passengerYear": 2024,
+      "passengerRank": 104
     },
     {
       "id": "tokyo23-003688",
@@ -2509,7 +3162,10 @@
       "line": "丸ノ内線",
       "route": "東京メトロ丸ノ内線→中野坂上→東京メトロ丸ノ内線→新宿三丁目→東京メトロ副都心線通勤急行→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 39
+      "duration": 39,
+      "passengers": 19307,
+      "passengerYear": 2024,
+      "passengerRank": 404
     },
     {
       "id": "tokyo23-003679",
@@ -2520,7 +3176,10 @@
       "line": "丸ノ内線",
       "route": "東京メトロ丸ノ内線→四ツ谷→東京メトロ南北線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 38
+      "duration": 38,
+      "passengers": 20570,
+      "passengerYear": 2024,
+      "passengerRank": 394
     },
     {
       "id": "tokyo23-003638",
@@ -2531,7 +3190,10 @@
       "line": "丸ノ内線",
       "route": "東京メトロ丸ノ内線→新宿三丁目→東京メトロ副都心線通勤急行→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 37
+      "duration": 37,
+      "passengers": 33550,
+      "passengerYear": 2024,
+      "passengerRank": 286
     },
     {
       "id": "tokyo23-003489",
@@ -2542,7 +3204,10 @@
       "line": "新宿線",
       "route": "西武新宿線→高田馬場→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 35
+      "duration": 35,
+      "passengers": 19709,
+      "passengerYear": 2024,
+      "passengerRank": 398
     },
     {
       "id": "tokyo23-003549",
@@ -2553,7 +3218,10 @@
       "line": "大江戸線 / 中央線",
       "route": "JR総武線→市ケ谷→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 35
+      "duration": 35,
+      "passengers": 92396,
+      "passengerYear": 2024,
+      "passengerRank": 111
     },
     {
       "id": "tokyo23-003475",
@@ -2564,7 +3232,10 @@
       "line": "新宿線",
       "route": "西武新宿線→高田馬場→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 37
+      "duration": 37,
+      "passengers": 18003,
+      "passengerYear": 2024,
+      "passengerRank": 416
     },
     {
       "id": "tokyo23-003523",
@@ -2575,7 +3246,10 @@
       "line": "東西線",
       "route": "東京メトロ東西線快速→高田馬場→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 29
+      "duration": 29,
+      "passengers": 26664,
+      "passengerYear": 2024,
+      "passengerRank": 346
     },
     {
       "id": "tokyo23-003453",
@@ -2586,7 +3260,10 @@
       "line": "新宿線",
       "route": "西武新宿線→高田馬場→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 42
+      "duration": 42,
+      "passengers": 17816,
+      "passengerYear": 2024,
+      "passengerRank": 417
     },
     {
       "id": "tokyo23-003473",
@@ -2597,7 +3274,10 @@
       "line": "新宿線",
       "route": "西武新宿線→高田馬場→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 40
+      "duration": 40,
+      "passengers": 23415,
+      "passengerYear": 2024,
+      "passengerRank": 371
     },
     {
       "id": "tokyo23-003451",
@@ -2608,7 +3288,10 @@
       "line": "新宿線",
       "route": "西武新宿線急行→高田馬場→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 35
+      "duration": 35,
+      "passengers": 30388,
+      "passengerYear": 2024,
+      "passengerRank": 308
     },
     {
       "id": "tokyo23-003153",
@@ -2619,7 +3302,10 @@
       "line": "南北線",
       "route": "東京メトロ南北線→後楽園→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 35
+      "duration": 35,
+      "passengers": 15187,
+      "passengerYear": 2024,
+      "passengerRank": 433
     },
     {
       "id": "tokyo23-003253",
@@ -2630,7 +3316,10 @@
       "line": "荒川線",
       "route": "都電荒川線→大塚駅前→徒歩→大塚駅前/都営バス→都営バス・都02(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "searchDate": "2026-08-28",
-      "duration": 36
+      "duration": 36,
+      "passengers": 789,
+      "passengerYear": 2024,
+      "passengerRank": 558
     },
     {
       "id": "tokyo23-003246",
@@ -2641,7 +3330,10 @@
       "line": "荒川線",
       "route": "都電荒川線→大塚駅前→徒歩→大塚駅前/都営バス→都営バス・都02(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "searchDate": "2026-08-28",
-      "duration": 37
+      "duration": 37,
+      "passengers": 2628,
+      "passengerYear": 2024,
+      "passengerRank": 536
     },
     {
       "id": "tokyo23-003107",
@@ -2652,7 +3344,10 @@
       "line": "東北線",
       "route": "JR埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 32
+      "duration": 32,
+      "passengers": 43438,
+      "passengerYear": 2024,
+      "passengerRank": 220
     },
     {
       "id": "tokyo23-003276",
@@ -2663,7 +3358,10 @@
       "line": "荒川線",
       "route": "都電荒川線→大塚駅前→徒歩→大塚駅前/都営バス→都営バス・都02(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "searchDate": "2026-08-28",
-      "duration": 29
+      "duration": 29,
+      "passengers": 1610,
+      "passengerYear": 2024,
+      "passengerRank": 549
     },
     {
       "id": "tokyo23-003236",
@@ -2674,7 +3372,10 @@
       "line": "南北線 / 東北線",
       "route": "東京メトロ南北線→後楽園→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 29
+      "duration": 29,
+      "passengers": 178128,
+      "passengerYear": 2024,
+      "passengerRank": 55
     },
     {
       "id": "tokyo23-003207",
@@ -2685,7 +3386,10 @@
       "line": "南北線",
       "route": "東京メトロ南北線→後楽園→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 32
+      "duration": 32,
+      "passengers": 36275,
+      "passengerYear": 2024,
+      "passengerRank": 268
     },
     {
       "id": "tokyo23-003239",
@@ -2696,7 +3400,10 @@
       "line": "荒川線",
       "route": "徒歩→王子→東京メトロ南北線→後楽園→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 32
+      "duration": 32,
+      "passengers": 9239,
+      "passengerYear": 2024,
+      "passengerRank": 486
     },
     {
       "id": "tokyo23-003279",
@@ -2707,7 +3414,10 @@
       "line": "南北線",
       "route": "東京メトロ南北線→後楽園→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 27
+      "duration": 27,
+      "passengers": 8976,
+      "passengerYear": 2024,
+      "passengerRank": 490
     },
     {
       "id": "tokyo23-003289",
@@ -2718,7 +3428,10 @@
       "line": "荒川線",
       "route": "都電荒川線→大塚駅前→徒歩→大塚駅前/都営バス→都営バス・都02(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "searchDate": "2026-08-28",
-      "duration": 26
+      "duration": 26,
+      "passengers": 2515,
+      "passengerYear": 2024,
+      "passengerRank": 538
     },
     {
       "id": "tokyo23-003141",
@@ -2729,7 +3442,10 @@
       "line": "南北線 / 埼玉高速鉄道線",
       "route": "東京メトロ南北線→後楽園→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 37
+      "duration": 37,
+      "passengers": 94035,
+      "passengerYear": 2024,
+      "passengerRank": 110
     },
     {
       "id": "tokyo23-003256",
@@ -2740,7 +3456,10 @@
       "line": "荒川線",
       "route": "都電荒川線→大塚駅前→徒歩→大塚駅前/都営バス→都営バス・都02(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "searchDate": "2026-08-28",
-      "duration": 30
+      "duration": 30,
+      "passengers": 993,
+      "passengerYear": 2024,
+      "passengerRank": 555
     },
     {
       "id": "tokyo23-003657",
@@ -2751,7 +3470,10 @@
       "line": "新宿線 / 半蔵門線 / 東西線",
       "route": "東京メトロ東西線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 21
+      "duration": 21,
+      "passengers": 201105,
+      "passengerYear": 2024,
+      "passengerRank": 46
     },
     {
       "id": "tokyo23-003772",
@@ -2762,7 +3484,10 @@
       "line": "千代田線",
       "route": "東京メトロ千代田線→大手町(東京都)→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 29
+      "duration": 29,
+      "passengers": 35289,
+      "passengerYear": 2024,
+      "passengerRank": 274
     },
     {
       "id": "tokyo23-003729",
@@ -2773,7 +3498,10 @@
       "line": "半蔵門線",
       "route": "東京メトロ半蔵門線→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 25
+      "duration": 25,
+      "passengers": 73487,
+      "passengerYear": 2024,
+      "passengerRank": 143
     },
     {
       "id": "tokyo23-003728",
@@ -2784,7 +3512,10 @@
       "line": "丸ノ内線 / 南北線 / 中央線",
       "route": "JR総武線→市ケ谷→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 21
+      "duration": 21,
+      "passengers": 295458,
+      "passengerYear": 2024,
+      "passengerRank": 31
     },
     {
       "id": "tokyo23-003799",
@@ -2795,7 +3526,10 @@
       "line": "丸ノ内線 / 千代田線",
       "route": "東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 29
+      "duration": 29,
+      "passengers": 40907,
+      "passengerYear": 2024,
+      "passengerRank": 232
     },
     {
       "id": "tokyo23-003719",
@@ -2806,7 +3540,10 @@
       "line": "半蔵門線 / 丸ノ内線 / 東西線 / 三田線 / 千代田線",
       "route": "東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 21
+      "duration": 21,
+      "passengers": 396194,
+      "passengerYear": 2024,
+      "passengerRank": 17
     },
     {
       "id": "tokyo23-003659",
@@ -2817,7 +3554,10 @@
       "line": "新宿線",
       "route": "同駅内徒歩→淡路町→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 23
+      "duration": 23,
+      "passengers": 37295,
+      "passengerYear": 2024,
+      "passengerRank": 259
     },
     {
       "id": "tokyo23-003655",
@@ -2828,7 +3568,10 @@
       "line": "新宿線",
       "route": "都営新宿線→小川町(東京都)→同駅内徒歩→淡路町→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 26
+      "duration": 26,
+      "passengers": 39177,
+      "passengerYear": 2024,
+      "passengerRank": 244
     },
     {
       "id": "tokyo23-003671",
@@ -2839,7 +3582,10 @@
       "line": "新宿線 / 南北線 / 有楽町線 / 中央線",
       "route": "東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 15
+      "duration": 15,
+      "passengers": 279416,
+      "passengerYear": 2024,
+      "passengerRank": 33
     },
     {
       "id": "tokyo23-003615",
@@ -2850,7 +3596,10 @@
       "line": "丸ノ内線 / 中央線 / 総武線",
       "route": "東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 17
+      "duration": 17,
+      "passengers": 231276,
+      "passengerYear": 2024,
+      "passengerRank": 40
     },
     {
       "id": "tokyo23-003645",
@@ -2861,7 +3610,10 @@
       "line": "千代田線",
       "route": "徒歩→御茶ノ水→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 25
+      "duration": 25,
+      "passengers": 87057,
+      "passengerYear": 2024,
+      "passengerRank": 115
     },
     {
       "id": "tokyo23-003802",
@@ -2872,7 +3624,10 @@
       "line": "日比谷線 / 三田線 / 千代田線",
       "route": "都営三田線→大手町(東京都)→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 29
+      "duration": 29,
+      "passengers": 132278,
+      "passengerYear": 2024,
+      "passengerRank": 78
     },
     {
       "id": "tokyo23-003586",
@@ -2883,7 +3638,10 @@
       "line": "銀座線",
       "route": "東京メトロ銀座線→神田(東京都)→JR中央線快速→御茶ノ水→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 27
+      "duration": 27,
+      "passengers": 27833,
+      "passengerYear": 2024,
+      "passengerRank": 332
     },
     {
       "id": "tokyo23-003787",
@@ -2894,7 +3652,10 @@
       "line": "有楽町線",
       "route": "東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 21
+      "duration": 21,
+      "passengers": 13129,
+      "passengerYear": 2024,
+      "passengerRank": 456
     },
     {
       "id": "tokyo23-003782",
@@ -2905,7 +3666,10 @@
       "line": "半蔵門線 / 南北線 / 有楽町線",
       "route": "東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 19
+      "duration": 19,
+      "passengers": 75272,
+      "passengerYear": 2024,
+      "passengerRank": 135
     },
     {
       "id": "tokyo23-003661",
@@ -2916,7 +3680,10 @@
       "line": "丸ノ内線",
       "route": "東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 19
+      "duration": 19,
+      "passengers": 57894,
+      "passengerYear": 2024,
+      "passengerRank": 173
     },
     {
       "id": "tokyo23-003651",
@@ -2927,7 +3694,10 @@
       "line": "新宿線 / 半蔵門線 / 三田線",
       "route": "都営新宿線→市ケ谷→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 24
+      "duration": 24,
+      "passengers": 203106,
+      "passengerYear": 2024,
+      "passengerRank": 45
     },
     {
       "id": "tokyo23-003691",
@@ -2938,7 +3708,10 @@
       "line": "東西線",
       "route": "東京メトロ東西線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 23
+      "duration": 23,
+      "passengers": 42156,
+      "passengerYear": 2024,
+      "passengerRank": 228
     },
     {
       "id": "tokyo23-003805",
@@ -2949,7 +3722,10 @@
       "line": "日比谷線 / 丸ノ内線 / 千代田線",
       "route": "東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 27
+      "duration": 27,
+      "passengers": 132884,
+      "passengerYear": 2024,
+      "passengerRank": 77
     },
     {
       "id": "tokyo23-003595",
@@ -2960,7 +3736,10 @@
       "line": "大江戸線 / 東西線 / 南北線 / 有楽町線 / 中央線",
       "route": "東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 13
+      "duration": 13,
+      "passengers": 314792,
+      "passengerYear": 2024,
+      "passengerRank": 28
     },
     {
       "id": "tokyo23-003737",
@@ -2971,7 +3750,10 @@
       "line": "有楽町線",
       "route": "東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 17
+      "duration": 17,
+      "passengers": 56238,
+      "passengerYear": 2024,
+      "passengerRank": 176
     },
     {
       "id": "tokyo23-003399",
@@ -2982,7 +3764,10 @@
       "line": "日比谷線",
       "route": "東京メトロ日比谷線→仲御徒町→同駅内徒歩→上野御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 34
+      "duration": 34,
+      "passengers": 46924,
+      "passengerYear": 2024,
+      "passengerRank": 207
     },
     {
       "id": "tokyo23-003545",
@@ -2993,7 +3778,10 @@
       "line": "銀座線",
       "route": "同駅内徒歩→上野御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 25
+      "duration": 25,
+      "passengers": 25666,
+      "passengerYear": 2024,
+      "passengerRank": 353
     },
     {
       "id": "tokyo23-003543",
@@ -3004,7 +3792,10 @@
       "line": "大江戸線",
       "route": "都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 20
+      "duration": 20,
+      "passengers": 34438,
+      "passengerYear": 2024,
+      "passengerRank": 282
     },
     {
       "id": "tokyo23-003521",
@@ -3015,7 +3806,10 @@
       "line": "本線",
       "route": "徒歩→上野御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 29
+      "duration": 29,
+      "passengers": 48475,
+      "passengerYear": 2024,
+      "passengerRank": 200
     },
     {
       "id": "tokyo23-003560",
@@ -3026,7 +3820,10 @@
       "line": "日比谷線",
       "route": "同駅内徒歩→上野御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 26
+      "duration": 26,
+      "passengers": 41623,
+      "passengerYear": 2024,
+      "passengerRank": 231
     },
     {
       "id": "tokyo23-003469",
@@ -3037,7 +3834,10 @@
       "line": "日比谷線",
       "route": "東京メトロ日比谷線→仲御徒町→同駅内徒歩→上野御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 32
+      "duration": 32,
+      "passengers": 38480,
+      "passengerYear": 2024,
+      "passengerRank": 246
     },
     {
       "id": "tokyo23-003556",
@@ -3048,7 +3848,10 @@
       "line": "大江戸線 / つくばエクスプレス",
       "route": "都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 22
+      "duration": 22,
+      "passengers": 84215,
+      "passengerYear": 2024,
+      "passengerRank": 118
     },
     {
       "id": "tokyo23-003522",
@@ -3059,7 +3862,10 @@
       "line": "浅草線 / 銀座線 / 伊勢崎線",
       "route": "都営浅草線特急→浅草橋→JR総武線→御茶ノ水→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 34
+      "duration": 34,
+      "passengers": 197745,
+      "passengerYear": 2024,
+      "passengerRank": 48
     },
     {
       "id": "tokyo23-003636",
@@ -3070,7 +3876,10 @@
       "line": "浅草線 / 総武線",
       "route": "JR総武線→御茶ノ水→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 25
+      "duration": 25,
+      "passengers": 147750,
+      "passengerYear": 2024,
+      "passengerRank": 65
     },
     {
       "id": "tokyo23-003530",
@@ -3081,7 +3890,10 @@
       "line": "銀座線",
       "route": "東京メトロ銀座線→上野広小路→同駅内徒歩→上野御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 35
+      "duration": 35,
+      "passengers": 36681,
+      "passengerYear": 2024,
+      "passengerRank": 264
     },
     {
       "id": "tokyo23-003519",
@@ -3092,7 +3904,10 @@
       "line": "銀座線",
       "route": "東京メトロ銀座線→上野広小路→同駅内徒歩→上野御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 33
+      "duration": 33,
+      "passengers": 18891,
+      "passengerYear": 2024,
+      "passengerRank": 409
     },
     {
       "id": "tokyo23-003571",
@@ -3103,7 +3918,10 @@
       "line": "大江戸線 / 浅草線",
       "route": "都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 24
+      "duration": 24,
+      "passengers": 53056,
+      "passengerYear": 2024,
+      "passengerRank": 186
     },
     {
       "id": "tokyo23-004125",
@@ -3114,7 +3932,10 @@
       "line": "本線",
       "route": "京急本線→品川→JR東海道本線(上野東京ライン)→東京→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 44
+      "duration": 44,
+      "passengers": 8977,
+      "passengerYear": 2024,
+      "passengerRank": 489
     },
     {
       "id": "tokyo23-004182",
@@ -3125,7 +3946,10 @@
       "line": "臨海副都心線",
       "route": "東京臨海高速鉄道りんかい線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 43
+      "duration": 43,
+      "passengers": 37378,
+      "passengerYear": 2024,
+      "passengerRank": 258
     },
     {
       "id": "tokyo23-004127",
@@ -3136,7 +3960,10 @@
       "line": "池上線",
       "route": "東急池上線→五反田→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 46
+      "duration": 46,
+      "passengers": 7648,
+      "passengerYear": 2024,
+      "passengerRank": 502
     },
     {
       "id": "tokyo23-004268",
@@ -3147,7 +3974,10 @@
       "line": "本線",
       "route": "京急本線→立会川→京急本線急行→品川→JR東海道本線(上野東京ライン)→東京→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 51
+      "duration": 51,
+      "passengers": 13644,
+      "passengerYear": 2024,
+      "passengerRank": 450
     },
     {
       "id": "tokyo23-004123",
@@ -3158,7 +3988,10 @@
       "line": "東京モノレール / 臨海副都心線",
       "route": "東京モノレール→浜松町→JR山手線内回り→有楽町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 44
+      "duration": 44,
+      "passengers": 54707,
+      "passengerYear": 2024,
+      "passengerRank": 182
     },
     {
       "id": "tokyo23-004161",
@@ -3169,7 +4002,10 @@
       "line": "浅草線",
       "route": "都営浅草線→五反田→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 46
+      "duration": 46,
+      "passengers": 21299,
+      "passengerYear": 2024,
+      "passengerRank": 386
     },
     {
       "id": "tokyo23-004155",
@@ -3180,7 +4016,10 @@
       "line": "池上線",
       "route": "東急池上線→五反田→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 49
+      "duration": 49,
+      "passengers": 19370,
+      "passengerYear": 2024,
+      "passengerRank": 402
     },
     {
       "id": "tokyo23-004153",
@@ -3191,7 +4030,10 @@
       "line": "本線",
       "route": "京急本線→品川→JR東海道本線(上野東京ライン)→東京→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 45
+      "duration": 45,
+      "passengers": 15099,
+      "passengerYear": 2024,
+      "passengerRank": 435
     },
     {
       "id": "tokyo23-004244",
@@ -3202,7 +4044,10 @@
       "line": "本線",
       "route": "京急本線急行→品川→JR東海道本線(上野東京ライン)→東京→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 47
+      "duration": 47,
+      "passengers": 17669,
+      "passengerYear": 2024,
+      "passengerRank": 418
     },
     {
       "id": "tokyo23-004181",
@@ -3213,7 +4058,10 @@
       "line": "池上線",
       "route": "東急池上線→五反田→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 50
+      "duration": 50,
+      "passengers": 12777,
+      "passengerYear": 2024,
+      "passengerRank": 461
     },
     {
       "id": "tokyo23-004235",
@@ -3224,7 +4072,10 @@
       "line": "東海道線",
       "route": "JR横須賀線→東京→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 41
+      "duration": 41,
+      "passengers": 39232,
+      "passengerYear": 2024,
+      "passengerRank": 242
     },
     {
       "id": "tokyo23-004184",
@@ -3235,7 +4086,10 @@
       "line": "本線",
       "route": "京急本線→品川→JR東海道本線(上野東京ライン)→東京→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 47
+      "duration": 47,
+      "passengers": 35970,
+      "passengerYear": 2024,
+      "passengerRank": 272
     },
     {
       "id": "tokyo23-004220",
@@ -3246,7 +4100,10 @@
       "line": "本線",
       "route": "京急本線→品川→JR東海道本線(上野東京ライン)→東京→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 48
+      "duration": 48,
+      "passengers": 9677,
+      "passengerYear": 2024,
+      "passengerRank": 479
     },
     {
       "id": "tokyo23-003524",
@@ -3257,7 +4114,10 @@
       "line": "伊勢崎線",
       "route": "徒歩→とうきょうスカイツリー駅入口/都営バス→都営バス・門33→都営両国駅前/都営バス→徒歩→両国(都営線)→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 47
+      "duration": 47,
+      "passengers": null,
+      "passengerYear": null,
+      "passengerRank": null
     },
     {
       "id": "tokyo23-003646-003654",
@@ -3268,7 +4128,10 @@
       "line": "大江戸線 / 総武線",
       "route": "JR総武線→御茶ノ水→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 27
+      "duration": 27,
+      "passengers": 32508,
+      "passengerYear": 2024,
+      "passengerRank": 291
     },
     {
       "id": "tokyo23-003477",
@@ -3279,7 +4142,10 @@
       "line": "押上線",
       "route": "京成押上線→浅草橋→JR総武線→御茶ノ水→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 40
+      "duration": 40,
+      "passengers": 19929,
+      "passengerYear": 2024,
+      "passengerRank": 397
     },
     {
       "id": "tokyo23-003422",
@@ -3290,7 +4156,10 @@
       "line": "押上線",
       "route": "京成押上線→浅草橋→JR総武線→御茶ノ水→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 42
+      "duration": 42,
+      "passengers": 14618,
+      "passengerYear": 2024,
+      "passengerRank": 442
     },
     {
       "id": "tokyo23-003525",
@@ -3301,7 +4170,10 @@
       "line": "亀戸線",
       "route": "東武亀戸線→亀戸→JR総武線→御茶ノ水→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 44
+      "duration": 44,
+      "passengers": 11154,
+      "passengerYear": 2024,
+      "passengerRank": 468
     },
     {
       "id": "tokyo23-003526",
@@ -3312,7 +4184,10 @@
       "line": "半蔵門線 / 浅草線 / 伊勢崎線 / 押上線",
       "route": "都営浅草線特急→浅草橋→JR総武線→御茶ノ水→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 37
+      "duration": 37,
+      "passengers": 526053,
+      "passengerYear": 2024,
+      "passengerRank": 13
     },
     {
       "id": "tokyo23-003479",
@@ -3323,7 +4198,10 @@
       "line": "亀戸線 / 伊勢崎線",
       "route": "東武スカイツリーライン準急→大手町(東京都)→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 44
+      "duration": 44,
+      "passengers": 29890,
+      "passengerYear": 2024,
+      "passengerRank": 315
     },
     {
       "id": "tokyo23-003538",
@@ -3334,7 +4212,10 @@
       "line": "浅草線",
       "route": "都営浅草線特急→浅草橋→JR総武線→御茶ノ水→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 36
+      "duration": 36,
+      "passengers": 21482,
+      "passengerYear": 2024,
+      "passengerRank": 384
     },
     {
       "id": "tokyo23-003548",
@@ -3345,7 +4226,10 @@
       "line": "亀戸線",
       "route": "東武亀戸線→亀戸→JR総武線→御茶ノ水→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 42
+      "duration": 42,
+      "passengers": 7938,
+      "passengerYear": 2024,
+      "passengerRank": 500
     },
     {
       "id": "tokyo23-003442",
@@ -3356,7 +4240,10 @@
       "line": "伊勢崎線",
       "route": "東武スカイツリーライン区間準急→北千住→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 45
+      "duration": 45,
+      "passengers": 19220,
+      "passengerYear": 2024,
+      "passengerRank": 406
     },
     {
       "id": "tokyo23-003709",
@@ -3367,7 +4254,10 @@
       "line": "新宿線",
       "route": "都営新宿線→小川町(東京都)→同駅内徒歩→淡路町→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 33
+      "duration": 33,
+      "passengers": 24573,
+      "passengerYear": 2024,
+      "passengerRank": 364
     },
     {
       "id": "tokyo23-003639",
@@ -3378,7 +4268,10 @@
       "line": "半蔵門線 / 総武線",
       "route": "JR総武線→御茶ノ水→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 30
+      "duration": 30,
+      "passengers": 299028,
+      "passengerYear": 2024,
+      "passengerRank": 29
     },
     {
       "id": "tokyo23-003355",
@@ -3389,7 +4282,10 @@
       "line": "伊勢崎線",
       "route": "東武スカイツリーライン区間準急→北千住→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 43
+      "duration": 43,
+      "passengers": 12929,
+      "passengerYear": 2024,
+      "passengerRank": 460
     },
     {
       "id": "tokyo23-004310",
@@ -3400,7 +4296,10 @@
       "line": "東急多摩川線",
       "route": "東急多摩川線→蒲田→JR京浜東北・根岸線→有楽町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 59
+      "duration": 59,
+      "passengers": 31438,
+      "passengerYear": 2024,
+      "passengerRank": 295
     },
     {
       "id": "tokyo23-004292",
@@ -3411,7 +4310,10 @@
       "line": "池上線",
       "route": "東急池上線→五反田→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 62
+      "duration": 62,
+      "passengers": 15640,
+      "passengerYear": 2024,
+      "passengerRank": 430
     },
     {
       "id": "tokyo23-004331",
@@ -3422,7 +4324,10 @@
       "line": "本線 / 空港線",
       "route": "京急本線快特→品川→JR東海道本線(上野東京ライン)→東京→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 53
+      "duration": 53,
+      "passengers": 61303,
+      "passengerYear": 2024,
+      "passengerRank": 164
     },
     {
       "id": "tokyo23-004399",
@@ -3433,7 +4338,10 @@
       "line": "本線",
       "route": "京急本線→京急蒲田→京急本線快特→品川→JR東海道本線(上野東京ライン)→東京→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 60
+      "duration": 60,
+      "passengers": 16205,
+      "passengerYear": 2024,
+      "passengerRank": 426
     },
     {
       "id": "tokyo23-004305",
@@ -3444,7 +4352,10 @@
       "line": "池上線",
       "route": "東急池上線→蒲田→JR京浜東北・根岸線→有楽町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 61
+      "duration": 61,
+      "passengers": 15216,
+      "passengerYear": 2024,
+      "passengerRank": 432
     },
     {
       "id": "tokyo23-004264",
@@ -3455,7 +4366,10 @@
       "line": "東海道線",
       "route": "JR京浜東北・根岸線→有楽町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 47
+      "duration": 47,
+      "passengers": 165460,
+      "passengerYear": 2024,
+      "passengerRank": 60
     },
     {
       "id": "tokyo23-004307",
@@ -3466,7 +4380,10 @@
       "line": "本線",
       "route": "京急本線→平和島→京急本線特急→品川→JR横須賀線→東京→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 49
+      "duration": 49,
+      "passengers": 21817,
+      "passengerYear": 2024,
+      "passengerRank": 382
     },
     {
       "id": "tokyo23-004356",
@@ -3477,7 +4394,10 @@
       "line": "空港線",
       "route": "京急空港線急行→品川→JR東海道本線(上野東京ライン)→東京→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 58
+      "duration": 58,
+      "passengers": 30660,
+      "passengerYear": 2024,
+      "passengerRank": 304
     },
     {
       "id": "tokyo23-004373",
@@ -3488,7 +4408,10 @@
       "line": "東京モノレール / 空港線",
       "route": "東京モノレール→浜松町→JR山手線内回り→有楽町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 55
+      "duration": 55,
+      "passengers": 30427,
+      "passengerYear": 2024,
+      "passengerRank": 305
     },
     {
       "id": "tokyo23-004294",
@@ -3499,7 +4422,10 @@
       "line": "本線",
       "route": "京急本線特急→品川→JR横須賀線→東京→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 49
+      "duration": 49,
+      "passengers": 44102,
+      "passengerYear": 2024,
+      "passengerRank": 217
     },
     {
       "id": "tokyo23-004273",
@@ -3510,7 +4436,10 @@
       "line": "池上線",
       "route": "東急池上線→五反田→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 61
+      "duration": 61,
+      "passengers": 23587,
+      "passengerYear": 2024,
+      "passengerRank": 369
     },
     {
       "id": "tokyo23-004348",
@@ -3521,7 +4450,10 @@
       "line": "東京モノレール",
       "route": "東京モノレール→浜松町→JR山手線内回り→有楽町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 54
+      "duration": 54,
+      "passengers": 1749,
+      "passengerYear": 2024,
+      "passengerRank": 545
     },
     {
       "id": "tokyo23-004393",
@@ -3532,7 +4464,10 @@
       "line": "東京モノレール",
       "route": "東京モノレール→浜松町→JR山手線内回り→有楽町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 61
+      "duration": 61,
+      "passengers": 4366,
+      "passengerYear": 2024,
+      "passengerRank": 521
     },
     {
       "id": "tokyo23-004312",
@@ -3543,7 +4478,10 @@
       "line": "東京モノレール",
       "route": "東京モノレール→浜松町→JR山手線内回り→有楽町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 51
+      "duration": 51,
+      "passengers": 5862,
+      "passengerYear": 2024,
+      "passengerRank": 512
     },
     {
       "id": "tokyo23-004319",
@@ -3554,7 +4492,10 @@
       "line": "本線",
       "route": "京急本線→平和島→京急本線特急→品川→JR横須賀線→東京→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 50
+      "duration": 50,
+      "passengers": 16426,
+      "passengerYear": 2024,
+      "passengerRank": 425
     },
     {
       "id": "tokyo23-004317",
@@ -3565,7 +4506,10 @@
       "line": "東急多摩川線",
       "route": "東急多摩川線→蒲田→JR京浜東北・根岸線→有楽町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 58
+      "duration": 58,
+      "passengers": 25710,
+      "passengerYear": 2024,
+      "passengerRank": 352
     },
     {
       "id": "tokyo23-004309",
@@ -3576,7 +4520,10 @@
       "line": "池上線",
       "route": "東急池上線→蒲田→JR京浜東北・根岸線→有楽町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 59
+      "duration": 59,
+      "passengers": 35181,
+      "passengerYear": 2024,
+      "passengerRank": 277
     },
     {
       "id": "tokyo23-004279",
@@ -3587,7 +4534,10 @@
       "line": "東急多摩川線",
       "route": "東急多摩川線→多摩川→東急目黒線急行→武蔵小山→東急目黒線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 58
+      "duration": 58,
+      "passengers": 10289,
+      "passengerYear": 2024,
+      "passengerRank": 476
     },
     {
       "id": "tokyo23-004239",
@@ -3598,7 +4548,10 @@
       "line": "池上線",
       "route": "東急池上線→五反田→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 56
+      "duration": 56,
+      "passengers": 17037,
+      "passengerYear": 2024,
+      "passengerRank": 421
     },
     {
       "id": "tokyo23-004285",
@@ -3609,7 +4562,10 @@
       "line": "東京モノレール",
       "route": "東京モノレール→浜松町→JR山手線内回り→有楽町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 49
+      "duration": 49,
+      "passengers": 15693,
+      "passengerYear": 2024,
+      "passengerRank": 429
     },
     {
       "id": "tokyo23-004329",
@@ -3620,7 +4576,10 @@
       "line": "東急多摩川線",
       "route": "東急多摩川線→蒲田→JR京浜東北・根岸線→有楽町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 56
+      "duration": 56,
+      "passengers": 25506,
+      "passengerYear": 2024,
+      "passengerRank": 357
     },
     {
       "id": "tokyo23-004247",
@@ -3631,7 +4590,10 @@
       "line": "池上線",
       "route": "東急池上線→五反田→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 57
+      "duration": 57,
+      "passengers": 14877,
+      "passengerYear": 2024,
+      "passengerRank": 438
     },
     {
       "id": "tokyo23-004364",
@@ -3642,7 +4604,10 @@
       "line": "空港線",
       "route": "京急空港線急行→天空橋→東京モノレール→浜松町→JR山手線内回り→有楽町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 63
+      "duration": 63,
+      "passengers": 20698,
+      "passengerYear": 2024,
+      "passengerRank": 392
     },
     {
       "id": "tokyo23-004349",
@@ -3653,7 +4618,10 @@
       "line": "空港線",
       "route": "京急空港線急行→品川→JR東海道本線(上野東京ライン)→東京→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 56
+      "duration": 56,
+      "passengers": 28346,
+      "passengerYear": 2024,
+      "passengerRank": 329
     },
     {
       "id": "tokyo23-004372",
@@ -3664,7 +4632,10 @@
       "line": "東京モノレール",
       "route": "東京モノレール→浜松町→JR山手線内回り→有楽町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 62
+      "duration": 62,
+      "passengers": 21124,
+      "passengerYear": 2024,
+      "passengerRank": 387
     },
     {
       "id": "tokyo23-004368",
@@ -3675,7 +4646,10 @@
       "line": "空港線",
       "route": "京急空港線急行→天空橋→東京モノレール→浜松町→JR山手線内回り→有楽町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 63
+      "duration": 63,
+      "passengers": 111697,
+      "passengerYear": 2024,
+      "passengerRank": 87
     },
     {
       "id": "tokyo23-004361",
@@ -3686,7 +4660,10 @@
       "line": "東京モノレール",
       "route": "東京モノレール→浜松町→JR山手線内回り→有楽町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 64
+      "duration": 64,
+      "passengers": 24342,
+      "passengerYear": 2024,
+      "passengerRank": 366
     },
     {
       "id": "tokyo23-004382",
@@ -3697,7 +4674,10 @@
       "line": "東京モノレール / 空港線",
       "route": "東京モノレール→浜松町→JR山手線内回り→有楽町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 58
+      "duration": 58,
+      "passengers": 47320,
+      "passengerYear": 2024,
+      "passengerRank": 206
     },
     {
       "id": "tokyo23-004330",
@@ -3708,7 +4688,10 @@
       "line": "東急多摩川線 / 東海道線 / 池上線",
       "route": "JR京浜東北・根岸線→有楽町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 51
+      "duration": 51,
+      "passengers": 408525,
+      "passengerYear": 2024,
+      "passengerRank": 15
     },
     {
       "id": "tokyo23-004323",
@@ -3719,7 +4702,10 @@
       "line": "池上線",
       "route": "東急池上線→蒲田→JR京浜東北・根岸線→有楽町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 57
+      "duration": 57,
+      "passengers": 8254,
+      "passengerYear": 2024,
+      "passengerRank": 497
     },
     {
       "id": "tokyo23-004270",
@@ -3730,7 +4716,10 @@
       "line": "浅草線",
       "route": "都営浅草線→五反田→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 52
+      "duration": 52,
+      "passengers": 43636,
+      "passengerYear": 2024,
+      "passengerRank": 219
     },
     {
       "id": "tokyo23-004232",
@@ -3741,7 +4730,10 @@
       "line": "池上線",
       "route": "東急池上線→五反田→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 54
+      "duration": 54,
+      "passengers": 14880,
+      "passengerYear": 2024,
+      "passengerRank": 437
     },
     {
       "id": "tokyo23-004367",
@@ -3752,7 +4744,10 @@
       "line": "本線",
       "route": "京急本線→京急蒲田→京急本線快特→品川→JR東海道本線(上野東京ライン)→東京→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 58
+      "duration": 58,
+      "passengers": 30842,
+      "passengerYear": 2024,
+      "passengerRank": 300
     },
     {
       "id": "tokyo23-004259",
@@ -3763,7 +4758,10 @@
       "line": "池上線",
       "route": "東急池上線→五反田→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 58
+      "duration": 58,
+      "passengers": 22365,
+      "passengerYear": 2024,
+      "passengerRank": 376
     },
     {
       "id": "tokyo23-004248",
@@ -3774,7 +4772,10 @@
       "line": "浅草線",
       "route": "都営浅草線→五反田→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 50
+      "duration": 50,
+      "passengers": 26346,
+      "passengerYear": 2024,
+      "passengerRank": 350
     },
     {
       "id": "tokyo23-004299",
@@ -3785,7 +4786,10 @@
       "line": "東急多摩川線",
       "route": "東急多摩川線→多摩川→東急目黒線急行→武蔵小山→東急目黒線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 60
+      "duration": 60,
+      "passengers": 19463,
+      "passengerYear": 2024,
+      "passengerRank": 399
     },
     {
       "id": "tokyo23-003415",
@@ -3796,7 +4800,10 @@
       "line": "三田線",
       "route": "徒歩→千石一丁目(文京区)/都営バス→都営バス・上58→音羽二丁目/都営バス→徒歩4分",
       "searchDate": "2026-08-28",
-      "duration": 19
+      "duration": 19,
+      "passengers": 31304,
+      "passengerYear": 2024,
+      "passengerRank": 296
     },
     {
       "id": "tokyo23-003434",
@@ -3807,7 +4814,10 @@
       "line": "千代田線",
       "route": "徒歩→団子坂下/都営バス→都営バス・上58→音羽二丁目/都営バス→徒歩4分",
       "searchDate": "2026-08-28",
-      "duration": 31
+      "duration": 31,
+      "passengers": 28507,
+      "passengerYear": 2024,
+      "passengerRank": 327
     },
     {
       "id": "tokyo23-003542",
@@ -3818,7 +4828,10 @@
       "line": "丸ノ内線 / 南北線",
       "route": "東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 13
+      "duration": 13,
+      "passengers": 104894,
+      "passengerYear": 2024,
+      "passengerRank": 95
     },
     {
       "id": "tokyo23-003529",
@@ -3829,7 +4842,10 @@
       "line": "大江戸線 / 三田線",
       "route": "同駅内徒歩→後楽園→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 21
+      "duration": 21,
+      "passengers": 65361,
+      "passengerYear": 2024,
+      "passengerRank": 157
     },
     {
       "id": "tokyo23-003546",
@@ -3840,7 +4856,10 @@
       "line": "大江戸線 / 丸ノ内線",
       "route": "東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 15
+      "duration": 15,
+      "passengers": 70357,
+      "passengerYear": 2024,
+      "passengerRank": 149
     },
     {
       "id": "tokyo23-003441",
@@ -3851,7 +4870,10 @@
       "line": "南北線",
       "route": "東京メトロ南北線→後楽園→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 22
+      "duration": 22,
+      "passengers": 21070,
+      "passengerYear": 2024,
+      "passengerRank": 388
     },
     {
       "id": "tokyo23-003481",
@@ -3862,7 +4884,10 @@
       "line": "南北線",
       "route": "東京メトロ南北線→後楽園→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 20
+      "duration": 20,
+      "passengers": 27311,
+      "passengerYear": 2024,
+      "passengerRank": 342
     },
     {
       "id": "tokyo23-003483",
@@ -3873,7 +4898,10 @@
       "line": "千代田線",
       "route": "東京メトロ千代田線→新御茶ノ水→徒歩→御茶ノ水→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 29
+      "duration": 29,
+      "passengers": 27937,
+      "passengerYear": 2024,
+      "passengerRank": 331
     },
     {
       "id": "tokyo23-003580",
@@ -3884,7 +4912,10 @@
       "line": "三田線 / 中央線",
       "route": "JR総武線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 21
+      "duration": 21,
+      "passengers": 182490,
+      "passengerYear": 2024,
+      "passengerRank": 53
     },
     {
       "id": "tokyo23-003534",
@@ -3895,7 +4926,10 @@
       "line": "有楽町線",
       "route": "東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 10
+      "duration": 10,
+      "passengers": 49844,
+      "passengerYear": 2024,
+      "passengerRank": 193
     },
     {
       "id": "tokyo23-003558",
@@ -3906,7 +4940,10 @@
       "line": "千代田線",
       "route": "東京メトロ千代田線→新御茶ノ水→徒歩→御茶ノ水→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 27
+      "duration": 27,
+      "passengers": 37913,
+      "passengerYear": 2024,
+      "passengerRank": 252
     },
     {
       "id": "tokyo23-003461",
@@ -3917,7 +4954,10 @@
       "line": "三田線",
       "route": "都営三田線→春日(東京都)→同駅内徒歩→後楽園→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 24
+      "duration": 24,
+      "passengers": 48388,
+      "passengerYear": 2024,
+      "passengerRank": 201
     },
     {
       "id": "tokyo23-003491",
@@ -3928,7 +4968,10 @@
       "line": "新宿線",
       "route": "西武新宿線→高田馬場→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 29
+      "duration": 29,
+      "passengers": 11882,
+      "passengerYear": 2024,
+      "passengerRank": 466
     },
     {
       "id": "tokyo23-003495",
@@ -3939,7 +4982,10 @@
       "line": "大江戸線 / 新宿線",
       "route": "西武新宿線→高田馬場→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 31
+      "duration": 31,
+      "passengers": 45031,
+      "passengerYear": 2024,
+      "passengerRank": 215
     },
     {
       "id": "tokyo23-003774",
@@ -3950,7 +4996,10 @@
       "line": "中央線",
       "route": "JR総武線→市ケ谷→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 24
+      "duration": 24,
+      "passengers": 43682,
+      "passengerYear": 2024,
+      "passengerRank": 218
     },
     {
       "id": "tokyo23-003713",
@@ -3961,7 +5010,10 @@
       "line": "丸ノ内線",
       "route": "東京メトロ丸ノ内線→四ツ谷→JR総武線→市ケ谷→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 26
+      "duration": 26,
+      "passengers": 42890,
+      "passengerYear": 2024,
+      "passengerRank": 226
     },
     {
       "id": "tokyo23-003775",
@@ -3972,7 +5024,10 @@
       "line": "大江戸線",
       "route": "都営大江戸線→青山一丁目→東京メトロ半蔵門線→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 30
+      "duration": 30,
+      "passengers": 13711,
+      "passengerYear": 2024,
+      "passengerRank": 448
     },
     {
       "id": "tokyo23-003604",
@@ -3983,7 +5038,10 @@
       "line": "中央線",
       "route": "JR総武線→市ケ谷→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 32
+      "duration": 32,
+      "passengers": 51544,
+      "passengerYear": 2024,
+      "passengerRank": 187
     },
     {
       "id": "tokyo23-003689",
@@ -3994,7 +5052,10 @@
       "line": "新宿線 / 副都心線 / 丸ノ内線",
       "route": "都営新宿線→市ケ谷→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 25
+      "duration": 25,
+      "passengers": 199171,
+      "passengerYear": 2024,
+      "passengerRank": 47
     },
     {
       "id": "tokyo23-003707",
@@ -4005,7 +5066,10 @@
       "line": "丸ノ内線",
       "route": "東京メトロ丸ノ内線→四ツ谷→JR総武線→市ケ谷→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 28
+      "duration": 28,
+      "passengers": 48832,
+      "passengerYear": 2024,
+      "passengerRank": 197
     },
     {
       "id": "tokyo23-003669",
@@ -4016,7 +5080,10 @@
       "line": "大江戸線",
       "route": "都営大江戸線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 31
+      "duration": 31,
+      "passengers": 36754,
+      "passengerYear": 2024,
+      "passengerRank": 262
     },
     {
       "id": "tokyo23-003570",
@@ -4027,7 +5094,10 @@
       "line": "東西線",
       "route": "東京メトロ東西線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 23
+      "duration": 23,
+      "passengers": 79978,
+      "passengerYear": 2024,
+      "passengerRank": 127
     },
     {
       "id": "tokyo23-003514",
@@ -4038,7 +5108,10 @@
       "line": "荒川線",
       "route": "徒歩→早稲田/都営バス→都営バス・上58→音羽二丁目/都営バス→徒歩4分",
       "searchDate": "2026-08-28",
-      "duration": 17
+      "duration": 17,
+      "passengers": 3179,
+      "passengerYear": 2024,
+      "passengerRank": 532
     },
     {
       "id": "tokyo23-003673",
@@ -4049,7 +5122,10 @@
       "line": "新宿線",
       "route": "都営新宿線→市ケ谷→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 23
+      "duration": 23,
+      "passengers": 36403,
+      "passengerYear": 2024,
+      "passengerRank": 267
     },
     {
       "id": "tokyo23-003612",
@@ -4060,7 +5136,10 @@
       "line": "大江戸線 / 副都心線",
       "route": "東京メトロ副都心線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 26
+      "duration": 26,
+      "passengers": 68375,
+      "passengerYear": 2024,
+      "passengerRank": 150
     },
     {
       "id": "tokyo23-003618",
@@ -4071,7 +5150,10 @@
       "line": "大江戸線",
       "route": "都営大江戸線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 24
+      "duration": 24,
+      "passengers": 19954,
+      "passengerYear": 2024,
+      "passengerRank": 395
     },
     {
       "id": "tokyo23-003602",
@@ -4082,7 +5164,10 @@
       "line": "大江戸線",
       "route": "都営大江戸線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 22
+      "duration": 22,
+      "passengers": 13686,
+      "passengerYear": 2024,
+      "passengerRank": 449
     },
     {
       "id": "tokyo23-003578",
@@ -4093,7 +5178,10 @@
       "line": "東西線",
       "route": "東京メトロ東西線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 21
+      "duration": 21,
+      "passengers": 40020,
+      "passengerYear": 2024,
+      "passengerRank": 238
     },
     {
       "id": "tokyo23-003623",
@@ -4104,7 +5192,10 @@
       "line": "大江戸線",
       "route": "都営大江戸線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 26
+      "duration": 26,
+      "passengers": 28849,
+      "passengerYear": 2024,
+      "passengerRank": 324
     },
     {
       "id": "tokyo23-003448",
@@ -4115,7 +5206,10 @@
       "line": "大江戸線",
       "route": "都営大江戸線→練馬→西武有楽町線準急→護国寺→東京メトロ有楽町線→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 38
+      "duration": 38,
+      "passengers": 27118,
+      "passengerYear": 2024,
+      "passengerRank": 344
     },
     {
       "id": "tokyo23-003662",
@@ -4126,7 +5220,10 @@
       "line": "丸ノ内線",
       "route": "東京メトロ丸ノ内線→新宿三丁目→東京メトロ副都心線通勤急行→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 32
+      "duration": 32,
+      "passengers": 85481,
+      "passengerYear": 2024,
+      "passengerRank": 116
     },
     {
       "id": "tokyo23-003696",
@@ -4137,7 +5234,10 @@
       "line": "大江戸線",
       "route": "都営大江戸線→新宿→都営新宿線→市ケ谷→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 35
+      "duration": 35,
+      "passengers": 32776,
+      "passengerYear": 2024,
+      "passengerRank": 289
     },
     {
       "id": "tokyo23-003544",
@@ -4148,7 +5248,10 @@
       "line": "副都心線",
       "route": "東京メトロ副都心線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 24
+      "duration": 24,
+      "passengers": 37411,
+      "passengerYear": 2024,
+      "passengerRank": 257
     },
     {
       "id": "tokyo23-003648",
@@ -4159,7 +5262,10 @@
       "line": "新宿線",
       "route": "西武新宿線急行→高田馬場→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 29
+      "duration": 29,
+      "passengers": 147390,
+      "passengerYear": 2024,
+      "passengerRank": 66
     },
     {
       "id": "tokyo23-003690",
@@ -4170,7 +5276,10 @@
       "line": "大江戸線",
       "route": "都営大江戸線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 33
+      "duration": 33,
+      "passengers": 49779,
+      "passengerYear": 2024,
+      "passengerRank": 194
     },
     {
       "id": "tokyo23-003509",
@@ -4181,7 +5290,10 @@
       "line": "荒川線",
       "route": "都電荒川線→早稲田(都電荒川線)→徒歩→早稲田/都営バス→都営バス・上58→音羽二丁目/都営バス→徒歩4分",
       "searchDate": "2026-08-28",
-      "duration": 21
+      "duration": 21,
+      "passengers": 822,
+      "passengerYear": 2024,
+      "passengerRank": 557
     },
     {
       "id": "tokyo23-003437",
@@ -4192,7 +5304,10 @@
       "line": "新宿線",
       "route": "西武新宿線→鷺ノ宮→西武新宿線急行→高田馬場→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 49
+      "duration": 49,
+      "passengers": 18819,
+      "passengerYear": 2024,
+      "passengerRank": 410
     },
     {
       "id": "tokyo23-003444",
@@ -4203,7 +5318,10 @@
       "line": "新宿線",
       "route": "西武新宿線→鷺ノ宮→西武新宿線急行→高田馬場→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 43
+      "duration": 43,
+      "passengers": 22499,
+      "passengerYear": 2024,
+      "passengerRank": 375
     },
     {
       "id": "tokyo23-003710",
@@ -4214,7 +5332,10 @@
       "line": "井の頭線",
       "route": "京王井の頭線→明大前→京王線→新宿→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 53
+      "duration": 53,
+      "passengers": 38168,
+      "passengerYear": 2024,
+      "passengerRank": 249
     },
     {
       "id": "tokyo23-003440",
@@ -4225,7 +5346,10 @@
       "line": "新宿線",
       "route": "西武新宿線→鷺ノ宮→西武新宿線急行→高田馬場→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 45
+      "duration": 45,
+      "passengers": 18679,
+      "passengerYear": 2024,
+      "passengerRank": 411
     },
     {
       "id": "tokyo23-003836",
@@ -4236,7 +5360,10 @@
       "line": "京王線",
       "route": "京王線→新宿→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 47
+      "duration": 47,
+      "passengers": 37716,
+      "passengerYear": 2024,
+      "passengerRank": 254
     },
     {
       "id": "tokyo23-003619",
@@ -4247,7 +5374,10 @@
       "line": "丸ノ内線",
       "route": "東京メトロ丸ノ内線→荻窪→東京メトロ東西線→高田馬場→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 45
+      "duration": 45,
+      "passengers": 27693,
+      "passengerYear": 2024,
+      "passengerRank": 339
     },
     {
       "id": "tokyo23-003736",
@@ -4258,7 +5388,10 @@
       "line": "井の頭線",
       "route": "京王井の頭線→明大前→京王線→新宿→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 51
+      "duration": 51,
+      "passengers": 13091,
+      "passengerYear": 2024,
+      "passengerRank": 457
     },
     {
       "id": "tokyo23-003632",
@@ -4269,7 +5402,10 @@
       "line": "丸ノ内線",
       "route": "東京メトロ丸ノ内線→新宿三丁目→東京メトロ副都心線通勤急行→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 41
+      "duration": 41,
+      "passengers": 35288,
+      "passengerYear": 2024,
+      "passengerRank": 275
     },
     {
       "id": "tokyo23-003751",
@@ -4280,7 +5416,10 @@
       "line": "丸ノ内線",
       "route": "東京メトロ丸ノ内線→中野坂上→東京メトロ丸ノ内線→新宿三丁目→東京メトロ副都心線通勤急行→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 42
+      "duration": 42,
+      "passengers": 40171,
+      "passengerYear": 2024,
+      "passengerRank": 236
     },
     {
       "id": "tokyo23-003628",
@@ -4291,7 +5430,10 @@
       "line": "丸ノ内線",
       "route": "東京メトロ丸ノ内線→新宿三丁目→東京メトロ副都心線通勤急行→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 39
+      "duration": 39,
+      "passengers": 33021,
+      "passengerYear": 2024,
+      "passengerRank": 287
     },
     {
       "id": "tokyo23-003794",
@@ -4302,7 +5444,10 @@
       "line": "井の頭線",
       "route": "京王井の頭線→明大前→京王線→新宿→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 43
+      "duration": 43,
+      "passengers": 30039,
+      "passengerYear": 2024,
+      "passengerRank": 312
     },
     {
       "id": "tokyo23-003763",
@@ -4313,7 +5458,10 @@
       "line": "井の頭線",
       "route": "京王井の頭線→明大前→京王線→新宿→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 47
+      "duration": 47,
+      "passengers": 27565,
+      "passengerYear": 2024,
+      "passengerRank": 340
     },
     {
       "id": "tokyo23-003575",
@@ -4324,7 +5472,10 @@
       "line": "丸ノ内線 / 中央線",
       "route": "東京メトロ東西線→高田馬場→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 39
+      "duration": 39,
+      "passengers": 250115,
+      "passengerYear": 2024,
+      "passengerRank": 37
     },
     {
       "id": "tokyo23-003777",
@@ -4335,7 +5486,10 @@
       "line": "井の頭線",
       "route": "京王井の頭線→明大前→京王線→新宿→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 46
+      "duration": 46,
+      "passengers": 17596,
+      "passengerYear": 2024,
+      "passengerRank": 419
     },
     {
       "id": "tokyo23-003579",
@@ -4346,7 +5500,10 @@
       "line": "中央線",
       "route": "東京メトロ東西線→高田馬場→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 42
+      "duration": 42,
+      "passengers": 85340,
+      "passengerYear": 2024,
+      "passengerRank": 117
     },
     {
       "id": "tokyo23-003574",
@@ -4357,7 +5514,10 @@
       "line": "中央線",
       "route": "東京メトロ東西線→高田馬場→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 37
+      "duration": 37,
+      "passengers": 84048,
+      "passengerYear": 2024,
+      "passengerRank": 119
     },
     {
       "id": "tokyo23-003752",
@@ -4368,7 +5528,10 @@
       "line": "井の頭線",
       "route": "京王井の頭線→明大前→京王線→新宿→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 49
+      "duration": 49,
+      "passengers": 37789,
+      "passengerYear": 2024,
+      "passengerRank": 253
     },
     {
       "id": "tokyo23-003573",
@@ -4379,7 +5542,10 @@
       "line": "中央線",
       "route": "東京メトロ東西線→高田馬場→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 35
+      "duration": 35,
+      "passengers": 95432,
+      "passengerYear": 2024,
+      "passengerRank": 108
     },
     {
       "id": "tokyo23-003163",
@@ -4390,7 +5556,10 @@
       "line": "有楽町線",
       "route": "東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 31
+      "duration": 31,
+      "passengers": 50698,
+      "passengerYear": 2024,
+      "passengerRank": 190
     },
     {
       "id": "tokyo23-003158",
@@ -4401,7 +5570,10 @@
       "line": "三田線",
       "route": "都営三田線→千石→徒歩→千石一丁目(文京区)/都営バス→都営バス・上58→音羽二丁目/都営バス→徒歩4分",
       "searchDate": "2026-08-28",
-      "duration": 35
+      "duration": 35,
+      "passengers": 30055,
+      "passengerYear": 2024,
+      "passengerRank": 311
     },
     {
       "id": "tokyo23-003165",
@@ -4412,7 +5584,10 @@
       "line": "三田線",
       "route": "都営三田線→千石→徒歩→千石一丁目(文京区)/都営バス→都営バス・上58→音羽二丁目/都営バス→徒歩4分",
       "searchDate": "2026-08-28",
-      "duration": 33
+      "duration": 33,
+      "passengers": 30150,
+      "passengerYear": 2024,
+      "passengerRank": 310
     },
     {
       "id": "tokyo23-003268",
@@ -4423,7 +5598,10 @@
       "line": "三田線",
       "route": "都営三田線→千石→徒歩→千石一丁目(文京区)/都営バス→都営バス・上58→音羽二丁目/都営バス→徒歩4分",
       "searchDate": "2026-08-28",
-      "duration": 26
+      "duration": 26,
+      "passengers": 24762,
+      "passengerYear": 2024,
+      "passengerRank": 363
     },
     {
       "id": "tokyo23-003112",
@@ -4434,7 +5612,10 @@
       "line": "三田線",
       "route": "都営三田線→千石→徒歩→千石一丁目(文京区)/都営バス→都営バス・上58→音羽二丁目/都営バス→徒歩4分",
       "searchDate": "2026-08-28",
-      "duration": 43
+      "duration": 43,
+      "passengers": 9534,
+      "passengerYear": 2024,
+      "passengerRank": 482
     },
     {
       "id": "tokyo23-003193",
@@ -4445,7 +5626,10 @@
       "line": "三田線",
       "route": "都営三田線→千石→徒歩→千石一丁目(文京区)/都営バス→都営バス・上58→音羽二丁目/都営バス→徒歩4分",
       "searchDate": "2026-08-28",
-      "duration": 31
+      "duration": 31,
+      "passengers": 25190,
+      "passengerYear": 2024,
+      "passengerRank": 360
     },
     {
       "id": "tokyo23-003245",
@@ -4456,7 +5640,10 @@
       "line": "三田線",
       "route": "都営三田線→千石→徒歩→千石一丁目(文京区)/都営バス→都営バス・上58→音羽二丁目/都営バス→徒歩4分",
       "searchDate": "2026-08-28",
-      "duration": 27
+      "duration": 27,
+      "passengers": 34519,
+      "passengerYear": 2024,
+      "passengerRank": 281
     },
     {
       "id": "tokyo23-003216",
@@ -4467,7 +5654,10 @@
       "line": "三田線",
       "route": "都営三田線→千石→徒歩→千石一丁目(文京区)/都営バス→都営バス・上58→音羽二丁目/都営バス→徒歩4分",
       "searchDate": "2026-08-28",
-      "duration": 30
+      "duration": 30,
+      "passengers": 37555,
+      "passengerYear": 2024,
+      "passengerRank": 255
     },
     {
       "id": "tokyo23-003140",
@@ -4478,7 +5668,10 @@
       "line": "三田線",
       "route": "都営三田線→千石→徒歩→千石一丁目(文京区)/都営バス→都営バス・上58→音羽二丁目/都営バス→徒歩4分",
       "searchDate": "2026-08-28",
-      "duration": 37
+      "duration": 37,
+      "passengers": 19363,
+      "passengerYear": 2024,
+      "passengerRank": 403
     },
     {
       "id": "tokyo23-003128",
@@ -4489,7 +5682,10 @@
       "line": "三田線",
       "route": "都営三田線→千石→徒歩→千石一丁目(文京区)/都営バス→都営バス・上58→音羽二丁目/都営バス→徒歩4分",
       "searchDate": "2026-08-28",
-      "duration": 39
+      "duration": 39,
+      "passengers": 25605,
+      "passengerYear": 2024,
+      "passengerRank": 354
     },
     {
       "id": "tokyo23-003104",
@@ -4500,7 +5696,10 @@
       "line": "三田線",
       "route": "都営三田線→千石→徒歩→千石一丁目(文京区)/都営バス→都営バス・上58→音羽二丁目/都営バス→徒歩4分",
       "searchDate": "2026-08-28",
-      "duration": 45
+      "duration": 45,
+      "passengers": 12970,
+      "passengerYear": 2024,
+      "passengerRank": 458
     },
     {
       "id": "tokyo23-003117",
@@ -4511,7 +5710,10 @@
       "line": "三田線",
       "route": "都営三田線→千石→徒歩→千石一丁目(文京区)/都営バス→都営バス・上58→音羽二丁目/都営バス→徒歩4分",
       "searchDate": "2026-08-28",
-      "duration": 41
+      "duration": 41,
+      "passengers": 27789,
+      "passengerYear": 2024,
+      "passengerRank": 333
     },
     {
       "id": "tokyo23-003724",
@@ -4522,7 +5724,10 @@
       "line": "新宿線",
       "route": "都営新宿線→小川町(東京都)→同駅内徒歩→淡路町→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 46
+      "duration": 46,
+      "passengers": 43043,
+      "passengerYear": 2024,
+      "passengerRank": 224
     },
     {
       "id": "tokyo23-003303",
@@ -4533,7 +5738,10 @@
       "line": "本線",
       "route": "京成本線→京成高砂→京成本線快速特急→蔵前→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 55
+      "duration": 55,
+      "passengers": 18036,
+      "passengerYear": 2024,
+      "passengerRank": 415
     },
     {
       "id": "tokyo23-003360",
@@ -4544,7 +5752,10 @@
       "line": "総武線",
       "route": "JR総武線→御茶ノ水→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 42
+      "duration": 42,
+      "passengers": 120166,
+      "passengerYear": 2024,
+      "passengerRank": 82
     },
     {
       "id": "tokyo23-003561",
@@ -4555,7 +5766,10 @@
       "line": "総武線",
       "route": "JR総武線→御茶ノ水→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 36
+      "duration": 36,
+      "passengers": 62126,
+      "passengerYear": 2024,
+      "passengerRank": 163
     },
     {
       "id": "tokyo23-003331",
@@ -4566,7 +5780,10 @@
       "line": "本線",
       "route": "京成本線→京成高砂→京成本線快速特急→蔵前→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 60
+      "duration": 60,
+      "passengers": 6229,
+      "passengerYear": 2024,
+      "passengerRank": 510
     },
     {
       "id": "tokyo23-003667",
@@ -4577,7 +5794,10 @@
       "line": "新宿線",
       "route": "都営新宿線→小川町(東京都)→同駅内徒歩→淡路町→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 49
+      "duration": 49,
+      "passengers": 55028,
+      "passengerYear": 2024,
+      "passengerRank": 181
     },
     {
       "id": "tokyo23-003565",
@@ -4588,7 +5808,10 @@
       "line": "新宿線",
       "route": "都営新宿線→小川町(東京都)→同駅内徒歩→淡路町→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 51
+      "duration": 51,
+      "passengers": 39512,
+      "passengerYear": 2024,
+      "passengerRank": 240
     },
     {
       "id": "tokyo23-003745",
@@ -4599,7 +5822,10 @@
       "line": "新宿線",
       "route": "都営新宿線→小川町(東京都)→同駅内徒歩→淡路町→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 44
+      "duration": 44,
+      "passengers": 58409,
+      "passengerYear": 2024,
+      "passengerRank": 172
     },
     {
       "id": "tokyo23-003894",
@@ -4610,7 +5836,10 @@
       "line": "東西線",
       "route": "東京メトロ東西線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 47
+      "duration": 47,
+      "passengers": 99258,
+      "passengerYear": 2024,
+      "passengerRank": 102
     },
     {
       "id": "tokyo23-004012",
@@ -4621,7 +5850,10 @@
       "line": "京葉線",
       "route": "JR京葉線→新木場→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 42
+      "duration": 42,
+      "passengers": 29022,
+      "passengerYear": 2024,
+      "passengerRank": 320
     },
     {
       "id": "tokyo23-003890",
@@ -4632,7 +5864,10 @@
       "line": "東西線",
       "route": "東京メトロ東西線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 45
+      "duration": 45,
+      "passengers": 96546,
+      "passengerYear": 2024,
+      "passengerRank": 105
     },
     {
       "id": "tokyo23-004144",
@@ -4643,7 +5878,10 @@
       "line": "ゆりかもめ",
       "route": "ゆりかもめ→豊洲→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 49
+      "duration": 49,
+      "passengers": 9267,
+      "passengerYear": 2024,
+      "passengerRank": 485
     },
     {
       "id": "tokyo23-003635",
@@ -4654,7 +5892,10 @@
       "line": "亀戸線 / 総武線",
       "route": "JR総武線→御茶ノ水→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 33
+      "duration": 33,
+      "passengers": 135911,
+      "passengerYear": 2024,
+      "passengerRank": 75
     },
     {
       "id": "tokyo23-003610",
@@ -4665,7 +5906,10 @@
       "line": "亀戸線",
       "route": "東武亀戸線→亀戸→JR総武線→御茶ノ水→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 40
+      "duration": 40,
+      "passengers": 4434,
+      "passengerYear": 2024,
+      "passengerRank": 520
     },
     {
       "id": "tokyo23-003704",
@@ -4676,7 +5920,10 @@
       "line": "新宿線 / 半蔵門線",
       "route": "都営新宿線→小川町(東京都)→同駅内徒歩→淡路町→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 35
+      "duration": 35,
+      "passengers": 74853,
+      "passengerYear": 2024,
+      "passengerRank": 136
     },
     {
       "id": "tokyo23-003854",
@@ -4687,7 +5934,10 @@
       "line": "東西線",
       "route": "東京メトロ東西線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 40
+      "duration": 40,
+      "passengers": 59562,
+      "passengerYear": 2024,
+      "passengerRank": 166
     },
     {
       "id": "tokyo23-004065",
@@ -4698,7 +5948,10 @@
       "line": "臨海副都心線",
       "route": "東京臨海高速鉄道りんかい線→新木場→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 46
+      "duration": 46,
+      "passengers": 70461,
+      "passengerYear": 2024,
+      "passengerRank": 148
     },
     {
       "id": "tokyo23-003698",
@@ -4709,7 +5962,10 @@
       "line": "新宿線",
       "route": "都営新宿線→小川町(東京都)→同駅内徒歩→淡路町→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 39
+      "duration": 39,
+      "passengers": 31661,
+      "passengerYear": 2024,
+      "passengerRank": 294
     },
     {
       "id": "tokyo23-004001",
@@ -4720,7 +5976,10 @@
       "line": "ゆりかもめ",
       "route": "ゆりかもめ→豊洲→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 38
+      "duration": 38,
+      "passengers": 16534,
+      "passengerYear": 2024,
+      "passengerRank": 424
     },
     {
       "id": "tokyo23-003997",
@@ -4731,7 +5990,10 @@
       "line": "有楽町線 / 京葉線 / 臨海副都心線",
       "route": "東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 36
+      "duration": 36,
+      "passengers": 296274,
+      "passengerYear": 2024,
+      "passengerRank": 30
     },
     {
       "id": "tokyo23-003981",
@@ -4742,7 +6004,10 @@
       "line": "ゆりかもめ",
       "route": "ゆりかもめ→豊洲→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 37
+      "duration": 37,
+      "passengers": 10511,
+      "passengerYear": 2024,
+      "passengerRank": 474
     },
     {
       "id": "tokyo23-004064",
@@ -4753,7 +6018,10 @@
       "line": "ゆりかもめ",
       "route": "ゆりかもめ→豊洲→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 42
+      "duration": 42,
+      "passengers": 9102,
+      "passengerYear": 2024,
+      "passengerRank": 488
     },
     {
       "id": "tokyo23-004037",
@@ -4764,7 +6032,10 @@
       "line": "ゆりかもめ",
       "route": "ゆりかもめ→豊洲→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 41
+      "duration": 41,
+      "passengers": 8868,
+      "passengerYear": 2024,
+      "passengerRank": 492
     },
     {
       "id": "tokyo23-003840",
@@ -4775,7 +6046,10 @@
       "line": "東西線",
       "route": "東京メトロ東西線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 35
+      "duration": 35,
+      "passengers": 72289,
+      "passengerYear": 2024,
+      "passengerRank": 146
     },
     {
       "id": "tokyo23-004108",
@@ -4786,7 +6060,10 @@
       "line": "臨海副都心線",
       "route": "東京臨海高速鉄道りんかい線→新木場→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 48
+      "duration": 48,
+      "passengers": 45645,
+      "passengerYear": 2024,
+      "passengerRank": 213
     },
     {
       "id": "tokyo23-004087",
@@ -4797,7 +6074,10 @@
       "line": "ゆりかもめ",
       "route": "ゆりかもめ→豊洲→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 45
+      "duration": 45,
+      "passengers": 19291,
+      "passengerYear": 2024,
+      "passengerRank": 405
     },
     {
       "id": "tokyo23-004128",
@@ -4808,7 +6088,10 @@
       "line": "ゆりかもめ",
       "route": "ゆりかもめ→豊洲→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 51
+      "duration": 51,
+      "passengers": 3503,
+      "passengerYear": 2024,
+      "passengerRank": 528
     },
     {
       "id": "tokyo23-003695",
@@ -4819,7 +6102,10 @@
       "line": "新宿線",
       "route": "都営新宿線→小川町(東京都)→同駅内徒歩→淡路町→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 41
+      "duration": 41,
+      "passengers": 30424,
+      "passengerYear": 2024,
+      "passengerRank": 306
     },
     {
       "id": "tokyo23-003839",
@@ -4830,7 +6116,10 @@
       "line": "東西線",
       "route": "東京メトロ東西線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 37
+      "duration": 37,
+      "passengers": 114708,
+      "passengerYear": 2024,
+      "passengerRank": 84
     },
     {
       "id": "tokyo23-004034",
@@ -4841,7 +6130,10 @@
       "line": "臨海副都心線",
       "route": "東京臨海高速鉄道りんかい線→新木場→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 44
+      "duration": 44,
+      "passengers": 14700,
+      "passengerYear": 2024,
+      "passengerRank": 440
     },
     {
       "id": "tokyo23-003711",
@@ -4852,7 +6144,10 @@
       "line": "新宿線 / 大江戸線",
       "route": "都営新宿線→小川町(東京都)→同駅内徒歩→淡路町→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 31
+      "duration": 31,
+      "passengers": 74094,
+      "passengerYear": 2024,
+      "passengerRank": 142
     },
     {
       "id": "tokyo23-003754",
@@ -4863,7 +6158,10 @@
       "line": "半蔵門線 / 大江戸線",
       "route": "東京メトロ半蔵門線→大手町(東京都)→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 32
+      "duration": 32,
+      "passengers": 80796,
+      "passengerYear": 2024,
+      "passengerRank": 123
     },
     {
       "id": "tokyo23-003928",
@@ -4874,7 +6172,10 @@
       "line": "京葉線",
       "route": "JR武蔵野線→東京→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 39
+      "duration": 39,
+      "passengers": 30732,
+      "passengerYear": 2024,
+      "passengerRank": 302
     },
     {
       "id": "tokyo23-003702",
@@ -4885,7 +6186,10 @@
       "line": "新宿線",
       "route": "都営新宿線→小川町(東京都)→同駅内徒歩→淡路町→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 37
+      "duration": 37,
+      "passengers": 27698,
+      "passengerYear": 2024,
+      "passengerRank": 338
     },
     {
       "id": "tokyo23-003951",
@@ -4896,7 +6200,10 @@
       "line": "有楽町線 / ゆりかもめ",
       "route": "東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 31
+      "duration": 31,
+      "passengers": 246184,
+      "passengerYear": 2024,
+      "passengerRank": 38
     },
     {
       "id": "tokyo23-003859",
@@ -4907,7 +6214,10 @@
       "line": "京葉線",
       "route": "JR武蔵野線→東京→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 36
+      "duration": 36,
+      "passengers": 10880,
+      "passengerYear": 2024,
+      "passengerRank": 471
     },
     {
       "id": "tokyo23-003999",
@@ -4918,7 +6228,10 @@
       "line": "有楽町線",
       "route": "東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 33
+      "duration": 33,
+      "passengers": 27776,
+      "passengerYear": 2024,
+      "passengerRank": 336
     },
     {
       "id": "tokyo23-003818",
@@ -4929,7 +6242,10 @@
       "line": "大江戸線 / 東西線",
       "route": "東京メトロ東西線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 33
+      "duration": 33,
+      "passengers": 143409,
+      "passengerYear": 2024,
+      "passengerRank": 69
     },
     {
       "id": "tokyo23-004119",
@@ -4940,7 +6256,10 @@
       "line": "ゆりかもめ",
       "route": "ゆりかもめ→豊洲→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 47
+      "duration": 47,
+      "passengers": 2455,
+      "passengerYear": 2024,
+      "passengerRank": 539
     },
     {
       "id": "tokyo23-003847",
@@ -4951,7 +6270,10 @@
       "line": "千代田線 / 小田原線",
       "route": "小田急小田原線快速急行→新宿→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 38
+      "duration": 38,
+      "passengers": 269075,
+      "passengerYear": 2024,
+      "passengerRank": 34
     },
     {
       "id": "tokyo23-003837",
@@ -4962,7 +6284,10 @@
       "line": "小田原線",
       "route": "小田急小田原線→新宿→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 36
+      "duration": 36,
+      "passengers": 18567,
+      "passengerYear": 2024,
+      "passengerRank": 412
     },
     {
       "id": "tokyo23-003845",
@@ -4973,7 +6298,10 @@
       "line": "千代田線",
       "route": "東京メトロ千代田線→表参道→東京メトロ半蔵門線→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 32
+      "duration": 32,
+      "passengers": 28862,
+      "passengerYear": 2024,
+      "passengerRank": 323
     },
     {
       "id": "tokyo23-003764",
@@ -4984,7 +6312,10 @@
       "line": "京王線",
       "route": "京王新線→市ケ谷→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 31
+      "duration": 31,
+      "passengers": 59407,
+      "passengerYear": 2024,
+      "passengerRank": 169
     },
     {
       "id": "tokyo23-003780",
@@ -4995,7 +6326,10 @@
       "line": "副都心線",
       "route": "東京メトロ副都心線→新宿三丁目→東京メトロ副都心線通勤急行→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 32
+      "duration": 32,
+      "passengers": 23768,
+      "passengerYear": 2024,
+      "passengerRank": 368
     },
     {
       "id": "tokyo23-003767",
@@ -5006,7 +6340,10 @@
       "line": "中央線",
       "route": "JR総武線→市ケ谷→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 26
+      "duration": 26,
+      "passengers": 34572,
+      "passengerYear": 2024,
+      "passengerRank": 280
     },
     {
       "id": "tokyo23-003750",
@@ -5017,7 +6354,10 @@
       "line": "小田原線",
       "route": "小田急小田原線→新宿→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 32
+      "duration": 32,
+      "passengers": 3926,
+      "passengerYear": 2024,
+      "passengerRank": 524
     },
     {
       "id": "tokyo23-003778",
@@ -5028,7 +6368,10 @@
       "line": "小田原線",
       "route": "小田急小田原線→新宿→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 33
+      "duration": 33,
+      "passengers": 13182,
+      "passengerYear": 2024,
+      "passengerRank": 455
     },
     {
       "id": "tokyo23-003791",
@@ -5039,7 +6382,10 @@
       "line": "京王線",
       "route": "京王新線→市ケ谷→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 34
+      "duration": 34,
+      "passengers": 29965,
+      "passengerYear": 2024,
+      "passengerRank": 313
     },
     {
       "id": "tokyo23-003969",
@@ -5050,7 +6396,10 @@
       "line": "日比谷線",
       "route": "東京メトロ日比谷線→恵比寿→JR埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 38
+      "duration": 38,
+      "passengers": 58660,
+      "passengerYear": 2024,
+      "passengerRank": 171
     },
     {
       "id": "tokyo23-003844",
@@ -5061,7 +6410,10 @@
       "line": "副都心線 / 千代田線",
       "route": "東京メトロ副都心線通勤急行→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 30
+      "duration": 30,
+      "passengers": 105665,
+      "passengerYear": 2024,
+      "passengerRank": 94
     },
     {
       "id": "tokyo23-003938",
@@ -5072,7 +6424,10 @@
       "line": "井の頭線",
       "route": "京王井の頭線→渋谷→JR埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 36
+      "duration": 36,
+      "passengers": 10963,
+      "passengerYear": 2024,
+      "passengerRank": 470
     },
     {
       "id": "tokyo23-003806",
@@ -5083,7 +6438,10 @@
       "line": "京王線",
       "route": "京王線→新宿→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 35
+      "duration": 35,
+      "passengers": 73199,
+      "passengerYear": 2024,
+      "passengerRank": 144
     },
     {
       "id": "tokyo23-004091",
@@ -5094,7 +6452,10 @@
       "line": "ゆりかもめ",
       "route": "ゆりかもめ→新橋→JR山手線内回り→東京→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 49
+      "duration": 49,
+      "passengers": 13435,
+      "passengerYear": 2024,
+      "passengerRank": 452
     },
     {
       "id": "tokyo23-003946",
@@ -5105,7 +6466,10 @@
       "line": "東京モノレール",
       "route": "徒歩2分→浜松町→JR山手線内回り→東京→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 36
+      "duration": 36,
+      "passengers": 94252,
+      "passengerYear": 2024,
+      "passengerRank": 109
     },
     {
       "id": "tokyo23-003986",
@@ -5116,7 +6480,10 @@
       "line": "浅草線 / 三田線",
       "route": "都営三田線→大手町(東京都)→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 37
+      "duration": 37,
+      "passengers": 107560,
+      "passengerYear": 2024,
+      "passengerRank": 92
     },
     {
       "id": "tokyo23-003868",
@@ -5127,7 +6494,10 @@
       "line": "千代田線",
       "route": "東京メトロ千代田線→表参道→東京メトロ半蔵門線→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 30
+      "duration": 30,
+      "passengers": 39194,
+      "passengerYear": 2024,
+      "passengerRank": 243
     },
     {
       "id": "tokyo23-003892",
@@ -5138,7 +6508,10 @@
       "line": "大江戸線 / 日比谷線",
       "route": "都営大江戸線→青山一丁目→東京メトロ半蔵門線→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 31
+      "duration": 31,
+      "passengers": 183792,
+      "passengerYear": 2024,
+      "passengerRank": 52
     },
     {
       "id": "tokyo23-003884",
@@ -5149,7 +6522,10 @@
       "line": "南北線",
       "route": "東京メトロ南北線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 26
+      "duration": 26,
+      "passengers": 74305,
+      "passengerYear": 2024,
+      "passengerRank": 140
     },
     {
       "id": "tokyo23-003842",
@@ -5160,7 +6536,10 @@
       "line": "三田線",
       "route": "都営三田線→大手町(東京都)→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 31
+      "duration": 31,
+      "passengers": 38025,
+      "passengerYear": 2024,
+      "passengerRank": 250
     },
     {
       "id": "tokyo23-004112",
@@ -5171,7 +6550,10 @@
       "line": "ゆりかもめ",
       "route": "ゆりかもめ→新橋→JR山手線内回り→東京→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 50
+      "duration": 50,
+      "passengers": 19936,
+      "passengerYear": 2024,
+      "passengerRank": 396
     },
     {
       "id": "tokyo23-003834",
@@ -5182,7 +6564,10 @@
       "line": "銀座線",
       "route": "東京メトロ銀座線→青山一丁目→東京メトロ半蔵門線→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 28
+      "duration": 28,
+      "passengers": 74637,
+      "passengerYear": 2024,
+      "passengerRank": 138
     },
     {
       "id": "tokyo23-003939",
@@ -5193,7 +6578,10 @@
       "line": "大江戸線 / 浅草線",
       "route": "都営浅草線→東銀座→東京メトロ日比谷線→銀座→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 36
+      "duration": 36,
+      "passengers": 101853,
+      "passengerYear": 2024,
+      "passengerRank": 97
     },
     {
       "id": "tokyo23-003911",
@@ -5204,7 +6592,10 @@
       "line": "三田線",
       "route": "都営三田線→大手町(東京都)→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 33
+      "duration": 33,
+      "passengers": 43230,
+      "passengerYear": 2024,
+      "passengerRank": 223
     },
     {
       "id": "tokyo23-003979",
@@ -5215,7 +6606,10 @@
       "line": "ゆりかもめ",
       "route": "ゆりかもめ→新橋→JR山手線内回り→東京→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 41
+      "duration": 41,
+      "passengers": 2441,
+      "passengerYear": 2024,
+      "passengerRank": 541
     },
     {
       "id": "tokyo23-003887",
@@ -5226,7 +6620,10 @@
       "line": "大江戸線 / ゆりかもめ",
       "route": "ゆりかもめ→新橋→JR山手線内回り→東京→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 36
+      "duration": 36,
+      "passengers": 45681,
+      "passengerYear": 2024,
+      "passengerRank": 212
     },
     {
       "id": "tokyo23-004042",
@@ -5237,7 +6634,10 @@
       "line": "浅草線 / 本線",
       "route": "都営浅草線→東銀座→東京メトロ日比谷線→銀座→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 41
+      "duration": 41,
+      "passengers": 33601,
+      "passengerYear": 2024,
+      "passengerRank": 285
     },
     {
       "id": "tokyo23-003810",
@@ -5248,7 +6648,10 @@
       "line": "銀座線 / 南北線",
       "route": "東京メトロ南北線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 24
+      "duration": 24,
+      "passengers": 82631,
+      "passengerYear": 2024,
+      "passengerRank": 120
     },
     {
       "id": "tokyo23-004044",
@@ -5259,7 +6662,10 @@
       "line": "三田線 / 南北線",
       "route": "東京メトロ南北線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 34
+      "duration": 34,
+      "passengers": 16791,
+      "passengerYear": 2024,
+      "passengerRank": 422
     },
     {
       "id": "tokyo23-004025",
@@ -5270,7 +6676,10 @@
       "line": "三田線 / 南北線",
       "route": "東京メトロ南北線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 31
+      "duration": 31,
+      "passengers": 36926,
+      "passengerYear": 2024,
+      "passengerRank": 261
     },
     {
       "id": "tokyo23-003900",
@@ -5281,7 +6690,10 @@
       "line": "日比谷線",
       "route": "東京メトロ日比谷線→霞ケ関(東京都)→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 33
+      "duration": 33,
+      "passengers": 107982,
+      "passengerYear": 2024,
+      "passengerRank": 91
     },
     {
       "id": "tokyo23-003958",
@@ -5292,7 +6704,10 @@
       "line": "ゆりかもめ",
       "route": "ゆりかもめ→新橋→JR山手線内回り→東京→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 39
+      "duration": 39,
+      "passengers": 5132,
+      "passengerYear": 2024,
+      "passengerRank": 516
     },
     {
       "id": "tokyo23-003962",
@@ -5303,7 +6718,10 @@
       "line": "三田線",
       "route": "都営三田線→大手町(東京都)→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 35
+      "duration": 35,
+      "passengers": 28023,
+      "passengerYear": 2024,
+      "passengerRank": 330
     },
     {
       "id": "tokyo23-004030",
@@ -5314,7 +6732,10 @@
       "line": "ゆりかもめ",
       "route": "ゆりかもめ→新橋→JR山手線内回り→東京→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 43
+      "duration": 43,
+      "passengers": 5032,
+      "passengerYear": 2024,
+      "passengerRank": 517
     },
     {
       "id": "tokyo23-003835",
@@ -5325,7 +6746,10 @@
       "line": "銀座線",
       "route": "東京メトロ銀座線→溜池山王→東京メトロ南北線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 29
+      "duration": 29,
+      "passengers": 96029,
+      "passengerYear": 2024,
+      "passengerRank": 107
     },
     {
       "id": "tokyo23-003866",
@@ -5336,7 +6760,10 @@
       "line": "日比谷線",
       "route": "東京メトロ日比谷線→霞ケ関(東京都)→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 32
+      "duration": 32,
+      "passengers": 56595,
+      "passengerYear": 2024,
+      "passengerRank": 175
     },
     {
       "id": "tokyo23-003883",
@@ -5347,7 +6774,10 @@
       "line": "半蔵門線 / 銀座線 / 千代田線",
       "route": "東京メトロ半蔵門線→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 28
+      "duration": 28,
+      "passengers": 176901,
+      "passengerYear": 2024,
+      "passengerRank": 56
     },
     {
       "id": "tokyo23-003822",
@@ -5358,7 +6788,10 @@
       "line": "千代田線",
       "route": "東京メトロ千代田線→国会議事堂前→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 34
+      "duration": 34,
+      "passengers": 77718,
+      "passengerYear": 2024,
+      "passengerRank": 133
     },
     {
       "id": "tokyo23-003788",
@@ -5369,7 +6802,10 @@
       "line": "銀座線 / 丸ノ内線",
       "route": "同駅内徒歩→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 28
+      "duration": 28,
+      "passengers": 89214,
+      "passengerYear": 2024,
+      "passengerRank": 114
     },
     {
       "id": "tokyo23-003954",
@@ -5380,7 +6816,10 @@
       "line": "大江戸線",
       "route": "都営大江戸線→青山一丁目→東京メトロ半蔵門線→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 35
+      "duration": 35,
+      "passengers": 37465,
+      "passengerYear": 2024,
+      "passengerRank": 256
     },
     {
       "id": "tokyo23-003812",
@@ -5391,7 +6830,10 @@
       "line": "半蔵門線 / 大江戸線 / 銀座線",
       "route": "東京メトロ半蔵門線→永田町→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 25
+      "duration": 25,
+      "passengers": 124550,
+      "passengerYear": 2024,
+      "passengerRank": 81
     },
     {
       "id": "tokyo23-004079",
@@ -5402,7 +6844,10 @@
       "line": "浅草線",
       "route": "都営浅草線→五反田→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 47
+      "duration": 47,
+      "passengers": 13969,
+      "passengerYear": 2024,
+      "passengerRank": 446
     },
     {
       "id": "tokyo23-003941",
@@ -5413,7 +6858,10 @@
       "line": "大江戸線 / 南北線",
       "route": "東京メトロ南北線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 29
+      "duration": 29,
+      "passengers": 70951,
+      "passengerYear": 2024,
+      "passengerRank": 147
     },
     {
       "id": "tokyo23-003929",
@@ -5424,7 +6872,10 @@
       "line": "井の頭線",
       "route": "京王井の頭線→渋谷→JR埼京線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 38
+      "duration": 38,
+      "passengers": 35206,
+      "passengerYear": 2024,
+      "passengerRank": 276
     },
     {
       "id": "tokyo23-003427",
@@ -5435,7 +6886,10 @@
       "line": "新宿線",
       "route": "西武新宿線急行→高田馬場→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 40
+      "duration": 40,
+      "passengers": 41728,
+      "passengerYear": 2024,
+      "passengerRank": 230
     },
     {
       "id": "tokyo23-003345",
@@ -5446,7 +6900,10 @@
       "line": "池袋線",
       "route": "西武池袋線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 32
+      "duration": 32,
+      "passengers": 38455,
+      "passengerYear": 2024,
+      "passengerRank": 247
     },
     {
       "id": "tokyo23-003225",
@@ -5457,7 +6914,10 @@
       "line": "大江戸線",
       "route": "都営大江戸線→練馬→西武有楽町線準急→護国寺→東京メトロ有楽町線→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 39
+      "duration": 39,
+      "passengers": 56838,
+      "passengerYear": 2024,
+      "passengerRank": 174
     },
     {
       "id": "tokyo23-003186",
@@ -5468,7 +6928,10 @@
       "line": "有楽町線",
       "route": "東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 29
+      "duration": 29,
+      "passengers": 40077,
+      "passengerYear": 2024,
+      "passengerRank": 237
     },
     {
       "id": "tokyo23-003263",
@@ -5479,7 +6942,10 @@
       "line": "池袋線",
       "route": "西武池袋線準急→護国寺→東京メトロ有楽町線→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 38
+      "duration": 38,
+      "passengers": 80236,
+      "passengerYear": 2024,
+      "passengerRank": 125
     },
     {
       "id": "tokyo23-003349",
@@ -5490,7 +6956,10 @@
       "line": "池袋線",
       "route": "西武池袋線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 34
+      "duration": 34,
+      "passengers": 27732,
+      "passengerYear": 2024,
+      "passengerRank": 337
     },
     {
       "id": "tokyo23-003294",
@@ -5501,7 +6970,10 @@
       "line": "副都心線 / 有楽町線 / 西武有楽町線",
       "route": "東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 20
+      "duration": 20,
+      "passengers": 317839,
+      "passengerYear": 2024,
+      "passengerRank": 27
     },
     {
       "id": "tokyo23-003228",
@@ -5512,7 +6984,10 @@
       "line": "有楽町線",
       "route": "東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 26
+      "duration": 26,
+      "passengers": 42893,
+      "passengerYear": 2024,
+      "passengerRank": 225
     },
     {
       "id": "tokyo23-003311",
@@ -5523,7 +6998,10 @@
       "line": "西武有楽町線",
       "route": "西武有楽町線準急→護国寺→東京メトロ有楽町線→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 25
+      "duration": 25,
+      "passengers": 9867,
+      "passengerYear": 2024,
+      "passengerRank": 478
     },
     {
       "id": "tokyo23-003367",
@@ -5534,7 +7012,10 @@
       "line": "大江戸線",
       "route": "都営大江戸線→練馬→西武有楽町線準急→護国寺→東京メトロ有楽町線→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 35
+      "duration": 35,
+      "passengers": 28904,
+      "passengerYear": 2024,
+      "passengerRank": 322
     },
     {
       "id": "tokyo23-003321",
@@ -5545,7 +7026,10 @@
       "line": "池袋線",
       "route": "西武池袋線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 28
+      "duration": 28,
+      "passengers": 15032,
+      "passengerYear": 2024,
+      "passengerRank": 436
     },
     {
       "id": "tokyo23-003419",
@@ -5556,7 +7040,10 @@
       "line": "新宿線",
       "route": "西武新宿線→上石神井→西武新宿線急行→高田馬場→JR山手線外回り→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 45
+      "duration": 45,
+      "passengers": 29438,
+      "passengerYear": 2024,
+      "passengerRank": 318
     },
     {
       "id": "tokyo23-003261",
@@ -5567,7 +7054,10 @@
       "line": "有楽町線",
       "route": "東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 23
+      "duration": 23,
+      "passengers": 37978,
+      "passengerYear": 2024,
+      "passengerRank": 251
     },
     {
       "id": "tokyo23-003337",
@@ -5578,7 +7068,10 @@
       "line": "池袋線",
       "route": "西武池袋線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 26
+      "duration": 26,
+      "passengers": 32177,
+      "passengerYear": 2024,
+      "passengerRank": 293
     },
     {
       "id": "tokyo23-003292",
@@ -5589,7 +7082,10 @@
       "line": "池袋線",
       "route": "西武池袋線準急→護国寺→東京メトロ有楽町線→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 35
+      "duration": 35,
+      "passengers": 76732,
+      "passengerYear": 2024,
+      "passengerRank": 134
     },
     {
       "id": "tokyo23-003328",
@@ -5600,7 +7096,10 @@
       "line": "大江戸線 / 池袋線 / 西武有楽町線 / 豊島線",
       "route": "西武池袋線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 29
+      "duration": 29,
+      "passengers": 173987,
+      "passengerYear": 2024,
+      "passengerRank": 57
     },
     {
       "id": "tokyo23-003243",
@@ -5611,7 +7110,10 @@
       "line": "大江戸線",
       "route": "都営大江戸線→練馬→西武有楽町線準急→護国寺→東京メトロ有楽町線→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 37
+      "duration": 37,
+      "passengers": 22655,
+      "passengerYear": 2024,
+      "passengerRank": 374
     },
     {
       "id": "tokyo23-003314",
@@ -5622,7 +7124,10 @@
       "line": "池袋線",
       "route": "西武池袋線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 36
+      "duration": 36,
+      "passengers": 26372,
+      "passengerYear": 2024,
+      "passengerRank": 349
     },
     {
       "id": "tokyo23-003305",
@@ -5633,7 +7138,10 @@
       "line": "大江戸線 / 豊島線",
       "route": "西武豊島線→練馬→西武有楽町線快速→小竹向原→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 30
+      "duration": 30,
+      "passengers": 29508,
+      "passengerYear": 2024,
+      "passengerRank": 317
     },
     {
       "id": "tokyo23-003370",
@@ -5644,7 +7152,10 @@
       "line": "荒川線",
       "route": "徒歩→三ノ輪→東京メトロ日比谷線→仲御徒町→同駅内徒歩→上野御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 40
+      "duration": 40,
+      "passengers": 3266,
+      "passengerYear": 2024,
+      "passengerRank": 530
     },
     {
       "id": "tokyo23-003359",
@@ -5655,7 +7166,10 @@
       "line": "常磐線",
       "route": "JR常磐線快速→日暮里→JR山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都02(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "searchDate": "2026-08-28",
-      "duration": 31
+      "duration": 31,
+      "passengers": 24202,
+      "passengerYear": 2024,
+      "passengerRank": 367
     },
     {
       "id": "tokyo23-003363",
@@ -5666,7 +7180,10 @@
       "line": "日比谷線 / つくばエクスプレス / 常磐線",
       "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 30
+      "duration": 30,
+      "passengers": 79673,
+      "passengerYear": 2024,
+      "passengerRank": 130
     },
     {
       "id": "tokyo23-003259",
@@ -5677,7 +7194,10 @@
       "line": "荒川線",
       "route": "都電荒川線→町屋駅前→徒歩→町屋(東京メトロ)→東京メトロ千代田線→西日暮里→JR山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都02(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "searchDate": "2026-08-28",
-      "duration": 49
+      "duration": 49,
+      "passengers": 3101,
+      "passengerYear": 2024,
+      "passengerRank": 534
     },
     {
       "id": "tokyo23-003255",
@@ -5688,7 +7208,10 @@
       "line": "荒川線",
       "route": "都電荒川線→東池袋四丁目→徒歩→東池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 48
+      "duration": 48,
+      "passengers": 3186,
+      "passengerYear": 2024,
+      "passengerRank": 531
     },
     {
       "id": "tokyo23-003339",
@@ -5699,7 +7222,10 @@
       "line": "本線",
       "route": "京成本線→町屋(京成線)→徒歩→町屋(東京メトロ)→東京メトロ千代田線→西日暮里→JR山手線内回り→池袋→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 42
+      "duration": 42,
+      "passengers": 5882,
+      "passengerYear": 2024,
+      "passengerRank": 511
     },
     {
       "id": "tokyo23-003284",
@@ -5710,7 +7236,10 @@
       "line": "荒川線",
       "route": "都電荒川線→町屋駅前→徒歩→町屋(東京メトロ)→東京メトロ千代田線→西日暮里→JR山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都02(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "searchDate": "2026-08-28",
-      "duration": 44
+      "duration": 44,
+      "passengers": 1563,
+      "passengerYear": 2024,
+      "passengerRank": 550
     },
     {
       "id": "tokyo23-003302",
@@ -5721,7 +7250,10 @@
       "line": "千代田線 / 本線",
       "route": "東京メトロ千代田線→西日暮里→JR山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都02(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "searchDate": "2026-08-28",
-      "duration": 32
+      "duration": 32,
+      "passengers": 80085,
+      "passengerYear": 2024,
+      "passengerRank": 126
     },
     {
       "id": "tokyo23-003291",
@@ -5732,7 +7264,10 @@
       "line": "荒川線",
       "route": "都電荒川線→町屋駅前→徒歩→町屋(東京メトロ)→東京メトロ千代田線→西日暮里→JR山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都02(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "searchDate": "2026-08-28",
-      "duration": 43
+      "duration": 43,
+      "passengers": 775,
+      "passengerYear": 2024,
+      "passengerRank": 559
     },
     {
       "id": "tokyo23-003299",
@@ -5743,7 +7278,10 @@
       "line": "荒川線",
       "route": "徒歩→町屋(東京メトロ)→東京メトロ千代田線→西日暮里→JR山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都02(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "searchDate": "2026-08-28",
-      "duration": 36
+      "duration": 36,
+      "passengers": 8555,
+      "passengerYear": 2024,
+      "passengerRank": 496
     },
     {
       "id": "tokyo23-003357",
@@ -5754,7 +7292,10 @@
       "line": "荒川線",
       "route": "都電荒川線→三ノ輪橋→徒歩→三ノ輪→東京メトロ日比谷線→仲御徒町→同駅内徒歩→上野御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 44
+      "duration": 44,
+      "passengers": 699,
+      "passengerYear": 2024,
+      "passengerRank": 561
     },
     {
       "id": "tokyo23-003306",
@@ -5765,7 +7306,10 @@
       "line": "荒川線",
       "route": "都電荒川線→町屋駅前→徒歩→町屋(東京メトロ)→東京メトロ千代田線→西日暮里→JR山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都02(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "searchDate": "2026-08-28",
-      "duration": 43
+      "duration": 43,
+      "passengers": 473,
+      "passengerYear": 2024,
+      "passengerRank": 562
     },
     {
       "id": "tokyo23-003322",
@@ -5776,7 +7320,10 @@
       "line": "荒川線",
       "route": "都電荒川線→町屋駅前→徒歩→町屋(東京メトロ)→東京メトロ千代田線→西日暮里→JR山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都02(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "searchDate": "2026-08-28",
-      "duration": 44
+      "duration": 44,
+      "passengers": 845,
+      "passengerYear": 2024,
+      "passengerRank": 556
     },
     {
       "id": "tokyo23-003350",
@@ -5787,7 +7334,10 @@
       "line": "荒川線",
       "route": "都電荒川線→町屋駅前→徒歩→町屋(東京メトロ)→東京メトロ千代田線→西日暮里→JR山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都02(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "searchDate": "2026-08-28",
-      "duration": 45
+      "duration": 45,
+      "passengers": 1689,
+      "passengerYear": 2024,
+      "passengerRank": 547
     },
     {
       "id": "tokyo23-003252",
@@ -5798,7 +7348,10 @@
       "line": "荒川線",
       "route": "都電荒川線→大塚駅前→徒歩→大塚駅前/都営バス→都営バス・都02(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "searchDate": "2026-08-28",
-      "duration": 38
+      "duration": 38,
+      "passengers": 3350,
+      "passengerYear": 2024,
+      "passengerRank": 529
     },
     {
       "id": "tokyo23-003254",
@@ -5809,7 +7362,10 @@
       "line": "荒川線",
       "route": "都電荒川線→東池袋四丁目→徒歩→東池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 47
+      "duration": 47,
+      "passengers": 2207,
+      "passengerYear": 2024,
+      "passengerRank": 544
     },
     {
       "id": "tokyo23-003274",
@@ -5820,7 +7376,10 @@
       "line": "本線",
       "route": "京成本線→京成関屋→徒歩→牛田(東京都)→東武スカイツリーライン区間準急→北千住→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 45
+      "duration": 45,
+      "passengers": 32727,
+      "passengerYear": 2024,
+      "passengerRank": 290
     },
     {
       "id": "tokyo23-003199",
@@ -5831,7 +7390,10 @@
       "line": "常磐線",
       "route": "JR常磐線→北千住→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 44
+      "duration": 44,
+      "passengers": 79818,
+      "passengerYear": 2024,
+      "passengerRank": 128
     },
     {
       "id": "tokyo23-003323",
@@ -5842,7 +7404,10 @@
       "line": "押上線",
       "route": "京成押上線→浅草橋→JR総武線→御茶ノ水→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 48
+      "duration": 48,
+      "passengers": 34621,
+      "passengerYear": 2024,
+      "passengerRank": 279
     },
     {
       "id": "tokyo23-003195",
@@ -5853,7 +7418,10 @@
       "line": "金町線",
       "route": "徒歩→金町(東京都)→JR常磐線→北千住→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 49
+      "duration": 49,
+      "passengers": 23574,
+      "passengerYear": 2024,
+      "passengerRank": 370
     },
     {
       "id": "tokyo23-003248",
@@ -5864,7 +7432,10 @@
       "line": "北総線 / 成田空港線 / 本線 / 金町線",
       "route": "京成本線快速特急→蔵前→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 48
+      "duration": 48,
+      "passengers": 102056,
+      "passengerYear": 2024,
+      "passengerRank": 96
     },
     {
       "id": "tokyo23-003376",
@@ -5875,7 +7446,10 @@
       "line": "押上線",
       "route": "京成押上線→浅草橋→JR総武線→御茶ノ水→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 46
+      "duration": 46,
+      "passengers": 18180,
+      "passengerYear": 2024,
+      "passengerRank": 414
     },
     {
       "id": "tokyo23-003273",
@@ -5886,7 +7460,10 @@
       "line": "本線",
       "route": "京成本線→京成関屋→徒歩→牛田(東京都)→東武スカイツリーライン区間準急→北千住→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 44
+      "duration": 44,
+      "passengers": 22096,
+      "passengerYear": 2024,
+      "passengerRank": 381
     },
     {
       "id": "tokyo23-003486",
@@ -5897,7 +7474,10 @@
       "line": "総武線",
       "route": "JR総武線→御茶ノ水→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 39
+      "duration": 39,
+      "passengers": 146776,
+      "passengerYear": 2024,
+      "passengerRank": 67
     },
     {
       "id": "tokyo23-003244",
@@ -5908,7 +7488,10 @@
       "line": "北総線",
       "route": "北総鉄道北総線→京成高砂→京成本線通勤特急→日暮里→JR山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都02(大塚駅前−東京ドームシティ)→大塚二丁目/都営バス→徒歩6分",
       "searchDate": "2026-08-28",
-      "duration": 52
+      "duration": 52,
+      "passengers": 5520,
+      "passengerYear": 2024,
+      "passengerRank": 515
     },
     {
       "id": "tokyo23-003232",
@@ -5919,7 +7502,10 @@
       "line": "金町線",
       "route": "京成金町線→京成金町→徒歩→金町(東京都)→JR常磐線→西日暮里→JR山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都02(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "searchDate": "2026-08-28",
-      "duration": 54
+      "duration": 54,
+      "passengers": 8624,
+      "passengerYear": 2024,
+      "passengerRank": 495
     },
     {
       "id": "tokyo23-003191",
@@ -5930,7 +7516,10 @@
       "line": "常磐線",
       "route": "JR常磐線→北千住→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 46
+      "duration": 46,
+      "passengers": 99396,
+      "passengerYear": 2024,
+      "passengerRank": 100
     },
     {
       "id": "tokyo23-003280",
@@ -5941,7 +7530,10 @@
       "line": "押上線 / 本線",
       "route": "京成押上線快速特急→蔵前→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 46
+      "duration": 46,
+      "passengers": 48727,
+      "passengerYear": 2024,
+      "passengerRank": 198
     },
     {
       "id": "tokyo23-003324",
@@ -5952,7 +7544,10 @@
       "line": "副都心線 / 有楽町線",
       "route": "東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 18
+      "duration": 18,
+      "passengers": 39136,
+      "passengerYear": 2024,
+      "passengerRank": 245
     },
     {
       "id": "tokyo23-003407",
@@ -5963,7 +7558,10 @@
       "line": "荒川線",
       "route": "都電荒川線→東池袋四丁目→徒歩→東池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 18
+      "duration": 18,
+      "passengers": 1460,
+      "passengerYear": 2024,
+      "passengerRank": 551
     },
     {
       "id": "tokyo23-003378",
@@ -5974,7 +7572,10 @@
       "line": "荒川線",
       "route": "徒歩→大塚駅前/都営バス→都営バス・都02(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "searchDate": "2026-08-28",
-      "duration": 16
+      "duration": 16,
+      "passengers": 7990,
+      "passengerYear": 2024,
+      "passengerRank": 499
     },
     {
       "id": "tokyo23-003490",
@@ -5985,7 +7586,10 @@
       "line": "荒川線",
       "route": "都電荒川線→東池袋四丁目→徒歩→東池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 19
+      "duration": 19,
+      "passengers": 1716,
+      "passengerYear": 2024,
+      "passengerRank": 546
     },
     {
       "id": "tokyo23-003351",
@@ -5996,7 +7600,10 @@
       "line": "荒川線",
       "route": "都電荒川線→大塚駅前→徒歩→大塚駅前/都営バス→都営バス・都02(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "searchDate": "2026-08-28",
-      "duration": 22
+      "duration": 22,
+      "passengers": 1180,
+      "passengerYear": 2024,
+      "passengerRank": 552
     },
     {
       "id": "tokyo23-003319",
@@ -6007,7 +7614,10 @@
       "line": "荒川線",
       "route": "都電荒川線→大塚駅前→徒歩→大塚駅前/都営バス→都営バス・都02(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "searchDate": "2026-08-28",
-      "duration": 24
+      "duration": 24,
+      "passengers": 2450,
+      "passengerYear": 2024,
+      "passengerRank": 540
     },
     {
       "id": "tokyo23-003431",
@@ -6018,7 +7628,10 @@
       "line": "丸ノ内線",
       "route": "東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 11
+      "duration": 11,
+      "passengers": 25769,
+      "passengerYear": 2024,
+      "passengerRank": 351
     },
     {
       "id": "tokyo23-003310",
@@ -6029,7 +7642,10 @@
       "line": "荒川線",
       "route": "都電荒川線→大塚駅前→徒歩→大塚駅前/都営バス→都営バス・都02(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "searchDate": "2026-08-28",
-      "duration": 25
+      "duration": 25,
+      "passengers": 2649,
+      "passengerYear": 2024,
+      "passengerRank": 535
     },
     {
       "id": "tokyo23-003432",
@@ -6040,7 +7656,10 @@
       "line": "有楽町線",
       "route": "東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 10
+      "duration": 10,
+      "passengers": 45348,
+      "passengerYear": 2024,
+      "passengerRank": 214
     },
     {
       "id": "tokyo23-003436",
@@ -6051,7 +7670,10 @@
       "line": "荒川線",
       "route": "徒歩→東池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 14
+      "duration": 14,
+      "passengers": 3743,
+      "passengerYear": 2024,
+      "passengerRank": 525
     },
     {
       "id": "tokyo23-003393",
@@ -6062,7 +7684,10 @@
       "line": "池袋線",
       "route": "西武池袋線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 23
+      "duration": 23,
+      "passengers": 25544,
+      "passengerYear": 2024,
+      "passengerRank": 355
     },
     {
       "id": "tokyo23-003426",
@@ -6073,7 +7698,10 @@
       "line": "池袋線",
       "route": "西武池袋線→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 21
+      "duration": 21,
+      "passengers": 20617,
+      "passengerYear": 2024,
+      "passengerRank": 393
     },
     {
       "id": "tokyo23-003293",
@@ -6084,7 +7712,10 @@
       "line": "三田線",
       "route": "都営三田線→千石→徒歩→千石一丁目(文京区)/都営バス→都営バス・上58→音羽二丁目/都営バス→徒歩4分",
       "searchDate": "2026-08-28",
-      "duration": 24
+      "duration": 24,
+      "passengers": 29560,
+      "passengerYear": 2024,
+      "passengerRank": 316
     },
     {
       "id": "tokyo23-003361",
@@ -6095,7 +7726,10 @@
       "line": "副都心線 / 有楽町線",
       "route": "東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 16
+      "duration": 16,
+      "passengers": 40890,
+      "passengerYear": 2024,
+      "passengerRank": 233
     },
     {
       "id": "tokyo23-003443",
@@ -6106,7 +7740,10 @@
       "line": "荒川線",
       "route": "都電荒川線→東池袋四丁目→徒歩→東池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 16
+      "duration": 16,
+      "passengers": 1067,
+      "passengerYear": 2024,
+      "passengerRank": 554
     },
     {
       "id": "tokyo23-003471",
@@ -6117,7 +7754,10 @@
       "line": "副都心線",
       "route": "東京メトロ副都心線→池袋→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 22
+      "duration": 22,
+      "passengers": 19401,
+      "passengerYear": 2024,
+      "passengerRank": 401
     },
     {
       "id": "tokyo23-003468",
@@ -6128,7 +7768,10 @@
       "line": "荒川線",
       "route": "都電荒川線→東池袋四丁目→徒歩→東池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "searchDate": "2026-08-28",
-      "duration": 18
+      "duration": 18,
+      "passengers": 2564,
+      "passengerYear": 2024,
+      "passengerRank": 537
     },
     {
       "id": "tokyo23-003200",
@@ -6139,7 +7782,10 @@
       "line": "伊勢崎線",
       "route": "東武スカイツリーライン→北千住→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 43
+      "duration": 43,
+      "passengers": 36724,
+      "passengerYear": 2024,
+      "passengerRank": 263
     },
     {
       "id": "tokyo23-003290",
@@ -6150,7 +7796,10 @@
       "line": "本線",
       "route": "徒歩→牛田(東京都)→東武スカイツリーライン区間準急→北千住→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 41
+      "duration": 41,
+      "passengers": 23344,
+      "passengerYear": 2024,
+      "passengerRank": 372
     },
     {
       "id": "tokyo23-003260",
@@ -6161,7 +7810,10 @@
       "line": "日比谷線 / 千代田線 / 伊勢崎線 / つくばエクスプレス / 常磐線",
       "route": "つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 32
+      "duration": 32,
+      "passengers": 1434911,
+      "passengerYear": 2024,
+      "passengerRank": 4
     },
     {
       "id": "tokyo23-003162",
@@ -6172,7 +7824,10 @@
       "line": "千代田線",
       "route": "東京メトロ千代田線→綾瀬→東京メトロ千代田線→西日暮里→JR山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都02(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "searchDate": "2026-08-28",
-      "duration": 46
+      "duration": 46,
+      "passengers": 43371,
+      "passengerYear": 2024,
+      "passengerRank": 221
     },
     {
       "id": "tokyo23-003301",
@@ -6183,7 +7838,10 @@
       "line": "本線",
       "route": "京成本線→日暮里→JR山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都02(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "searchDate": "2026-08-28",
-      "duration": 40
+      "duration": 40,
+      "passengers": 16762,
+      "passengerYear": 2024,
+      "passengerRank": 423
     },
     {
       "id": "tokyo23-003297",
@@ -6194,7 +7852,10 @@
       "line": "伊勢崎線",
       "route": "東武スカイツリーライン区間準急→北千住→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 41
+      "duration": 41,
+      "passengers": 4217,
+      "passengerYear": 2024,
+      "passengerRank": 522
     },
     {
       "id": "tokyo23-003150",
@@ -6205,7 +7866,10 @@
       "line": "大師線",
       "route": "東武大師線→西新井→東武スカイツリーライン区間急行→北千住→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 48
+      "duration": 48,
+      "passengers": 12621,
+      "passengerYear": 2024,
+      "passengerRank": 463
     },
     {
       "id": "tokyo23-003224",
@@ -6216,7 +7880,10 @@
       "line": "伊勢崎線",
       "route": "東武スカイツリーライン→北千住→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 41
+      "duration": 41,
+      "passengers": 6261,
+      "passengerYear": 2024,
+      "passengerRank": 509
     },
     {
       "id": "tokyo23-003176",
@@ -6227,7 +7894,10 @@
       "line": "伊勢崎線",
       "route": "東武スカイツリーライン→北千住→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 45
+      "duration": 45,
+      "passengers": 35416,
+      "passengerYear": 2024,
+      "passengerRank": 273
     },
     {
       "id": "tokyo23-003288",
@@ -6238,7 +7908,10 @@
       "line": "伊勢崎線",
       "route": "東武スカイツリーライン区間準急→北千住→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 39
+      "duration": 39,
+      "passengers": 20820,
+      "passengerYear": 2024,
+      "passengerRank": 391
     },
     {
       "id": "tokyo23-003101",
@@ -6249,7 +7922,10 @@
       "line": "伊勢崎線",
       "route": "東武スカイツリーライン→西新井→東武スカイツリーライン区間急行→北千住→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 48
+      "duration": 48,
+      "passengers": 67699,
+      "passengerYear": 2024,
+      "passengerRank": 152
     },
     {
       "id": "tokyo23-003214",
@@ -6260,7 +7936,10 @@
       "line": "千代田線 / 常磐線",
       "route": "東京メトロ千代田線→西日暮里→JR山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都02(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "searchDate": "2026-08-28",
-      "duration": 40
+      "duration": 40,
+      "passengers": 384554,
+      "passengerYear": 2024,
+      "passengerRank": 19
     },
     {
       "id": "tokyo23-003159",
@@ -6271,7 +7950,10 @@
       "line": "伊勢崎線 / 大師線",
       "route": "東武スカイツリーライン区間急行→北千住→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "searchDate": "2026-08-28",
-      "duration": 43
+      "duration": 43,
+      "passengers": 62984,
+      "passengerYear": 2024,
+      "passengerRank": 162
     }
   ]
 }
