@@ -89,11 +89,11 @@ def build_groups(geojson):
 
 
 def group_codes_from_id(station_id: str):
-    prefix = "tokyo23-"
-    if not station_id.startswith(prefix):
-        return None
-    codes = station_id[len(prefix):].split("+")
-    return codes if all(code.isdigit() for code in codes) else None
+    for prefix in ("tokyo23-", "n02-"):
+        if station_id.startswith(prefix):
+            codes = station_id[len(prefix):].split("+")
+            return codes if all(code.isdigit() for code in codes) else None
+    return None
 
 
 def match_station(station, groups, groups_by_name):
