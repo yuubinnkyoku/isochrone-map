@@ -17135,10 +17135,21 @@
       "duration": 111,
       "departureDisplay": "前日21:15",
       "previousDay": true,
-      "note": "当日朝の始発では08:18までに到着できないため、前日発の最終経路を表示",
+      "note": "Yahoo!の駅直接検索では前日21:15発。ただし高尾山口駅まで徒歩42分で移動し、同駅06:26発→07:55学校着で当日通学可能なため、この駅の直接検索値はIDW補間から除外。",
       "passengers": 1746,
       "passengerYear": 2024,
-      "passengerRank": 1216
+      "passengerRank": 1216,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "Yahoo!乗換案内の駅直接検索では前日21:15発だが、高尾山駅地点から徒歩で高尾山口駅へ移動し、当日06:26発の鉄道で07:55までに学校へ到着可能なため、駅直接検索値はその地点からの当日到達可能性を代表しない。",
+      "alternateAccess": {
+        "station": "高尾山口",
+        "accessMode": "徒歩",
+        "walkMinutes": 42,
+        "departureFromPoint": "05:44",
+        "departure": "06:26",
+        "arrival": "07:55",
+        "searchDate": "2026-08-28"
+      }
     },
     {
       "id": "n02-004327",
