@@ -19,11 +19,15 @@
       "complete": true
     },
     "idwExclusionPolicy": {
-      "walkMinutes": 15,
-      "rule": "Yahoo!乗換案内の駅直接検索で当日08:18までに到着できず、徒歩15分以内の別駅から当日08:18までに到着できる場合、その駅の直接検索値をIDW補間から除外し、駅マーカーには理由を明記する。",
-      "excludedStationIds": [
-        "n02-003192"
-      ]
+      "rule": "駅から直接乗車する収録経路より、駅地点から徒歩・鉄道・路線バスを用いる別経路の方が遅く出ても08:18までに到着できる場合、直接検索値をIDW補間から除外する",
+      "fixedAccessTimeLimit": false,
+      "allowedAccessModes": [
+        "徒歩",
+        "鉄道",
+        "路線バス"
+      ],
+      "auditResolutionMinutes": 1,
+      "excludedStations": 67
     }
   },
   "stations": [
@@ -214,7 +218,21 @@
       "route": "東急東横線→自由が丘→東急東横線通勤特急→池袋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 26424,
       "passengerYear": 2024,
-      "passengerRank": 605
+      "passengerRank": 605,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:21発だが、徒歩で武蔵小杉駅へ移動し、同駅07:29発の収録済み経路を使うと、元地点を07:22まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "武蔵小杉",
+        "accessMode": "徒歩",
+        "walkMinutes": 7,
+        "walkDistanceKm": 0.514,
+        "departureFromPoint": "07:22",
+        "departure": "07:29",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:21発だが、武蔵小杉駅まで徒歩約7分で移動すれば、元地点を07:22ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "musashikosugi",
@@ -356,7 +374,21 @@
       "route": "東急目黒線→飯田橋→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 12146,
       "passengerYear": 2024,
-      "passengerRank": 898
+      "passengerRank": 898,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:19発だが、徒歩で自由が丘駅へ移動し、同駅07:30発の収録済み経路を使うと、元地点を07:21まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "自由が丘",
+        "accessMode": "徒歩",
+        "walkMinutes": 9,
+        "walkDistanceKm": 0.641,
+        "departureFromPoint": "07:21",
+        "departure": "07:30",
+        "gainMinutes": 2,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:19発だが、自由が丘駅まで徒歩約9分で移動すれば、元地点を07:21ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "ooichou",
@@ -974,7 +1006,21 @@
       "route": "徒歩→地下鉄赤塚→東京メトロ有楽町線→護国寺→徒歩5分",
       "passengers": 14727,
       "passengerYear": 2024,
-      "passengerRank": 825
+      "passengerRank": 825,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:43発だが、徒歩で地下鉄赤塚駅へ移動し、同駅07:48発の収録済み経路を使うと、元地点を07:45まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "地下鉄赤塚",
+        "accessMode": "徒歩",
+        "walkMinutes": 3,
+        "walkDistanceKm": 0.177,
+        "departureFromPoint": "07:45",
+        "departure": "07:48",
+        "gainMinutes": 2,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:43発だが、地下鉄赤塚駅まで徒歩約3分で移動すれば、元地点を07:45ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "toubunerima",
@@ -2068,7 +2114,21 @@
       "route": "流鉄流山線→馬橋→ＪＲ常磐線→松戸→ＪＲ常磐線快速→日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "passengers": 1124,
       "passengerYear": 2024,
-      "passengerRank": 1233
+      "passengerRank": 1233,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:04発だが、徒歩で南流山駅へ移動し、同駅07:23発の収録済み経路を使うと、元地点を07:08まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "南流山",
+        "accessMode": "徒歩",
+        "walkMinutes": 15,
+        "walkDistanceKm": 1.062,
+        "departureFromPoint": "07:08",
+        "departure": "07:23",
+        "gainMinutes": 4,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:04発だが、南流山駅まで徒歩約15分で移動すれば、元地点を07:08ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "koganejoushi",
@@ -2295,7 +2355,21 @@
       "searchDate": "2026-08-28",
       "passengers": 125968,
       "passengerYear": 2024,
-      "passengerRank": 118
+      "passengerRank": 118,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:47発だが、徒歩で上野御徒町駅へ移動し、同駅07:52発の収録済み経路を使うと、元地点を07:48まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "上野御徒町",
+        "accessMode": "徒歩",
+        "walkMinutes": 4,
+        "walkDistanceKm": 0.277,
+        "departureFromPoint": "07:48",
+        "departure": "07:52",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:47発だが、上野御徒町駅まで徒歩約4分で移動すれば、元地点を07:48ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "ueno",
@@ -2605,7 +2679,21 @@
       "duration": 48,
       "passengers": 7784,
       "passengerYear": 2024,
-      "passengerRank": 1022
+      "passengerRank": 1022,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:24発だが、徒歩で豪徳寺駅へ移動し、同駅07:27発の収録済み経路を使うと、元地点を07:25まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "豪徳寺",
+        "accessMode": "徒歩",
+        "walkMinutes": 2,
+        "walkDistanceKm": 0.129,
+        "departureFromPoint": "07:25",
+        "departure": "07:27",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:24発だが、豪徳寺駅まで徒歩約2分で移動すれば、元地点を07:25ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "tokyo23-004036",
@@ -2815,7 +2903,21 @@
       "duration": 45,
       "passengers": 734,
       "passengerYear": 2024,
-      "passengerRank": 1242
+      "passengerRank": 1242,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:31発だが、徒歩で三軒茶屋駅へ移動し、同駅07:39発の収録済み経路を使うと、元地点を07:32まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "三軒茶屋",
+        "accessMode": "徒歩",
+        "walkMinutes": 7,
+        "walkDistanceKm": 0.491,
+        "departureFromPoint": "07:32",
+        "departure": "07:39",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:31発だが、三軒茶屋駅まで徒歩約7分で移動すれば、元地点を07:32ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "tokyo23-003960",
@@ -2997,7 +3099,21 @@
       "duration": 32,
       "passengers": 25398,
       "passengerYear": 2024,
-      "passengerRank": 622
+      "passengerRank": 622,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:45発だが、徒歩で馬喰横山駅へ移動し、同駅07:50発の収録済み経路を使うと、元地点を07:46まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "馬喰横山",
+        "accessMode": "徒歩",
+        "walkMinutes": 4,
+        "walkDistanceKm": 0.28,
+        "departureFromPoint": "07:46",
+        "departure": "07:50",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:45発だが、馬喰横山駅まで徒歩約4分で移動すれば、元地点を07:46ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "tokyo23-003838",
@@ -3137,7 +3253,21 @@
       "duration": 31,
       "passengers": 50414,
       "passengerYear": 2024,
-      "passengerRank": 319
+      "passengerRank": 319,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:46発だが、徒歩で馬喰横山駅へ移動し、同駅07:50発の収録済み経路を使うと、元地点を07:47まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "馬喰横山",
+        "accessMode": "徒歩",
+        "walkMinutes": 3,
+        "walkDistanceKm": 0.204,
+        "departureFromPoint": "07:47",
+        "departure": "07:50",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:46発だが、馬喰横山駅まで徒歩約3分で移動すれば、元地点を07:47ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "tokyo23-003568",
@@ -3515,7 +3645,21 @@
       "duration": 25,
       "passengers": 73487,
       "passengerYear": 2024,
-      "passengerRank": 217
+      "passengerRank": 217,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:51発だが、徒歩で麹町駅へ移動し、同駅07:59発の収録済み経路を使うと、元地点を07:52まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "麹町",
+        "accessMode": "徒歩",
+        "walkMinutes": 7,
+        "walkDistanceKm": 0.489,
+        "departureFromPoint": "07:52",
+        "departure": "07:59",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:51発だが、麹町駅まで徒歩約7分で移動すれば、元地点を07:52ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "tokyo23-003728",
@@ -3571,7 +3715,21 @@
       "duration": 23,
       "passengers": 37295,
       "passengerYear": 2024,
-      "passengerRank": 442
+      "passengerRank": 442,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:54発だが、徒歩で淡路町駅へ移動し、同駅07:58発の収録済み経路を使うと、元地点を07:55まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "淡路町",
+        "accessMode": "徒歩",
+        "walkMinutes": 3,
+        "walkDistanceKm": 0.191,
+        "departureFromPoint": "07:55",
+        "departure": "07:58",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:54発だが、淡路町駅まで徒歩約3分で移動すれば、元地点を07:55ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "tokyo23-003655",
@@ -3795,7 +3953,21 @@
       "duration": 25,
       "passengers": 25666,
       "passengerYear": 2024,
-      "passengerRank": 615
+      "passengerRank": 615,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:47発だが、徒歩で上野御徒町駅へ移動し、同駅07:52発の収録済み経路を使うと、元地点を07:50まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "上野御徒町",
+        "accessMode": "徒歩",
+        "walkMinutes": 2,
+        "walkDistanceKm": 0.091,
+        "departureFromPoint": "07:50",
+        "departure": "07:52",
+        "gainMinutes": 3,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:47発だが、上野御徒町駅まで徒歩約2分で移動すれば、元地点を07:50ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "tokyo23-003543",
@@ -3823,7 +3995,21 @@
       "duration": 29,
       "passengers": 48475,
       "passengerYear": 2024,
-      "passengerRank": 334
+      "passengerRank": 334,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:43発だが、徒歩で上野御徒町駅へ移動し、同駅07:52発の収録済み経路を使うと、元地点を07:46まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "上野御徒町",
+        "accessMode": "徒歩",
+        "walkMinutes": 6,
+        "walkDistanceKm": 0.426,
+        "departureFromPoint": "07:46",
+        "departure": "07:52",
+        "gainMinutes": 3,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:43発だが、上野御徒町駅まで徒歩約6分で移動すれば、元地点を07:46ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "tokyo23-003560",
@@ -3921,7 +4107,21 @@
       "duration": 33,
       "passengers": 18891,
       "passengerYear": 2024,
-      "passengerRank": 734
+      "passengerRank": 734,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:39発だが、徒歩で新御徒町駅へ移動し、同駅07:50発の収録済み経路を使うと、元地点を07:42まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "新御徒町",
+        "accessMode": "徒歩",
+        "walkMinutes": 8,
+        "walkDistanceKm": 0.572,
+        "departureFromPoint": "07:42",
+        "departure": "07:50",
+        "gainMinutes": 3,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:39発だが、新御徒町駅まで徒歩約8分で移動すれば、元地点を07:42ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "tokyo23-003571",
@@ -4131,7 +4331,21 @@
       "duration": 47,
       "passengers": null,
       "passengerYear": null,
-      "passengerRank": null
+      "passengerRank": null,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:25発だが、徒歩で押上駅へ移動し、同駅07:37発の収録済み経路を使うと、元地点を07:30まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "押上",
+        "accessMode": "徒歩",
+        "walkMinutes": 7,
+        "walkDistanceKm": 0.521,
+        "departureFromPoint": "07:30",
+        "departure": "07:37",
+        "gainMinutes": 5,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:25発だが、押上駅まで徒歩約7分で移動すれば、元地点を07:30ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "tokyo23-003646-003654",
@@ -4509,7 +4723,21 @@
       "duration": 50,
       "passengers": 16426,
       "passengerYear": 2024,
-      "passengerRank": 784
+      "passengerRank": 784,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:10発だが、徒歩で京急蒲田駅へ移動し、同駅07:24発の収録済み経路を使うと、元地点を07:13まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "京急蒲田",
+        "accessMode": "徒歩",
+        "walkMinutes": 11,
+        "walkDistanceKm": 0.771,
+        "departureFromPoint": "07:13",
+        "departure": "07:24",
+        "gainMinutes": 3,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:10発だが、京急蒲田駅まで徒歩約11分で移動すれば、元地点を07:13ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "tokyo23-004317",
@@ -4859,7 +5087,21 @@
       "duration": 21,
       "passengers": 65361,
       "passengerYear": 2024,
-      "passengerRank": 242
+      "passengerRank": 242,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:56発だが、徒歩で後楽園駅へ移動し、同駅08:04発の収録済み経路を使うと、元地点を07:58まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "後楽園",
+        "accessMode": "徒歩",
+        "walkMinutes": 6,
+        "walkDistanceKm": 0.376,
+        "departureFromPoint": "07:58",
+        "departure": "08:04",
+        "gainMinutes": 2,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:56発だが、後楽園駅まで徒歩約6分で移動すれば、元地点を07:58ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "tokyo23-003546",
@@ -4957,7 +5199,21 @@
       "duration": 27,
       "passengers": 37913,
       "passengerYear": 2024,
-      "passengerRank": 431
+      "passengerRank": 431,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:47発だが、徒歩で本郷三丁目駅へ移動し、同駅08:02発の収録済み経路を使うと、元地点を07:48まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "本郷三丁目",
+        "accessMode": "徒歩",
+        "walkMinutes": 14,
+        "walkDistanceKm": 0.975,
+        "departureFromPoint": "07:48",
+        "departure": "08:02",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:47発だが、本郷三丁目駅まで徒歩約14分で移動すれば、元地点を07:48ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "tokyo23-003461",
@@ -5055,7 +5311,21 @@
       "duration": 32,
       "passengers": 51544,
       "passengerYear": 2024,
-      "passengerRank": 309
+      "passengerRank": 309,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:44発だが、徒歩で新大久保駅へ移動し、同駅07:53発の収録済み経路を使うと、元地点を07:46まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "新大久保",
+        "accessMode": "徒歩",
+        "walkMinutes": 7,
+        "walkDistanceKm": 0.468,
+        "departureFromPoint": "07:46",
+        "departure": "07:53",
+        "gainMinutes": 2,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:44発だが、新大久保駅まで徒歩約7分で移動すれば、元地点を07:46ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "tokyo23-003689",
@@ -5097,7 +5367,21 @@
       "duration": 31,
       "passengers": 36754,
       "passengerYear": 2024,
-      "passengerRank": 447
+      "passengerRank": 447,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:45発だが、徒歩で新宿駅へ移動し、同駅07:51発の収録済み経路を使うと、元地点を07:46まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "新宿",
+        "accessMode": "徒歩",
+        "walkMinutes": 5,
+        "walkDistanceKm": 0.37,
+        "departureFromPoint": "07:46",
+        "departure": "07:51",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:45発だが、新宿駅まで徒歩約5分で移動すれば、元地点を07:46ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "tokyo23-003570",
@@ -5223,7 +5507,21 @@
       "duration": 38,
       "passengers": 27118,
       "passengerYear": 2024,
-      "passengerRank": 594
+      "passengerRank": 594,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:36発だが、徒歩で東長崎駅へ移動し、同駅07:54発の収録済み経路を使うと、元地点を07:42まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "東長崎",
+        "accessMode": "徒歩",
+        "walkMinutes": 12,
+        "walkDistanceKm": 0.866,
+        "departureFromPoint": "07:42",
+        "departure": "07:54",
+        "gainMinutes": 6,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:36発だが、東長崎駅まで徒歩約12分で移動すれば、元地点を07:42ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "tokyo23-003662",
@@ -6371,7 +6669,21 @@
       "duration": 32,
       "passengers": 3926,
       "passengerYear": 2024,
-      "passengerRank": 1143
+      "passengerRank": 1143,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:42発だが、徒歩で代々木駅へ移動し、同駅07:49発の収録済み経路を使うと、元地点を07:43まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "代々木",
+        "accessMode": "徒歩",
+        "walkMinutes": 6,
+        "walkDistanceKm": 0.42,
+        "departureFromPoint": "07:43",
+        "departure": "07:49",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:42発だが、代々木駅まで徒歩約6分で移動すれば、元地点を07:43ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "tokyo23-003778",
@@ -6637,7 +6949,21 @@
       "duration": 36,
       "passengers": 45681,
       "passengerYear": 2024,
-      "passengerRank": 358
+      "passengerRank": 358,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:38発だが、徒歩で新橋駅へ移動し、同駅07:46発の収録済み経路を使うと、元地点を07:41まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "新橋",
+        "accessMode": "徒歩",
+        "walkMinutes": 5,
+        "walkDistanceKm": 0.356,
+        "departureFromPoint": "07:41",
+        "departure": "07:46",
+        "gainMinutes": 3,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:38発だが、新橋駅まで徒歩約5分で移動すれば、元地点を07:41ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "tokyo23-004042",
@@ -6819,7 +7145,21 @@
       "duration": 28,
       "passengers": 89214,
       "passengerYear": 2024,
-      "passengerRank": 176
+      "passengerRank": 176,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:48発だが、徒歩で永田町駅へ移動し、同駅07:57発の収録済み経路を使うと、元地点を07:50まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "永田町",
+        "accessMode": "徒歩",
+        "walkMinutes": 7,
+        "walkDistanceKm": 0.481,
+        "departureFromPoint": "07:50",
+        "departure": "07:57",
+        "gainMinutes": 2,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:48発だが、永田町駅まで徒歩約7分で移動すれば、元地点を07:50ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "tokyo23-003954",
@@ -7029,7 +7369,21 @@
       "duration": 35,
       "passengers": 28904,
       "passengerYear": 2024,
-      "passengerRank": 557
+      "passengerRank": 557,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:39発だが、徒歩で江古田駅へ移動し、同駅07:51発の収録済み経路を使うと、元地点を07:41まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "江古田",
+        "accessMode": "徒歩",
+        "walkMinutes": 10,
+        "walkDistanceKm": 0.699,
+        "departureFromPoint": "07:41",
+        "departure": "07:51",
+        "gainMinutes": 2,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:39発だが、江古田駅まで徒歩約10分で移動すれば、元地点を07:41ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "tokyo23-003321",
@@ -7225,7 +7579,21 @@
       "duration": 48,
       "passengers": 3186,
       "passengerYear": 2024,
-      "passengerRank": 1168
+      "passengerRank": 1168,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:26発だが、徒歩で田端駅へ移動し、同駅07:49発の収録済み経路を使うと、元地点を07:27まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "田端",
+        "accessMode": "徒歩",
+        "walkMinutes": 22,
+        "walkDistanceKm": 1.631,
+        "departureFromPoint": "07:27",
+        "departure": "07:49",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:26発だが、田端駅まで徒歩約22分で移動すれば、元地点を07:27ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "tokyo23-003339",
@@ -7253,7 +7621,21 @@
       "duration": 44,
       "passengers": 1563,
       "passengerYear": 2024,
-      "passengerRank": 1225
+      "passengerRank": 1225,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:30発だが、徒歩で町屋駅へ移動し、同駅07:42発の収録済み経路を使うと、元地点を07:31まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "町屋",
+        "accessMode": "徒歩",
+        "walkMinutes": 11,
+        "walkDistanceKm": 0.776,
+        "departureFromPoint": "07:31",
+        "departure": "07:42",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:30発だが、町屋駅まで徒歩約11分で移動すれば、元地点を07:31ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "tokyo23-003302",
@@ -7281,7 +7663,21 @@
       "duration": 43,
       "passengers": 775,
       "passengerYear": 2024,
-      "passengerRank": 1241
+      "passengerRank": 1241,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:31発だが、徒歩で町屋駅へ移動し、同駅07:42発の収録済み経路を使うと、元地点を07:35まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "町屋",
+        "accessMode": "徒歩",
+        "walkMinutes": 7,
+        "walkDistanceKm": 0.459,
+        "departureFromPoint": "07:35",
+        "departure": "07:42",
+        "gainMinutes": 4,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:31発だが、町屋駅まで徒歩約7分で移動すれば、元地点を07:35ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "tokyo23-003299",
@@ -7295,7 +7691,21 @@
       "duration": 36,
       "passengers": 8555,
       "passengerYear": 2024,
-      "passengerRank": 1000
+      "passengerRank": 1000,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:38発だが、徒歩で町屋駅へ移動し、同駅07:42発の収録済み経路を使うと、元地点を07:40まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "町屋",
+        "accessMode": "徒歩",
+        "walkMinutes": 2,
+        "walkDistanceKm": 0.11,
+        "departureFromPoint": "07:40",
+        "departure": "07:42",
+        "gainMinutes": 2,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:38発だが、町屋駅まで徒歩約2分で移動すれば、元地点を07:40ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "tokyo23-003357",
@@ -7323,7 +7733,21 @@
       "duration": 43,
       "passengers": 473,
       "passengerYear": 2024,
-      "passengerRank": 1251
+      "passengerRank": 1251,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:31発だが、徒歩で町屋駅へ移動し、同駅07:42発の収録済み経路を使うと、元地点を07:36まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "町屋",
+        "accessMode": "徒歩",
+        "walkMinutes": 6,
+        "walkDistanceKm": 0.379,
+        "departureFromPoint": "07:36",
+        "departure": "07:42",
+        "gainMinutes": 5,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:31発だが、町屋駅まで徒歩約6分で移動すれば、元地点を07:36ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "tokyo23-003322",
@@ -7337,7 +7761,21 @@
       "duration": 44,
       "passengers": 845,
       "passengerYear": 2024,
-      "passengerRank": 1238
+      "passengerRank": 1238,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:30発だが、徒歩で町屋駅へ移動し、同駅07:42発の収録済み経路を使うと、元地点を07:32まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "町屋",
+        "accessMode": "徒歩",
+        "walkMinutes": 10,
+        "walkDistanceKm": 0.742,
+        "departureFromPoint": "07:32",
+        "departure": "07:42",
+        "gainMinutes": 2,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:30発だが、町屋駅まで徒歩約10分で移動すれば、元地点を07:32ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "tokyo23-003350",
@@ -7379,7 +7817,21 @@
       "duration": 47,
       "passengers": 2207,
       "passengerYear": 2024,
-      "passengerRank": 1204
+      "passengerRank": 1204,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:27発だが、徒歩で荒川車庫前駅へ移動し、同駅07:36発の収録済み経路を使うと、元地点を07:29まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "荒川車庫前",
+        "accessMode": "徒歩",
+        "walkMinutes": 7,
+        "walkDistanceKm": 0.474,
+        "departureFromPoint": "07:29",
+        "departure": "07:36",
+        "gainMinutes": 2,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:27発だが、荒川車庫前駅まで徒歩約7分で移動すれば、元地点を07:29ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "tokyo23-003274",
@@ -7575,7 +8027,21 @@
       "duration": 18,
       "passengers": 1460,
       "passengerYear": 2024,
-      "passengerRank": 1228
+      "passengerRank": 1228,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:56発だが、徒歩で新大塚駅へ移動し、同駅08:06発の収録済み経路を使うと、元地点を07:58まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "新大塚",
+        "accessMode": "徒歩",
+        "walkMinutes": 8,
+        "walkDistanceKm": 0.529,
+        "departureFromPoint": "07:58",
+        "departure": "08:06",
+        "gainMinutes": 2,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:56発だが、新大塚駅まで徒歩約8分で移動すれば、元地点を07:58ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "tokyo23-003378",
@@ -7687,7 +8153,21 @@
       "duration": 14,
       "passengers": 3743,
       "passengerYear": 2024,
-      "passengerRank": 1149
+      "passengerRank": 1149,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は08:03発だが、徒歩で東池袋駅へ移動し、同駅08:07発の収録済み経路を使うと、元地点を08:04まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "東池袋",
+        "accessMode": "徒歩",
+        "walkMinutes": 3,
+        "walkDistanceKm": 0.214,
+        "departureFromPoint": "08:04",
+        "departure": "08:07",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は08:03発だが、東池袋駅まで徒歩約3分で移動すれば、元地点を08:04ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "tokyo23-003393",
@@ -7757,7 +8237,21 @@
       "duration": 16,
       "passengers": 1067,
       "passengerYear": 2024,
-      "passengerRank": 1234
+      "passengerRank": 1234,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:58発だが、徒歩で東池袋駅へ移動し、同駅08:07発の収録済み経路を使うと、元地点を08:02まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "東池袋",
+        "accessMode": "徒歩",
+        "walkMinutes": 5,
+        "walkDistanceKm": 0.301,
+        "departureFromPoint": "08:02",
+        "departure": "08:07",
+        "gainMinutes": 4,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:58発だが、東池袋駅まで徒歩約5分で移動すれば、元地点を08:02ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "tokyo23-003471",
@@ -7785,7 +8279,21 @@
       "duration": 18,
       "passengers": 2564,
       "passengerYear": 2024,
-      "passengerRank": 1185
+      "passengerRank": 1185,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:56発だが、徒歩で東池袋駅へ移動し、同駅08:07発の収録済み経路を使うと、元地点を07:57まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "東池袋",
+        "accessMode": "徒歩",
+        "walkMinutes": 10,
+        "walkDistanceKm": 0.744,
+        "departureFromPoint": "07:57",
+        "departure": "08:07",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:56発だが、東池袋駅まで徒歩約10分で移動すれば、元地点を07:57ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "tokyo23-003200",
@@ -8219,7 +8727,21 @@
       "duration": 63,
       "passengers": 11912,
       "passengerYear": 2024,
-      "passengerRank": 904
+      "passengerRank": 904,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:11発だが、徒歩で市川駅へ移動し、同駅07:29発の収録済み経路を使うと、元地点を07:12まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "市川",
+        "accessMode": "徒歩",
+        "walkMinutes": 17,
+        "walkDistanceKm": 1.226,
+        "departureFromPoint": "07:12",
+        "departure": "07:29",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:11発だが、市川駅まで徒歩約17分で移動すれば、元地点を07:12ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "n02-002988",
@@ -8275,7 +8797,21 @@
       "duration": 64,
       "passengers": 16949,
       "passengerYear": 2024,
-      "passengerRank": 768
+      "passengerRank": 768,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:12発だが、徒歩で舞浜駅へ移動し、同駅07:31発の収録済み経路を使うと、元地点を07:23まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "舞浜",
+        "accessMode": "徒歩",
+        "walkMinutes": 8,
+        "walkDistanceKm": 0.556,
+        "departureFromPoint": "07:23",
+        "departure": "07:31",
+        "gainMinutes": 11,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:12発だが、舞浜駅まで徒歩約8分で移動すれば、元地点を07:23ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "n02-003409",
@@ -8345,7 +8881,21 @@
       "duration": 62,
       "passengers": 6821,
       "passengerYear": 2024,
-      "passengerRank": 1054
+      "passengerRank": 1054,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:12発だが、徒歩で市川駅へ移動し、同駅07:29発の収録済み経路を使うと、元地点を07:20まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "市川",
+        "accessMode": "徒歩",
+        "walkMinutes": 9,
+        "walkDistanceKm": 0.645,
+        "departureFromPoint": "07:20",
+        "departure": "07:29",
+        "gainMinutes": 8,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:12発だが、市川駅まで徒歩約9分で移動すれば、元地点を07:20ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "n02-004098",
@@ -8723,7 +9273,21 @@
       "duration": 57,
       "passengers": 35135,
       "passengerYear": 2024,
-      "passengerRank": 471
+      "passengerRank": 471,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:17発だが、徒歩で本八幡駅へ移動し、同駅07:25発の収録済み経路を使うと、元地点を07:20まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "本八幡",
+        "accessMode": "徒歩",
+        "walkMinutes": 5,
+        "walkDistanceKm": 0.306,
+        "departureFromPoint": "07:20",
+        "departure": "07:25",
+        "gainMinutes": 3,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:17発だが、本八幡駅まで徒歩約5分で移動すれば、元地点を07:20ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "n02-003978",
@@ -9031,7 +9595,21 @@
       "duration": 62,
       "passengers": 3681,
       "passengerYear": 2024,
-      "passengerRank": 1152
+      "passengerRank": 1152,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:10発だが、徒歩で下総中山駅へ移動し、同駅07:23発の収録済み経路を使うと、元地点を07:14まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "下総中山",
+        "accessMode": "徒歩",
+        "walkMinutes": 9,
+        "walkDistanceKm": 0.646,
+        "departureFromPoint": "07:14",
+        "departure": "07:23",
+        "gainMinutes": 4,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:10発だが、下総中山駅まで徒歩約9分で移動すれば、元地点を07:14ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "n02-003937",
@@ -9437,7 +10015,21 @@
       "duration": 64,
       "passengers": 10702,
       "passengerYear": 2024,
-      "passengerRank": 930
+      "passengerRank": 930,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:10発だが、徒歩で西船橋駅へ移動し、同駅07:20発の収録済み経路を使うと、元地点を07:11まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "西船橋",
+        "accessMode": "徒歩",
+        "walkMinutes": 9,
+        "walkDistanceKm": 0.64,
+        "departureFromPoint": "07:11",
+        "departure": "07:20",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:10発だが、西船橋駅まで徒歩約9分で移動すれば、元地点を07:11ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "n02-004424",
@@ -9451,7 +10043,21 @@
       "duration": 55,
       "passengers": 123389,
       "passengerYear": 2024,
-      "passengerRank": 121
+      "passengerRank": 121,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:22発だが、徒歩で川崎駅へ移動し、同駅07:31発の収録済み経路を使うと、元地点を07:23まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "川崎",
+        "accessMode": "徒歩",
+        "walkMinutes": 8,
+        "walkDistanceKm": 0.55,
+        "departureFromPoint": "07:23",
+        "departure": "07:31",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:22発だが、川崎駅まで徒歩約8分で移動すれば、元地点を07:23ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "n02-003547",
@@ -9563,7 +10169,21 @@
       "duration": 60,
       "passengers": 4114,
       "passengerYear": 2024,
-      "passengerRank": 1135
+      "passengerRank": 1135,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:12発だが、徒歩で新松戸駅へ移動し、同駅07:17発の収録済み経路を使うと、元地点を07:13まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "新松戸",
+        "accessMode": "徒歩",
+        "walkMinutes": 4,
+        "walkDistanceKm": 0.275,
+        "departureFromPoint": "07:13",
+        "departure": "07:17",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:12発だが、新松戸駅まで徒歩約4分で移動すれば、元地点を07:13ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "n02-002920",
@@ -10081,7 +10701,21 @@
       "duration": 72,
       "passengers": 2442,
       "passengerYear": 2024,
-      "passengerRank": 1191
+      "passengerRank": 1191,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は06:50発だが、徒歩で府中駅へ移動し、同駅07:04発の収録済み経路を使うと、元地点を06:52まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "府中",
+        "accessMode": "徒歩",
+        "walkMinutes": 12,
+        "walkDistanceKm": 0.833,
+        "departureFromPoint": "06:52",
+        "departure": "07:04",
+        "gainMinutes": 2,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は06:50発だが、府中駅まで徒歩約12分で移動すれば、元地点を06:52ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "n02-003944",
@@ -10151,7 +10785,21 @@
       "duration": 74,
       "passengers": 7985,
       "passengerYear": 2024,
-      "passengerRank": 1014
+      "passengerRank": 1014,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:03発だが、徒歩で新小平駅へ移動し、同駅07:13発の収録済み経路を使うと、元地点を07:04まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "新小平",
+        "accessMode": "徒歩",
+        "walkMinutes": 9,
+        "walkDistanceKm": 0.655,
+        "departureFromPoint": "07:04",
+        "departure": "07:13",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:03発だが、新小平駅まで徒歩約9分で移動すれば、元地点を07:04ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "n02-003609",
@@ -10473,7 +11121,21 @@
       "duration": 60,
       "passengers": 6368,
       "passengerYear": 2024,
-      "passengerRank": 1064
+      "passengerRank": 1064,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:00発だが、徒歩で久米川駅へ移動し、同駅07:18発の収録済み経路を使うと、元地点を07:04まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "久米川",
+        "accessMode": "徒歩",
+        "walkMinutes": 14,
+        "walkDistanceKm": 1.019,
+        "departureFromPoint": "07:04",
+        "departure": "07:18",
+        "gainMinutes": 4,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:00発だが、久米川駅まで徒歩約14分で移動すれば、元地点を07:04ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "n02-004517",
@@ -11397,7 +12059,21 @@
       "duration": 62,
       "passengers": 7292,
       "passengerYear": 2024,
-      "passengerRank": 1039
+      "passengerRank": 1039,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:15発だが、徒歩で新子安駅へ移動し、同駅07:19発の収録済み経路を使うと、元地点を07:16まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "新子安",
+        "accessMode": "徒歩",
+        "walkMinutes": 3,
+        "walkDistanceKm": 0.191,
+        "departureFromPoint": "07:16",
+        "departure": "07:19",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:15発だが、新子安駅まで徒歩約3分で移動すれば、元地点を07:16ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "n02-004562",
@@ -11439,7 +12115,21 @@
       "duration": 61,
       "passengers": 60382,
       "passengerYear": 2024,
-      "passengerRank": 257
+      "passengerRank": 257,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:11発だが、徒歩で津田沼駅へ移動し、同駅07:18発の収録済み経路を使うと、元地点を07:12まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "津田沼",
+        "accessMode": "徒歩",
+        "walkMinutes": 6,
+        "walkDistanceKm": 0.443,
+        "departureFromPoint": "07:12",
+        "departure": "07:18",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:11発だが、津田沼駅まで徒歩約6分で移動すれば、元地点を07:12ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "n02-003077",
@@ -11593,18 +12283,20 @@
       "duration": 82,
       "departureDisplay": "前日22:31",
       "previousDay": true,
-      "note": "Yahoo!の駅直接検索では前日22:31発。ただし多摩湖駅まで徒歩9分で移動し、同駅06:55発→08:08学校着で当日通学可能なため、この駅の直接検索値はIDW補間から除外。",
+      "note": "IDW補間対象外。直接乗車は前日22:31発だが、多摩湖駅へ徒歩で移動すれば当日朝に08:18までに到着可能。",
       "passengers": 1472,
       "passengerYear": 2024,
       "passengerRank": 1227,
       "excludeFromIdw": true,
-      "idwExclusionReason": "Yahoo!乗換案内の駅直接検索では前日22:31発だが、多摩湖駅まで徒歩9分で移動でき、多摩湖駅から当日朝に08:18までに到着可能なため、駅直接検索値は周辺の時間距離を代表しない。",
+      "idwExclusionReason": "駅から直接乗車する収録経路は前日22:31発だが、多摩湖駅へ徒歩で移動して当日朝の経路を利用すれば08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
       "alternateAccess": {
         "station": "多摩湖",
         "walkMinutes": 9,
         "departure": "06:55",
         "arrival": "08:08",
-        "searchDate": "2026-08-28"
+        "searchDate": "2026-08-28",
+        "accessMode": "徒歩",
+        "routingBasis": "実経路確認"
       }
     },
     {
@@ -12165,7 +12857,21 @@
       "duration": 66,
       "passengers": 15951,
       "passengerYear": 2024,
-      "passengerRank": 796
+      "passengerRank": 796,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:06発だが、徒歩で幕張本郷駅へ移動し、同駅07:08発の収録済み経路を使うと、元地点を07:07まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "幕張本郷",
+        "accessMode": "徒歩",
+        "walkMinutes": 1,
+        "walkDistanceKm": 0.061,
+        "departureFromPoint": "07:07",
+        "departure": "07:08",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:06発だが、幕張本郷駅まで徒歩約1分で移動すれば、元地点を07:07ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "n02-003815",
@@ -12753,7 +13459,21 @@
       "duration": 75,
       "passengers": 7898,
       "passengerYear": 2024,
-      "passengerRank": 1016
+      "passengerRank": 1016,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は06:57発だが、徒歩で幕張駅へ移動し、同駅07:05発の収録済み経路を使うと、元地点を06:58まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "幕張",
+        "accessMode": "徒歩",
+        "walkMinutes": 7,
+        "walkDistanceKm": 0.504,
+        "departureFromPoint": "06:58",
+        "departure": "07:05",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は06:57発だが、幕張駅まで徒歩約7分で移動すれば、元地点を06:58ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "n02-003135",
@@ -13873,7 +14593,21 @@
       "duration": 79,
       "passengers": 7483,
       "passengerYear": 2024,
-      "passengerRank": 1031
+      "passengerRank": 1031,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は06:53発だが、徒歩で稲毛駅へ移動し、同駅07:05発の収録済み経路を使うと、元地点を06:54まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "稲毛",
+        "accessMode": "徒歩",
+        "walkMinutes": 11,
+        "walkDistanceKm": 0.797,
+        "departureFromPoint": "06:54",
+        "departure": "07:05",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は06:53発だが、稲毛駅まで徒歩約11分で移動すれば、元地点を06:54ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "n02-003507",
@@ -14475,7 +15209,21 @@
       "duration": 83,
       "passengers": 3279,
       "passengerYear": 2024,
-      "passengerRank": 1163
+      "passengerRank": 1163,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は06:49発だが、徒歩で千葉駅へ移動し、同駅07:07発の収録済み経路を使うと、元地点を06:50まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "千葉",
+        "accessMode": "徒歩",
+        "walkMinutes": 17,
+        "walkDistanceKm": 1.249,
+        "departureFromPoint": "06:50",
+        "departure": "07:07",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は06:49発だが、千葉駅まで徒歩約17分で移動すれば、元地点を06:50ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "n02-004615",
@@ -14615,7 +15363,21 @@
       "duration": 83,
       "passengers": null,
       "passengerYear": null,
-      "passengerRank": null
+      "passengerRank": null,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は06:34発だが、徒歩で牛浜駅へ移動し、同駅06:51発の収録済み経路を使うと、元地点を06:39まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "牛浜",
+        "accessMode": "徒歩",
+        "walkMinutes": 12,
+        "walkDistanceKm": 0.878,
+        "departureFromPoint": "06:39",
+        "departure": "06:51",
+        "gainMinutes": 5,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は06:34発だが、牛浜駅まで徒歩約12分で移動すれば、元地点を06:39ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "n02-004549",
@@ -14825,7 +15587,21 @@
       "duration": 81,
       "passengers": 2167,
       "passengerYear": 2024,
-      "passengerRank": 1206
+      "passengerRank": 1206,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は06:51発だが、徒歩で千葉駅へ移動し、同駅07:07発の収録済み経路を使うと、元地点を06:59まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "千葉",
+        "accessMode": "徒歩",
+        "walkMinutes": 8,
+        "walkDistanceKm": 0.583,
+        "departureFromPoint": "06:59",
+        "departure": "07:07",
+        "gainMinutes": 8,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は06:51発だが、千葉駅まで徒歩約8分で移動すれば、元地点を06:59ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "n02-003028",
@@ -15021,7 +15797,21 @@
       "duration": 69,
       "passengers": 31702,
       "passengerYear": 2024,
-      "passengerRank": 511
+      "passengerRank": 511,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は07:01発だが、徒歩で千葉駅へ移動し、同駅07:07発の収録済み経路を使うと、元地点を07:04まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "千葉",
+        "accessMode": "徒歩",
+        "walkMinutes": 3,
+        "walkDistanceKm": 0.157,
+        "departureFromPoint": "07:04",
+        "departure": "07:07",
+        "gainMinutes": 3,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は07:01発だが、千葉駅まで徒歩約3分で移動すれば、元地点を07:04ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "n02-004028",
@@ -15091,7 +15881,21 @@
       "duration": 79,
       "passengers": 596,
       "passengerYear": 2024,
-      "passengerRank": 1245
+      "passengerRank": 1245,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は06:53発だが、徒歩で千葉駅へ移動し、同駅07:07発の収録済み経路を使うと、元地点を06:58まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "千葉",
+        "accessMode": "徒歩",
+        "walkMinutes": 9,
+        "walkDistanceKm": 0.672,
+        "departureFromPoint": "06:58",
+        "departure": "07:07",
+        "gainMinutes": 5,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は06:53発だが、千葉駅まで徒歩約9分で移動すれば、元地点を06:58ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "n02-002852",
@@ -15119,7 +15923,21 @@
       "duration": 76,
       "passengers": 20353,
       "passengerYear": 2024,
-      "passengerRank": 710
+      "passengerRank": 710,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は06:54発だが、徒歩で千葉駅へ移動し、同駅07:07発の収録済み経路を使うと、元地点を06:55まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "千葉",
+        "accessMode": "徒歩",
+        "walkMinutes": 12,
+        "walkDistanceKm": 0.87,
+        "departureFromPoint": "06:55",
+        "departure": "07:07",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は06:54発だが、千葉駅まで徒歩約12分で移動すれば、元地点を06:55ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "n02-004151",
@@ -15147,7 +15965,21 @@
       "duration": 80,
       "passengers": 2355,
       "passengerYear": 2024,
-      "passengerRank": 1197
+      "passengerRank": 1197,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は06:52発だが、徒歩で千葉駅へ移動し、同駅07:07発の収録済み経路を使うと、元地点を06:55まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "千葉",
+        "accessMode": "徒歩",
+        "walkMinutes": 12,
+        "walkDistanceKm": 0.884,
+        "departureFromPoint": "06:55",
+        "departure": "07:07",
+        "gainMinutes": 3,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は06:52発だが、千葉駅まで徒歩約12分で移動すれば、元地点を06:55ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "n02-002782",
@@ -16505,7 +17337,21 @@
       "duration": 88,
       "passengers": 7278,
       "passengerYear": 2024,
-      "passengerRank": 1040
+      "passengerRank": 1040,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は06:44発だが、徒歩で下飯田駅へ移動し、同駅06:56発の収録済み経路を使うと、元地点を06:49まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "下飯田",
+        "accessMode": "徒歩",
+        "walkMinutes": 7,
+        "walkDistanceKm": 0.484,
+        "departureFromPoint": "06:49",
+        "departure": "06:56",
+        "gainMinutes": 5,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は06:44発だが、下飯田駅まで徒歩約7分で移動すれば、元地点を06:49ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "n02-002860",
@@ -16953,7 +17799,21 @@
       "duration": 101,
       "passengers": 1746,
       "passengerYear": 2024,
-      "passengerRank": 1215
+      "passengerRank": 1215,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は06:23発だが、徒歩で高尾山口駅へ移動し、同駅06:32発の収録済み経路を使うと、元地点を06:26まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "高尾山口",
+        "accessMode": "徒歩",
+        "walkMinutes": 6,
+        "walkDistanceKm": 0.383,
+        "departureFromPoint": "06:26",
+        "departure": "06:32",
+        "gainMinutes": 3,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は06:23発だが、高尾山口駅まで徒歩約6分で移動すれば、元地点を06:26ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "n02-004860",
@@ -17135,12 +17995,12 @@
       "duration": 111,
       "departureDisplay": "前日21:15",
       "previousDay": true,
-      "note": "Yahoo!の駅直接検索では前日21:15発。ただし高尾山口駅まで徒歩42分で移動し、同駅06:26発→07:55学校着で当日通学可能なため、この駅の直接検索値はIDW補間から除外。",
+      "note": "IDW補間対象外。直接乗車は前日21:15発だが、高尾山口駅まで徒歩で下山すれば当日朝に08:18までに到着可能。",
       "passengers": 1746,
       "passengerYear": 2024,
       "passengerRank": 1216,
       "excludeFromIdw": true,
-      "idwExclusionReason": "Yahoo!乗換案内の駅直接検索では前日21:15発だが、高尾山駅地点から徒歩で高尾山口駅へ移動し、当日06:26発の鉄道で07:55までに学校へ到着可能なため、駅直接検索値はその地点からの当日到達可能性を代表しない。",
+      "idwExclusionReason": "駅から直接乗車する収録経路は前日21:15発だが、高尾山口駅まで徒歩で下山し当日朝の経路を利用すれば08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
       "alternateAccess": {
         "station": "高尾山口",
         "accessMode": "徒歩",
@@ -17148,7 +18008,8 @@
         "departureFromPoint": "05:44",
         "departure": "06:26",
         "arrival": "07:55",
-        "searchDate": "2026-08-28"
+        "searchDate": "2026-08-28",
+        "routingBasis": "実経路確認"
       }
     },
     {
@@ -17499,7 +18360,21 @@
       "duration": 94,
       "passengers": 1392,
       "passengerYear": 2024,
-      "passengerRank": 1230
+      "passengerRank": 1230,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は05:36発だが、徒歩で東毛呂駅へ移動し、同駅06:42発の収録済み経路を使うと、元地点を06:23まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "東毛呂",
+        "accessMode": "徒歩",
+        "walkMinutes": 19,
+        "walkDistanceKm": 1.349,
+        "departureFromPoint": "06:23",
+        "departure": "06:42",
+        "gainMinutes": 47,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は05:36発だが、東毛呂駅まで徒歩約19分で移動すれば、元地点を06:23ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "n02-002724",
@@ -17947,7 +18822,21 @@
       "duration": 83,
       "passengers": 1233,
       "passengerYear": 2024,
-      "passengerRank": 1231
+      "passengerRank": 1231,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は06:40発だが、徒歩で鎌倉駅へ移動し、同駅06:54発の収録済み経路を使うと、元地点を06:42まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "鎌倉",
+        "accessMode": "徒歩",
+        "walkMinutes": 12,
+        "walkDistanceKm": 0.894,
+        "departureFromPoint": "06:42",
+        "departure": "06:54",
+        "gainMinutes": 2,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は06:40発だが、鎌倉駅まで徒歩約12分で移動すれば、元地点を06:42ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "n02-005133",
@@ -18045,7 +18934,21 @@
       "duration": 83,
       "passengers": 699,
       "passengerYear": 2024,
-      "passengerRank": 1243
+      "passengerRank": 1243,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は06:40発だが、徒歩で藤沢駅へ移動し、同駅06:58発の収録済み経路を使うと、元地点を06:49まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "藤沢",
+        "accessMode": "徒歩",
+        "walkMinutes": 9,
+        "walkDistanceKm": 0.646,
+        "departureFromPoint": "06:49",
+        "departure": "06:58",
+        "gainMinutes": 9,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は06:40発だが、藤沢駅まで徒歩約9分で移動すれば、元地点を06:49ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "n02-002694",
@@ -18199,7 +19102,21 @@
       "duration": 85,
       "passengers": 2720,
       "passengerYear": 2024,
-      "passengerRank": 1179
+      "passengerRank": 1179,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅から直接乗車する収録経路は06:38発だが、徒歩で藤沢駅へ移動し、同駅06:58発の収録済み経路を使うと、元地点を06:41まで遅く出ても08:18までに到着できるため、直接検索値は地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "藤沢",
+        "accessMode": "徒歩",
+        "walkMinutes": 17,
+        "walkDistanceKm": 1.243,
+        "departureFromPoint": "06:41",
+        "departure": "06:58",
+        "gainMinutes": 3,
+        "searchDate": "2026-08-28",
+        "routingBasis": "OpenStreetMap歩行経路で監査"
+      },
+      "note": "IDW補間対象外。直接乗車は06:38発だが、藤沢駅まで徒歩約17分で移動すれば、元地点を06:41ごろに出ても08:18までに到着可能。"
     },
     {
       "id": "n02-005053",
