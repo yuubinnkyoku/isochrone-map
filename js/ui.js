@@ -163,7 +163,7 @@
         if (r.contourMin < denseMin) {
           var early = document.createElement('div');
           early.className = 'legend-item';
-          early.innerHTML = '<span class="legend-swatch thick" style="background:' + colorToCSS(minutesToColor(r.contourMin)) + '"></span><span class="legend-time">06:30以前（1時間刻み・前日含む）</span>';
+          early.innerHTML = '<span class="legend-swatch thick" style="background:' + colorToCSS(minutesToColor(r.contourMin)) + '"></span><span class="legend-time">06:30以前（1時間刻み）</span>';
           lines.appendChild(early);
         }
         for (var m = Math.ceil(denseMin / 10) * 10; m <= r.contourMax; m += 10) {

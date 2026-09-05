@@ -2,13 +2,14 @@
   "version": 1,
   "algorithm": "IDW on Web Mercator coordinates",
   "idwPower": 2.5,
-  "stationCount": 1317,
+  "stationCount": 1316,
   "sourceStationCount": 1318,
-  "excludedStationCount": 1,
+  "excludedStationCount": 2,
   "excludedStationIds": [
-    "n02-003192"
+    "n02-003192",
+    "n02-004084"
   ],
-  "stationDataSha256": "38f62db92dddc49aa6eee7f0e5a8607469231ed5fcefc874ba911b95e764dfe5",
+  "stationDataSha256": "c58ba24ca31e44692934180fd682c3c9db7e53e3c22c628cf50cd34503fd2108",
   "rows": 2069,
   "cols": 2289,
   "north": 36.737,
