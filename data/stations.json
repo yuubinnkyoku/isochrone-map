@@ -17,6 +17,13 @@
       "source": "国土数値情報 鉄道データ N02-25",
       "stationGroups": 1322,
       "complete": true
+    },
+    "idwExclusionPolicy": {
+      "walkMinutes": 15,
+      "rule": "Yahoo!乗換案内の駅直接検索で当日08:18までに到着できず、徒歩15分以内の別駅から当日08:18までに到着できる場合、その駅の直接検索値をIDW補間から除外し、駅マーカーには理由を明記する。",
+      "excludedStationIds": [
+        "n02-003192"
+      ]
     }
   },
   "stations": [
@@ -11586,10 +11593,19 @@
       "duration": 82,
       "departureDisplay": "前日22:31",
       "previousDay": true,
-      "note": "当日朝の始発では08:18までに到着できないため、前日22:31発として補間・等時線に反映（06:30以前は同系色で表示）",
+      "note": "Yahoo!の駅直接検索では前日22:31発。ただし多摩湖駅まで徒歩9分で移動し、同駅06:55発→08:08学校着で当日通学可能なため、この駅の直接検索値はIDW補間から除外。",
       "passengers": 1472,
       "passengerYear": 2024,
-      "passengerRank": 1227
+      "passengerRank": 1227,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "Yahoo!乗換案内の駅直接検索では前日22:31発だが、多摩湖駅まで徒歩9分で移動でき、多摩湖駅から当日朝に08:18までに到着可能なため、駅直接検索値は周辺の時間距離を代表しない。",
+      "alternateAccess": {
+        "station": "多摩湖",
+        "walkMinutes": 9,
+        "departure": "06:55",
+        "arrival": "08:08",
+        "searchDate": "2026-08-28"
+      }
     },
     {
       "id": "n02-004554",

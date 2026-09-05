@@ -64,7 +64,9 @@ if (!isMainThread) {
   const stationsPath = process.argv[2] || `${root}/data/stations.json`;
   const outputBase = process.argv[3] || `${root}/data/idw-grid`;
   const doc = JSON.parse(fs.readFileSync(stationsPath, 'utf8'));
-  const stations = doc.stations;
+  const sourceStations = doc.stations;
+  const stations = sourceStations.filter((s) => !s.excludeFromIdw);
+  const excludedStations = sourceStations.filter((s) => s.excludeFromIdw);
   const power = DEFAULT_POWER;
 
   const minLat = Math.min(...stations.map((s) => s.lat));
@@ -81,7 +83,7 @@ if (!isMainThread) {
   const stationBytes = fs.readFileSync(stationsPath);
   const stationSha256 = crypto.createHash('sha256').update(stationBytes).digest('hex');
   const workerCount = Math.max(1, Math.min(os.availableParallelism?.() || os.cpus().length || 1, 8, rows));
-  console.log(`stations=${stations.length} rows=${rows} cols=${cols} points=${(rows * cols).toLocaleString()} workers=${workerCount}`);
+  console.log(`stations=${stations.length}/${sourceStations.length} IDW/source excluded=${excludedStations.length} rows=${rows} cols=${cols} points=${(rows * cols).toLocaleString()} workers=${workerCount}`);
   console.log(`bounds=${south},${west} .. ${north},${east} step=${STEP_DEG}`);
 
   const chunks = [];
@@ -115,6 +117,9 @@ if (!isMainThread) {
     algorithm: 'IDW on Web Mercator coordinates',
     idwPower: power,
     stationCount: stations.length,
+    sourceStationCount: sourceStations.length,
+    excludedStationCount: excludedStations.length,
+    excludedStationIds: excludedStations.map((s) => s.id),
     stationDataSha256: stationSha256,
     rows,
     cols,
