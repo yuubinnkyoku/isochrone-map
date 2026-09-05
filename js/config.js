@@ -10,9 +10,9 @@
     defaultZoom: 11,
 
     // stations.json cache-buster. Bump when station data changes.
-    dataVersion: 14,
+    dataVersion: 15,
     // Precomputed IDW grid cache-buster.
-    gridVersion: 3,
+    gridVersion: 4,
 
     // 目的地
     destination: {
