@@ -32,6 +32,7 @@
         gradientEnabled: CONFIG.defaultGradientEnabled,
         labelsEnabled: CONFIG.defaultLabelsEnabled,
         legendEnabled: CONFIG.defaultLegendEnabled,
+        excludedStationMode: CONFIG.defaultExcludedStationMode || 'hollow',
         radiusRingsEnabled: CONFIG.destinationRings.enabledDefault
       };
     },
@@ -44,6 +45,9 @@
         Object.keys(defaults).forEach(function (k) {
           if (!(k in parsed)) parsed[k] = defaults[k];
         });
+        if (['highlight', 'hollow', 'hidden'].indexOf(parsed.excludedStationMode) === -1) {
+          parsed.excludedStationMode = defaults.excludedStationMode;
+        }
         return parsed;
       } catch (e) { return defaults; }
     },
@@ -65,6 +69,7 @@
       document.getElementById('toggle-contour').checked = s.contourEnabled;
       document.getElementById('toggle-gradient').checked = s.gradientEnabled;
       document.getElementById('toggle-labels').checked = s.labelsEnabled;
+      document.getElementById('select-excluded-stations').value = s.excludedStationMode || 'hollow';
       document.getElementById('toggle-legend').checked = s.legendEnabled;
       document.getElementById('legend').style.display = s.legendEnabled ? '' : 'none';
       document.getElementById('toggle-radius-rings').checked = s.radiusRingsEnabled;
@@ -101,6 +106,11 @@
       });
       bind('toggle-gradient', 'change', function () { self._settings.gradientEnabled = this.checked; self._buildLegend(); self._commit('gradient', this.checked); });
       bind('toggle-labels', 'change', function () { self._settings.labelsEnabled = this.checked; self._commit('labels', this.checked); });
+      bind('select-excluded-stations', 'change', function () {
+        self._settings.excludedStationMode = this.value;
+        self._buildLegend();
+        self._commit('excludedStationMode', this.value);
+      });
       bind('toggle-legend', 'change', function () {
         self._settings.legendEnabled = this.checked;
         document.getElementById('legend').style.display = this.checked ? '' : 'none';
@@ -150,6 +160,7 @@
       var title = document.getElementById('legend-title');
       var bar = document.getElementById('legend-grad');
       var labels = document.getElementById('legend-grad-labels');
+      var excluded = document.getElementById('legend-excluded');
 
       title.textContent = s.threeDEnabled ? '出発時刻（3D地形）' :
         (s.contourEnabled && s.gradientEnabled ? '出発時刻（等時線＋グラデーション）' :
@@ -185,6 +196,12 @@
         bar.style.background = 'linear-gradient(90deg,' + stops.join(',') + ')';
         labels.innerHTML = [r.min, 420, 450, 480, r.max].map(function (v) { return '<span>' + minutesToTimeStr(v) + '</span>'; }).join('');
       }
+
+      var showExcluded = !s.threeDEnabled && (s.excludedStationMode || 'hollow') !== 'hidden';
+      excluded.style.display = showExcluded ? 'flex' : 'none';
+      excluded.innerHTML = showExcluded
+        ? '<span class="legend-excluded-symbol">○</span><span class="legend-excluded-text">補間対象外（別経路の方が有利）</span>'
+        : '';
     }
   };
 

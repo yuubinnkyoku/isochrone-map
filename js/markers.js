@@ -11,6 +11,7 @@
     _destMarker: null,
     _destRings: [],
     _labelsEnabled: true,
+    _excludedStationMode: 'hollow',
 
     init: function (map, stations, meta) {
       this._map = map;
@@ -89,19 +90,53 @@
       return getComputedStyle(document.documentElement).getPropertyValue('--marker-stroke').trim() || '#fff';
     },
 
+    _getExcludedMarkerStroke: function () {
+      return getComputedStyle(document.documentElement).getPropertyValue('--excluded-marker-highlight').trim() || '#ff2d55';
+    },
+
+    _applyMarkerStyle: function (item, baseRadius, markerStroke, excludedStroke) {
+      var isExcluded = !!item.data.excludeFromIdw;
+      var mode = this._excludedStationMode;
+      var style = {
+        radius: baseRadius,
+        fillColor: item.timeColor,
+        color: markerStroke,
+        weight: item.isMajor ? 2 : 1.5,
+        opacity: 1,
+        fillOpacity: 0.9
+      };
+
+      if (isExcluded && mode === 'hollow') {
+        style.radius = baseRadius + 1;
+        style.color = item.timeColor;
+        style.weight = 2.5;
+        style.fillOpacity = 0;
+      } else if (isExcluded && mode === 'highlight') {
+        style.radius = baseRadius + 2;
+        style.color = excludedStroke;
+        style.weight = 3;
+        style.fillOpacity = 1;
+      }
+
+      item.marker.setRadius(style.radius);
+      delete style.radius;
+      item.marker.setStyle(style);
+    },
+
     _createStationMarkers: function (stations) {
       var self = this;
       var strokeColor = this._getMarkerStroke();
 
       stations.forEach(function (s) {
         var c = minutesToColor(s.minutes);
+        var timeColor = colorToCSS(c);
         var ts = s.departureDisplay || minutesToTimeStr(s.minutes);
         var travelHtml = s.duration !== undefined ? '<div class="tt-travel">所要 ' + s.duration + '分</div>' : '';
         var isMajor = !!s.major;
 
         var marker = L.circleMarker([s.lat, s.lng], {
           radius: 6,
-          fillColor: colorToCSS(c),
+          fillColor: timeColor,
           color: strokeColor,
           weight: isMajor ? 2 : 1.5,
           opacity: 1,
@@ -109,6 +144,7 @@
         }).addTo(self._map);
 
         var routeHtml = s.route ? '<div class="tt-line">' + s.route + '</div>' : '';
+        var exclusionHtml = s.excludeFromIdw ? '<div class="tt-excluded">○ 補間対象外（別経路の方が有利）</div>' : '';
         var noteHtml = s.note ? '<div class="tt-detail">' + s.note + '</div>' : '';
         var searchDateHtml = s.searchDate ? '<div class="tt-detail">検索日: ' + s.searchDate + '</div>' : '';
         var passengerHtml = Number.isFinite(s.passengers)
@@ -121,7 +157,8 @@
         marker.bindTooltip(
           '<div class="station-tooltip">' +
             '<div class="tt-name">' + s.station + '</div>' +
-            '<div class="tt-time" style="color:' + colorToCSS(c) + '">' + ts + '</div>' +
+            '<div class="tt-time" style="color:' + timeColor + '">' + ts + '</div>' +
+            exclusionHtml +
             travelHtml +
             '<div class="tt-divider"></div>' +
             '<div class="tt-line">' + s.line + '</div>' +
@@ -142,7 +179,7 @@
           interactive: false
         });
 
-        self._markers.push({ marker: marker, label: label, data: s, isMajor: isMajor });
+        self._markers.push({ marker: marker, label: label, data: s, isMajor: isMajor, timeColor: timeColor });
       });
     },
 
@@ -191,15 +228,24 @@
       var collisionMaxZoom = labelConfig.collisionMaxZoom || 14;
       var rankLimit = this._getLabelRankLimit(z);
 
+      var markerStroke = this._getMarkerStroke();
+      var excludedStroke = this._getExcludedMarkerStroke();
       this._markers.forEach(function (item) {
-        var r = item.isMajor ? (z <= 10 ? 5 : z === 11 ? 6 : z <= 13 ? 7 : 8) : (z <= 10 ? 3 : z === 11 ? 4 : z <= 13 ? 5 : 6);
-        item.marker.setRadius(r);
+        var hidden = !!item.data.excludeFromIdw && self._excludedStationMode === 'hidden';
         self._setLabelVisible(item, false, false);
+        if (hidden) {
+          if (self._map.hasLayer(item.marker)) self._map.removeLayer(item.marker);
+          return;
+        }
+        if (!self._map.hasLayer(item.marker)) item.marker.addTo(self._map);
+        var r = item.isMajor ? (z <= 10 ? 5 : z === 11 ? 6 : z <= 13 ? 7 : 8) : (z <= 10 ? 3 : z === 11 ? 4 : z <= 13 ? 5 : 6);
+        self._applyMarkerStyle(item, r, markerStroke, excludedStroke);
       });
 
       if (!this._labelsEnabled) return;
 
       var candidates = this._markers.filter(function (item) {
+        if (item.data.excludeFromIdw && self._excludedStationMode === 'hidden') return false;
         if (z >= allLabelsMinZoom) return true;
         if (item.isMajor) return true;
         return Number.isFinite(item.data.passengerRank) && item.data.passengerRank <= rankLimit;
@@ -233,6 +279,12 @@
       this._updateDisplay();
     },
 
+    setExcludedStationMode: function (mode) {
+      if (['highlight', 'hollow', 'hidden'].indexOf(mode) === -1) mode = 'hollow';
+      this._excludedStationMode = mode;
+      this._updateDisplay();
+    },
+
     findStationMarker: function (name) {
       for (var i = 0; i < this._markers.length; i++) {
         if (this._markers[i].data.station === name) return this._markers[i].marker;
@@ -253,10 +305,7 @@
     },
 
     updateTheme: function () {
-      var strokeColor = this._getMarkerStroke();
-      this._markers.forEach(function (item) {
-        item.marker.setStyle({ color: strokeColor });
-      });
+      this._updateDisplay();
 
       if (this._destRings.length) {
         var ringStyle = this._getDestinationRingStyles();
