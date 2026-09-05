@@ -74,15 +74,19 @@
       collisionBox: { width: 120, height: 40, gap: 3 },
     },
 
-    // 目的地同心円（5km/10km/15km）
+    // 目的地同心円（5km/10km/15km/20km/30km/40km/50km）
     destinationRings: {
       enabledDefault: false,
-      radiiMeters: [5000, 10000, 15000],
+      radiiMeters: [5000, 10000, 15000, 20000, 30000, 40000, 50000],
       styleVars: {
         strokeByRadius: {
           5000: '--dest-ring-5km-stroke',
           10000: '--dest-ring-10km-stroke',
           15000: '--dest-ring-15km-stroke',
+          20000: '--dest-ring-20km-stroke',
+          30000: '--dest-ring-30km-stroke',
+          40000: '--dest-ring-40km-stroke',
+          50000: '--dest-ring-50km-stroke',
         },
         fill: '--dest-ring-fill',
       },
