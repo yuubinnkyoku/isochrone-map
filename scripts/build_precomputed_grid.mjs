@@ -8,7 +8,8 @@ import { fileURLToPath } from 'node:url';
 
 const STEP_DEG = 0.001;
 const MARGIN_DEG = 0.60;
-const SCALE = 100;
+const SCALE = 25;
+const OFFSET_MINUTES = 1440;
 const NODATA = 65535;
 const DEFAULT_POWER = 2.5;
 
@@ -44,7 +45,7 @@ function calcValue(lat, lng, stations, halfPower) {
 }
 
 if (!isMainThread) {
-  const { rowStart, rowEnd, cols, north, west, step, stations, power, scale } = workerData;
+  const { rowStart, rowEnd, cols, north, west, step, stations, power, scale, offsetMinutes } = workerData;
   const projected = projectStations(stations);
   const halfPower = power / 2;
   const out = new Uint16Array((rowEnd - rowStart) * cols);
@@ -54,7 +55,7 @@ if (!isMainThread) {
     for (let c = 0; c < cols; c++) {
       const lng = west + c * step;
       const value = calcValue(lat, lng, projected, halfPower);
-      out[k++] = Math.max(0, Math.min(65534, Math.round(value * scale)));
+      out[k++] = Math.max(0, Math.min(65534, Math.round((value + offsetMinutes) * scale)));
     }
   }
   parentPort.postMessage({ rowStart, rowEnd, buffer: out.buffer }, [out.buffer]);
@@ -90,7 +91,7 @@ if (!isMainThread) {
     const rowEnd = Math.floor(rows * (i + 1) / workerCount);
     chunks.push(new Promise((resolve, reject) => {
       const worker = new Worker(new URL(import.meta.url), {
-        workerData: { rowStart, rowEnd, cols, north, west, step: STEP_DEG, stations, power, scale: SCALE },
+        workerData: { rowStart, rowEnd, cols, north, west, step: STEP_DEG, stations, power, scale: SCALE, offsetMinutes: OFFSET_MINUTES },
       });
       worker.on('message', resolve);
       worker.on('error', reject);
@@ -125,6 +126,7 @@ if (!isMainThread) {
     lngStep: STEP_DEG,
     valueType: 'uint16-le',
     scale: SCALE,
+    offsetMinutes: OFFSET_MINUTES,
     nodata: NODATA,
   };
   fs.writeFileSync(`${outputBase}.meta.json`, JSON.stringify(meta, null, 2) + '\n');

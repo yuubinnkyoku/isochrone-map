@@ -94,7 +94,8 @@
       if (v00 === m.nodata || v10 === m.nodata || v01 === m.nodata || v11 === m.nodata) return null;
       var top = v00 + (v10 - v00) * fc;
       var bottom = v01 + (v11 - v01) * fc;
-      return (top + (bottom - top) * fr) / m.scale;
+      var encoded = (top + (bottom - top) * fr) / m.scale;
+      return encoded - (m.offsetMinutes || 0);
     },
   };
 

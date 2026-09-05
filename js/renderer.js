@@ -6,9 +6,20 @@
 
   function buildContourBreaks(interval) {
     var breaks = [];
-    var min = CONFIG.timeRange.contourMin;
-    var max = CONFIG.timeRange.contourMax;
-    var first = Math.ceil(min / interval) * interval;
+    var range = CONFIG.timeRange;
+    var min = range.contourMin;
+    var max = range.contourMax;
+    var denseMin = range.denseContourMin || min;
+    var earlyInterval = range.earlyContourInterval || 60;
+
+    // Early-morning / previous-day values can be many hours away from the
+    // normal school-morning scale. Keep those lines sparse so the map remains
+    // readable, while retaining the user-selected interval from 06:30 onward.
+    if (min < denseMin) {
+      var earlyFirst = Math.ceil(min / earlyInterval) * earlyInterval;
+      for (var e = earlyFirst; e < denseMin; e += earlyInterval) breaks.push(e);
+    }
+    var first = Math.ceil(Math.max(min, denseMin) / interval) * interval;
     for (var m = first; m <= max; m += interval) breaks.push(m);
     return breaks;
   }
@@ -145,7 +156,9 @@
       for (var bi = 0; bi < breaks.length; bi++) {
         var level = breaks[bi];
         var col = minutesToColor(level);
-        var isMain = (level % 10 === 0);
+        var denseMin = CONFIG.timeRange.denseContourMin || CONFIG.timeRange.contourMin;
+        var isEarly = level < denseMin;
+        var isMain = isEarly ? (level % 60 === 0) : (level % 10 === 0);
         ctx.strokeStyle = colorToCSS(col, isMain ? 0.9 : 0.45);
         ctx.lineWidth = isMain ? 3 : 1.2;
         ctx.beginPath();

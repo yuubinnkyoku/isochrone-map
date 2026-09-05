@@ -49,6 +49,9 @@
     var stations = DataManager.stations;
     var meta = DataManager.meta;
 
+    if (window.updateTimeRangeFromStations) updateTimeRangeFromStations(stations);
+    UIManager.refreshLegend();
+
     if (PrecomputedGrid.ready) {
       contourOverlay.setGrid(PrecomputedGrid);
       gradientOverlay.setGrid(PrecomputedGrid);

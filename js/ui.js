@@ -20,6 +20,7 @@
     },
 
     getSettings: function () { return this._settings; },
+    refreshLegend: function () { this._buildLegend(); },
 
     _defaults: function () {
       var dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -158,7 +159,14 @@
       lines.innerHTML = '';
       lines.style.display = (s.contourEnabled && !s.threeDEnabled) ? '' : 'none';
       if (s.contourEnabled) {
-        for (var m = Math.ceil(r.contourMin / 10) * 10; m <= r.contourMax; m += 10) {
+        var denseMin = r.denseContourMin || r.contourMin;
+        if (r.contourMin < denseMin) {
+          var early = document.createElement('div');
+          early.className = 'legend-item';
+          early.innerHTML = '<span class="legend-swatch thick" style="background:' + colorToCSS(minutesToColor(r.contourMin)) + '"></span><span class="legend-time">06:30以前（1時間刻み・前日含む）</span>';
+          lines.appendChild(early);
+        }
+        for (var m = Math.ceil(denseMin / 10) * 10; m <= r.contourMax; m += 10) {
           var item = document.createElement('div');
           item.className = 'legend-item';
           item.innerHTML = '<span class="legend-swatch thick" style="background:' + colorToCSS(minutesToColor(m)) + '"></span><span class="legend-time">' + minutesToTimeStr(m) + '</span>';
