@@ -10,9 +10,9 @@
     defaultZoom: 11,
 
     // stations.json cache-buster. Bump when station data changes.
-    dataVersion: 15,
+    dataVersion: 16,
     // Precomputed IDW grid cache-buster.
-    gridVersion: 4,
+    gridVersion: 5,
 
     // 目的地
     destination: {
@@ -27,10 +27,12 @@
 
     // 表示する時刻範囲
     timeRange: {
-      min: 390,          // 06:30
+      min: 390,          // data load may extend this earlier
       max: 495,          // 08:15
-      contourMin: 390,   // 06:30
+      contourMin: 390,   // data load may extend this earlier
       contourMax: 495,   // 08:15
+      denseContourMin: 390,      // 06:30 onward follows the selected 3/5/10-minute interval
+      earlyContourInterval: 60,  // before 06:30, use hourly lines to avoid clutter
     },
 
     // カラースケール（OKLCH）。
@@ -192,9 +194,31 @@
   }
 
   function minutesToTimeStr(m) {
-    var h = String(Math.floor(m / 60)).padStart(2, '0');
-    var min = String(Math.round(m % 60)).padStart(2, '0');
-    return h + ':' + min;
+    var total = Math.round(m);
+    var day = Math.floor(total / 1440);
+    var withinDay = ((total % 1440) + 1440) % 1440;
+    var h = String(Math.floor(withinDay / 60)).padStart(2, '0');
+    var min = String(withinDay % 60).padStart(2, '0');
+    var time = h + ':' + min;
+    if (day === -1) return '前日' + time;
+    if (day < -1) return String(-day) + '日前' + time;
+    if (day > 0) return String(day) + '日後' + time;
+    return time;
+  }
+
+  function updateTimeRangeFromStations(stations) {
+    if (!stations || !stations.length) return;
+    var min = Math.min.apply(null, stations.map(function (s) { return s.minutes; }).filter(Number.isFinite));
+    var denseMin = CONFIG.timeRange.denseContourMin || 390;
+    var earlyInterval = CONFIG.timeRange.earlyContourInterval || 60;
+    if (Number.isFinite(min) && min < denseMin) {
+      var rounded = Math.floor(min / earlyInterval) * earlyInterval;
+      CONFIG.timeRange.min = rounded;
+      CONFIG.timeRange.contourMin = rounded;
+    } else {
+      CONFIG.timeRange.min = denseMin;
+      CONFIG.timeRange.contourMin = denseMin;
+    }
   }
 
   // Export
@@ -202,4 +226,5 @@
   window.minutesToColor = minutesToColor;
   window.colorToCSS = colorToCSS;
   window.minutesToTimeStr = minutesToTimeStr;
+  window.updateTimeRangeFromStations = updateTimeRangeFromStations;
 })();
