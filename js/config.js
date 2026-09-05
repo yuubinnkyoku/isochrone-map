@@ -10,9 +10,9 @@
     defaultZoom: 11,
 
     // stations.json cache-buster. Bump when station data changes.
-    dataVersion: 17,
+    dataVersion: 18,
     // Precomputed IDW grid cache-buster.
-    gridVersion: 6,
+    gridVersion: 7,
 
     // 目的地
     destination: {
@@ -212,7 +212,7 @@
 
   function updateTimeRangeFromStations(stations) {
     if (!stations || !stations.length) return;
-    var min = Math.min.apply(null, stations.map(function (s) { return s.minutes; }).filter(Number.isFinite));
+    var min = Math.min.apply(null, stations.filter(function (s) { return !s.excludeFromIdw; }).map(function (s) { return s.minutes; }).filter(Number.isFinite));
     var denseMin = CONFIG.timeRange.denseContourMin || 390;
     var earlyInterval = CONFIG.timeRange.earlyContourInterval || 60;
     if (Number.isFinite(min) && min < denseMin) {
