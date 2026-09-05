@@ -95,7 +95,7 @@
 
       stations.forEach(function (s) {
         var c = minutesToColor(s.minutes);
-        var ts = minutesToTimeStr(s.minutes);
+        var ts = s.departureDisplay || minutesToTimeStr(s.minutes);
         var travelHtml = s.duration !== undefined ? '<div class="tt-travel">所要 ' + s.duration + '分</div>' : '';
         var isMajor = !!s.major;
 
