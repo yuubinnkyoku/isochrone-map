@@ -13,6 +13,7 @@
   --text-muted: #999;
   --contour-label-bg: rgba(255, 255, 255, 0.82);
   --marker-stroke: #fff;
+  --excluded-marker-highlight: #ff2d55;
   --dest-ring-5km-stroke: rgba(255, 107, 107, 0.85);
   --dest-ring-10km-stroke: rgba(255, 140, 102, 0.75);
   --dest-ring-15km-stroke: rgba(255, 184, 107, 0.70);
@@ -39,6 +40,7 @@
   --text-muted: #666;
   --contour-label-bg: rgba(10, 10, 15, 0.75);
   --marker-stroke: #444;
+  --excluded-marker-highlight: #ff6680;
   --dest-ring-5km-stroke: rgba(255, 140, 140, 0.9);
   --dest-ring-10km-stroke: rgba(255, 174, 128, 0.8);
   --dest-ring-15km-stroke: rgba(255, 210, 150, 0.75);
@@ -401,6 +403,28 @@ body {
   color: var(--text-muted);
 }
 
+.legend-excluded {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--ctrl-info-border);
+}
+
+.legend-excluded-symbol {
+  font-size: 17px;
+  line-height: 1;
+  color: var(--text-secondary);
+  font-family: sans-serif;
+}
+
+.legend-excluded-text {
+  font-size: 10px;
+  color: var(--text-secondary);
+  line-height: 1.35;
+}
+
 /* ---- Tooltip ---- */
 .station-tooltip {
   background: var(--bg-panel) !important;
@@ -454,6 +478,18 @@ body {
   font-size: 10px;
   color: var(--text-muted);
   line-height: 1.5;
+}
+
+.tt-excluded {
+  display: inline-block;
+  margin: 2px 0 4px;
+  padding: 2px 6px;
+  border: 1px solid var(--border-panel);
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  background: color-mix(in srgb, var(--bg-panel) 75%, transparent);
 }
 
 /* ---- Station labels ---- */

@@ -59,6 +59,7 @@
     defaultGradientEnabled: false,
     defaultLabelsEnabled: true,
     defaultLegendEnabled: true,
+    defaultExcludedStationMode: 'hollow',
 
     // 駅名ラベル表示。中間ズームでは2024年の駅別乗降客数順位で段階表示し、
     // さらに画面上で衝突する一般駅ラベルを利用者数の少ない順に省く。

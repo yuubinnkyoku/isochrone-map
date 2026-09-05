@@ -60,6 +60,7 @@
 
     MarkerManager.init(map, stations, meta);
     MarkerManager.setLabelsEnabled(settings.labelsEnabled);
+    MarkerManager.setExcludedStationMode(settings.excludedStationMode || 'hollow');
     MarkerManager.setDestinationRingsVisible(settings.radiusRingsEnabled);
 
     UIManager.updateDataInfo(meta, stations.length, DataManager.getMajorCount());
@@ -138,6 +139,9 @@
         break;
       case 'labels':
         MarkerManager.setLabelsEnabled(value);
+        break;
+      case 'excludedStationMode':
+        MarkerManager.setExcludedStationMode(value);
         break;
       case 'radiusRings':
         MarkerManager.setDestinationRingsVisible(value);
