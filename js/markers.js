@@ -107,9 +107,7 @@
       };
 
       if (isExcluded && mode === 'hollow') {
-        style.radius = baseRadius + 1;
         style.color = item.timeColor;
-        style.weight = 2.5;
         style.fillOpacity = 0;
       } else if (isExcluded && mode === 'highlight') {
         style.radius = baseRadius + 2;
