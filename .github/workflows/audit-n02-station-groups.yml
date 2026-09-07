@@ -24,6 +24,8 @@ jobs:
           python -m py_compile scripts/audit_route_anchor_candidates.py
           python -m py_compile scripts/audit_route_origin_alignment.py
           python -m py_compile scripts/audit_same_name_station_routes.py
+          python -m py_compile scripts/audit_unparsed_route_members.py
+          python -m py_compile scripts/audit_yahoo_targeted.py
       - name: Run N02 station-group audit
         run: python scripts/audit_n02_station_groups.py
       - name: Prove N02 50km coverage
@@ -32,8 +34,13 @@ jobs:
         run: python scripts/audit_route_anchor_candidates.py
       - name: Audit all route origins
         run: python scripts/audit_route_origin_alignment.py
+      - name: Audit unresolved route members
+        run: python scripts/audit_unparsed_route_members.py
       - name: Audit same-name route resolution
         run: python scripts/audit_same_name_station_routes.py
+      - name: Query targeted Yahoo routes
+        continue-on-error: true
+        run: python scripts/audit_yahoo_targeted.py
       - name: Show report summaries
         if: always()
         run: |
@@ -44,6 +51,8 @@ jobs:
           cat data/route-origin-alignment-audit.md || true
           echo '--- same-name route resolution ---'
           cat data/same-name-station-route-audit.md || true
+          echo '--- targeted Yahoo ---'
+          cat data/yahoo-targeted-audit.json || true
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -56,5 +65,7 @@ jobs:
             data/route-anchor-candidates.json
             data/route-origin-alignment-audit.json
             data/route-origin-alignment-audit.md
+            data/unparsed-route-members.json
             data/same-name-station-route-audit.json
             data/same-name-station-route-audit.md
+            data/yahoo-targeted-audit.json
