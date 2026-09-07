@@ -21,10 +21,13 @@ jobs:
         run: |
           python -m py_compile scripts/audit_n02_station_groups.py
           python -m py_compile scripts/audit_n02_coverage.py
+          python -m py_compile scripts/audit_route_anchor_candidates.py
       - name: Run N02 station-group audit
         run: python scripts/audit_n02_station_groups.py
       - name: Prove N02 50km coverage
         run: python scripts/audit_n02_coverage.py
+      - name: Inspect ambiguous route anchors
+        run: python scripts/audit_route_anchor_candidates.py
       - name: Show report summaries
         if: always()
         run: |
@@ -40,3 +43,4 @@ jobs:
             data/n02-station-group-audit.md
             data/n02-coverage-audit.json
             data/n02-coverage-audit.md
+            data/route-anchor-candidates.json
