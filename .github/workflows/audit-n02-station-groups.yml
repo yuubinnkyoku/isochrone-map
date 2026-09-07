@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   audit:
@@ -26,9 +26,8 @@ jobs:
           python -m py_compile scripts/audit_same_name_station_routes.py
           python -m py_compile scripts/audit_unparsed_route_members.py
           python -m py_compile scripts/audit_yahoo_targeted.py
+          python -m py_compile scripts/audit_yahoo_flagged_station_baselines.py
           python -m py_compile scripts/apply_confirmed_station_fixes.py
-      - name: Apply confirmed station fixes
-        run: python scripts/apply_confirmed_station_fixes.py
       - name: Run N02 station-group audit
         run: python scripts/audit_n02_station_groups.py
       - name: Prove N02 50km coverage
@@ -44,6 +43,9 @@ jobs:
       - name: Query targeted Yahoo routes
         continue-on-error: true
         run: python scripts/audit_yahoo_targeted.py
+      - name: Re-query flagged station baselines on Yahoo
+        continue-on-error: true
+        run: python scripts/audit_yahoo_flagged_station_baselines.py
       - name: Show report summaries
         if: always()
         run: |
@@ -56,6 +58,17 @@ jobs:
           cat data/same-name-station-route-audit.md || true
           echo '--- targeted Yahoo ---'
           cat data/yahoo-targeted-audit.json || true
+          echo '--- flagged station baselines ---'
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          path = Path('data/yahoo-flagged-station-baselines.json')
+          if path.exists():
+              doc = json.loads(path.read_text(encoding='utf-8'))
+              print(json.dumps(doc['summary'], ensure_ascii=False, indent=2))
+              for row in doc['rows']:
+                  print(row['station'], row.get('storedDeparture'), row.get('summaryDeparture'), row.get('minuteDelta'), row.get('error'))
+          PY
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -72,15 +85,4 @@ jobs:
             data/same-name-station-route-audit.json
             data/same-name-station-route-audit.md
             data/yahoo-targeted-audit.json
-      - name: Commit confirmed station fixes
-        if: success()
-        run: |
-          if git diff --quiet -- data/stations.json; then
-            echo 'No confirmed station-data changes to commit.'
-            exit 0
-          fi
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add data/stations.json
-          git commit -m 'Fix confirmed 弘明寺 station route'
-          git push
+            data/yahoo-flagged-station-baselines.json
