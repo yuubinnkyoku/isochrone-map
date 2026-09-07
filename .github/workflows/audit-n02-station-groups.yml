@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   audit:
@@ -26,6 +26,9 @@ jobs:
           python -m py_compile scripts/audit_same_name_station_routes.py
           python -m py_compile scripts/audit_unparsed_route_members.py
           python -m py_compile scripts/audit_yahoo_targeted.py
+          python -m py_compile scripts/apply_confirmed_station_fixes.py
+      - name: Apply confirmed station fixes
+        run: python scripts/apply_confirmed_station_fixes.py
       - name: Run N02 station-group audit
         run: python scripts/audit_n02_station_groups.py
       - name: Prove N02 50km coverage
@@ -69,3 +72,15 @@ jobs:
             data/same-name-station-route-audit.json
             data/same-name-station-route-audit.md
             data/yahoo-targeted-audit.json
+      - name: Commit confirmed station fixes
+        if: success()
+        run: |
+          if git diff --quiet -- data/stations.json; then
+            echo 'No confirmed station-data changes to commit.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/stations.json
+          git commit -m 'Fix confirmed 弘明寺 station route'
+          git push
