@@ -1,19 +1,20 @@
 #!/usr/bin/env python3
-"""Validate address-origin routing before using it for IDW exclusion decisions.
+"""Validate point-origin routing before using it for IDW exclusions.
 
-The project stores N02 station coordinates, but Yahoo! Transit does not accept raw
-``lat,lng`` as a route origin.  For a small set of known/suspicious stations this
-script:
+Yahoo! Transit accepts ordinary station names, but the exclusion audit needs a route
+from the *station point* so that walking to another station or taking a local bus can
+compete with boarding there directly.  A broad textual address is unsafe: Yahoo can
+resolve a block address hundreds of metres away (or even to a POI inside that block).
 
-1. reverse-geocodes the N02 point with the GSI reverse-geocoder,
-2. queries Yahoo! Transit from that textual address with the project's exact
-   2026-08-28 / 08:18-arrival settings,
-3. compares the address-origin departure with the stored direct-station departure,
-4. scans the Yahoo HTML for coordinate-bearing links/data so we can detect a textual
-   address that Yahoo resolves far away from the N02 station point.
+For known candidates and the Disney outliers this script therefore compares two
+methods:
 
-It is deliberately targeted (not a 1318-request crawler) until the origin-resolution
-method is proven safe on the known Disney outliers and representative candidates.
+* GSI reverse-geocoded block address -> Yahoo (diagnostic only), and
+* Yahoo ``flatlon`` with the exact N02 latitude/longitude (candidate replacement).
+
+The returned Yahoo HTML is also inspected for the actual ``fromLat``/``fromLon`` used
+by its first walking leg.  This lets us prove whether the requested point survived
+Yahoo's own location resolution instead of guessing from nearby map links.
 """
 from __future__ import annotations
 
@@ -22,6 +23,7 @@ import json
 import math
 import re
 import time
+import unicodedata
 import urllib.parse
 import urllib.request
 from pathlib import Path
@@ -79,10 +81,15 @@ def haversine_m(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
     return 2 * r * math.asin(math.sqrt(a))
 
 
+def name_key(value: object) -> str:
+    text = unicodedata.normalize("NFKC", str(value or ""))
+    # NFKC does not consistently make the two Japanese middle-dot codepoints equal.
+    return text.replace("･", "・").strip()
+
+
 def load_municipalities() -> dict[str, tuple[str, str]]:
     body, _, _ = fetch_text(GSI_MUNI)
     mapping: dict[str, tuple[str, str]] = {}
-    # Current GSI format is e.g. GSI.MUNI_ARRAY["13101"] = '13,東京都,13101,千代田区';
     pattern = re.compile(
         r'MUNI_ARRAY\[?["\'](?P<code>\d{5})["\']\]?\s*=\s*["\']'
         r'(?P<prefcode>\d+),(?P<pref>[^,]+),(?P=code),(?P<muni>[^"\']+)["\']'
@@ -113,75 +120,91 @@ def reverse_geocode(lat: float, lon: float, municipalities: dict[str, tuple[str,
     }
 
 
-def _valid_lat(value: float) -> bool:
-    return 20.0 <= value <= 50.0
+def build_flatlon_url(label: str, lat: float, lon: float) -> str:
+    """Add Yahoo's point-location parameter while keeping project search settings."""
+    base = build_url(label)
+    parsed = urllib.parse.urlsplit(base)
+    params = urllib.parse.parse_qsl(parsed.query, keep_blank_values=True)
+    # Replace rather than append if Yahoo changes build_url in the future.
+    params = [(key, value) for key, value in params if key not in {"flatlon", "fromgid"}]
+    params.extend(
+        [
+            ("fromgid", ""),
+            ("flatlon", f"{lat:.8f},{lon:.8f},{label}"),
+        ]
+    )
+    return urllib.parse.urlunsplit(
+        (parsed.scheme, parsed.netloc, parsed.path, urllib.parse.urlencode(params), parsed.fragment)
+    )
 
 
-def _valid_lon(value: float) -> bool:
-    return 120.0 <= value <= 155.0
-
-
-def extract_coordinate_mentions(body: str, station_lat: float, station_lon: float) -> list[dict]:
-    # Decode entities and URL escapes because Yahoo often nests map links in query strings.
+def extract_walk_origins(body: str, station_lat: float, station_lon: float) -> list[dict]:
+    """Extract actual origins from Yahoo map walking links in document order."""
     decoded = html.unescape(body)
     for _ in range(2):
         decoded = urllib.parse.unquote(decoded)
+    # JSON embedded in the page uses escaped ampersands after URL decoding.
+    decoded = decoded.replace("\\u0026", "&")
 
-    candidates: list[tuple[float, float, str, int]] = []
-    patterns = [
-        # Explicit lat/lon style keys, either order.
-        re.compile(
-            r'(?i)(?:lat|latitude)[=:"\']+\s*(-?\d{2}\.\d+).{0,180}?'
-            r'(?:lon|lng|longitude)[=:"\']+\s*(-?\d{3}\.\d+)'
-        ),
-        re.compile(
-            r'(?i)(?:lon|lng|longitude)[=:"\']+\s*(-?\d{3}\.\d+).{0,180}?'
-            r'(?:lat|latitude)[=:"\']+\s*(-?\d{2}\.\d+)'
-        ),
-        # Common compact map coordinate forms.
-        re.compile(r'(?i)(?:latlon|latlng)[=:"\']+\s*(-?\d{2}\.\d+)[,/%20 ]+(-?\d{3}\.\d+)'),
-        re.compile(r'(?i)(?:ll|center)[=:"\']+\s*(-?\d{3}\.\d+)[,/%20 ]+(-?\d{2}\.\d+)'),
-        # Raw coordinate pairs as a last resort; later we sort by distance to the station.
-        re.compile(r'(?<!\d)(-?\d{2}\.\d{4,})\s*[,/]\s*(-?\d{3}\.\d{4,})(?!\d)'),
-        re.compile(r'(?<!\d)(-?\d{3}\.\d{4,})\s*[,/]\s*(-?\d{2}\.\d{4,})(?!\d)'),
-    ]
-
-    for pattern_index, pattern in enumerate(patterns):
-        for match in pattern.finditer(decoded):
-            a = float(match.group(1))
-            b = float(match.group(2))
-            if pattern_index in {1, 3, 5}:
-                lon, lat = a, b
-            else:
-                lat, lon = a, b
-            if not (_valid_lat(lat) and _valid_lon(lon)):
-                continue
-            context = decoded[max(0, match.start() - 100) : min(len(decoded), match.end() + 100)]
-            candidates.append((lat, lon, re.sub(r"\s+", " ", context), pattern_index))
-
-    unique: dict[tuple[float, float], dict] = {}
-    for lat, lon, context, pattern_index in candidates:
-        key = (round(lat, 7), round(lon, 7))
-        distance = haversine_m(station_lat, station_lon, lat, lon)
-        row = {
-            "lat": lat,
-            "lng": lon,
-            "distanceFromStationM": round(distance, 2),
-            "pattern": pattern_index,
-            "context": context[:300],
-        }
-        old = unique.get(key)
-        if old is None or pattern_index < old["pattern"]:
-            unique[key] = row
-
-    return sorted(
-        unique.values(),
-        key=lambda row: (row["distanceFromStationM"], row["pattern"], row["lat"], row["lng"]),
-    )[:40]
+    pattern = re.compile(
+        r'(?:https?://map\.yahoo\.co\.jp/route/walk\?)?'
+        r'from=(?P<label>[^&"<>]{0,300})&fromGid=[^&"<>]*&fromLat=(?P<lat>-?\d{2}\.\d+)'
+        r'&fromLon=(?P<lon>-?\d{3}\.\d+)',
+        re.IGNORECASE,
+    )
+    rows: list[dict] = []
+    seen: set[tuple[str, float, float]] = set()
+    for match in pattern.finditer(decoded):
+        lat = float(match.group("lat"))
+        lon = float(match.group("lon"))
+        label = match.group("label").strip()
+        key = (label, round(lat, 8), round(lon, 8))
+        if key in seen:
+            continue
+        seen.add(key)
+        rows.append(
+            {
+                "label": label,
+                "lat": lat,
+                "lng": lon,
+                "distanceFromStationM": round(
+                    haversine_m(station_lat, station_lon, lat, lon), 2
+                ),
+                "documentOffset": match.start(),
+            }
+        )
+    return rows
 
 
-def query_yahoo_address(address: str, station_lat: float, station_lon: float) -> dict:
-    url = build_url(address)
+def extract_address_options(body: str, station_lat: float, station_lon: float) -> list[dict]:
+    """Capture Yahoo autocomplete candidates to explain broad-address misresolution."""
+    decoded = html.unescape(body)
+    pattern = re.compile(
+        r'<option\s+value="(?P<lat>-?\d{2}\.\d+),(?P<lon>-?\d{3}\.\d+),(?P<label>[^"]*)"'
+        r'[^>]*data-gid="(?P<gid>[^"]*)"[^>]*>',
+        re.IGNORECASE,
+    )
+    rows = []
+    for match in pattern.finditer(decoded):
+        lat = float(match.group("lat"))
+        lon = float(match.group("lon"))
+        if not (20 <= lat <= 50 and 120 <= lon <= 155):
+            continue
+        rows.append(
+            {
+                "label": html.unescape(match.group("label")),
+                "gid": match.group("gid"),
+                "lat": lat,
+                "lng": lon,
+                "distanceFromStationM": round(
+                    haversine_m(station_lat, station_lon, lat, lon), 2
+                ),
+            }
+        )
+    return sorted(rows, key=lambda row: row["distanceFromStationM"])[:30]
+
+
+def query_yahoo(url: str, station_lat: float, station_lon: float) -> dict:
     body, final_url, status = fetch_text(url)
     parser = TextExtractor()
     parser.feed(body)
@@ -190,7 +213,7 @@ def query_yahoo_address(address: str, station_lat: float, station_lon: float) ->
     excerpt = lines[route_start : route_start + 140] if route_start is not None else lines[:180]
     joined = "\n".join(excerpt)
     summary = re.search(r"(\d{1,2}:\d{2})\s*→\s*(\d{1,2}:\d{2})", joined)
-    mentions = extract_coordinate_mentions(body, station_lat, station_lon)
+    walk_origins = extract_walk_origins(body, station_lat, station_lon)
     return {
         "requestedUrl": url,
         "finalUrl": final_url,
@@ -198,8 +221,9 @@ def query_yahoo_address(address: str, station_lat: float, station_lon: float) ->
         "summaryDeparture": summary.group(1) if summary else None,
         "summaryArrival": summary.group(2) if summary else None,
         "excerpt": excerpt,
-        "coordinateMentions": mentions,
-        "nearestCoordinateMention": mentions[0] if mentions else None,
+        "walkOrigins": walk_origins[:30],
+        "firstWalkOrigin": walk_origins[0] if walk_origins else None,
+        "addressOptions": extract_address_options(body, station_lat, station_lon),
         "htmlBytes": len(body.encode("utf-8")),
     }
 
@@ -211,39 +235,50 @@ def hhmm_to_minutes(value: str | None) -> int | None:
     return int(h) * 60 + int(m)
 
 
+def gain_minutes(result: dict, stored_minutes: object) -> int | None:
+    yahoo_minutes = hhmm_to_minutes(result.get("summaryDeparture"))
+    if yahoo_minutes is None or stored_minutes is None:
+        return None
+    return yahoo_minutes - int(stored_minutes)
+
+
 def main() -> None:
     doc = json.loads(STATIONS_PATH.read_text(encoding="utf-8"))
     by_name: dict[str, list[dict]] = {}
     for station in doc["stations"]:
-        by_name.setdefault(str(station.get("station")), []).append(station)
+        by_name.setdefault(name_key(station.get("station")), []).append(station)
 
     municipalities = load_municipalities()
     print(f"GSI municipality entries={len(municipalities)}")
     rows = []
 
-    for index, name in enumerate(TARGETS, start=1):
-        matches = by_name.get(name, [])
+    for index, requested_name in enumerate(TARGETS, start=1):
+        matches = by_name.get(name_key(requested_name), [])
         if not matches:
-            row = {"station": name, "error": "station-not-found"}
+            row = {"station": requested_name, "error": "station-not-found"}
             rows.append(row)
-            print(f"[{index:02d}/{len(TARGETS):02d}] {name}: station-not-found")
+            print(f"[{index:02d}/{len(TARGETS):02d}] {requested_name}: station-not-found")
             continue
         if len(matches) > 1:
-            # Keep every duplicate visible instead of silently choosing one.
-            print(f"[{index:02d}/{len(TARGETS):02d}] {name}: {len(matches)} project records")
+            print(
+                f"[{index:02d}/{len(TARGETS):02d}] {requested_name}: "
+                f"{len(matches)} project records"
+            )
 
         for station in matches:
             lat = float(station["lat"])
             lon = float(station["lng"])
+            stored_minutes = station.get("minutes")
+            display_name = str(station.get("station"))
             row = {
                 "id": station.get("id"),
-                "station": name,
+                "station": display_name,
                 "lat": lat,
                 "lng": lon,
-                "storedMinutes": station.get("minutes"),
+                "storedMinutes": stored_minutes,
                 "storedDeparture": (
-                    f"{int(station['minutes']) // 60:02d}:{int(station['minutes']) % 60:02d}"
-                    if station.get("minutes") is not None
+                    f"{int(stored_minutes) // 60:02d}:{int(stored_minutes) % 60:02d}"
+                    if stored_minutes is not None
                     else None
                 ),
                 "excludeFromIdw": bool(station.get("excludeFromIdw")),
@@ -252,33 +287,43 @@ def main() -> None:
                 reverse = reverse_geocode(lat, lon, municipalities)
                 row["reverseGeocode"] = reverse
                 address = reverse.get("address") or ""
-                if not address:
-                    raise RuntimeError("GSI returned no usable textual address")
-                # Small delay between public-service requests.
+                if address:
+                    time.sleep(0.6)
+                    address_result = query_yahoo(build_url(address), lat, lon)
+                    row["addressYahoo"] = address_result
+                    row["addressGainMinutes"] = gain_minutes(address_result, stored_minutes)
+                    address_origin = address_result.get("firstWalkOrigin")
+                    row["addressResolvedOriginDistanceM"] = (
+                        address_origin.get("distanceFromStationM") if address_origin else None
+                    )
+
+                # Use a deliberately non-station label so a successful result cannot be
+                # explained by Yahoo silently treating `from` as the direct station.
+                point_label = f"{display_name}駅地点"
                 time.sleep(0.6)
-                yahoo = query_yahoo_address(address, lat, lon)
-                row["yahoo"] = yahoo
-                yahoo_minutes = hhmm_to_minutes(yahoo.get("summaryDeparture"))
-                stored_minutes = station.get("minutes")
-                row["gainMinutes"] = (
-                    None
-                    if yahoo_minutes is None or stored_minutes is None
-                    else yahoo_minutes - int(stored_minutes)
+                flatlon_result = query_yahoo(build_flatlon_url(point_label, lat, lon), lat, lon)
+                row["flatlonYahoo"] = flatlon_result
+                row["flatlonGainMinutes"] = gain_minutes(flatlon_result, stored_minutes)
+                flatlon_origin = flatlon_result.get("firstWalkOrigin")
+                row["flatlonResolvedOriginDistanceM"] = (
+                    flatlon_origin.get("distanceFromStationM") if flatlon_origin else None
                 )
-                nearest = yahoo.get("nearestCoordinateMention")
-                row["nearestYahooCoordinateDistanceM"] = (
-                    nearest.get("distanceFromStationM") if nearest else None
-                )
+
                 print(
-                    f"[{index:02d}/{len(TARGETS):02d}] {name} {station.get('id')}: "
-                    f"address={address!r} stored={row['storedDeparture']} "
-                    f"Yahoo={yahoo.get('summaryDeparture')}->{yahoo.get('summaryArrival')} "
-                    f"gain={row['gainMinutes']} nearestCoord={row['nearestYahooCoordinateDistanceM']}m"
+                    f"[{index:02d}/{len(TARGETS):02d}] {display_name} {station.get('id')}: "
+                    f"stored={row['storedDeparture']} "
+                    f"address={address!r} -> {address_result.get('summaryDeparture') if address else None} "
+                    f"gain={row.get('addressGainMinutes')} "
+                    f"originDist={row.get('addressResolvedOriginDistanceM')}m; "
+                    f"flatlon={flatlon_result.get('summaryDeparture')} "
+                    f"gain={row.get('flatlonGainMinutes')} "
+                    f"originDist={row.get('flatlonResolvedOriginDistanceM')}m"
                 )
             except Exception as exc:
                 row["error"] = f"{type(exc).__name__}: {exc}"
                 print(
-                    f"[{index:02d}/{len(TARGETS):02d}] {name} {station.get('id')}: {row['error']}"
+                    f"[{index:02d}/{len(TARGETS):02d}] {display_name} "
+                    f"{station.get('id')}: {row['error']}"
                 )
             rows.append(row)
             time.sleep(0.6)
