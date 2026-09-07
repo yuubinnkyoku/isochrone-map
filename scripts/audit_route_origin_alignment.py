@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Audit whether a stored station point is aligned with the route actually boarded.
 
-The station `line` field is display metadata and can be stale.  This audit instead
-looks at the first route segment in `route`, matches that segment against the
+The station ``line`` field is display metadata and can be stale. This audit instead
+looks at the first route segment in ``route``, matches that segment against the
 route-specific station records in N02-25, and measures the distance from the stored
 station point to the N02 position for the route actually used.
 
@@ -23,25 +23,55 @@ from audit_n02_station_groups import build_n02, fetch_n02, haversine_m
 
 SOURCE_URL = "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-25/N02-25_GML.zip"
 
-# Service names that do not contain an N02 line name. Keep this deliberately narrow.
+# Service names that do not contain an N02 line name. Keep station-specific cases
+# deliberately narrow where a service maps to a physically remote part of one station.
 SERVICE_LINE_OVERRIDES = {
     "musashikosugi": {
         "成田エクスプレス": ["東海道線"],
     },
 }
 
-# Route branding/name -> N02 line name.
+# Passenger-facing route branding/name -> N02 infrastructure line name(s). Several
+# JR services run over infrastructure whose N02 name differs from the timetable name.
+# Candidate lines are always restricted to the N02 members of the current station.
 ROUTE_LINE_ALIASES = {
     "りんかい線": ["臨海副都心線"],
     "つくばエクスプレス": ["常磐新線"],
     "ゆりかもめ": ["東京臨海新交通臨海線"],
     "日暮里・舎人ライナー": ["日暮里・舎人ライナー"],
     "東京モノレール": ["東京モノレール羽田空港線"],
+    "東武アーバンパークライン": ["野田線"],
+    "東武スカイツリーライン": ["伊勢崎線"],
+    "東武東上線": ["東上本線"],
+    "横浜市営地下鉄ブルーライン": ["1号線", "3号線"],
+    "横浜市営地下鉄グリーンライン": ["4号線"],
+    "多摩モノレール": ["多摩都市モノレール線"],
+    "千葉モノレール": ["1号線", "2号線"],
+    "埼玉新都市交通ニューシャトル": ["伊奈線"],
+    "横浜シーサイドライン": ["金沢シーサイドライン"],
+    "江ノ島電鉄": ["江ノ島電鉄線"],
+    "東葉高速鉄道": ["東葉高速線"],
+    "埼玉高速鉄道": ["埼玉高速鉄道線"],
+    "湘南モノレール": ["江の島線"],
+    "みなとみらい線": ["みなとみらい21線"],
+    "小湊鐵道": ["小湊鉄道線"],
+    "京王新線": ["京王線"],
+    "JR総武本線": ["総武線"],
+    "JR総武線": ["総武線", "中央線"],
+    "JR京浜東北・根岸線": ["東海道線", "東北線", "根岸線"],
+    "JR埼京線": ["山手線", "赤羽線", "東北線"],
+    "JR湘南新宿ライン": ["山手線", "赤羽線", "東北線", "東海道線", "高崎線", "横須賀線"],
+    "JR東海道本線": ["東海道線", "東北線", "高崎線"],
+    "JR横須賀線": ["横須賀線", "東海道線"],
+    "JR中央・青梅線快速": ["中央線", "青梅線"],
+    "JR高崎線": ["高崎線", "東北線"],
+    "JR特急しおさい": ["総武線"],
+    "JR新幹線こだま": ["東海道新幹線"],
 }
 
 OPERATOR_TOKENS = {
-    "東日本旅客鉄道": ["jr", "ＪＲ"],
-    "東海旅客鉄道": ["jr", "ＪＲ"],
+    "東日本旅客鉄道": ["jr"],
+    "東海旅客鉄道": ["jr"],
     "東京地下鉄": ["東京メトロ"],
     "東京都": ["都営", "東京都"],
     "東急電鉄": ["東急"],
@@ -53,8 +83,17 @@ OPERATOR_TOKENS = {
     "小田急電鉄": ["小田急"],
     "相模鉄道": ["相鉄"],
     "東京臨海高速鉄道": ["りんかい", "東京臨海高速鉄道"],
-    "首都圏新都市鉄道": ["つくばエクスプレス", "tx", "ＴＸ"],
+    "首都圏新都市鉄道": ["つくばエクスプレス", "tx"],
     "横浜市": ["横浜市営地下鉄", "ブルーライン", "グリーンライン"],
+    "東葉高速鉄道": ["東葉高速"],
+    "埼玉高速鉄道": ["埼玉高速"],
+    "多摩都市モノレール": ["多摩モノレール"],
+    "千葉都市モノレール": ["千葉モノレール"],
+    "埼玉新都市交通": ["ニューシャトル", "埼玉新都市交通"],
+    "横浜シーサイドライン": ["シーサイドライン"],
+    "江ノ島電鉄": ["江ノ島電鉄", "江ノ電"],
+    "湘南モノレール": ["湘南モノレール"],
+    "小湊鐵道": ["小湊鐵道", "小湊鉄道"],
 }
 
 ACCESS_PREFIXES = (
@@ -79,16 +118,15 @@ def compact(value: object) -> str:
 
 def line_core(line: str) -> str:
     value = compact(line)
-    # N02 subway names are often "8号線有楽町線" etc.
     value = re.sub(r"^\d+号線", "", value)
     return value
 
 
 def is_access_segment(segment: str) -> bool:
     value = compact(segment)
-    if value.startswith(compact("徒歩")):
+    # Includes forms such as "同駅内徒歩" as well as plain "徒歩".
+    if compact("徒歩") in value:
         return True
-    # Bus segments usually contain バス even when company name is not in our list.
     if "バス" in value:
         return True
     return any(value.startswith(compact(prefix)) for prefix in ACCESS_PREFIXES)
@@ -107,20 +145,31 @@ def member_matches_segment(station_id: str, segment: str, member: dict) -> tuple
             return True, f"route-alias:{route_name}"
 
     # Strong ordinary match: route segment literally contains the meaningful line name.
-    # Avoid generic names such as "本線" or just "1号線" without an operator check.
-    if member_line and len(member_line) >= 3 and member_line not in {"本線", "1号線", "2号線", "3号線"}:
+    if member_line and len(member_line) >= 3 and member_line not in {"本線", "1号線", "2号線", "3号線", "4号線"}:
         if member_line in seg:
             return True, "line-name"
 
     # Generic line names need operator evidence as well.
-    if member_line in {"本線", "1号線", "2号線", "3号線"} and member_line in seg:
+    if member_line in {"本線", "1号線", "2号線", "3号線", "4号線"} and member_line in seg:
         tokens = OPERATOR_TOKENS.get(member.get("operator", ""), [])
         if any(compact(token) in seg for token in tokens):
             return True, "generic-line+operator"
 
-    # Some operator-specific routes omit the generic N02 line name entirely.
-    # This is only used if the station has a single N02 member for that operator.
     return False, None
+
+
+def operator_fallback(segment: str, members: list[dict]) -> list[dict]:
+    """Use operator identity only when it leaves one N02 infrastructure line."""
+    seg = compact(segment)
+    candidates = []
+    for member in members:
+        tokens = OPERATOR_TOKENS.get(member.get("operator", ""), [])
+        if tokens and any(compact(token) in seg for token in tokens):
+            candidates.append(member)
+    distinct_lines = {member.get("line") for member in candidates}
+    if candidates and len(distinct_lines) == 1:
+        return candidates
+    return []
 
 
 def nearest_member(point_lat: float, point_lng: float, members: list[dict]) -> tuple[float, dict]:
@@ -197,6 +246,11 @@ def main() -> None:
                 reasons[f"{member['groupCode']}:{member['stationCode']}"] = reason
 
         if not matched:
+            matched = operator_fallback(first, members)
+            for member in matched:
+                reasons[f"{member['groupCode']}:{member['stationCode']}"] = "unique-operator-line"
+
+        if not matched:
             row["status"] = "unparsed-direct-segment"
             rows.append(row)
             status_counts[row["status"]] += 1
@@ -228,10 +282,7 @@ def main() -> None:
             },
             "routeVsNearestGapM": round(gap, 2),
         })
-        row["flag"] = (
-            route_distance >= args.distance_threshold_m
-            and gap >= args.gap_threshold_m
-        )
+        row["flag"] = route_distance >= args.distance_threshold_m and gap >= args.gap_threshold_m
         rows.append(row)
         status_counts[row["status"]] += 1
 
@@ -255,9 +306,7 @@ def main() -> None:
             "flagged": len(flags),
         },
         "flagged": flags,
-        "unparsedDirectSegments": sorted(
-            unparsed, key=lambda row: (row["firstSegment"], row["station"])
-        ),
+        "unparsedDirectSegments": sorted(unparsed, key=lambda row: (row["firstSegment"], row["station"])),
         "explicitAccess": explicit,
         "rows": rows,
     }
