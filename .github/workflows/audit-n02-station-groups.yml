@@ -27,6 +27,7 @@ jobs:
           python -m py_compile scripts/audit_unparsed_route_members.py
           python -m py_compile scripts/audit_yahoo_targeted.py
           python -m py_compile scripts/audit_yahoo_flagged_station_baselines.py
+          python -m py_compile scripts/audit_address_origin_resolution.py
           python -m py_compile scripts/apply_confirmed_station_fixes.py
       - name: Run N02 station-group audit
         run: python scripts/audit_n02_station_groups.py
@@ -46,6 +47,9 @@ jobs:
       - name: Re-query flagged station baselines on Yahoo
         continue-on-error: true
         run: python scripts/audit_yahoo_flagged_station_baselines.py
+      - name: Audit address-origin resolution
+        continue-on-error: true
+        run: python scripts/audit_address_origin_resolution.py
       - name: Show report summaries
         if: always()
         run: |
@@ -69,6 +73,18 @@ jobs:
               for row in doc['rows']:
                   print(row['station'], row.get('storedDeparture'), row.get('summaryDeparture'), row.get('minuteDelta'), row.get('error'))
           PY
+          echo '--- address-origin resolution ---'
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          path = Path('data/address-origin-resolution-audit.json')
+          if path.exists():
+              doc = json.loads(path.read_text(encoding='utf-8'))
+              for row in doc['rows']:
+                  yahoo = row.get('yahoo') or {}
+                  reverse = row.get('reverseGeocode') or {}
+                  print(row.get('station'), row.get('id'), repr(reverse.get('address')), row.get('storedDeparture'), yahoo.get('summaryDeparture'), row.get('gainMinutes'), row.get('nearestYahooCoordinateDistanceM'), row.get('error'))
+          PY
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -86,3 +102,4 @@ jobs:
             data/same-name-station-route-audit.md
             data/yahoo-targeted-audit.json
             data/yahoo-flagged-station-baselines.json
+            data/address-origin-resolution-audit.json
