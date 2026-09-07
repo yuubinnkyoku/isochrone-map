@@ -5,19 +5,15 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from audit_n02_station_groups import (
-    build_n02,
-    fetch_n02,
-    haversine_m,
-    match_station,
-    norm_line,
-)
+from audit_n02_coverage import load_overrides, match_with_overrides
+from audit_n02_station_groups import build_n02, fetch_n02, haversine_m
 
 CANDIDATES = {"熊野前", "目黒", "大井町", "高田馬場", "駒込", "武蔵小杉"}
 
 
 def main() -> None:
     doc = json.loads(Path("data/stations.json").read_text(encoding="utf-8"))
+    overrides = load_overrides(Path("data/n02-station-group-overrides.json"))
     groups, summaries, groups_by_name = build_n02(fetch_n02(
         "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-25/N02-25_GML.zip"
     ))
@@ -25,7 +21,9 @@ def main() -> None:
     for station in doc["stations"]:
         if station.get("station") not in CANDIDATES:
             continue
-        codes, method, _ = match_station(station, summaries, groups_by_name)
+        codes, method, _, override = match_with_overrides(
+            station, summaries, groups_by_name, overrides
+        )
         members = [member for code in codes for member in groups[code]]
         details = []
         for member in members:
@@ -53,6 +51,7 @@ def main() -> None:
             "alternateAccess": station.get("alternateAccess"),
             "matchMethod": method,
             "groupCodes": codes,
+            "overrideReason": override.get("reason") if override else None,
             "n02Members": details,
         })
     rows.sort(key=lambda row: row["station"])
@@ -63,13 +62,14 @@ def main() -> None:
     for row in rows:
         print("===", row["station"], row["id"], "===")
         print("minutes:", row["minutes"], "line:", row["line"], "excluded:", row["excludeFromIdw"])
+        print("groups:", ",".join(row["groupCodes"]), "method:", row["matchMethod"])
         print("route:", row["route"])
         if row["alternateAccess"]:
             print("alternateAccess:", json.dumps(row["alternateAccess"], ensure_ascii=False))
         for member in row["n02Members"]:
             print(
                 f"  {member['distanceM']:7.2f}m  {member['line']}  "
-                f"code={member['stationCode']} operator={member['operator']}"
+                f"group={member['groupCode']} code={member['stationCode']} operator={member['operator']}"
             )
 
 
