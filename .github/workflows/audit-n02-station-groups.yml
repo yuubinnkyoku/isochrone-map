@@ -17,15 +17,26 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Compile audit script
-        run: python -m py_compile scripts/audit_n02_station_groups.py
+      - name: Compile audit scripts
+        run: |
+          python -m py_compile scripts/audit_n02_station_groups.py
+          python -m py_compile scripts/audit_n02_coverage.py
       - name: Run N02 station-group audit
         run: python scripts/audit_n02_station_groups.py
-      - name: Show report summary
-        run: sed -n '1,220p' data/n02-station-group-audit.md
+      - name: Prove N02 50km coverage
+        run: python scripts/audit_n02_coverage.py
+      - name: Show report summaries
+        if: always()
+        run: |
+          sed -n '1,220p' data/n02-station-group-audit.md || true
+          echo '--- coverage ---'
+          cat data/n02-coverage-audit.md || true
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: n02-station-group-audit
           path: |
             data/n02-station-group-audit.json
             data/n02-station-group-audit.md
+            data/n02-coverage-audit.json
+            data/n02-coverage-audit.md
