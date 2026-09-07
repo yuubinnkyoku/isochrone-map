@@ -27,7 +27,16 @@
         "路線バス"
       ],
       "auditResolutionMinutes": 1,
-      "excludedStations": 67
+      "excludedStations": 91,
+      "exactPointAudit": {
+        "method": "Yahoo!乗換案内 flatlon + fromLat/fromLon verification",
+        "searchDate": "2026-08-28",
+        "targetArrival": "08:18",
+        "gainThresholdMinutes": 1,
+        "originToleranceM": 5.0,
+        "flatlonCandidates": 72,
+        "newlyApplied": 24
+      }
     }
   },
   "stations": [
@@ -388,7 +397,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は07:19発だが、自由が丘駅まで徒歩約9分で移動すれば、元地点を07:21ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は07:19発だが、自由が丘駅まで徒歩約9分で移動すれば、元地点を07:21ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "07:20",
+        "arrival": "08:14",
+        "gainMinutes": 1,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "ooichou",
@@ -725,7 +742,30 @@
       "route": "徒歩→熊野前(舎人ライナー)→日暮里・舎人ライナー→西日暮里(舎人ライナー)→徒歩→西日暮里→ＪＲ山手線内回り→大塚(東京都)→徒歩→大塚駅前/都営バス→都営バス・都０２(大塚駅前−錦糸町駅前)→大塚二丁目/都営バス→徒歩6分",
       "passengers": 13313,
       "passengerYear": 2024,
-      "passengerRank": 862
+      "passengerRank": 862,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅の収録座標をYahoo!乗換案内のflatlonで固定し、徒歩・鉄道・路線バスを許可して08:18着で検索すると07:33発（08:14着）が得られ、駅直接検索の07:29発より4分遅く出発できるため、直接検索値はこの地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "accessMode": "徒歩・鉄道・路線バスを許可した地点発経路",
+        "departureFromPoint": "07:33",
+        "arrival": "08:14",
+        "gainMinutes": 4,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit",
+        "originVerification": {
+          "method": "Yahoo walking-link fromLat/fromLon",
+          "distanceM": 0.0,
+          "toleranceM": 5.0
+        },
+        "yahooRouteExcerpt": [
+          "ルート1",
+          "07:33→08:1441分",
+          "577円",
+          "乗換：2回",
+          "早"
+        ]
+      },
+      "note": "IDW補間対象外。収録座標からの地点発検索では、駅直接検索より4分遅く出ても08:18までに到着できる。"
     },
     {
       "id": "shakudoshougakkoumae",
@@ -1020,7 +1060,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は07:43発だが、地下鉄赤塚駅まで徒歩約3分で移動すれば、元地点を07:45ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は07:43発だが、地下鉄赤塚駅まで徒歩約3分で移動すれば、元地点を07:45ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "07:44",
+        "arrival": "08:17",
+        "gainMinutes": 1,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "toubunerima",
@@ -2086,7 +2134,30 @@
       "route": "徒歩→流山駅/京成バス千葉ウエスト→京成バス千葉ウエスト・松７１→南流山駅/京成バス千葉ウエスト→徒歩→南流山→つくばエクスプレス→新御徒町→都営大江戸線→本郷三丁目→東京メトロ丸ノ内線→茗荷谷→徒歩8分",
       "passengers": 2422,
       "passengerYear": 2024,
-      "passengerRank": 1193
+      "passengerRank": 1193,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅の収録座標をYahoo!乗換案内のflatlonで固定し、徒歩・鉄道・路線バスを許可して08:18着で検索すると07:03発（08:12着）が得られ、駅直接検索の07:01発より2分遅く出発できるため、直接検索値はこの地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "accessMode": "徒歩・鉄道・路線バスを許可した地点発経路",
+        "departureFromPoint": "07:03",
+        "arrival": "08:12",
+        "gainMinutes": 2,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit",
+        "originVerification": {
+          "method": "Yahoo walking-link fromLat/fromLon",
+          "distanceM": 0.0,
+          "toleranceM": 5.0
+        },
+        "yahooRouteExcerpt": [
+          "ルート1",
+          "07:03→08:121時間9分",
+          "1,070円",
+          "乗換：3回",
+          "早"
+        ]
+      },
+      "note": "IDW補間対象外。収録座標からの地点発検索では、駅直接検索より2分遅く出ても08:18までに到着できる。"
     },
     {
       "id": "heiwadai",
@@ -2128,7 +2199,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は07:04発だが、南流山駅まで徒歩約15分で移動すれば、元地点を07:08ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は07:04発だが、南流山駅まで徒歩約15分で移動すれば、元地点を07:08ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "07:11",
+        "arrival": "08:12",
+        "gainMinutes": 7,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "koganejoushi",
@@ -2369,7 +2448,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は07:47発だが、上野御徒町駅まで徒歩約4分で移動すれば、元地点を07:48ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は07:47発だが、上野御徒町駅まで徒歩約4分で移動すれば、元地点を07:48ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "07:48",
+        "arrival": "08:12",
+        "gainMinutes": 1,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "ueno",
@@ -3113,7 +3200,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は07:45発だが、馬喰横山駅まで徒歩約4分で移動すれば、元地点を07:46ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は07:45発だが、馬喰横山駅まで徒歩約4分で移動すれば、元地点を07:46ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "07:46",
+        "arrival": "08:17",
+        "gainMinutes": 1,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "tokyo23-003838",
@@ -3183,7 +3278,30 @@
       "duration": 36,
       "passengers": 23281,
       "passengerYear": 2024,
-      "passengerRank": 655
+      "passengerRank": 655,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅の収録座標をYahoo!乗換案内のflatlonで固定し、徒歩・鉄道・路線バスを許可して08:18着で検索すると07:37発（08:14着）が得られ、駅直接検索の07:36発より1分遅く出発できるため、直接検索値はこの地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "accessMode": "徒歩・鉄道・路線バスを許可した地点発経路",
+        "departureFromPoint": "07:37",
+        "arrival": "08:14",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit",
+        "originVerification": {
+          "method": "Yahoo walking-link fromLat/fromLon",
+          "distanceM": 0.0,
+          "toleranceM": 5.0
+        },
+        "yahooRouteExcerpt": [
+          "ルート1",
+          "07:37→08:1437分",
+          "209円",
+          "乗換：1回",
+          "早安"
+        ]
+      },
+      "note": "IDW補間対象外。収録座標からの地点発検索では、駅直接検索より1分遅く出ても08:18までに到着できる。"
     },
     {
       "id": "tokyo23-003773",
@@ -3589,7 +3707,30 @@
       "duration": 37,
       "passengers": 94035,
       "passengerYear": 2024,
-      "passengerRank": 168
+      "passengerRank": 168,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅の収録座標をYahoo!乗換案内のflatlonで固定し、徒歩・鉄道・路線バスを許可して08:18着で検索すると07:38発（08:14着）が得られ、駅直接検索の07:37発より1分遅く出発できるため、直接検索値はこの地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "accessMode": "徒歩・鉄道・路線バスを許可した地点発経路",
+        "departureFromPoint": "07:38",
+        "arrival": "08:14",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit",
+        "originVerification": {
+          "method": "Yahoo walking-link fromLat/fromLon",
+          "distanceM": 0.0,
+          "toleranceM": 5.0
+        },
+        "yahooRouteExcerpt": [
+          "ルート1",
+          "07:38→08:1436分",
+          "377円",
+          "乗換：1回",
+          "早楽"
+        ]
+      },
+      "note": "IDW補間対象外。収録座標からの地点発検索では、駅直接検索より1分遅く出ても08:18までに到着できる。"
     },
     {
       "id": "tokyo23-003256",
@@ -3729,7 +3870,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は07:54発だが、淡路町駅まで徒歩約3分で移動すれば、元地点を07:55ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は07:54発だが、淡路町駅まで徒歩約3分で移動すれば、元地点を07:55ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "07:55",
+        "arrival": "08:17",
+        "gainMinutes": 1,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "tokyo23-003655",
@@ -3967,7 +4116,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は07:47発だが、上野御徒町駅まで徒歩約2分で移動すれば、元地点を07:50ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は07:47発だが、上野御徒町駅まで徒歩約2分で移動すれば、元地点を07:50ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "07:48",
+        "arrival": "08:12",
+        "gainMinutes": 1,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "tokyo23-003543",
@@ -4009,7 +4166,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は07:43発だが、上野御徒町駅まで徒歩約6分で移動すれば、元地点を07:46ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は07:43発だが、上野御徒町駅まで徒歩約6分で移動すれば、元地点を07:46ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "07:45",
+        "arrival": "08:12",
+        "gainMinutes": 2,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "tokyo23-003560",
@@ -4023,7 +4188,30 @@
       "duration": 26,
       "passengers": 41623,
       "passengerYear": 2024,
-      "passengerRank": 391
+      "passengerRank": 391,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅の収録座標をYahoo!乗換案内のflatlonで固定し、徒歩・鉄道・路線バスを許可して08:18着で検索すると07:47発（08:12着）が得られ、駅直接検索の07:46発より1分遅く出発できるため、直接検索値はこの地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "accessMode": "徒歩・鉄道・路線バスを許可した地点発経路",
+        "departureFromPoint": "07:47",
+        "arrival": "08:12",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit",
+        "originVerification": {
+          "method": "Yahoo walking-link fromLat/fromLon",
+          "distanceM": 0.0,
+          "toleranceM": 5.0
+        },
+        "yahooRouteExcerpt": [
+          "ルート1",
+          "07:47→08:1225分",
+          "286円",
+          "乗換：1回",
+          "早"
+        ]
+      },
+      "note": "IDW補間対象外。収録座標からの地点発検索では、駅直接検索より1分遅く出ても08:18までに到着できる。"
     },
     {
       "id": "tokyo23-003469",
@@ -4093,7 +4281,30 @@
       "duration": 35,
       "passengers": 36681,
       "passengerYear": 2024,
-      "passengerRank": 449
+      "passengerRank": 449,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅の収録座標をYahoo!乗換案内のflatlonで固定し、徒歩・鉄道・路線バスを許可して08:18着で検索すると07:38発（08:12着）が得られ、駅直接検索の07:37発より1分遅く出発できるため、直接検索値はこの地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "accessMode": "徒歩・鉄道・路線バスを許可した地点発経路",
+        "departureFromPoint": "07:38",
+        "arrival": "08:12",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit",
+        "originVerification": {
+          "method": "Yahoo walking-link fromLat/fromLon",
+          "distanceM": 0.0,
+          "toleranceM": 5.0
+        },
+        "yahooRouteExcerpt": [
+          "ルート1",
+          "07:38→08:1234分",
+          "286円",
+          "乗換：1回",
+          "早楽"
+        ]
+      },
+      "note": "IDW補間対象外。収録座標からの地点発検索では、駅直接検索より1分遅く出ても08:18までに到着できる。"
     },
     {
       "id": "tokyo23-003519",
@@ -4121,7 +4332,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は07:39発だが、新御徒町駅まで徒歩約8分で移動すれば、元地点を07:42ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は07:39発だが、新御徒町駅まで徒歩約8分で移動すれば、元地点を07:42ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "07:41",
+        "arrival": "08:12",
+        "gainMinutes": 2,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "tokyo23-003571",
@@ -4345,7 +4564,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は07:25発だが、押上駅まで徒歩約7分で移動すれば、元地点を07:30ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は07:25発だが、押上駅まで徒歩約7分で移動すれば、元地点を07:30ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "07:30",
+        "arrival": "08:14",
+        "gainMinutes": 5,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "tokyo23-003646-003654",
@@ -4737,7 +4964,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は07:10発だが、京急蒲田駅まで徒歩約11分で移動すれば、元地点を07:13ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は07:10発だが、京急蒲田駅まで徒歩約11分で移動すれば、元地点を07:13ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "07:12",
+        "arrival": "08:17",
+        "gainMinutes": 2,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "tokyo23-004317",
@@ -5045,7 +5280,30 @@
       "duration": 19,
       "passengers": 31304,
       "passengerYear": 2024,
-      "passengerRank": 515
+      "passengerRank": 515,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅の収録座標をYahoo!乗換案内のflatlonで固定し、徒歩・鉄道・路線バスを許可して08:18着で検索すると07:59発（08:16着）が得られ、駅直接検索の07:57発より2分遅く出発できるため、直接検索値はこの地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "accessMode": "徒歩・鉄道・路線バスを許可した地点発経路",
+        "departureFromPoint": "07:59",
+        "arrival": "08:16",
+        "gainMinutes": 2,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit",
+        "originVerification": {
+          "method": "Yahoo walking-link fromLat/fromLon",
+          "distanceM": 0.0,
+          "toleranceM": 5.0
+        },
+        "yahooRouteExcerpt": [
+          "ルート1",
+          "07:59→08:1617分",
+          "210円",
+          "乗換：0回",
+          "早楽"
+        ]
+      },
+      "note": "IDW補間対象外。収録座標からの地点発検索では、駅直接検索より2分遅く出ても08:18までに到着できる。"
     },
     {
       "id": "tokyo23-003434",
@@ -5059,7 +5317,30 @@
       "duration": 31,
       "passengers": 28507,
       "passengerYear": 2024,
-      "passengerRank": 566
+      "passengerRank": 566,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅の収録座標をYahoo!乗換案内のflatlonで固定し、徒歩・鉄道・路線バスを許可して08:18着で検索すると07:46発（08:16着）が得られ、駅直接検索の07:45発より1分遅く出発できるため、直接検索値はこの地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "accessMode": "徒歩・鉄道・路線バスを許可した地点発経路",
+        "departureFromPoint": "07:46",
+        "arrival": "08:16",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit",
+        "originVerification": {
+          "method": "Yahoo walking-link fromLat/fromLon",
+          "distanceM": 0.0,
+          "toleranceM": 5.0
+        },
+        "yahooRouteExcerpt": [
+          "ルート1",
+          "07:46→08:1630分",
+          "210円",
+          "乗換：0回",
+          "早楽"
+        ]
+      },
+      "note": "IDW補間対象外。収録座標からの地点発検索では、駅直接検索より1分遅く出ても08:18までに到着できる。"
     },
     {
       "id": "tokyo23-003542",
@@ -5101,7 +5382,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は07:56発だが、後楽園駅まで徒歩約6分で移動すれば、元地点を07:58ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は07:56発だが、後楽園駅まで徒歩約6分で移動すれば、元地点を07:58ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "07:57",
+        "arrival": "08:17",
+        "gainMinutes": 1,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "tokyo23-003546",
@@ -5325,7 +5614,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は07:44発だが、新大久保駅まで徒歩約7分で移動すれば、元地点を07:46ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は07:44発だが、新大久保駅まで徒歩約7分で移動すれば、元地点を07:46ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "07:46",
+        "arrival": "08:17",
+        "gainMinutes": 2,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "tokyo23-003689",
@@ -5409,7 +5706,30 @@
       "duration": 17,
       "passengers": 3179,
       "passengerYear": 2024,
-      "passengerRank": 1169
+      "passengerRank": 1169,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅の収録座標をYahoo!乗換案内のflatlonで固定し、徒歩・鉄道・路線バスを許可して08:18着で検索すると08:01発（08:16着）が得られ、駅直接検索の07:59発より2分遅く出発できるため、直接検索値はこの地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "accessMode": "徒歩・鉄道・路線バスを許可した地点発経路",
+        "departureFromPoint": "08:01",
+        "arrival": "08:16",
+        "gainMinutes": 2,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit",
+        "originVerification": {
+          "method": "Yahoo walking-link fromLat/fromLon",
+          "distanceM": 0.0,
+          "toleranceM": 5.0
+        },
+        "yahooRouteExcerpt": [
+          "ルート1",
+          "08:01→08:1615分",
+          "210円",
+          "乗換：0回",
+          "早楽"
+        ]
+      },
+      "note": "IDW補間対象外。収録座標からの地点発検索では、駅直接検索より2分遅く出ても08:18までに到着できる。"
     },
     {
       "id": "tokyo23-003673",
@@ -5521,7 +5841,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は07:36発だが、東長崎駅まで徒歩約12分で移動すれば、元地点を07:42ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は07:36発だが、東長崎駅まで徒歩約12分で移動すれば、元地点を07:42ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "07:42",
+        "arrival": "08:17",
+        "gainMinutes": 6,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "tokyo23-003662",
@@ -6795,7 +7123,30 @@
       "duration": 36,
       "passengers": 94252,
       "passengerYear": 2024,
-      "passengerRank": 167
+      "passengerRank": 167,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅の収録座標をYahoo!乗換案内のflatlonで固定し、徒歩・鉄道・路線バスを許可して08:18着で検索すると07:39発（08:14着）が得られ、駅直接検索の07:38発より1分遅く出発できるため、直接検索値はこの地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "accessMode": "徒歩・鉄道・路線バスを許可した地点発経路",
+        "departureFromPoint": "07:39",
+        "arrival": "08:14",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit",
+        "originVerification": {
+          "method": "Yahoo walking-link fromLat/fromLon",
+          "distanceM": 0.0,
+          "toleranceM": 5.0
+        },
+        "yahooRouteExcerpt": [
+          "ルート1",
+          "07:39→08:1435分",
+          "377円",
+          "乗換：1回",
+          "早楽"
+        ]
+      },
+      "note": "IDW補間対象外。収録座標からの地点発検索では、駅直接検索より1分遅く出ても08:18までに到着できる。"
     },
     {
       "id": "tokyo23-003986",
@@ -6963,7 +7314,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は07:38発だが、新橋駅まで徒歩約5分で移動すれば、元地点を07:41ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は07:38発だが、新橋駅まで徒歩約5分で移動すれば、元地点を07:41ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "07:40",
+        "arrival": "08:17",
+        "gainMinutes": 2,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "tokyo23-004042",
@@ -7159,7 +7518,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は07:48発だが、永田町駅まで徒歩約7分で移動すれば、元地点を07:50ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は07:48発だが、永田町駅まで徒歩約7分で移動すれば、元地点を07:50ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "07:50",
+        "arrival": "08:16",
+        "gainMinutes": 2,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "tokyo23-003954",
@@ -7383,7 +7750,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は07:39発だが、江古田駅まで徒歩約10分で移動すれば、元地点を07:41ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は07:39発だが、江古田駅まで徒歩約10分で移動すれば、元地点を07:41ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "07:41",
+        "arrival": "08:17",
+        "gainMinutes": 2,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "tokyo23-003321",
@@ -7509,7 +7884,30 @@
       "duration": 30,
       "passengers": 29508,
       "passengerYear": 2024,
-      "passengerRank": 548
+      "passengerRank": 548,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅の収録座標をYahoo!乗換案内のflatlonで固定し、徒歩・鉄道・路線バスを許可して08:18着で検索すると07:37発（08:14着）が得られ、駅直接検索の07:35発より2分遅く出発できるため、直接検索値はこの地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "accessMode": "徒歩・鉄道・路線バスを許可した地点発経路",
+        "departureFromPoint": "07:37",
+        "arrival": "08:14",
+        "gainMinutes": 2,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit",
+        "originVerification": {
+          "method": "Yahoo walking-link fromLat/fromLon",
+          "distanceM": 0.0,
+          "toleranceM": 5.0
+        },
+        "yahooRouteExcerpt": [
+          "ルート1",
+          "07:37→08:1437分",
+          "505円",
+          "乗換：1回",
+          "早"
+        ]
+      },
+      "note": "IDW補間対象外。収録座標からの地点発検索では、駅直接検索より2分遅く出ても08:18までに到着できる。"
     },
     {
       "id": "tokyo23-003370",
@@ -7523,7 +7921,30 @@
       "duration": 40,
       "passengers": 3266,
       "passengerYear": 2024,
-      "passengerRank": 1164
+      "passengerRank": 1164,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅の収録座標をYahoo!乗換案内のflatlonで固定し、徒歩・鉄道・路線バスを許可して08:18着で検索すると07:33発（08:12着）が得られ、駅直接検索の07:32発より1分遅く出発できるため、直接検索値はこの地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "accessMode": "徒歩・鉄道・路線バスを許可した地点発経路",
+        "departureFromPoint": "07:33",
+        "arrival": "08:12",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit",
+        "originVerification": {
+          "method": "Yahoo walking-link fromLat/fromLon",
+          "distanceM": 0.0,
+          "toleranceM": 5.0
+        },
+        "yahooRouteExcerpt": [
+          "ルート1",
+          "07:33→08:1239分",
+          "464円",
+          "乗換：2回",
+          "早"
+        ]
+      },
+      "note": "IDW補間対象外。収録座標からの地点発検索では、駅直接検索より1分遅く出ても08:18までに到着できる。"
     },
     {
       "id": "tokyo23-003359",
@@ -7565,7 +7986,30 @@
       "duration": 49,
       "passengers": 3101,
       "passengerYear": 2024,
-      "passengerRank": 1173
+      "passengerRank": 1173,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅の収録座標をYahoo!乗換案内のflatlonで固定し、徒歩・鉄道・路線バスを許可して08:18着で検索すると07:29発（08:14着）が得られ、駅直接検索の07:25発より4分遅く出発できるため、直接検索値はこの地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "accessMode": "徒歩・鉄道・路線バスを許可した地点発経路",
+        "departureFromPoint": "07:29",
+        "arrival": "08:14",
+        "gainMinutes": 4,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit",
+        "originVerification": {
+          "method": "Yahoo walking-link fromLat/fromLon",
+          "distanceM": 0.0,
+          "toleranceM": 5.0
+        },
+        "yahooRouteExcerpt": [
+          "ルート1",
+          "07:29→08:1445分",
+          "577円",
+          "乗換：2回",
+          "早"
+        ]
+      },
+      "note": "IDW補間対象外。収録座標からの地点発検索では、駅直接検索より4分遅く出ても08:18までに到着できる。"
     },
     {
       "id": "tokyo23-003255",
@@ -7593,7 +8037,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は07:26発だが、田端駅まで徒歩約22分で移動すれば、元地点を07:27ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は07:26発だが、田端駅まで徒歩約22分で移動すれば、元地点を07:27ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "07:27",
+        "arrival": "08:10",
+        "gainMinutes": 1,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "tokyo23-003339",
@@ -7677,7 +8129,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は07:31発だが、町屋駅まで徒歩約7分で移動すれば、元地点を07:35ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は07:31発だが、町屋駅まで徒歩約7分で移動すれば、元地点を07:35ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "07:34",
+        "arrival": "08:14",
+        "gainMinutes": 3,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "tokyo23-003299",
@@ -7719,7 +8179,30 @@
       "duration": 44,
       "passengers": 699,
       "passengerYear": 2024,
-      "passengerRank": 1244
+      "passengerRank": 1244,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅の収録座標をYahoo!乗換案内のflatlonで固定し、徒歩・鉄道・路線バスを許可して08:18着で検索すると07:29発（08:12着）が得られ、駅直接検索の07:28発より1分遅く出発できるため、直接検索値はこの地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "accessMode": "徒歩・鉄道・路線バスを許可した地点発経路",
+        "departureFromPoint": "07:29",
+        "arrival": "08:12",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit",
+        "originVerification": {
+          "method": "Yahoo walking-link fromLat/fromLon",
+          "distanceM": 0.0,
+          "toleranceM": 5.0
+        },
+        "yahooRouteExcerpt": [
+          "ルート1",
+          "07:29→08:1243分",
+          "464円",
+          "乗換：2回",
+          "早"
+        ]
+      },
+      "note": "IDW補間対象外。収録座標からの地点発検索では、駅直接検索より1分遅く出ても08:18までに到着できる。"
     },
     {
       "id": "tokyo23-003306",
@@ -7747,7 +8230,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は07:31発だが、町屋駅まで徒歩約6分で移動すれば、元地点を07:36ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は07:31発だが、町屋駅まで徒歩約6分で移動すれば、元地点を07:36ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "07:34",
+        "arrival": "08:14",
+        "gainMinutes": 3,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "tokyo23-003322",
@@ -7831,7 +8322,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は07:27発だが、荒川車庫前駅まで徒歩約7分で移動すれば、元地点を07:29ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は07:27発だが、荒川車庫前駅まで徒歩約7分で移動すれば、元地点を07:29ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "07:29",
+        "arrival": "08:14",
+        "gainMinutes": 2,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "tokyo23-003274",
@@ -8055,7 +8554,30 @@
       "duration": 16,
       "passengers": 7990,
       "passengerYear": 2024,
-      "passengerRank": 1013
+      "passengerRank": 1013,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅の収録座標をYahoo!乗換案内のflatlonで固定し、徒歩・鉄道・路線バスを許可して08:18着で検索すると07:59発（08:14着）が得られ、駅直接検索の07:58発より1分遅く出発できるため、直接検索値はこの地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "accessMode": "徒歩・鉄道・路線バスを許可した地点発経路",
+        "departureFromPoint": "07:59",
+        "arrival": "08:14",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit",
+        "originVerification": {
+          "method": "Yahoo walking-link fromLat/fromLon",
+          "distanceM": 0.0,
+          "toleranceM": 5.0
+        },
+        "yahooRouteExcerpt": [
+          "ルート1",
+          "07:59→08:1415分",
+          "210円",
+          "乗換：0回",
+          "早楽"
+        ]
+      },
+      "note": "IDW補間対象外。収録座標からの地点発検索では、駅直接検索より1分遅く出ても08:18までに到着できる。"
     },
     {
       "id": "tokyo23-003490",
@@ -8083,7 +8605,30 @@
       "duration": 22,
       "passengers": 1180,
       "passengerYear": 2024,
-      "passengerRank": 1232
+      "passengerRank": 1232,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅の収録座標をYahoo!乗換案内のflatlonで固定し、徒歩・鉄道・路線バスを許可して08:18着で検索すると07:53発（08:14着）が得られ、駅直接検索の07:52発より1分遅く出発できるため、直接検索値はこの地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "accessMode": "徒歩・鉄道・路線バスを許可した地点発経路",
+        "departureFromPoint": "07:53",
+        "arrival": "08:14",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit",
+        "originVerification": {
+          "method": "Yahoo walking-link fromLat/fromLon",
+          "distanceM": 0.0,
+          "toleranceM": 5.0
+        },
+        "yahooRouteExcerpt": [
+          "ルート1",
+          "07:53→08:1421分",
+          "210円",
+          "乗換：0回",
+          "早楽"
+        ]
+      },
+      "note": "IDW補間対象外。収録座標からの地点発検索では、駅直接検索より1分遅く出ても08:18までに到着できる。"
     },
     {
       "id": "tokyo23-003319",
@@ -8251,7 +8796,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は07:58発だが、東池袋駅まで徒歩約5分で移動すれば、元地点を08:02ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は07:58発だが、東池袋駅まで徒歩約5分で移動すれば、元地点を08:02ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "08:00",
+        "arrival": "08:17",
+        "gainMinutes": 2,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "tokyo23-003471",
@@ -8741,7 +9294,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は07:11発だが、市川駅まで徒歩約17分で移動すれば、元地点を07:12ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は07:11発だが、市川駅まで徒歩約17分で移動すれば、元地点を07:12ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "07:13",
+        "arrival": "08:12",
+        "gainMinutes": 2,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "n02-002988",
@@ -8811,7 +9372,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は07:12発だが、舞浜駅まで徒歩約8分で移動すれば、元地点を07:23ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は07:12発だが、舞浜駅まで徒歩約8分で移動すれば、元地点を07:23ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "07:22",
+        "arrival": "08:16",
+        "gainMinutes": 10,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "n02-003409",
@@ -8895,7 +9464,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は07:12発だが、市川駅まで徒歩約9分で移動すれば、元地点を07:20ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は07:12発だが、市川駅まで徒歩約9分で移動すれば、元地点を07:20ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "07:18",
+        "arrival": "08:12",
+        "gainMinutes": 6,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "n02-004098",
@@ -9035,7 +9612,30 @@
       "duration": 54,
       "passengers": 14604,
       "passengerYear": 2024,
-      "passengerRank": 830
+      "passengerRank": 830,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅の収録座標をYahoo!乗換案内のflatlonで固定し、徒歩・鉄道・路線バスを許可して08:18着で検索すると07:21発（08:14着）が得られ、駅直接検索の07:20発より1分遅く出発できるため、直接検索値はこの地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "accessMode": "徒歩・鉄道・路線バスを許可した地点発経路",
+        "departureFromPoint": "07:21",
+        "arrival": "08:14",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit",
+        "originVerification": {
+          "method": "Yahoo walking-link fromLat/fromLon",
+          "distanceM": 0.0,
+          "toleranceM": 5.0
+        },
+        "yahooRouteExcerpt": [
+          "ルート1",
+          "07:21→08:1453分",
+          "1,279円",
+          "乗換：1回",
+          "早楽"
+        ]
+      },
+      "note": "IDW補間対象外。収録座標からの地点発検索では、駅直接検索より1分遅く出ても08:18までに到着できる。"
     },
     {
       "id": "n02-003136",
@@ -9287,7 +9887,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は07:17発だが、本八幡駅まで徒歩約5分で移動すれば、元地点を07:20ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は07:17発だが、本八幡駅まで徒歩約5分で移動すれば、元地点を07:20ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "07:18",
+        "arrival": "08:14",
+        "gainMinutes": 1,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "n02-003978",
@@ -9427,7 +10035,30 @@
       "duration": 60,
       "passengers": 4024,
       "passengerYear": 2024,
-      "passengerRank": 1136
+      "passengerRank": 1136,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅の収録座標をYahoo!乗換案内のflatlonで固定し、徒歩・鉄道・路線バスを許可して08:18着で検索すると07:09発（08:16着）が得られ、駅直接検索の07:08発より1分遅く出発できるため、直接検索値はこの地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "accessMode": "徒歩・鉄道・路線バスを許可した地点発経路",
+        "departureFromPoint": "07:09",
+        "arrival": "08:16",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit",
+        "originVerification": {
+          "method": "Yahoo walking-link fromLat/fromLon",
+          "distanceM": 0.0,
+          "toleranceM": 5.0
+        },
+        "yahooRouteExcerpt": [
+          "ルート1",
+          "07:09→08:161時間7分",
+          "618円",
+          "乗換：2回",
+          "早"
+        ]
+      },
+      "note": "IDW補間対象外。収録座標からの地点発検索では、駅直接検索より1分遅く出ても08:18までに到着できる。"
     },
     {
       "id": "n02-004150",
@@ -9609,7 +10240,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は07:10発だが、下総中山駅まで徒歩約9分で移動すれば、元地点を07:14ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は07:10発だが、下総中山駅まで徒歩約9分で移動すれば、元地点を07:14ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "07:17",
+        "arrival": "08:14",
+        "gainMinutes": 7,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "n02-003937",
@@ -10029,7 +10668,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は07:10発だが、西船橋駅まで徒歩約9分で移動すれば、元地点を07:11ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は07:10発だが、西船橋駅まで徒歩約9分で移動すれば、元地点を07:11ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "07:11",
+        "arrival": "08:14",
+        "gainMinutes": 1,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "n02-004424",
@@ -10057,7 +10704,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は07:22発だが、川崎駅まで徒歩約8分で移動すれば、元地点を07:23ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は07:22発だが、川崎駅まで徒歩約8分で移動すれば、元地点を07:23ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "07:23",
+        "arrival": "08:17",
+        "gainMinutes": 1,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "n02-003547",
@@ -10267,7 +10922,30 @@
       "duration": 82,
       "passengers": 12750,
       "passengerYear": 2024,
-      "passengerRank": 886
+      "passengerRank": 886,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅の収録座標をYahoo!乗換案内のflatlonで固定し、徒歩・鉄道・路線バスを許可して08:18着で検索すると07:00発（08:14着）が得られ、駅直接検索の06:52発より8分遅く出発できるため、直接検索値はこの地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "accessMode": "徒歩・鉄道・路線バスを許可した地点発経路",
+        "departureFromPoint": "07:00",
+        "arrival": "08:14",
+        "gainMinutes": 8,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit",
+        "originVerification": {
+          "method": "Yahoo walking-link fromLat/fromLon",
+          "distanceM": 0.0,
+          "toleranceM": 5.0
+        },
+        "yahooRouteExcerpt": [
+          "ルート1",
+          "07:00→08:141時間14分",
+          "701円",
+          "乗換：2回",
+          "早楽安"
+        ]
+      },
+      "note": "IDW補間対象外。収録座標からの地点発検索では、駅直接検索より8分遅く出ても08:18までに到着できる。"
     },
     {
       "id": "n02-003387",
@@ -10715,7 +11393,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は06:50発だが、府中駅まで徒歩約12分で移動すれば、元地点を06:52ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は06:50発だが、府中駅まで徒歩約12分で移動すれば、元地点を06:52ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "06:52",
+        "arrival": "08:04",
+        "gainMinutes": 2,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "n02-003944",
@@ -10813,7 +11499,30 @@
       "duration": 56,
       "passengers": 90840,
       "passengerYear": 2024,
-      "passengerRank": 173
+      "passengerRank": 173,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅の収録座標をYahoo!乗換案内のflatlonで固定し、徒歩・鉄道・路線バスを許可して08:18着で検索すると07:18発（08:12着）が得られ、駅直接検索の07:16発より2分遅く出発できるため、直接検索値はこの地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "accessMode": "徒歩・鉄道・路線バスを許可した地点発経路",
+        "departureFromPoint": "07:18",
+        "arrival": "08:12",
+        "gainMinutes": 2,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit",
+        "originVerification": {
+          "method": "Yahoo walking-link fromLat/fromLon",
+          "distanceM": 0.0,
+          "toleranceM": 5.0
+        },
+        "yahooRouteExcerpt": [
+          "ルート1",
+          "07:18→08:1254分",
+          "618円",
+          "乗換：2回",
+          "早"
+        ]
+      },
+      "note": "IDW補間対象外。収録座標からの地点発検索では、駅直接検索より2分遅く出ても08:18までに到着できる。"
     },
     {
       "id": "n02-004488",
@@ -11135,7 +11844,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は07:00発だが、久米川駅まで徒歩約14分で移動すれば、元地点を07:04ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は07:00発だが、久米川駅まで徒歩約14分で移動すれば、元地点を07:04ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "07:05",
+        "arrival": "08:14",
+        "gainMinutes": 5,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "n02-004517",
@@ -11415,7 +12132,30 @@
       "duration": 83,
       "passengers": null,
       "passengerYear": null,
-      "passengerRank": null
+      "passengerRank": null,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅の収録座標をYahoo!乗換案内のflatlonで固定し、徒歩・鉄道・路線バスを許可して08:18着で検索すると06:55発（08:17着）が得られ、駅直接検索の06:54発より1分遅く出発できるため、直接検索値はこの地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "accessMode": "徒歩・鉄道・路線バスを許可した地点発経路",
+        "departureFromPoint": "06:55",
+        "arrival": "08:17",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit",
+        "originVerification": {
+          "method": "Yahoo walking-link fromLat/fromLon",
+          "distanceM": 0.0,
+          "toleranceM": 5.0
+        },
+        "yahooRouteExcerpt": [
+          "ルート1",
+          "06:55→08:171時間22分",
+          "759円",
+          "乗換：2回",
+          "早楽"
+        ]
+      },
+      "note": "IDW補間対象外。収録座標からの地点発検索では、駅直接検索より1分遅く出ても08:18までに到着できる。"
     },
     {
       "id": "n02-002856",
@@ -12297,6 +13037,14 @@
         "searchDate": "2026-08-28",
         "accessMode": "徒歩",
         "routingBasis": "実経路確認"
+      },
+      "flatlonAudit": {
+        "departureFromPoint": "06:52",
+        "arrival": "08:14",
+        "gainMinutes": 501,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
       }
     },
     {
@@ -13473,7 +14221,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は06:57発だが、幕張駅まで徒歩約7分で移動すれば、元地点を06:58ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は06:57発だが、幕張駅まで徒歩約7分で移動すれば、元地点を06:58ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "06:59",
+        "arrival": "08:12",
+        "gainMinutes": 2,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "n02-003135",
@@ -14607,7 +15363,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は06:53発だが、稲毛駅まで徒歩約11分で移動すれば、元地点を06:54ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は06:53発だが、稲毛駅まで徒歩約11分で移動すれば、元地点を06:54ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "06:54",
+        "arrival": "08:12",
+        "gainMinutes": 1,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "n02-003507",
@@ -15223,7 +15987,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は06:49発だが、千葉駅まで徒歩約17分で移動すれば、元地点を06:50ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は06:49発だが、千葉駅まで徒歩約17分で移動すれば、元地点を06:50ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "06:52",
+        "arrival": "08:10",
+        "gainMinutes": 3,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "n02-004615",
@@ -15251,7 +16023,30 @@
       "duration": 82,
       "passengers": 3858,
       "passengerYear": 2024,
-      "passengerRank": 1145
+      "passengerRank": 1145,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅の収録座標をYahoo!乗換案内のflatlonで固定し、徒歩・鉄道・路線バスを許可して08:18着で検索すると06:51発（08:12着）が得られ、駅直接検索の06:50発より1分遅く出発できるため、直接検索値はこの地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "accessMode": "徒歩・鉄道・路線バスを許可した地点発経路",
+        "departureFromPoint": "06:51",
+        "arrival": "08:12",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit",
+        "originVerification": {
+          "method": "Yahoo walking-link fromLat/fromLon",
+          "distanceM": 0.0,
+          "toleranceM": 5.0
+        },
+        "yahooRouteExcerpt": [
+          "ルート1",
+          "06:51→08:121時間21分",
+          "1,093円",
+          "乗換：3回",
+          "早"
+        ]
+      },
+      "note": "IDW補間対象外。収録座標からの地点発検索では、駅直接検索より1分遅く出ても08:18までに到着できる。"
     },
     {
       "id": "n02-004537",
@@ -15321,7 +16116,30 @@
       "duration": 84,
       "passengers": 47824,
       "passengerYear": 2024,
-      "passengerRank": 338
+      "passengerRank": 338,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅の収録座標をYahoo!乗換案内のflatlonで固定し、徒歩・鉄道・路線バスを許可して08:18着で検索すると06:45発（08:08着）が得られ、駅直接検索の06:44発より1分遅く出発できるため、直接検索値はこの地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "accessMode": "徒歩・鉄道・路線バスを許可した地点発経路",
+        "departureFromPoint": "06:45",
+        "arrival": "08:08",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit",
+        "originVerification": {
+          "method": "Yahoo walking-link fromLat/fromLon",
+          "distanceM": 0.0,
+          "toleranceM": 5.0
+        },
+        "yahooRouteExcerpt": [
+          "ルート1",
+          "06:45→08:081時間23分",
+          "981円",
+          "乗換：3回",
+          "早"
+        ]
+      },
+      "note": "IDW補間対象外。収録座標からの地点発検索では、駅直接検索より1分遅く出ても08:18までに到着できる。"
     },
     {
       "id": "n02-003487",
@@ -15377,7 +16195,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は06:34発だが、牛浜駅まで徒歩約12分で移動すれば、元地点を06:39ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は06:34発だが、牛浜駅まで徒歩約12分で移動すれば、元地点を06:39ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "06:39",
+        "arrival": "08:08",
+        "gainMinutes": 5,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "n02-004549",
@@ -15601,7 +16427,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は06:51発だが、千葉駅まで徒歩約8分で移動すれば、元地点を06:59ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は06:51発だが、千葉駅まで徒歩約8分で移動すれば、元地点を06:59ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "07:00",
+        "arrival": "08:10",
+        "gainMinutes": 9,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "n02-003028",
@@ -15811,7 +16645,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は07:01発だが、千葉駅まで徒歩約3分で移動すれば、元地点を07:04ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は07:01発だが、千葉駅まで徒歩約3分で移動すれば、元地点を07:04ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "07:03",
+        "arrival": "08:10",
+        "gainMinutes": 2,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "n02-004028",
@@ -15895,7 +16737,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は06:53発だが、千葉駅まで徒歩約9分で移動すれば、元地点を06:58ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は06:53発だが、千葉駅まで徒歩約9分で移動すれば、元地点を06:58ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "06:59",
+        "arrival": "08:10",
+        "gainMinutes": 6,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "n02-002852",
@@ -15937,7 +16787,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は06:54発だが、千葉駅まで徒歩約12分で移動すれば、元地点を06:55ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は06:54発だが、千葉駅まで徒歩約12分で移動すれば、元地点を06:55ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "06:55",
+        "arrival": "08:10",
+        "gainMinutes": 1,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "n02-004151",
@@ -15979,7 +16837,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は06:52発だが、千葉駅まで徒歩約12分で移動すれば、元地点を06:55ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は06:52発だが、千葉駅まで徒歩約12分で移動すれば、元地点を06:55ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "06:54",
+        "arrival": "08:10",
+        "gainMinutes": 2,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "n02-002782",
@@ -17351,7 +18217,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は06:44発だが、下飯田駅まで徒歩約7分で移動すれば、元地点を06:49ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は06:44発だが、下飯田駅まで徒歩約7分で移動すれば、元地点を06:49ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "06:50",
+        "arrival": "08:12",
+        "gainMinutes": 6,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "n02-002860",
@@ -17813,7 +18687,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は06:23発だが、高尾山口駅まで徒歩約6分で移動すれば、元地点を06:26ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は06:23発だが、高尾山口駅まで徒歩約6分で移動すれば、元地点を06:26ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "06:24",
+        "arrival": "08:04",
+        "gainMinutes": 1,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "n02-004860",
@@ -17911,7 +18793,30 @@
       "duration": 97,
       "passengers": null,
       "passengerYear": null,
-      "passengerRank": null
+      "passengerRank": null,
+      "excludeFromIdw": true,
+      "idwExclusionReason": "駅の収録座標をYahoo!乗換案内のflatlonで固定し、徒歩・鉄道・路線バスを許可して08:18着で検索すると06:38発（08:14着）が得られ、駅直接検索の06:37発より1分遅く出発できるため、直接検索値はこの地点の時間距離を代表しない。",
+      "alternateAccess": {
+        "accessMode": "徒歩・鉄道・路線バスを許可した地点発経路",
+        "departureFromPoint": "06:38",
+        "arrival": "08:14",
+        "gainMinutes": 1,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit",
+        "originVerification": {
+          "method": "Yahoo walking-link fromLat/fromLon",
+          "distanceM": 0.0,
+          "toleranceM": 5.0
+        },
+        "yahooRouteExcerpt": [
+          "ルート1",
+          "06:38→08:141時間36分",
+          "2,279円",
+          "乗換：4回",
+          "早"
+        ]
+      },
+      "note": "IDW補間対象外。収録座標からの地点発検索では、駅直接検索より1分遅く出ても08:18までに到着できる。"
     },
     {
       "id": "n02-002867",
@@ -18010,6 +18915,14 @@
         "arrival": "07:55",
         "searchDate": "2026-08-28",
         "routingBasis": "実経路確認"
+      },
+      "flatlonAudit": {
+        "departureFromPoint": "06:00",
+        "arrival": "08:04",
+        "gainMinutes": 525,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
       }
     },
     {
@@ -18374,7 +19287,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は05:36発だが、東毛呂駅まで徒歩約19分で移動すれば、元地点を06:23ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は05:36発だが、東毛呂駅まで徒歩約19分で移動すれば、元地点を06:23ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "06:27",
+        "arrival": "08:17",
+        "gainMinutes": 51,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "n02-002724",
@@ -18836,7 +19757,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は06:40発だが、鎌倉駅まで徒歩約12分で移動すれば、元地点を06:42ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は06:40発だが、鎌倉駅まで徒歩約12分で移動すれば、元地点を06:42ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "06:41",
+        "arrival": "08:17",
+        "gainMinutes": 1,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "n02-005133",
@@ -18948,7 +19877,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は06:40発だが、藤沢駅まで徒歩約9分で移動すれば、元地点を06:49ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は06:40発だが、藤沢駅まで徒歩約9分で移動すれば、元地点を06:49ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "06:47",
+        "arrival": "08:17",
+        "gainMinutes": 7,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "n02-002694",
@@ -19116,7 +20053,15 @@
         "searchDate": "2026-08-28",
         "routingBasis": "OpenStreetMap歩行経路で監査"
       },
-      "note": "IDW補間対象外。直接乗車は06:38発だが、藤沢駅まで徒歩約17分で移動すれば、元地点を06:41ごろに出ても08:18までに到着可能。"
+      "note": "IDW補間対象外。直接乗車は06:38発だが、藤沢駅まで徒歩約17分で移動すれば、元地点を06:41ごろに出ても08:18までに到着可能。",
+      "flatlonAudit": {
+        "departureFromPoint": "06:40",
+        "arrival": "08:17",
+        "gainMinutes": 2,
+        "originDistanceM": 0.0,
+        "searchDate": "2026-08-28",
+        "routingBasis": "Yahoo!乗換案内 flatlon exact-point audit"
+      }
     },
     {
       "id": "n02-005053",
