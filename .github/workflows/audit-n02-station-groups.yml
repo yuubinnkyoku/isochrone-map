@@ -1,0 +1,31 @@
+name: Audit N02 station groups
+
+on:
+  push:
+    branches:
+      - audit-n02-station-groups
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile audit script
+        run: python -m py_compile scripts/audit_n02_station_groups.py
+      - name: Run N02 station-group audit
+        run: python scripts/audit_n02_station_groups.py
+      - name: Show report summary
+        run: sed -n '1,220p' data/n02-station-group-audit.md
+      - uses: actions/upload-artifact@v4
+        with:
+          name: n02-station-group-audit
+          path: |
+            data/n02-station-group-audit.json
+            data/n02-station-group-audit.md
