@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Audit project station grouping against MLIT N02-25.
 
-The script is read-only with respect to ``data/stations.json``.  It downloads the
+The script is read-only with respect to ``data/stations.json``. It downloads the
 N02-25 railway data, keeps every route-specific station record, and reports cases
 that can be hidden by representing a transfer station with one name/coordinate.
 """
@@ -25,7 +25,6 @@ USER_AGENT = "isochrone-map-n02-audit/2"
 
 def norm_name(value: object) -> str:
     name = unicodedata.normalize("NFKC", str(value)).strip()
-    # Project-only suffixes used to distinguish stations that share a display name.
     name = re.sub(
         r"[（(](?:流鉄|東京メトロ|東西線|都電|都電荒川線|TX|つくばエクスプレス)[）)]$",
         "",
@@ -37,12 +36,7 @@ def norm_name(value: object) -> str:
 
 def norm_line(value: object) -> str:
     line = unicodedata.normalize("NFKC", str(value or "")).strip().casefold()
-    replacements = {
-        "東京さくらトラム": "荒川線",
-        "都電荒川線": "荒川線",
-    }
-    for old, new in replacements.items():
-        line = line.replace(old, new)
+    line = line.replace("東京さくらトラム", "荒川線").replace("都電荒川線", "荒川線")
     for prefix in (
         "東京メトロ",
         "都営地下鉄",
@@ -102,11 +96,7 @@ def fetch_n02(url: str) -> dict:
     with urllib.request.urlopen(request, timeout=180) as response:
         payload = response.read()
     with zipfile.ZipFile(io.BytesIO(payload)) as archive:
-        candidates = [
-            name
-            for name in archive.namelist()
-            if name.casefold().endswith("station.geojson")
-        ]
+        candidates = [name for name in archive.namelist() if name.casefold().endswith("station.geojson")]
         if not candidates:
             raise RuntimeError("N02-25 archive contains no Station GeoJSON")
         candidates.sort(key=lambda name: ("utf-8" not in name.casefold(), len(name), name))
@@ -170,7 +160,8 @@ def build_n02(geojson: dict):
 def encoded_group_codes(station_id: str) -> list[str] | None:
     for prefix in ("tokyo23-", "n02-"):
         if station_id.startswith(prefix):
-            codes = station_id[len(prefix) :].split("+")
+            # Historical generated IDs used both '+' and '-' between multiple N02 groups.
+            codes = re.split(r"[+-]", station_id[len(prefix) :])
             return codes if codes and all(code.isdigit() for code in codes) else None
     return None
 
@@ -207,7 +198,7 @@ def nearest_member(lat: float, lng: float, members: list[dict]) -> tuple[float, 
 
 
 def max_group_distance(codes: list[str], summaries: dict) -> tuple[float, tuple[str, str] | None]:
-    best = (0.0, None)
+    best: tuple[float, tuple[str, str] | None] = (0.0, None)
     for a, b in combinations(codes, 2):
         ga, gb = summaries[a], summaries[b]
         distance = haversine_m(ga["lat"], ga["lng"], gb["lat"], gb["lng"])
@@ -309,9 +300,13 @@ def audit(doc: dict, groups: dict, summaries: dict, groups_by_name: dict, args) 
     same_name_pairs = []
     for normalized_name, code_set in groups_by_name.items():
         codes = sorted(code_set)
-        if len(codes) < 2 or not used_groups.intersection(codes):
+        if len(codes) < 2:
             continue
         for a, b in combinations(codes, 2):
+            # A same-name pair elsewhere in Japan is irrelevant merely because another
+            # group with that name is used in the 50 km project area.
+            if a not in used_groups and b not in used_groups:
+                continue
             ga, gb = summaries[a], summaries[b]
             distance = haversine_m(ga["lat"], ga["lng"], gb["lat"], gb["lng"])
             if distance <= args.nearby_same_name_m:
