@@ -1,0 +1,216 @@
+name: Finalize exact-point IDW exclusions
+
+on:
+  push:
+    branches:
+      - audit-n02-station-groups
+    paths:
+      - .github/workflows/finalize-flatlon-exclusions.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Download full exact-point shard evidence
+        uses: actions/download-artifact@v4
+        with:
+          pattern: flatlon-shard-*
+          path: data/flatlon-shards
+          merge-multiple: true
+          repository: yuubinnkyoku/isochrone-map
+          run-id: 34138693267
+          github-token: ${{ github.token }}
+
+      - name: Download new-candidate confirmation evidence
+        uses: actions/download-artifact@v4
+        with:
+          name: yahoo-flatlon-new-candidates
+          path: data/flatlon-confirmation
+          repository: yuubinnkyoku/isochrone-map
+          run-id: 34140277401
+          github-token: ${{ github.token }}
+
+      - name: Combine and validate full audit
+        run: |
+          mkdir -p data/flatlon-shards-fixed
+          for f in data/flatlon-shards/flatlon-shard-*.json; do
+            cp "$f" "data/flatlon-shards-fixed/${f##*/flatlon-}"
+          done
+          python scripts/combine_yahoo_flatlon_audit.py \
+            --input-dir data/flatlon-shards-fixed \
+            --json-output data/yahoo-flatlon-full-audit.json \
+            --markdown-output data/yahoo-flatlon-full-audit.md
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          full = json.loads(Path('data/yahoo-flatlon-full-audit.json').read_text(encoding='utf-8'))
+          confirm = json.loads(Path('data/flatlon-confirmation/yahoo-flatlon-new-candidates.json').read_text(encoding='utf-8'))
+          summary = full['summary']
+          expected = {
+              'expectedProjectStations': 1318,
+              'rows': 1318,
+              'uniqueStationIds': 1318,
+              'queriedSuccessfully': 1318,
+              'originVerified': 1318,
+              'errors': 0,
+              'unverifiedOrigins': 0,
+              'flatlonCandidates': 72,
+              'alreadyExcluded': 67,
+              'candidateOverlapExisting': 48,
+              'newFlatlonCandidates': 24,
+              'existingNotReproducedByFlatlon': 19,
+              'complete': True,
+          }
+          for key, value in expected.items():
+              if summary.get(key) != value:
+                  raise SystemExit(f'full-audit mismatch {key}: {summary.get(key)!r} != {value!r}')
+          if confirm.get('summary') != {
+              'candidateCount': 24,
+              'confirmed': 24,
+              'rejected': 0,
+              'originVerified': 24,
+              'prohibitedBusDetected': 0,
+          }:
+              raise SystemExit(f"confirmation summary mismatch: {confirm.get('summary')}")
+          full_new = {row['id'] for row in full['newCandidates']}
+          confirmed = {row['id'] for row in confirm['rows'] if row.get('confirmed')}
+          if full_new != confirmed:
+              raise SystemExit(f'candidate-set mismatch full-only={sorted(full_new-confirmed)} confirm-only={sorted(confirmed-full_new)}')
+
+          # Add the detailed second-pass route to each new candidate so the committed
+          # audit is self-contained, not merely a timing table.
+          details = {row['id']: row for row in confirm['rows']}
+          for row in full['newCandidates']:
+              row['confirmation'] = details[row['id']]
+          by_id = {row['id']: row for row in full['rows']}
+          for station_id, detail in details.items():
+              if station_id in by_id:
+                  by_id[station_id]['confirmation'] = detail
+          Path('data/yahoo-flatlon-full-audit.json').write_text(
+              json.dumps(full, ensure_ascii=False, indent=2) + '\n', encoding='utf-8'
+          )
+          print(json.dumps(summary, ensure_ascii=False, indent=2))
+          PY
+
+      - name: Apply the 24 newly confirmed exclusions
+        run: |
+          python -m py_compile scripts/apply_yahoo_flatlon_exclusions.py
+          python scripts/apply_yahoo_flatlon_exclusions.py \
+            --stations data/stations.json \
+            --audit data/yahoo-flatlon-full-audit.json \
+            --output data/stations.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          doc = json.loads(Path('data/stations.json').read_text(encoding='utf-8'))
+          excluded = [row for row in doc['stations'] if row.get('excludeFromIdw')]
+          if len(doc['stations']) != 1318 or len(excluded) != 91:
+              raise SystemExit(f"unexpected station counts: total={len(doc['stations'])} excluded={len(excluded)}")
+          if doc['meta']['idwExclusionPolicy'].get('excludedStations') != 91:
+              raise SystemExit('meta excludedStations was not updated to 91')
+          print(f"stations={len(doc['stations'])} excluded={len(excluded)} idw={len(doc['stations'])-len(excluded)}")
+          PY
+
+      - name: Update documentation and cache versions
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          readme = Path('README.md')
+          text = readme.read_text(encoding='utf-8')
+          replacements = {
+              '補間対象1251駅': '補間対象1227駅',
+              '（現在67駅を除外）': '（現在91駅を除外）',
+          }
+          for old, new in replacements.items():
+              if text.count(old) != 1:
+                  raise SystemExit(f'README expected exactly one {old!r}, got {text.count(old)}')
+              text = text.replace(old, new)
+          readme.write_text(text, encoding='utf-8')
+
+          config = Path('js/config.js')
+          text = config.read_text(encoding='utf-8')
+          for old, new in [('dataVersion: 20', 'dataVersion: 21'), ('gridVersion: 9', 'gridVersion: 10')]:
+              if text.count(old) != 1:
+                  raise SystemExit(f'config expected exactly one {old!r}, got {text.count(old)}')
+              text = text.replace(old, new)
+          config.write_text(text, encoding='utf-8')
+          PY
+          node --check js/config.js
+
+      - name: Regenerate IDW grid
+        run: node scripts/build_precomputed_grid.mjs
+
+      - name: Verify regenerated data
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+
+          stations = json.loads(Path('data/stations.json').read_text(encoding='utf-8'))
+          meta = json.loads(Path('data/idw-grid.meta.json').read_text(encoding='utf-8'))
+          expected_sha = hashlib.sha256(Path('data/stations.json').read_bytes()).hexdigest()
+          checks = {
+              'sourceStationCount': 1318,
+              'stationCount': 1227,
+              'excludedStationCount': 91,
+          }
+          for key, value in checks.items():
+              if meta.get(key) != value:
+                  raise SystemExit(f'grid meta {key}: {meta.get(key)} != {value}')
+          if len(meta.get('excludedStationIds', [])) != 91:
+              raise SystemExit('grid excludedStationIds length != 91')
+          if meta.get('stationDataSha256') != expected_sha:
+              raise SystemExit('grid stationDataSha256 does not match stations.json')
+          if stations['meta']['idwExclusionPolicy']['excludedStations'] != 91:
+              raise SystemExit('stations.json meta exclusion count mismatch')
+          print(json.dumps({
+              'stationCount': meta['stationCount'],
+              'sourceStationCount': meta['sourceStationCount'],
+              'excludedStationCount': meta['excludedStationCount'],
+              'stationDataSha256': meta['stationDataSha256'],
+              'gridBytes': Path('data/idw-grid.bin').stat().st_size,
+              'gridGzipBytes': Path('data/idw-grid.bin.gz').stat().st_size,
+          }, ensure_ascii=False, indent=2))
+          PY
+
+      - name: Recheck N02 coverage
+        run: python scripts/audit_n02_coverage.py
+
+      - name: Commit finalized audit and data
+        run: |
+          rm -rf data/flatlon-shards data/flatlon-shards-fixed data/flatlon-confirmation
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md js/config.js data/stations.json data/idw-grid.bin data/idw-grid.bin.gz data/idw-grid.meta.json data/yahoo-flatlon-full-audit.json data/yahoo-flatlon-full-audit.md
+          git diff --cached --stat
+          git commit -m "Finalize exact-point IDW exclusions" || exit 1
+          git push origin HEAD:audit-n02-station-groups
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: finalized-exact-point-idw
+          path: |
+            data/stations.json
+            data/idw-grid.bin
+            data/idw-grid.bin.gz
+            data/idw-grid.meta.json
+            data/yahoo-flatlon-full-audit.json
+            data/yahoo-flatlon-full-audit.md
+            README.md
+            js/config.js
