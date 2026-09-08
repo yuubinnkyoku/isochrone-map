@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 1
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
@@ -94,5 +94,6 @@ jobs:
             echo 'No generated changes to commit.'
           else
             git commit -m 'Recompute all 1563 physical station points'
+            git pull --rebase origin physical-station-points-recalc
             git push origin HEAD:physical-station-points-recalc
           fi
