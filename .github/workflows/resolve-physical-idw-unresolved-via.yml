@@ -1,13 +1,12 @@
-name: Resolve physical IDW exclusions via exact N02 adjacency
+name: Diagnose component routes via exact N02 adjacency
 
-# The resolver is deliberately conservative: an adjacent direction must produce a
-# route that demonstrably boards the current physical component. A no-route page is
-# never converted into an exclusion by itself.
+# Diagnostic only. N02 RailroadSection describes infrastructure topology, not a full
+# passenger-service/stopping-pattern graph, so these results must not drive production
+# IDW exclusions. Manual dispatch also avoids accidental high-volume Yahoo queries.
+# The resolver itself remains conservative: every N02 adjacent direction must verify a
+# route that demonstrably boards the current physical component; a no-route page is not
+# impossibility evidence.
 on:
-  push:
-    branches: [recalc-idw-physical-exclusions]
-    paths:
-      - .github/workflows/resolve-physical-idw-unresolved-via.yml
   workflow_dispatch:
 
 permissions:
@@ -27,7 +26,7 @@ jobs:
           python-version: '3.12'
       - name: Rebuild physical-point proposal
         run: python scripts/prepare_physical_station_points.py >/dev/null
-      - name: Derive exact N02 adjacent stations
+      - name: Derive exact N02 infrastructure-adjacent stations
         run: python scripts/build_n02_station_adjacency.py --output data/n02-station-adjacency.json
       - uses: actions/upload-artifact@v4
         with:
@@ -53,7 +52,7 @@ jobs:
         with:
           name: n02-station-adjacency-for-idw
           path: data
-      - name: Download initial four-shard audit
+      - name: Download initial diagnostic shards
         uses: actions/download-artifact@v4
         with:
           pattern: physical-idw-shard-*
@@ -62,7 +61,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           repository: ${{ github.repository }}
           run-id: ${{ env.INITIAL_RUN_ID }}
-      - name: Resolve initial unresolved rows using every exact adjacent station
+      - name: Diagnose unresolved direct-component routes through every N02 adjacent station
         run: |
           python scripts/resolve_physical_idw_unresolved_via.py \
             --input-dir data/initial-idw-shards \
@@ -86,7 +85,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Download initial audit shards
+      - name: Download initial diagnostic shards
         uses: actions/download-artifact@v4
         with:
           pattern: physical-idw-shard-*
@@ -95,13 +94,13 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           repository: ${{ github.repository }}
           run-id: ${{ env.INITIAL_RUN_ID }}
-      - name: Download exact-adjacency resolution shards
+      - name: Download exact-adjacency diagnostic shards
         uses: actions/download-artifact@v4
         with:
           pattern: physical-idw-via-resolution-*
           path: data/via-resolution-shards
           merge-multiple: true
-      - name: Overlay exact-adjacency resolutions and recompute summary
+      - name: Overlay diagnostic resolutions and recompute summary
         run: |
           python scripts/merge_physical_idw_resolutions.py \
             --initial-dir data/initial-idw-shards \
