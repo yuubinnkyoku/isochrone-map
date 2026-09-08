@@ -66,8 +66,8 @@ def main() -> None:
 
     excluded_ids = sorted(s['id'] for s in excluded)
     declared_ids = sorted(policy.get('excludedPhysicalPointIds') or [])
-    # Legacy all-included data did not yet carry excludedPhysicalPointIds.  Once the
-    # comparison audit is complete, the field is required and must match exactly.
+    # Legacy all-included data did not yet carry excludedPhysicalPointIds. Once the
+    # comparison audit is complete, evidence is mandatory for every physical point.
     if policy.get('complete'):
         if declared_ids != excluded_ids:
             raise SystemExit('policy excludedPhysicalPointIds does not match station flags')
@@ -75,6 +75,8 @@ def main() -> None:
             raise SystemExit('complete exclusion policy still has unresolved points')
         if policy.get('comparisonThresholdMinutes') != 1:
             raise SystemExit('comparison threshold must be 1 minute')
+        if not excluded:
+            raise SystemExit('completed comparison audit unexpectedly excludes zero physical points')
 
         for station in stations:
             decision = station.get('physicalPointAudit', {}).get('idwExclusion') or {}
@@ -84,11 +86,24 @@ def main() -> None:
             if decision.get('decision') != expected:
                 raise SystemExit(f"IDW decision/flag mismatch for {station['id']}")
             gain = decision.get('gainMinutes')
+            direct_minutes = decision.get('directMinutes')
+            reason = decision.get('reason')
             if expected == 'exclude':
-                if not isinstance(gain, int) or gain < 1 or decision.get('directMinutes') is None:
-                    raise SystemExit(f"invalid exclusion evidence for {station['id']}: gain={gain}")
-            elif decision.get('directMinutes') is not None and isinstance(gain, int) and gain >= 1:
+                if reason == 'no-feasible-direct-component-route':
+                    if direct_minutes is not None:
+                        raise SystemExit(f"no-feasible-direct exclusion has directMinutes for {station['id']}")
+                elif not isinstance(gain, int) or gain < 1 or direct_minutes is None:
+                    raise SystemExit(f"invalid exclusion evidence for {station['id']}: reason={reason} gain={gain}")
+            elif direct_minutes is not None and isinstance(gain, int) and gain >= 1:
                 raise SystemExit(f"included point has exclusion-sized gain: {station['id']} gain={gain}")
+
+            if decision.get('resolutionPass') == 'exact-n02-adjacent-via':
+                adjacent = decision.get('adjacentRouteResults') or []
+                if not adjacent:
+                    raise SystemExit(f"exact-adjacency resolution lacks adjacency evidence for {station['id']}")
+                unresolved_links = [a for a in adjacent if a.get('status') == 'unresolved']
+                if unresolved_links:
+                    raise SystemExit(f"completed point still has unresolved adjacent links: {station['id']}")
 
     diagnostics = policy.get('exactPointAudit', {}).get('routeSelectionDiagnostics')
     if diagnostics != EXPECTED_DIAGNOSTICS:
@@ -118,9 +133,9 @@ def main() -> None:
     if kuma['003266']['logicalStationId'] != 'kumanomae' or kuma['003270']['logicalStationId'] != 'kumanomae':
         raise SystemExit('熊野前 logical grouping broken')
     if kuma['003266']['physicalPointAudit'].get('reason') != 'boards-different-component':
-        raise SystemExit('熊野前荒川線のアクセス診断が変化した')
+        raise SystemExit('熊野前荒川線のunrestrictedアクセス診断が変化した')
     if kuma['003270']['physicalPointAudit'].get('reason') != 'boards-current-physical-point':
-        raise SystemExit('熊野前舎人ライナーのアクセス診断が変化した')
+        raise SystemExit('熊野前舎人ライナーのunrestrictedアクセス診断が変化した')
     if kuma['003270'].get('excludeFromIdw'):
         raise SystemExit('熊野前舎人ライナー側は自身から乗車するためIDWに残す必要がある')
 
