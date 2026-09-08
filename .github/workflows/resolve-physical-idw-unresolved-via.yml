@@ -1,5 +1,8 @@
 name: Resolve physical IDW exclusions via exact N02 adjacency
 
+# The resolver is deliberately conservative: an adjacent direction must produce a
+# route that demonstrably boards the current physical component. A no-route page is
+# never converted into an exclusion by itself.
 on:
   push:
     branches: [recalc-idw-physical-exclusions]
