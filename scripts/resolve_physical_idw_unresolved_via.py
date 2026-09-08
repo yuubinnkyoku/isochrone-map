@@ -2,20 +2,22 @@
 """Resolve unresolved direct-component baselines with exact adjacent-station vias.
 
 A route that boards a given physical rail component must next reach one of that
-component's route-topological adjacent stations.  N02 adjacency is derived separately
+component's route-topological adjacent stations. N02 adjacency is derived separately
 from RailroadSection geometry by `build_n02_station_adjacency.py`, not guessed from
 straight-line proximity.
 
 For every initially unresolved physical point, this script constrains Yahoo route 1 with
 `via01` for *each* exact adjacent station of every N02 station code represented by the
-physical point.  A candidate counts only when route 1's first rail boarding verifies as
-the queried physical point.  The latest verified departure across all adjacent links is
+physical point. A candidate counts only when route 1's first rail boarding verifies as
+the queried physical point. The latest verified departure across all adjacent links is
 therefore the direct-component baseline.
 
-An exclusion is emitted only when every topological adjacent link has a verified route
-(or an explicitly route-less result) and the unrestricted exact-point departure is at
-least one minute later.  Missing/unverifiable adjacent directions keep the row
-unresolved rather than risking a false exclusion.
+An exclusion is emitted only when every topological adjacent link has a verified direct-
+component route and the unrestricted exact-point departure is at least one minute later.
+A Yahoo 200 response with no route is deliberately NOT treated as proof that a direction
+is impossible, because an ambiguous origin/via label could itself be the reason no route
+was produced. Missing/unverifiable directions remain unresolved rather than risking a
+false exclusion.
 """
 from __future__ import annotations
 
@@ -144,8 +146,10 @@ def main() -> None:
 
         for link in links:
             verified = []
-            had_clean_no_route = False
             link_attempts = 0
+            saw_departure_unverified = False
+            saw_no_route = False
+            saw_error = False
             # Start with unqualified adjacent name; use line/operator-qualified via
             # variants only when necessary to disambiguate same-name stations.
             for via in via_labels(link):
@@ -176,12 +180,11 @@ def main() -> None:
                             'reason': route_class.get('reason'),
                             'firstRail': route_class.get('firstRail'),
                         })
-                        # A successful Yahoo response with no route summary after all
-                        # retries is evidence that this forced adjacent direction has no
-                        # feasible arrival-by-08:18 journey for this query.
-                        if dep_minutes is None and result.get('httpStatus') == 200:
-                            had_clean_no_route = True
-                        if dep_minutes is not None and route_class.get('reason') == 'boards-current-physical-point':
+                        if dep_minutes is None:
+                            saw_no_route = True
+                            attempt['attemptStatus'] = 'no-route-summary'
+                        elif route_class.get('reason') == 'boards-current-physical-point':
+                            attempt['attemptStatus'] = 'verified-direct-component'
                             verified.append({
                                 'originLabel': origin,
                                 'via': via,
@@ -189,7 +192,12 @@ def main() -> None:
                                 'minutes': dep_minutes,
                                 'firstRail': route_class.get('firstRail'),
                             })
+                        else:
+                            saw_departure_unverified = True
+                            attempt['attemptStatus'] = 'route-boards-other-component'
                     except Exception as exc:
+                        saw_error = True
+                        attempt['attemptStatus'] = 'error'
                         attempt['error'] = f'{type(exc).__name__}: {exc}'
                     attempts.append(attempt)
                     time.sleep(args.delay_seconds)
@@ -207,13 +215,21 @@ def main() -> None:
                     'attempts': link_attempts,
                     'best': best,
                 })
-            elif had_clean_no_route:
-                link_results.append({**link, 'status': 'no-feasible-route', 'attempts': link_attempts})
             else:
-                link_results.append({**link, 'status': 'unresolved', 'attempts': link_attempts})
+                # Deliberately conservative: neither a no-route page nor a route that
+                # starts on another component proves this adjacent direction is
+                # impossible from the target component.
+                link_results.append({
+                    **link,
+                    'status': 'unresolved',
+                    'attempts': link_attempts,
+                    'sawNoRoute': saw_no_route,
+                    'sawDepartureOnOtherComponent': saw_departure_unverified,
+                    'sawError': saw_error,
+                })
 
         verified_all = [lr['best'] | {'link': lr} for lr in link_results if lr['status'] == 'verified']
-        incomplete_links = [lr for lr in link_results if lr['status'] == 'unresolved']
+        incomplete_links = [lr for lr in link_results if lr['status'] != 'verified']
         out = dict(row)
         out['resolutionPass'] = 'exact-n02-adjacent-via'
         out['adjacentRouteResults'] = link_results
@@ -229,7 +245,10 @@ def main() -> None:
             out['decision'] = 'unresolved'
             out['decisionReason'] = 'unresolved-adjacent-direction'
             out['error'] = out['decisionReason']
-        elif verified_all:
+        else:
+            # Every topological direction has a route that demonstrably starts on this
+            # physical component, so the latest candidate is the complete direct
+            # baseline for this component.
             best = max(verified_all, key=lambda v: int(v['minutes']))
             gain = int(row['freeMinutes']) - int(best['minutes'])
             link = best['link']
@@ -245,19 +264,6 @@ def main() -> None:
                 'excludeFromIdw': gain >= 1,
                 'decision': 'exclude' if gain >= 1 else 'include',
                 'decisionReason': 'alternate-route-later-departure' if gain >= 1 else 'alternate-route-not-later',
-            })
-            out.pop('error', None)
-        else:
-            # Every adjacent direction was queried successfully but none has a feasible
-            # route to the school by 08:18.  The unrestricted route necessarily uses a
-            # different component/station, so the current component cannot beat it.
-            out.update({
-                'directDeparture': None,
-                'directMinutes': None,
-                'gainMinutes': None,
-                'excludeFromIdw': True,
-                'decision': 'exclude',
-                'decisionReason': 'no-feasible-direct-component-route',
             })
             out.pop('error', None)
 
@@ -278,6 +284,7 @@ def main() -> None:
         'exclude': sum(r.get('decision') == 'exclude' for r in resolved_rows),
         'unresolved': sum(r.get('decision') == 'unresolved' for r in resolved_rows),
         'exactAdjacencyMethod': True,
+        'noRouteNeverAutoExcludes': True,
     }
     Path(args.output).write_text(
         json.dumps({'summary': summary, 'rows': resolved_rows}, ensure_ascii=False, indent=2) + '\n',
