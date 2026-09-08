@@ -8,11 +8,16 @@ on:
       - data/idw-grid.bin
       - data/idw-grid.bin.gz
       - data/idw-grid.meta.json
+      - data/access-grid.bin
+      - data/access-grid.bin.gz
+      - data/access-grid.meta.json
       - scripts/prepare_physical_station_points.py
       - scripts/validate_physical_station_dataset.py
       - scripts/build_physical_station_dataset.py
       - scripts/build_precomputed_grid.mjs
+      - scripts/build_access_grid.mjs
       - js/config.js
+      - js/precomputed-grid.js
       - js/main.js
       - js/markers.js
       - js/ui.js
@@ -25,11 +30,16 @@ on:
       - data/idw-grid.bin
       - data/idw-grid.bin.gz
       - data/idw-grid.meta.json
+      - data/access-grid.bin
+      - data/access-grid.bin.gz
+      - data/access-grid.meta.json
       - scripts/prepare_physical_station_points.py
       - scripts/validate_physical_station_dataset.py
       - scripts/build_physical_station_dataset.py
       - scripts/build_precomputed_grid.mjs
+      - scripts/build_access_grid.mjs
       - js/config.js
+      - js/precomputed-grid.js
       - js/main.js
       - js/markers.js
       - js/ui.js
@@ -52,24 +62,77 @@ jobs:
         run: python scripts/prepare_physical_station_points.py
       - name: Validate station model
         run: python scripts/validate_physical_station_dataset.py
-      - name: Validate IDW metadata and station hash
+      - name: Validate interpolation metadata and station hash
         run: |
           python - <<'PY'
-          import hashlib, json
+          import hashlib, json, math, statistics, struct
           from pathlib import Path
-          stations = Path('data/stations.json')
-          meta = json.loads(Path('data/idw-grid.meta.json').read_text(encoding='utf-8'))
-          sha = hashlib.sha256(stations.read_bytes()).hexdigest()
-          assert meta['stationCount'] == 1563
-          assert meta['sourceStationCount'] == 1563
-          assert meta['excludedStationCount'] == 0
-          assert meta['stationDataSha256'] == sha, (meta['stationDataSha256'], sha)
+
+          stations_path = Path('data/stations.json')
+          stations_doc = json.loads(stations_path.read_text(encoding='utf-8'))
+          sha = hashlib.sha256(stations_path.read_bytes()).hexdigest()
+          idw = json.loads(Path('data/idw-grid.meta.json').read_text(encoding='utf-8'))
+          access = json.loads(Path('data/access-grid.meta.json').read_text(encoding='utf-8'))
+
+          for meta in (idw, access):
+              assert meta['stationCount'] == 1563
+              assert meta['sourceStationCount'] == 1563
+              assert meta['excludedStationCount'] == 0
+              assert meta['stationDataSha256'] == sha, (meta['stationDataSha256'], sha)
+
+          for key in ('rows', 'cols', 'north', 'south', 'west', 'east', 'latStep', 'lngStep', 'scale', 'offsetMinutes', 'nodata'):
+              assert access[key] == idw[key], (key, access[key], idw[key])
+          assert access['mode'] == 'access'
+          assert access['walkingSpeedMetersPerMinute'] == 80
+          assert access['streetDetourFactor'] == 1.25
+
+          raw = Path('data/access-grid.bin').read_bytes()
+          assert len(raw) == access['rows'] * access['cols'] * 2
+          assert Path('data/access-grid.bin.gz').stat().st_size > 0
+          values = struct.unpack('<' + 'H' * (len(raw) // 2), raw)
+          valid = [v for v in values if v != access['nodata']]
+          assert valid
+          # A clipped cell would silently flatten the access surface at the uint16
+          # encoding boundary, so reject it rather than publishing a bad grid.
+          assert min(valid) > 0, min(valid)
+          assert max(valid) < 65534, max(valid)
+
+          def decode(v):
+              return v / access['scale'] - access['offsetMinutes']
+
+          def sample(lat, lng):
+              row = (access['north'] - lat) / access['latStep']
+              col = (lng - access['west']) / access['lngStep']
+              r0 = math.floor(row); c0 = math.floor(col)
+              r0 = max(0, min(access['rows'] - 2, r0))
+              c0 = max(0, min(access['cols'] - 2, c0))
+              fr = max(0.0, min(1.0, row - r0)); fc = max(0.0, min(1.0, col - c0))
+              i = r0 * access['cols'] + c0
+              v00, v10 = values[i], values[i + 1]
+              v01, v11 = values[i + access['cols']], values[i + access['cols'] + 1]
+              top = v00 + (v10 - v00) * fc
+              bottom = v01 + (v11 - v01) * fc
+              return decode(top + (bottom - top) * fr)
+
+          errors = []
+          for s in stations_doc['stations']:
+              errors.append((sample(float(s['lat']), float(s['lng'])) - float(s['minutes']), s['station'], s['id']))
+          abs_errors = [abs(e[0]) for e in errors]
+
           print('stationDataSha256', sha)
-          print('grid', meta['rows'], meta['cols'])
+          print('grid', idw['rows'], idw['cols'])
+          print('access effective straight-line speed', access['effectiveStraightLineSpeedMetersPerMinute'], 'm/min')
+          print('access decoded range', decode(min(valid)), decode(max(valid)))
+          print('station anchor error median/max abs', statistics.median(abs_errors), max(abs_errors))
+          print('largest anchor differences')
+          for e, name, sid in sorted(errors, key=lambda x: abs(x[0]), reverse=True)[:10]:
+              print(f'  {sid} {name}: {e:+.2f} min')
           PY
       - name: Validate JavaScript syntax
         run: |
+          node --check scripts/build_access_grid.mjs
           node --check js/config.js
+          node --check js/precomputed-grid.js
           node --check js/main.js
           node --check js/markers.js
           node --check js/ui.js

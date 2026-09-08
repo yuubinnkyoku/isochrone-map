@@ -11,8 +11,11 @@
 
     // stations.json cache-buster. Bump when station data changes.
     dataVersion: 22,
-    // Precomputed IDW grid cache-buster.
+    // Precomputed grid cache-busters.
     gridVersion: 11,
+    accessGridVersion: 2,
+    // 駅からの距離による徒歩アクセス減点をデフォルトにし、従来IDWも比較用に残す。
+    defaultInterpolationMode: 'access',
 
     // 目的地
     destination: {

@@ -50,12 +50,13 @@
     var meta = DataManager.meta;
 
     if (window.updateTimeRangeFromStations) updateTimeRangeFromStations(stations);
-    UIManager.refreshLegend();
 
     if (PrecomputedGrid.ready) {
+      PrecomputedGrid.setMode(settings.interpolationMode || 'access');
       contourOverlay.setGrid(PrecomputedGrid);
       gradientOverlay.setGrid(PrecomputedGrid);
     }
+    UIManager.refreshLegend();
     Renderer3D.setStations(stations);
 
     MarkerManager.init(map, stations, meta);
@@ -127,6 +128,23 @@
         MapManager.setTileByUser(value);
         if (UIManager.getSettings().threeDEnabled) {
           Renderer3D.refreshMapTexture();
+        }
+        break;
+      case 'interpolationMode':
+        if (PrecomputedGrid.ready) {
+          var actualMode = PrecomputedGrid.setMode(value);
+          contourOverlay.refresh();
+          gradientOverlay.refresh();
+          UIManager.updateDataInfo(DataManager.meta, DataManager.stations.length, DataManager.getMajorCount());
+          // 3D samples PrecomputedGrid when it builds its terrain. Re-request the
+          // terrain only when it is active; otherwise the next show() uses the
+          // currently selected interpolation mode automatically.
+          if (UIManager.getSettings().threeDEnabled) {
+            Renderer3D.setStations(DataManager.stations);
+          }
+          if (actualMode !== value) {
+            console.warn('指定した補間グリッドを利用できないため ' + actualMode + ' にフォールバックしました');
+          }
         }
         break;
       case 'contour':

@@ -28,6 +28,7 @@
       return {
         theme: dark ? 'dark' : 'light', tileId: null,
         threeDEnabled: false, threeDMapMode: 'texture', threeDFlatHeight: 4,
+        interpolationMode: CONFIG.defaultInterpolationMode || 'access',
         contourEnabled: CONFIG.defaultContourEnabled,
         contourInterval: CONFIG.defaultContourInterval,
         gradientEnabled: CONFIG.defaultGradientEnabled,
@@ -47,6 +48,9 @@
         Object.keys(defaults).forEach(function (k) {
           if (!(k in parsed)) parsed[k] = defaults[k];
         });
+        if (['access', 'idw'].indexOf(parsed.interpolationMode) === -1) {
+          parsed.interpolationMode = defaults.interpolationMode;
+        }
         if (['highlight', 'hollow', 'hidden'].indexOf(parsed.excludedStationMode) === -1) {
           parsed.excludedStationMode = defaults.excludedStationMode;
         }
@@ -68,6 +72,7 @@
       document.getElementById('select-3d-mapmode').value = s.threeDMapMode || 'texture';
       document.getElementById('range-3d-flat-height').value = String(s.threeDFlatHeight);
       document.getElementById('label-3d-flat-height').textContent = this._formatHeightLabel(s.threeDFlatHeight);
+      document.getElementById('select-interpolation').value = s.interpolationMode || 'access';
       document.getElementById('toggle-contour').checked = s.contourEnabled;
       document.getElementById('toggle-gradient').checked = s.gradientEnabled;
       document.getElementById('toggle-labels').checked = s.labelsEnabled;
@@ -98,6 +103,11 @@
         self._commit('theme', self._settings.theme);
       });
       bind('select-tile', 'change', function () { self._settings.tileId = this.value; self._commit('tile', this.value); });
+      bind('select-interpolation', 'change', function () {
+        self._settings.interpolationMode = this.value;
+        self._buildLegend();
+        self._commit('interpolationMode', this.value);
+      });
       bind('toggle-contour', 'change', function () {
         self._settings.contourEnabled = this.checked;
         document.getElementById('interval-row').style.display = this.checked ? '' : 'none';
@@ -151,6 +161,12 @@
         Number(diagnostics['no-rail-boarded'] || 0);
     },
 
+    _interpolationLabel: function () {
+      return (this._settings && this._settings.interpolationMode) === 'idw'
+        ? '従来IDW'
+        : '徒歩アクセス考慮';
+    },
+
     updateDataInfo: function (meta, stationCount, majorCount) {
       this._dataMeta = meta || null;
       var stationModel = meta && meta.stationModel;
@@ -171,6 +187,7 @@
       if (alternateCount > 0) {
         html += '<br>最適経路でこの地点の鉄道を使わない: <span>' + alternateCount + '</span> 地点';
       }
+      html += '<br>補間表示: <span>' + this._interpolationLabel() + '</span>';
       document.getElementById('data-info').innerHTML = html;
 
       var excludedSelect = document.getElementById('select-excluded-stations');
@@ -191,10 +208,11 @@
       var labels = document.getElementById('legend-grad-labels');
       var excluded = document.getElementById('legend-excluded');
 
-      title.textContent = s.threeDEnabled ? '出発時刻（3D地形）' :
+      var modeSuffix = s.interpolationMode === 'idw' ? '・IDW' : '・徒歩アクセス考慮';
+      title.textContent = (s.threeDEnabled ? '出発時刻（3D地形）' :
         (s.contourEnabled && s.gradientEnabled ? '出発時刻（等時線＋グラデーション）' :
         (s.contourEnabled ? '出発時刻（' + s.contourInterval + '分刻み等時線）' :
-        (s.gradientEnabled ? '出発時刻（グラデーション）' : '出発時刻')));
+        (s.gradientEnabled ? '出発時刻（グラデーション）' : '出発時刻')))) + modeSuffix;
 
       lines.innerHTML = '';
       lines.style.display = (s.contourEnabled && !s.threeDEnabled) ? '' : 'none';
