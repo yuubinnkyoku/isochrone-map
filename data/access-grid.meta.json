@@ -1,13 +1,7 @@
 {
-  "version": 1,
-  "mode": "access",
-  "algorithm": "Max-plus station accessibility with approximate walking access",
-  "formula": "max_i(stationMinutes_i - detourFactor * straightLineDistanceMeters_i / walkingSpeedMetersPerMinute)",
-  "approximation": "Straight-line distance multiplied by a fixed street-detour factor; not a pedestrian-network route search",
-  "walkingSpeedMetersPerMinute": 80,
-  "streetDetourFactor": 1.25,
-  "effectiveStraightLineSpeedMetersPerMinute": 64,
-  "projectionLatitude": 35.7,
+  "version": 2,
+  "algorithm": "IDW with nearest-station walking-access penalty",
+  "idwPower": 2.5,
   "stationCount": 1563,
   "sourceStationCount": 1563,
   "excludedStationCount": 0,
@@ -24,5 +18,14 @@
   "valueType": "uint16-le",
   "scale": 25,
   "offsetMinutes": 1440,
-  "nodata": 65535
+  "nodata": 65535,
+  "mode": "access",
+  "formula": "IDW(x) - streetDetourFactor * nearestPhysicalStationDistanceMeters(x) / walkingSpeedMetersPerMinute",
+  "approximation": "Nearest-station distance is straight-line distance multiplied by a fixed street-detour factor; not a pedestrian-network route search",
+  "baseGrid": "idw-grid",
+  "baseAlgorithm": "IDW on Web Mercator coordinates",
+  "walkingSpeedMetersPerMinute": 80,
+  "streetDetourFactor": 1.25,
+  "effectiveStraightLineSpeedMetersPerMinute": 64,
+  "projectionLatitude": 35.7
 }
