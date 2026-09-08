@@ -1,7 +1,7 @@
 name: Finalize physical station dataset
 
 # This rebuild is intentionally manual. It consumes the pinned full Yahoo audit
-# artifact and regenerates the 1563-point dataset plus the expensive IDW grid.
+# artifact and regenerates the 1563-point dataset plus both interpolation grids.
 on:
   workflow_dispatch:
 
@@ -65,40 +65,60 @@ jobs:
             --output data/stations.json \
             --compact-audit-output data/physical-station-point-audit-compact.json
 
-      - name: Rebuild IDW grid from all physical points
+      - name: Rebuild legacy IDW grid from all physical points
         run: node scripts/build_precomputed_grid.mjs
 
-      - name: Validate generated data and frontend syntax
+      - name: Rebuild walking-access-adjusted grid
+        run: node scripts/build_access_grid.mjs
+
+      - name: Validate generated data, both grids and frontend syntax
         run: |
           python scripts/validate_physical_station_dataset.py
+          node --check scripts/build_access_grid.mjs
           node --check js/config.js
+          node --check js/precomputed-grid.js
           node --check js/main.js
           node --check js/markers.js
           node --check js/ui.js
           python - <<'PY'
           import hashlib, json
           from pathlib import Path
+
           stations = Path('data/stations.json')
-          meta = json.loads(Path('data/idw-grid.meta.json').read_text(encoding='utf-8'))
+          idw = json.loads(Path('data/idw-grid.meta.json').read_text(encoding='utf-8'))
+          access = json.loads(Path('data/access-grid.meta.json').read_text(encoding='utf-8'))
           sha = hashlib.sha256(stations.read_bytes()).hexdigest()
-          assert meta['stationCount'] == 1563
-          assert meta['sourceStationCount'] == 1563
-          assert meta['excludedStationCount'] == 0
-          assert meta['stationDataSha256'] == sha, (meta['stationDataSha256'], sha)
+
+          for meta in (idw, access):
+              assert meta['stationCount'] == 1563
+              assert meta['sourceStationCount'] == 1563
+              assert meta['excludedStationCount'] == 0
+              assert meta['stationDataSha256'] == sha, (meta['stationDataSha256'], sha)
+          for key in ('rows', 'cols', 'north', 'south', 'west', 'east', 'latStep', 'lngStep', 'scale', 'offsetMinutes', 'nodata'):
+              assert access[key] == idw[key], (key, access[key], idw[key])
+          assert access['mode'] == 'access'
+          assert access['baseGrid'] == 'idw-grid'
+          assert access['walkingSpeedMetersPerMinute'] == 80
+          assert access['streetDetourFactor'] == 1.25
+          assert Path('data/access-grid.bin').stat().st_size == access['rows'] * access['cols'] * 2
+          assert Path('data/access-grid.bin.gz').stat().st_size > 0
+
           print('stationDataSha256', sha)
-          print('grid', meta['rows'], meta['cols'])
+          print('grid', idw['rows'], idw['cols'])
+          print('access effective straight-line speed', access['effectiveStraightLineSpeedMetersPerMinute'])
           PY
 
-      - name: Commit generated dataset and grid
+      - name: Commit generated dataset and interpolation grids
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add data/stations.json data/physical-station-point-audit-compact.json \
-            data/idw-grid.bin data/idw-grid.bin.gz data/idw-grid.meta.json
+            data/idw-grid.bin data/idw-grid.bin.gz data/idw-grid.meta.json \
+            data/access-grid.bin data/access-grid.bin.gz data/access-grid.meta.json
           if git diff --cached --quiet; then
             echo 'No generated changes to commit.'
           else
-            git commit -m 'Recompute all 1563 physical station points'
+            git commit -m 'Recompute all 1563 physical station points and interpolation grids'
             git pull --rebase origin "${GITHUB_REF_NAME}"
             git push origin "HEAD:${GITHUB_REF_NAME}"
           fi
