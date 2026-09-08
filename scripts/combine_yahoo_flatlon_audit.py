@@ -4,7 +4,36 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from pathlib import Path
+
+
+SHARD_NAME_RE = re.compile(r"(?:flatlon-)?shard-(\d+)\.json")
+
+
+def discover_shard_files(input_dir: Path) -> list[Path]:
+    """Find both local ``shard-N`` and workflow ``flatlon-shard-N`` outputs.
+
+    The GitHub Actions workflow historically uploaded ``flatlon-shard-N.json`` while
+    this combiner looked only for ``shard-N.json``.  Treat the two names as aliases
+    for the same shard.  If both aliases exist, accept them only when their bytes are
+    identical so a copied alias cannot accidentally double-count stations.
+    """
+    by_index: dict[int, Path] = {}
+    for path in sorted(input_dir.glob("*.json")):
+        match = SHARD_NAME_RE.fullmatch(path.name)
+        if not match:
+            continue
+        index = int(match.group(1))
+        previous = by_index.get(index)
+        if previous is None:
+            by_index[index] = path
+            continue
+        if previous.read_bytes() != path.read_bytes():
+            raise SystemExit(
+                f"conflicting files for shard {index}: {previous.name} and {path.name}"
+            )
+    return [by_index[index] for index in sorted(by_index)]
 
 
 def main() -> None:
@@ -15,7 +44,7 @@ def main() -> None:
     args = parser.parse_args()
 
     input_dir = Path(args.input_dir)
-    files = sorted(input_dir.glob("shard-*.json"))
+    files = discover_shard_files(input_dir)
     if not files:
         raise SystemExit(f"no shard files under {input_dir}")
 
