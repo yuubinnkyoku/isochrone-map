@@ -1,12 +1,9 @@
-name: Recalculate physical IDW exclusions
+name: Diagnose direct-component vs exact-point routes
 
+# Diagnostic only. The production IDW surface uses every verified exact-point
+# accessibility value, so this comparison must not mutate data/stations.json or the
+# precomputed grid. Manual dispatch also prevents accidental high-volume Yahoo queries.
 on:
-  push:
-    branches: [recalc-idw-physical-exclusions]
-    paths:
-      - scripts/audit_physical_idw_exclusions.py
-      - scripts/combine_physical_idw_exclusions.py
-      - .github/workflows/recalc-physical-idw-exclusions.yml
   workflow_dispatch:
 
 permissions:
@@ -26,7 +23,7 @@ jobs:
           python-version: '3.12'
       - name: Rebuild physical-point proposal
         run: python scripts/prepare_physical_station_points.py >/dev/null
-      - name: Audit direct-vs-unrestricted routes
+      - name: Diagnose direct-component vs unrestricted exact-point routes
         run: |
           python scripts/audit_physical_idw_exclusions.py \
             --shard-index ${{ matrix.shard }} \
@@ -53,7 +50,7 @@ jobs:
           pattern: physical-idw-shard-*
           path: data/physical-idw-shards
           merge-multiple: true
-      - name: Combine audit
+      - name: Combine diagnostic audit
         run: |
           python scripts/combine_physical_idw_exclusions.py \
             --input-dir data/physical-idw-shards \
