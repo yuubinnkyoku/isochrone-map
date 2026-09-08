@@ -76,6 +76,13 @@
       <input type="range" id="range-3d-flat-height" min="-5" max="110" step="1">
       <span class="ctrl-value" id="label-3d-flat-height">+4</span>
     </div>
+    <div class="ctrl-select">
+      <span class="ctrl-label">補間方法</span>
+      <select id="select-interpolation">
+        <option value="access" selected>徒歩アクセス考慮</option>
+        <option value="idw">従来IDW</option>
+      </select>
+    </div>
     <label class="ctrl-row">
       <input type="checkbox" id="toggle-contour" checked>
       <span class="ctrl-toggle"></span>
@@ -140,13 +147,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="js/config.js?v=25"></script>
 <script src="js/data.js?v=13"></script>
-<script src="js/precomputed-grid.js?v=2"></script>
+<script src="js/precomputed-grid.js?v=3"></script>
 <script src="js/map.js?v=9"></script>
 <script src="js/renderer.js?v=14"></script>
 <script src="js/renderer3d.js?v=15"></script>
 <script src="js/markers.js?v=17"></script>
-<script src="js/ui.js?v=17"></script>
-<script src="js/main.js?v=16"></script>
+<script src="js/ui.js?v=18"></script>
+<script src="js/main.js?v=17"></script>
 <script src="js/devtools.js?v=11"></script>
 </body>
 </html>
