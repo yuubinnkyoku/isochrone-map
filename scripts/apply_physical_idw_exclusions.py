@@ -3,14 +3,35 @@
 
 This does not remove station markers or replace their exact-point accessibility times.
 It only sets ``excludeFromIdw`` for points where moving to another station/component
-lets the user leave at least one minute later than a verified route that boards the
-queried physical component directly.
+lets the user leave at least one minute later than the best verified route that boards
+the queried physical component directly. Direct-component completeness for difficult
+interchanges is established by forcing every exact N02 topological adjacent station as
+a Yahoo via point and verifying first-rail boarding.
 """
 from __future__ import annotations
 
 import argparse
 import json
 from pathlib import Path
+
+
+def compact_adjacent_results(row: dict) -> list[dict]:
+    result = []
+    for item in row.get('adjacentRouteResults') or []:
+        best = item.get('best') or {}
+        result.append({
+            'fromStationCode': item.get('fromStationCode'),
+            'adjacentStationCode': item.get('stationCode'),
+            'adjacentStation': item.get('name'),
+            'line': item.get('line'),
+            'operator': item.get('operator'),
+            'networkDistanceM': item.get('networkDistanceM'),
+            'status': item.get('status'),
+            'bestDeparture': best.get('departure'),
+            'originLabel': best.get('originLabel'),
+            'via': best.get('via'),
+        })
+    return result
 
 
 def main() -> None:
@@ -55,10 +76,12 @@ def main() -> None:
         if exclude:
             excluded_ids.append(str(station['id']))
 
+        adjacency_evidence = compact_adjacent_results(row)
         audit_meta = station.setdefault('physicalPointAudit', {})
         audit_meta['idwExclusion'] = {
             'decision': decision,
             'reason': row.get('decisionReason'),
+            'resolutionPass': row.get('resolutionPass') or 'initial-qualified-origin',
             'unrestrictedDeparture': row.get('freeDeparture'),
             'unrestrictedMinutes': row.get('freeMinutes'),
             'unrestrictedFirstRailReason': row.get('freeReason'),
@@ -67,6 +90,10 @@ def main() -> None:
             'gainMinutes': row.get('gainMinutes'),
             'directOriginLabel': row.get('directLabel'),
             'directFirstRail': row.get('directFirstRail'),
+            'directVia': row.get('directVia'),
+            'directViaStationCode': row.get('directViaStationCode'),
+            'directViaDistanceM': row.get('directViaDistanceM'),
+            'adjacentRouteResults': adjacency_evidence,
         }
 
         compact_rows.append({
@@ -75,12 +102,18 @@ def main() -> None:
             'logicalStation': row.get('logicalStation'),
             'decision': decision,
             'excludeFromIdw': exclude,
+            'reason': row.get('decisionReason'),
+            'resolutionPass': row.get('resolutionPass') or 'initial-qualified-origin',
             'unrestrictedDeparture': row.get('freeDeparture'),
             'directDeparture': row.get('directDeparture'),
             'gainMinutes': row.get('gainMinutes'),
             'unrestrictedFirstRailReason': row.get('freeReason'),
             'directOriginLabel': row.get('directLabel'),
             'directFirstRail': row.get('directFirstRail'),
+            'directVia': row.get('directVia'),
+            'directViaStationCode': row.get('directViaStationCode'),
+            'directViaDistanceM': row.get('directViaDistanceM'),
+            'adjacentRouteResults': adjacency_evidence,
         })
 
     excluded_ids.sort()
@@ -94,7 +127,7 @@ def main() -> None:
 
     old_policy = doc.get('meta', {}).get('idwExclusionPolicy') or {}
     doc['meta']['idwExclusionPolicy'] = {
-        'rule': '座標が異なるN02物理駅地点はすべて表示する。各地点のunrestricted exact-point経路が別駅・別構成駅へ移動してから乗車する場合、同じ物理地点を直接使うことを確認した経路と比較し、unrestricted側が1分以上遅く出発できる地点だけIDWから除外する',
+        'rule': '座標が異なるN02物理駅地点はすべて表示する。各地点のunrestricted exact-point経路が別駅・別構成駅へ移動してから乗車する場合、当該物理地点から直接乗車する最良経路と比較し、unrestricted側が1分以上遅く出発できる地点だけIDWから除外する',
         'comparisonThresholdMinutes': 1,
         'fixedAccessTimeLimit': False,
         'allowedAccessModes': ['徒歩', '鉄道', '路線バス'],
@@ -104,15 +137,18 @@ def main() -> None:
         'excludedStations': excluded,
         'excludedPhysicalPointIds': excluded_ids,
         'directComparisons': int(summary.get('directComparisons', 0)),
+        'excludedWithNoFeasibleDirectRoute': int(summary.get('excludedWithNoFeasibleDirectRoute', 0)),
         'unresolved': 0,
         'complete': True,
         'gainDistribution': summary.get('gainDistribution') or {},
+        'resolutionPasses': summary.get('resolutionPasses') or {},
         'exactPointAudit': old_policy.get('exactPointAudit'),
         'comparisonAudit': {
-            'method': 'Yahoo!乗換案内: exact-point unrestricted route vs verified station/component-qualified direct route',
+            'method': 'Yahoo!乗換案内 unrestricted exact-point route vs verified direct-component route; ambiguous components are exhausted by exact N02 RailroadSection topological adjacent-station via constraints',
             'searchDate': '2026-08-28',
             'targetArrival': '08:18',
-            'directRouteAcceptance': '最初の鉄道乗車駅名とN02路線/事業者対応の両方が当該物理駅地点に一致した経路のみ採用',
+            'directRouteAcceptance': '最初の鉄道乗車駅名とN02路線/事業者対応が当該物理駅地点に一致した経路のみ採用。通常の路線名指定で曖昧な場合は、そのN02駅コードから鉄道トポロジ上で直接隣接する全駅をvia01として各方向を検証する',
+            'adjacencySource': '国土数値情報 N02-25 Station + RailroadSection',
         },
     }
 
@@ -124,7 +160,9 @@ def main() -> None:
             'includedPhysicalPoints': included,
             'excludedPhysicalPoints': excluded,
             'directComparisons': int(summary.get('directComparisons', 0)),
+            'excludedWithNoFeasibleDirectRoute': int(summary.get('excludedWithNoFeasibleDirectRoute', 0)),
             'gainDistribution': summary.get('gainDistribution') or {},
+            'resolutionPasses': summary.get('resolutionPasses') or {},
             'complete': True,
         },
         'rows': compact_rows,
@@ -137,7 +175,7 @@ def main() -> None:
         for station in doc['stations']:
             if station.get('logicalStation') == name:
                 meta = station.get('physicalPointAudit', {}).get('idwExclusion', {})
-                print('CHECK', name, station['id'], station['station'], meta.get('decision'), meta.get('unrestrictedDeparture'), meta.get('directDeparture'), meta.get('gainMinutes'))
+                print('CHECK', name, station['id'], station['station'], meta.get('decision'), meta.get('unrestrictedDeparture'), meta.get('directDeparture'), meta.get('gainMinutes'), meta.get('directVia'))
 
 
 if __name__ == '__main__':
