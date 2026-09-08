@@ -1,0 +1,25 @@
+name: Inspect N02 topology
+
+on:
+  push:
+    branches: [recalc-idw-physical-exclusions]
+    paths:
+      - .github/workflows/inspect-n02-topology.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python scripts/inspect_n02_topology.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: n02-topology-inspection
+          path: data/n02-topology-inspection.json
