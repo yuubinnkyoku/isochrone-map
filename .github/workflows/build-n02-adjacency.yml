@@ -1,0 +1,36 @@
+name: Build N02 station adjacency
+
+on:
+  push:
+    branches: [recalc-idw-physical-exclusions]
+    paths:
+      - .github/workflows/build-n02-adjacency.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Rebuild physical proposal
+        run: python scripts/prepare_physical_station_points.py >/dev/null
+      - name: Derive exact route-topological adjacency
+        run: python scripts/build_n02_station_adjacency.py --output data/n02-station-adjacency.json
+      - name: Show key examples
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('data/n02-station-adjacency.json', encoding='utf-8'))
+          for code in ['003266','003270','003381','003925','003770']:
+              print(code, json.dumps(d['adjacency'].get(code), ensure_ascii=False))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: n02-station-adjacency
+          path: data/n02-station-adjacency.json
