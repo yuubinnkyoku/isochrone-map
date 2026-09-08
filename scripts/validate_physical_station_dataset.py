@@ -1,5 +1,15 @@
 #!/usr/bin/env python3
-"""Validate the physical-point stations.json against its N02 proposal and IDW policy."""
+"""Validate the physical-point stations.json and exact-point accessibility policy.
+
+The map interpolates *accessibility from a coordinate*: the latest departure from that
+coordinate under the allowed walking / rail / local-bus route set.  Because every
+physical point in this dataset was queried with Yahoo ``flatlon`` and its actual walking
+origin was verified, all 1563 values are valid spatial samples even when the optimal
+journey walks to another station/component before boarding.
+
+Consequently, first-rail/component classification is diagnostic provenance only.  It
+must never be used to drop a successfully verified exact-point value from IDW.
+"""
 from __future__ import annotations
 
 import argparse
@@ -54,60 +64,46 @@ def main() -> None:
 
     excluded = [s for s in stations if s.get('excludeFromIdw')]
     included = [s for s in stations if not s.get('excludeFromIdw')]
+    if excluded:
+        raise SystemExit(
+            'verified exact-point accessibility samples must all remain in IDW; '
+            f'found {len(excluded)} exclusions: {[s["id"] for s in excluded[:20]]}'
+        )
+    if len(included) != 1563:
+        raise SystemExit(f'included physical point count {len(included)} != 1563')
+
     policy = doc['meta']['idwExclusionPolicy']
     if policy.get('auditedPhysicalPoints') != 1563:
         raise SystemExit(f"policy auditedPhysicalPoints {policy.get('auditedPhysicalPoints')} != 1563")
-    if policy.get('excludedPhysicalPoints') != len(excluded):
-        raise SystemExit('policy excludedPhysicalPoints does not match station flags')
-    if policy.get('includedPhysicalPoints') != len(included):
-        raise SystemExit('policy includedPhysicalPoints does not match station flags')
-    if policy.get('excludedStations') != len(excluded):
-        raise SystemExit('policy excludedStations does not match station flags')
-
-    excluded_ids = sorted(s['id'] for s in excluded)
-    declared_ids = sorted(policy.get('excludedPhysicalPointIds') or [])
-    # Legacy all-included data did not yet carry excludedPhysicalPointIds. Once the
-    # comparison audit is complete, evidence is mandatory for every physical point.
-    if policy.get('complete'):
-        if declared_ids != excluded_ids:
-            raise SystemExit('policy excludedPhysicalPointIds does not match station flags')
-        if policy.get('unresolved') != 0:
-            raise SystemExit('complete exclusion policy still has unresolved points')
-        if policy.get('comparisonThresholdMinutes') != 1:
-            raise SystemExit('comparison threshold must be 1 minute')
-        if not excluded:
-            raise SystemExit('completed comparison audit unexpectedly excludes zero physical points')
-
-        for station in stations:
-            decision = station.get('physicalPointAudit', {}).get('idwExclusion') or {}
-            if not decision:
-                raise SystemExit(f"missing IDW comparison provenance for {station['id']}")
-            expected = 'exclude' if station.get('excludeFromIdw') else 'include'
-            if decision.get('decision') != expected:
-                raise SystemExit(f"IDW decision/flag mismatch for {station['id']}")
-            gain = decision.get('gainMinutes')
-            direct_minutes = decision.get('directMinutes')
-            reason = decision.get('reason')
-            if expected == 'exclude':
-                if reason == 'no-feasible-direct-component-route':
-                    if direct_minutes is not None:
-                        raise SystemExit(f"no-feasible-direct exclusion has directMinutes for {station['id']}")
-                elif not isinstance(gain, int) or gain < 1 or direct_minutes is None:
-                    raise SystemExit(f"invalid exclusion evidence for {station['id']}: reason={reason} gain={gain}")
-            elif direct_minutes is not None and isinstance(gain, int) and gain >= 1:
-                raise SystemExit(f"included point has exclusion-sized gain: {station['id']} gain={gain}")
-
-            if decision.get('resolutionPass') == 'exact-n02-adjacent-via':
-                adjacent = decision.get('adjacentRouteResults') or []
-                if not adjacent:
-                    raise SystemExit(f"exact-adjacency resolution lacks adjacency evidence for {station['id']}")
-                unresolved_links = [a for a in adjacent if a.get('status') == 'unresolved']
-                if unresolved_links:
-                    raise SystemExit(f"completed point still has unresolved adjacent links: {station['id']}")
+    if policy.get('includedPhysicalPoints') != 1563:
+        raise SystemExit(f"policy includedPhysicalPoints {policy.get('includedPhysicalPoints')} != 1563")
+    if policy.get('excludedPhysicalPoints') != 0:
+        raise SystemExit(f"policy excludedPhysicalPoints {policy.get('excludedPhysicalPoints')} != 0")
+    if policy.get('excludedStations') != 0:
+        raise SystemExit(f"policy excludedStations {policy.get('excludedStations')} != 0")
+    if policy.get('excludedPhysicalPointIds') not in (None, []):
+        raise SystemExit('exact-point policy must not declare excluded physical point IDs')
+    if policy.get('originToleranceM') != 5.0:
+        raise SystemExit(f"origin tolerance changed: {policy.get('originToleranceM')}")
 
     diagnostics = policy.get('exactPointAudit', {}).get('routeSelectionDiagnostics')
     if diagnostics != EXPECTED_DIAGNOSTICS:
         raise SystemExit(f'route-selection diagnostics changed: {diagnostics}')
+    if policy.get('exactPointAudit', {}).get('originVerified') != 1563:
+        raise SystemExit('exact-point origin verification is not complete')
+
+    # Every station row must carry the provenance used to justify treating its value as
+    # a coordinate sample.  `reason` may say that another component/station is boarded;
+    # that is expected and must not imply IDW exclusion.
+    missing_provenance = [
+        s['id'] for s in stations
+        if not s.get('physicalPointAudit')
+        or s['physicalPointAudit'].get('reason') not in EXPECTED_DIAGNOSTICS
+        or not isinstance(s['physicalPointAudit'].get('originDistanceM'), (int, float))
+        or float(s['physicalPointAudit']['originDistanceM']) > 5.0
+    ]
+    if missing_provenance:
+        raise SystemExit(f'missing/invalid exact-point provenance: {missing_provenance[:20]}')
 
     if sum(1 for s in stations if s.get('labelPrimary')) != 1318:
         raise SystemExit('each logical station must have exactly one primary label')
@@ -136,8 +132,8 @@ def main() -> None:
         raise SystemExit('熊野前荒川線のunrestrictedアクセス診断が変化した')
     if kuma['003270']['physicalPointAudit'].get('reason') != 'boards-current-physical-point':
         raise SystemExit('熊野前舎人ライナーのunrestrictedアクセス診断が変化した')
-    if kuma['003270'].get('excludeFromIdw'):
-        raise SystemExit('熊野前舎人ライナー側は自身から乗車するためIDWに残す必要がある')
+    if kuma['003266'].get('excludeFromIdw') or kuma['003270'].get('excludeFromIdw'):
+        raise SystemExit('熊野前の両物理地点はexact-pointアクセシビリティ標本としてIDWに残す必要がある')
 
     gummyoji = [s for s in stations if s.get('logicalStation') == '弘明寺']
     if len(gummyoji) != 2 or len({s['station'] for s in gummyoji}) != 2:
@@ -151,18 +147,19 @@ def main() -> None:
         'included': len(included),
         'excluded': len(excluded),
         'diagnostics': EXPECTED_DIAGNOSTICS,
+        'idwSemantics': 'exact-point-accessibility',
         'kumanomae': {
             'arakawa': {
                 'id': kuma['003266']['id'],
                 'departure': kuma['003266']['departureDisplay'],
                 'reason': kuma['003266']['physicalPointAudit']['reason'],
-                'excludeFromIdw': bool(kuma['003266'].get('excludeFromIdw')),
+                'excludeFromIdw': False,
             },
             'toneri': {
                 'id': kuma['003270']['id'],
                 'departure': kuma['003270']['departureDisplay'],
                 'reason': kuma['003270']['physicalPointAudit']['reason'],
-                'excludeFromIdw': bool(kuma['003270'].get('excludeFromIdw')),
+                'excludeFromIdw': False,
             },
         },
         'gummyoji': [s['station'] for s in gummyoji],
