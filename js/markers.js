@@ -11,6 +11,8 @@
     _destMarker: null,
     _destRings: [],
     _labelsEnabled: true,
+    // 旧「IDW補間対象外駅」表示の見た目を、現在は
+    // 「最適経路でこの物理地点の鉄道を使わない地点」に再利用する。
     _excludedStationMode: 'hollow',
 
     init: function (map, stations, meta) {
@@ -94,8 +96,41 @@
       return getComputedStyle(document.documentElement).getPropertyValue('--excluded-marker-highlight').trim() || '#ff2d55';
     },
 
+    _isAlternateRoutePoint: function (data) {
+      var audit = data && data.physicalPointAudit;
+      var reason = audit && audit.reason;
+      return reason === 'boards-different-component' ||
+        reason === 'boards-different-station' ||
+        reason === 'no-rail-boarded';
+    },
+
+    _alternateRouteStatusHtml: function (data) {
+      var audit = data && data.physicalPointAudit;
+      if (!audit) return '';
+      var reason = audit.reason;
+      var message = '';
+      if (reason === 'boards-different-component') {
+        message = '○ 最適経路では同じ乗換駅の別地点から乗車';
+      } else if (reason === 'boards-different-station') {
+        message = '○ 最適経路では別の駅へ移動して乗車';
+      } else if (reason === 'no-rail-boarded') {
+        message = '○ 最適経路ではこの地点から鉄道に乗車しない';
+      }
+      if (!message) return '';
+
+      var firstRail = audit.firstRail || {};
+      var boarding = '';
+      if (firstRail.boardStation) {
+        boarding = '<div class="tt-detail">最初の鉄道乗車: ' + firstRail.boardStation +
+          (firstRail.service ? '（' + firstRail.service + '）' : '') + '</div>';
+      } else if (reason === 'no-rail-boarded') {
+        boarding = '<div class="tt-detail">この最適経路では鉄道を使用しません</div>';
+      }
+      return '<div class="tt-excluded">' + message + '</div>' + boarding;
+    },
+
     _applyMarkerStyle: function (item, baseRadius, markerStroke, excludedStroke) {
-      var isExcluded = !!item.data.excludeFromIdw;
+      var isAlternate = this._isAlternateRoutePoint(item.data);
       var mode = this._excludedStationMode;
       var style = {
         radius: baseRadius,
@@ -106,10 +141,10 @@
         fillOpacity: 0.9
       };
 
-      if (isExcluded && mode === 'hollow') {
+      if (isAlternate && mode === 'hollow') {
         style.color = item.timeColor;
         style.fillOpacity = 0;
-      } else if (isExcluded && mode === 'highlight') {
+      } else if (isAlternate && mode === 'highlight') {
         style.radius = baseRadius + 2;
         style.color = excludedStroke;
         style.weight = 3;
@@ -142,7 +177,7 @@
         }).addTo(self._map);
 
         var routeHtml = s.route ? '<div class="tt-line">' + s.route + '</div>' : '';
-        var exclusionHtml = s.excludeFromIdw ? '<div class="tt-excluded">○ 補間対象外（別経路の方が有利）</div>' : '';
+        var routeUsageHtml = self._alternateRouteStatusHtml(s);
         var noteHtml = s.note ? '<div class="tt-detail">' + s.note + '</div>' : '';
         var searchDateHtml = s.searchDate ? '<div class="tt-detail">検索日: ' + s.searchDate + '</div>' : '';
         var passengerHtml = Number.isFinite(s.passengers)
@@ -159,7 +194,7 @@
           '<div class="station-tooltip">' +
             '<div class="tt-name">' + s.station + '</div>' +
             '<div class="tt-time" style="color:' + timeColor + '">' + ts + '</div>' +
-            exclusionHtml +
+            routeUsageHtml +
             travelHtml +
             '<div class="tt-divider"></div>' +
             '<div class="tt-line">' + s.line + '</div>' +
@@ -231,7 +266,7 @@
       var markerStroke = this._getMarkerStroke();
       var excludedStroke = this._getExcludedMarkerStroke();
       this._markers.forEach(function (item) {
-        var hidden = !!item.data.excludeFromIdw && self._excludedStationMode === 'hidden';
+        var hidden = self._isAlternateRoutePoint(item.data) && self._excludedStationMode === 'hidden';
         self._setLabelVisible(item, false, false);
         if (hidden) {
           if (self._map.hasLayer(item.marker)) self._map.removeLayer(item.marker);
@@ -245,7 +280,7 @@
       if (!this._labelsEnabled) return;
 
       var candidates = this._markers.filter(function (item) {
-        if (item.data.excludeFromIdw && self._excludedStationMode === 'hidden') return false;
+        if (self._isAlternateRoutePoint(item.data) && self._excludedStationMode === 'hidden') return false;
         // All physical points get their own label once sufficiently zoomed in.  At
         // lower zooms only one representative label per logical transfer station is
         // considered, while every physical marker remains visible.

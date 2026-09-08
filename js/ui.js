@@ -33,6 +33,7 @@
         gradientEnabled: CONFIG.defaultGradientEnabled,
         labelsEnabled: CONFIG.defaultLabelsEnabled,
         legendEnabled: CONFIG.defaultLegendEnabled,
+        // 互換性のため設定キーは旧名のまま。現在は「最適経路でこの地点から乗らない駅」の表示方法。
         excludedStationMode: CONFIG.defaultExcludedStationMode || 'hollow',
         radiusRingsEnabled: CONFIG.destinationRings.enabledDefault
       };
@@ -141,6 +142,15 @@
 
     _formatHeightLabel: function (v) { return (v > 0 ? '+' : '') + String(v); },
 
+    _alternateRouteCount: function (meta) {
+      var policy = meta && meta.idwExclusionPolicy;
+      var diagnostics = policy && policy.exactPointAudit && policy.exactPointAudit.routeSelectionDiagnostics;
+      if (!diagnostics) return 0;
+      return Number(diagnostics['boards-different-component'] || 0) +
+        Number(diagnostics['boards-different-station'] || 0) +
+        Number(diagnostics['no-rail-boarded'] || 0);
+    },
+
     updateDataInfo: function (meta, stationCount, majorCount) {
       this._dataMeta = meta || null;
       var stationModel = meta && meta.stationModel;
@@ -156,14 +166,16 @@
       } else if (meta && meta.targetArrival) {
         html += '<br>検索上の学校到着: ' + meta.targetArrival + '（1限開始 ' + CONFIG.destination.classStartTime + '）';
       }
+
+      var alternateCount = this._alternateRouteCount(meta);
+      if (alternateCount > 0) {
+        html += '<br>最適経路でこの地点の鉄道を使わない: <span>' + alternateCount + '</span> 地点';
+      }
       document.getElementById('data-info').innerHTML = html;
 
-      var excludedCount = meta && meta.idwExclusionPolicy
-        ? Number(meta.idwExclusionPolicy.excludedPhysicalPoints || meta.idwExclusionPolicy.excludedStations || 0)
-        : 0;
       var excludedSelect = document.getElementById('select-excluded-stations');
       if (excludedSelect && excludedSelect.parentElement) {
-        excludedSelect.parentElement.style.display = excludedCount > 0 ? '' : 'none';
+        excludedSelect.parentElement.style.display = alternateCount > 0 ? '' : 'none';
       }
       this._buildLegend();
     },
@@ -214,13 +226,11 @@
         labels.innerHTML = [r.min, 420, 450, 480, r.max].map(function (v) { return '<span>' + minutesToTimeStr(v) + '</span>'; }).join('');
       }
 
-      var excludedCount = this._dataMeta && this._dataMeta.idwExclusionPolicy
-        ? Number(this._dataMeta.idwExclusionPolicy.excludedPhysicalPoints || this._dataMeta.idwExclusionPolicy.excludedStations || 0)
-        : 0;
-      var showExcluded = excludedCount > 0 && !s.threeDEnabled && (s.excludedStationMode || 'hollow') !== 'hidden';
+      var alternateCount = this._alternateRouteCount(this._dataMeta);
+      var showExcluded = alternateCount > 0 && !s.threeDEnabled && (s.excludedStationMode || 'hollow') !== 'hidden';
       excluded.style.display = showExcluded ? 'flex' : 'none';
       excluded.innerHTML = showExcluded
-        ? '<span class="legend-excluded-symbol">○</span><span class="legend-excluded-text">補間対象外（別経路の方が有利）</span>'
+        ? '<span class="legend-excluded-symbol">○</span><span class="legend-excluded-text">最適経路でこの地点の鉄道を使わない（' + alternateCount + '地点）</span>'
         : '';
     }
   };
