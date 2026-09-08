@@ -1,5 +1,5 @@
 // ============================================================
-// precomputed-grid.js — precomputed IDW scalar field loader / sampler
+// precomputed-grid.js — switchable precomputed scalar-field loader / sampler
 // ============================================================
 (function () {
   'use strict';
@@ -8,45 +8,67 @@
     meta: null,
     values: null,
     ready: false,
+    mode: 'idw',
+    _grids: {},
 
     load: function () {
       var self = this;
-      var version = (window.CONFIG && CONFIG.gridVersion) || 1;
-      var metaUrl = 'data/idw-grid.meta.json?v=' + encodeURIComponent(version);
+      var idwVersion = (window.CONFIG && CONFIG.gridVersion) || 1;
+      var accessVersion = (window.CONFIG && CONFIG.accessGridVersion) || 1;
+
+      return Promise.all([
+        self._loadGrid('idw', 'idw-grid', idwVersion),
+        self._loadGrid('access', 'access-grid', accessVersion).catch(function (err) {
+          // Keep the existing map usable while a newly introduced access grid is
+          // being deployed or when an old cached Pages deployment lacks it.
+          console.warn('徒歩アクセス考慮グリッドを読み込めないためIDWのみ使用します:', err);
+          return null;
+        })
+      ]).then(function (loaded) {
+        self._grids.idw = loaded[0];
+        if (loaded[1]) self._grids.access = loaded[1];
+        var preferred = (window.CONFIG && CONFIG.defaultInterpolationMode) || 'access';
+        self.setMode(preferred);
+        return self;
+      });
+    },
+
+    _loadGrid: function (mode, baseName, version) {
+      var self = this;
+      var metaUrl = 'data/' + baseName + '.meta.json?v=' + encodeURIComponent(version);
       return fetch(metaUrl, { cache: 'no-cache' }).then(function (res) {
-        if (!res.ok) throw new Error('idw-grid.meta.json: ' + res.status);
+        if (!res.ok) throw new Error(baseName + '.meta.json: ' + res.status);
         return res.json();
       }).then(function (meta) {
-        return self._loadData(version).then(function (buffer) {
+        return self._loadData(baseName, version).then(function (buffer) {
           var expectedBytes = meta.rows * meta.cols * 2;
           if (buffer.byteLength !== expectedBytes) {
-            throw new Error('idw-grid data size mismatch: expected ' + expectedBytes + ', got ' + buffer.byteLength);
+            throw new Error(baseName + ' data size mismatch: expected ' + expectedBytes + ', got ' + buffer.byteLength);
           }
-          self.meta = meta;
-          self.values = self._decodeUint16LE(buffer);
-          self.ready = true;
-          return self;
+          return {
+            mode: mode,
+            meta: meta,
+            values: self._decodeUint16LE(buffer),
+            ready: true
+          };
         });
       });
     },
 
-    _loadData: function (version) {
+    _loadData: function (baseName, version) {
       var suffix = '?v=' + encodeURIComponent(version);
-      var rawUrl = 'data/idw-grid.bin' + suffix;
-      var gzipUrl = 'data/idw-grid.bin.gz' + suffix;
+      var rawUrl = 'data/' + baseName + '.bin' + suffix;
+      var gzipUrl = 'data/' + baseName + '.bin.gz' + suffix;
       var loadRaw = function () {
         return fetch(rawUrl, { cache: 'no-cache' }).then(function (res) {
-          if (!res.ok) throw new Error('idw-grid.bin: ' + res.status);
+          if (!res.ok) throw new Error(baseName + '.bin: ' + res.status);
           return res.arrayBuffer();
         });
       };
 
-      // Modern browsers can unpack the ~0.6 MB gzip payload locally.  If the
-      // server already applies Content-Encoding, fetch() returns the decoded
-      // bytes and the gzip magic check simply skips the second decompression.
       if (typeof DecompressionStream !== 'function') return loadRaw();
       return fetch(gzipUrl, { cache: 'no-cache' }).then(function (res) {
-        if (!res.ok) throw new Error('idw-grid.bin.gz: ' + res.status);
+        if (!res.ok) throw new Error(baseName + '.bin.gz: ' + res.status);
         return res.arrayBuffer();
       }).then(function (buffer) {
         var bytes = new Uint8Array(buffer);
@@ -54,7 +76,7 @@
         var stream = new Blob([buffer]).stream().pipeThrough(new DecompressionStream('gzip'));
         return new Response(stream).arrayBuffer();
       }).catch(function (err) {
-        console.warn('圧縮IDWグリッドを読み込めなかったため非圧縮版へフォールバックします:', err);
+        console.warn('圧縮' + baseName + 'を読み込めなかったため非圧縮版へフォールバックします:', err);
         return loadRaw();
       });
     },
@@ -67,6 +89,21 @@
       var values = new Uint16Array(buffer.byteLength / 2);
       for (var i = 0; i < values.length; i++) values[i] = view.getUint16(i * 2, true);
       return values;
+    },
+
+    setMode: function (mode) {
+      if (mode !== 'idw' && mode !== 'access') mode = 'access';
+      if (!this._grids[mode]) mode = 'idw';
+      var grid = this._grids[mode];
+      this.mode = mode;
+      this.meta = grid ? grid.meta : null;
+      this.values = grid ? grid.values : null;
+      this.ready = !!(grid && grid.ready);
+      return this.mode;
+    },
+
+    hasMode: function (mode) {
+      return !!(this._grids[mode] && this._grids[mode].ready);
     },
 
     contains: function (lat, lng) {
