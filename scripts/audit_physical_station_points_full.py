@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """Recalculate every distinct physical N02 station point with Yahoo exact-point routing.
 
-A physical point is an IDW source iff the best (route 1) journey from that exact
-coordinate does not first board rail at a *different* station/component.  Walking,
-local bus, or another rail component may still appear later in the journey.  A
-bus-only/walk-only route is kept because it does not obtain its value by borrowing a
-different railway station.
+Every successful exact-point query is a valid spatial accessibility sample and is used
+by the final IDW dataset.  This audit additionally records a route-selection diagnostic:
+``keep`` means the best journey boards rail at the queried physical component (or does
+not board rail), while ``exclude`` means it first walks/buses to a different component
+or station before boarding.  Those historical field names describe only the boarding
+origin diagnostic; they are NOT final IDW inclusion/exclusion flags.
 
 The Yahoo request uses the same project conditions: 2026-08-28, arrival by 08:18,
 quick walking, local buses enabled and highway buses disabled.  The first walking
@@ -137,13 +138,12 @@ def line_matches_point(point: dict, service: str) -> tuple[bool, str | None]:
 
 
 def classify(point: dict, excerpt: list[str]) -> dict:
+    """Classify where route 1 first boards rail; not whether the point enters IDW."""
     section = detailed_route1(excerpt)
     if not section:
         return {'classification': 'unparsed', 'reason': 'route1-section-missing', 'route1': []}
     rail = first_rail_event(section)
     if rail is None:
-        # Walking/bus-only journeys are still genuine accessibility values of this
-        # physical point; no different rail station supplies the sample.
         return {
             'classification': 'keep',
             'reason': 'no-rail-boarded',
@@ -194,23 +194,23 @@ def main() -> None:
         (i, point) for i, point in enumerate(all_points)
         if i % args.shard_count == args.shard_index
     ]
-    rows=[]
+    rows = []
     for ordinal, (global_index, point) in enumerate(selected, 1):
-        label=f"{point['logicalStation']}物理駅地点-{point['id']}"
-        row={
+        label = f"{point['logicalStation']}物理駅地点-{point['id']}"
+        row = {
             'globalIndex': global_index,
             **point,
         }
         try:
-            result=query_yahoo(
+            result = query_yahoo(
                 build_flatlon_url(label, float(point['lat']), float(point['lng'])),
                 float(point['lat']), float(point['lng']),
             )
-            origin=result.get('firstWalkOrigin')
-            origin_dist=None if not origin else origin.get('distanceFromStationM')
-            departure=result.get('summaryDeparture')
-            departure_minutes=hhmm_to_minutes(departure)
-            route_class=classify(point, result.get('excerpt') or [])
+            origin = result.get('firstWalkOrigin')
+            origin_dist = None if not origin else origin.get('distanceFromStationM')
+            departure = result.get('summaryDeparture')
+            departure_minutes = hhmm_to_minutes(departure)
+            route_class = classify(point, result.get('excerpt') or [])
             row.update({
                 'departure': departure,
                 'arrival': result.get('summaryArrival'),
@@ -220,14 +220,14 @@ def main() -> None:
                 **route_class,
             })
             if departure_minutes is None:
-                row['error']='missing-departure'
+                row['error'] = 'missing-departure'
             elif not row['originVerified']:
-                row['error']=f'origin-not-verified:{origin_dist}'
+                row['error'] = f'origin-not-verified:{origin_dist}'
         except Exception as exc:
-            row['classification']='unparsed'
-            row['error']=f'{type(exc).__name__}: {exc}'
+            row['classification'] = 'unparsed'
+            row['error'] = f'{type(exc).__name__}: {exc}'
         rows.append(row)
-        first_rail=(row.get('firstRail') or {})
+        first_rail = row.get('firstRail') or {}
         print(
             f"[{ordinal}/{len(selected)}] {point['id']} {point['logicalStation']} "
             f"{row.get('departure')} {row.get('classification')} {row.get('reason')} "
@@ -237,19 +237,24 @@ def main() -> None:
         if ordinal < len(selected):
             time.sleep(args.delay_seconds)
 
-    summary={
+    summary = {
         'shardIndex': args.shard_index,
         'shardCount': args.shard_count,
         'projectPhysicalPoints': len(all_points),
         'rows': len(rows),
         'queriedSuccessfully': sum(1 for r in rows if not r.get('error')),
         'originVerified': sum(1 for r in rows if r.get('originVerified')),
+        # Diagnostic field names retained for compatibility with the completed audit.
         'keep': sum(1 for r in rows if r.get('classification') == 'keep' and not r.get('error')),
         'exclude': sum(1 for r in rows if r.get('classification') == 'exclude' and not r.get('error')),
         'unparsed': sum(1 for r in rows if r.get('classification') == 'unparsed' or r.get('error')),
     }
-    Path(args.output).write_text(json.dumps({'meta':summary,'rows':rows},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-    print(json.dumps(summary,ensure_ascii=False,indent=2))
+    Path(args.output).write_text(
+        json.dumps({'meta': summary, 'rows': rows}, ensure_ascii=False, indent=2) + '\n',
+        encoding='utf-8'
+    )
+    print(json.dumps(summary, ensure_ascii=False, indent=2))
 
-if __name__=='__main__':
+
+if __name__ == '__main__':
     main()
