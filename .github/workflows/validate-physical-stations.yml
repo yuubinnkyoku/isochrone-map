@@ -1,14 +1,34 @@
 name: Validate physical station dataset
 
 on:
-  push:
-    branches: [physical-station-points-recalc]
+  pull_request:
+    branches: [main]
     paths:
       - data/stations.json
+      - data/idw-grid.bin
+      - data/idw-grid.bin.gz
       - data/idw-grid.meta.json
       - scripts/prepare_physical_station_points.py
       - scripts/validate_physical_station_dataset.py
       - scripts/build_physical_station_dataset.py
+      - scripts/build_precomputed_grid.mjs
+      - js/config.js
+      - js/main.js
+      - js/markers.js
+      - js/ui.js
+      - index.html
+      - .github/workflows/validate-physical-stations.yml
+  push:
+    branches: [main]
+    paths:
+      - data/stations.json
+      - data/idw-grid.bin
+      - data/idw-grid.bin.gz
+      - data/idw-grid.meta.json
+      - scripts/prepare_physical_station_points.py
+      - scripts/validate_physical_station_dataset.py
+      - scripts/build_physical_station_dataset.py
+      - scripts/build_precomputed_grid.mjs
       - js/config.js
       - js/main.js
       - js/markers.js
