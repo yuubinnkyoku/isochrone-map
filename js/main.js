@@ -135,6 +135,7 @@
           var actualMode = PrecomputedGrid.setMode(value);
           contourOverlay.refresh();
           gradientOverlay.refresh();
+          UIManager.updateDataInfo(DataManager.meta, DataManager.stations.length, DataManager.getMajorCount());
           // 3D samples PrecomputedGrid when it builds its terrain. Re-request the
           // terrain only when it is active; otherwise the next show() uses the
           // currently selected interpolation mode automatically.
