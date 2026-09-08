@@ -1,0 +1,28 @@
+name: Inspect Yahoo origin GIDs
+
+on:
+  push:
+    branches: [recalc-idw-physical-exclusions]
+    paths:
+      - scripts/inspect_yahoo_origin_gids.py
+      - .github/workflows/inspect-yahoo-origin-gids.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Inspect ambiguous origin GIDs
+        run: python scripts/inspect_yahoo_origin_gids.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: yahoo-origin-gid-diagnostic
+          path: data/yahoo-origin-gid-diagnostic.json
