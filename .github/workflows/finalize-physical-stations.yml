@@ -1,0 +1,98 @@
+name: Finalize physical station dataset
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - physical-station-points-recalc
+    paths:
+      - .github/workflows/finalize-physical-stations.yml
+
+permissions:
+  contents: write
+
+env:
+  AUDIT_RUN_ID: '34202370240'
+
+jobs:
+  finalize:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Rebuild N02 physical point proposal
+        run: python scripts/prepare_physical_station_points.py
+
+      - name: Download complete 1563-point Yahoo audit
+        uses: actions/download-artifact@v4
+        with:
+          name: physical-station-point-audit
+          path: audit-artifact
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          run-id: ${{ env.AUDIT_RUN_ID }}
+
+      - name: Build physical station dataset
+        run: |
+          python scripts/build_physical_station_dataset.py \
+            --audit audit-artifact/physical-station-point-audit.json \
+            --output data/stations.json \
+            --compact-audit-output data/physical-station-point-audit-compact.json
+
+      - name: Rebuild IDW grid from all physical points
+        run: node scripts/build_precomputed_grid.mjs
+
+      - name: Validate generated data
+        run: |
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+
+          stations_path = Path('data/stations.json')
+          doc = json.loads(stations_path.read_text(encoding='utf-8'))
+          stations = doc['stations']
+          assert len(stations) == 1563, len(stations)
+          assert len({s['id'] for s in stations}) == 1563
+          assert sum(bool(s.get('excludeFromIdw')) for s in stations) == 0
+          assert sum(bool(s.get('labelPrimary')) for s in stations) == 1318
+          assert doc['meta']['stationModel']['logicalStations'] == 1318
+          assert doc['meta']['stationModel']['physicalPoints'] == 1563
+          assert doc['meta']['idwExclusionPolicy']['includedPhysicalPoints'] == 1563
+
+          meta = json.loads(Path('data/idw-grid.meta.json').read_text(encoding='utf-8'))
+          expected_sha = hashlib.sha256(stations_path.read_bytes()).hexdigest()
+          assert meta['stationCount'] == 1563, meta['stationCount']
+          assert meta['sourceStationCount'] == 1563, meta['sourceStationCount']
+          assert meta['excludedStationCount'] == 0, meta['excludedStationCount']
+          assert meta['stationDataSha256'] == expected_sha
+
+          by_logical = {}
+          for s in stations:
+              by_logical.setdefault(s['logicalStation'], []).append(s)
+          for name in ['熊野前', '東京', '武蔵小杉', '池袋', '両国']:
+              rows = by_logical.get(name, [])
+              print(name, len(rows))
+              for r in rows:
+                  print(' ', r['id'], r['station'], r['departureDisplay'], r['line'], r['physicalPointAudit']['reason'])
+          print('stations sha256', expected_sha)
+          print('grid', meta['rows'], meta['cols'], meta['stationCount'])
+          PY
+
+      - name: Commit generated dataset and grid
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/stations.json data/physical-station-point-audit-compact.json \
+            data/idw-grid.bin data/idw-grid.bin.gz data/idw-grid.meta.json
+          if git diff --cached --quiet; then
+            echo 'No generated changes to commit.'
+          else
+            git commit -m 'Recompute all 1563 physical station points'
+            git push origin HEAD:physical-station-points-recalc
+          fi
