@@ -1,0 +1,92 @@
+name: Resolve physical IDW exclusions via same-line routes
+
+on:
+  push:
+    branches: [recalc-idw-physical-exclusions]
+    paths:
+      - .github/workflows/resolve-physical-idw-unresolved-via.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+env:
+  INITIAL_RUN_ID: '34219625835'
+
+jobs:
+  resolve:
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3]
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Rebuild physical-point proposal
+        run: python scripts/prepare_physical_station_points.py >/dev/null
+      - name: Download initial four-shard audit
+        uses: actions/download-artifact@v4
+        with:
+          pattern: physical-idw-shard-*
+          path: data/initial-idw-shards
+          merge-multiple: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          run-id: ${{ env.INITIAL_RUN_ID }}
+      - name: Resolve initial unresolved rows using same-line via constraints
+        run: |
+          python scripts/resolve_physical_idw_unresolved_via.py \
+            --input-dir data/initial-idw-shards \
+            --shard-index ${{ matrix.shard }} \
+            --shard-count 4 \
+            --neighbour-limit 6 \
+            --delay-seconds 0.55 \
+            --output data/physical-idw-via-resolution-${{ matrix.shard }}.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: physical-idw-via-resolution-${{ matrix.shard }}
+          path: data/physical-idw-via-resolution-${{ matrix.shard }}.json
+
+  combine:
+    needs: resolve
+    if: always()
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Download initial audit shards
+        uses: actions/download-artifact@v4
+        with:
+          pattern: physical-idw-shard-*
+          path: data/initial-idw-shards
+          merge-multiple: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          run-id: ${{ env.INITIAL_RUN_ID }}
+      - name: Download via-resolution shards
+        uses: actions/download-artifact@v4
+        with:
+          pattern: physical-idw-via-resolution-*
+          path: data/via-resolution-shards
+          merge-multiple: true
+      - name: Overlay resolutions and recompute summary
+        run: |
+          python scripts/merge_physical_idw_resolutions.py \
+            --initial-dir data/initial-idw-shards \
+            --resolution-dir data/via-resolution-shards \
+            --json-output data/physical-idw-exclusion-audit-resolved.json \
+            --markdown-output data/physical-idw-exclusion-audit-resolved.md
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: physical-idw-exclusion-audit-resolved
+          path: |
+            data/physical-idw-exclusion-audit-resolved.json
+            data/physical-idw-exclusion-audit-resolved.md
