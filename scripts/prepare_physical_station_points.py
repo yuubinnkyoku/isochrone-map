@@ -17,7 +17,8 @@ import json
 from collections import defaultdict
 from pathlib import Path
 
-from audit_n02_coverage import SOURCE_URL, build_n02, fetch_n02, load_overrides, match_project_station
+from audit_n02_coverage import load_overrides, match_with_overrides
+from audit_n02_station_groups import SOURCE_URL, build_n02, fetch_n02
 
 STATIONS = Path("data/stations.json")
 OVERRIDES = Path("data/n02-station-group-overrides.json")
@@ -63,7 +64,9 @@ def main() -> None:
     multi_point_logical = []
 
     for logical_index, station in enumerate(doc.get("stations", [])):
-        codes, method, distance = match_project_station(station, summaries, groups_by_name, overrides)
+        codes, method, distance, override = match_with_overrides(
+            station, summaries, groups_by_name, overrides
+        )
         if not codes:
             unresolved.append({
                 "id": station.get("id"),
@@ -116,6 +119,7 @@ def main() -> None:
             "station": station.get("station"),
             "matchedGroupCodes": codes,
             "matchMethod": method,
+            "overrideReason": None if not override else override.get("reason"),
             "physicalPointCount": len(points),
             "physicalPointIds": [p["id"] for p in points],
         }
