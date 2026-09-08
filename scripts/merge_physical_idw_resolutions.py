@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Overlay via-constrained resolutions onto the initial physical IDW audit.
+"""Overlay exact-adjacency via resolutions onto the initial physical IDW audit.
 
-Initial rows that were already include/exclude are immutable.  A via-resolution row may
-replace only an initial unresolved row with the same ID/globalIndex.  Full coverage and
+Initial rows that were already include/exclude are immutable. A second-pass row may
+replace only an initial unresolved row with the same ID/globalIndex. Full coverage and
 all decision counts are recomputed after the overlay; `complete` is true only when no
 unresolved row remains.
 """
@@ -54,7 +54,6 @@ def main() -> None:
 
     initial = load_initial(Path(args.initial_dir))
     resolutions = load_resolutions(Path(args.resolution_dir))
-    initial_by_id = {str(r['id']): r for r in initial}
     initial_unresolved = {str(r['id']) for r in initial if r.get('decision') == 'unresolved'}
 
     extra = sorted(set(resolutions) - initial_unresolved)
@@ -70,13 +69,12 @@ def main() -> None:
         if row_id not in resolutions:
             rows.append(old)
             continue
-        new = resolutions[row_id]
+        new = dict(resolutions[row_id])
         if int(new.get('globalIndex', -1)) != int(old['globalIndex']):
             raise SystemExit(f'globalIndex changed for {row_id}')
-        # Preserve an explicit audit trail that this row came from second-pass via
-        # resolution rather than silently mutating the first pass.
-        new = dict(new)
-        new['resolutionPass'] = 'same-line-via'
+        # Exact resolver sets this itself. Preserve it rather than relabelling the
+        # provenance as the earlier geographic-neighbour experiment.
+        new.setdefault('resolutionPass', 'exact-n02-adjacent-via')
         rows.append(new)
 
     rows.sort(key=lambda r: int(r['globalIndex']))
@@ -84,7 +82,9 @@ def main() -> None:
     unresolved = [r for r in rows if r.get('decision') == 'unresolved']
     excluded = [r for r in rows if r.get('decision') == 'exclude']
     compared = [r for r in rows if r.get('directMinutes') is not None]
-    gains = Counter(int(r.get('gainMinutes') or 0) for r in excluded)
+    gains = Counter(int(r.get('gainMinutes') or 0) for r in excluded if r.get('gainMinutes') is not None)
+    no_direct = sum(1 for r in excluded if r.get('decisionReason') == 'no-feasible-direct-component-route')
+    passes = Counter(str(r.get('resolutionPass') or 'initial') for r in rows)
 
     summary = {
         'physicalPoints': 1563,
@@ -96,6 +96,8 @@ def main() -> None:
         'exclude': decisions.get('exclude', 0),
         'unresolved': len(unresolved),
         'directComparisons': len(compared),
+        'excludedWithNoFeasibleDirectRoute': no_direct,
+        'resolutionPasses': dict(sorted(passes.items())),
         'gainDistribution': {str(k): v for k, v in sorted(gains.items())},
         'complete': len(unresolved) == 0,
     }
@@ -108,28 +110,30 @@ def main() -> None:
         '# Physical station point IDW exclusion audit', '',
         f"- physical points: {summary['physicalPoints']}",
         f"- initial unresolved: {summary['initialUnresolved']}",
-        f"- resolved by same-line via pass: {summary['viaResolved']}",
+        f"- resolved by exact N02-adjacent via pass: {summary['viaResolved']}",
         f"- include: {summary['include']}",
         f"- exclude: {summary['exclude']}",
         f"- unresolved: {summary['unresolved']}",
         f"- direct comparisons: {summary['directComparisons']}",
+        f"- excluded because no direct route is feasible: {summary['excludedWithNoFeasibleDirectRoute']}",
         f"- complete: {summary['complete']}", '',
         '## Excluded physical points', '',
-        '| station | id | unrestricted | direct | gain | direct label | via | unrestricted first-rail |',
+        '| station | id | unrestricted | direct | gain | direct label | exact adjacent via | unrestricted first-rail |',
         '|---|---|---:|---:|---:|---|---|---|',
     ]
     for r in excluded:
+        gain = '' if r.get('gainMinutes') is None else f"+{r.get('gainMinutes')}"
         lines.append(
             f"| {r.get('station')} | `{r.get('id')}` | {r.get('freeDeparture')} | "
-            f"{r.get('directDeparture')} | +{r.get('gainMinutes')} | {r.get('directLabel')} | "
+            f"{r.get('directDeparture') or '—'} | {gain} | {r.get('directLabel') or ''} | "
             f"{r.get('directVia') or ''} | {r.get('freeReason')} |"
         )
     if unresolved:
-        lines += ['', '## Still unresolved', '', '| station | id | unrestricted reason | via attempts |', '|---|---|---|---:|']
+        lines += ['', '## Still unresolved', '', '| station | id | unrestricted reason | adjacent links | via attempts |', '|---|---|---|---:|---:|']
         for r in unresolved:
             lines.append(
                 f"| {r.get('station')} | `{r.get('id')}` | {r.get('freeReason')} | "
-                f"{len(r.get('viaResolutionAttempts') or [])} |"
+                f"{len(r.get('adjacentRouteResults') or [])} | {len(r.get('viaResolutionAttempts') or [])} |"
             )
     Path(args.markdown_output).write_text('\n'.join(lines) + '\n', encoding='utf-8')
     print(json.dumps(summary, ensure_ascii=False, indent=2))
