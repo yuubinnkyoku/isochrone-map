@@ -1,0 +1,55 @@
+name: Validate physical station dataset
+
+on:
+  push:
+    branches: [physical-station-points-recalc]
+    paths:
+      - data/stations.json
+      - data/idw-grid.meta.json
+      - scripts/prepare_physical_station_points.py
+      - scripts/validate_physical_station_dataset.py
+      - scripts/build_physical_station_dataset.py
+      - js/config.js
+      - js/main.js
+      - js/markers.js
+      - js/ui.js
+      - index.html
+      - .github/workflows/validate-physical-stations.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Rebuild physical-point proposal from current dataset
+        run: python scripts/prepare_physical_station_points.py
+      - name: Validate station model
+        run: python scripts/validate_physical_station_dataset.py
+      - name: Validate IDW metadata and station hash
+        run: |
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          stations = Path('data/stations.json')
+          meta = json.loads(Path('data/idw-grid.meta.json').read_text(encoding='utf-8'))
+          sha = hashlib.sha256(stations.read_bytes()).hexdigest()
+          assert meta['stationCount'] == 1563
+          assert meta['sourceStationCount'] == 1563
+          assert meta['excludedStationCount'] == 0
+          assert meta['stationDataSha256'] == sha, (meta['stationDataSha256'], sha)
+          print('stationDataSha256', sha)
+          print('grid', meta['rows'], meta['cols'])
+          PY
+      - name: Validate JavaScript syntax
+        run: |
+          node --check js/config.js
+          node --check js/main.js
+          node --check js/markers.js
+          node --check js/ui.js
