@@ -13,6 +13,10 @@ permissions:
 
 env:
   AUDIT_RUN_ID: '34202370240'
+  # Last main commit whose data/stations.json is the 1318-row logical source.
+  # Pinning it makes the physical-point dataset reproducible even after stations.json
+  # on this branch (and eventually main) becomes the generated 1563-row dataset.
+  LOGICAL_SOURCE_COMMIT: 'e7e95ab4117be8288606d2c4d4db90b674b37402'
 
 jobs:
   finalize:
@@ -26,8 +30,23 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Materialize immutable logical station source
+        run: |
+          git show "${LOGICAL_SOURCE_COMMIT}:data/stations.json" > /tmp/logical-stations.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          doc = json.loads(Path('/tmp/logical-stations.json').read_text(encoding='utf-8'))
+          assert len(doc['stations']) == 1318, len(doc['stations'])
+          assert not any(s.get('logicalStationId') for s in doc['stations'])
+          print('logical source stations', len(doc['stations']))
+          PY
+
       - name: Rebuild N02 physical point proposal
-        run: python scripts/prepare_physical_station_points.py
+        run: |
+          python scripts/prepare_physical_station_points.py \
+            --stations /tmp/logical-stations.json \
+            --output data/physical-station-points-proposal.json
 
       - name: Download complete 1563-point Yahoo audit
         uses: actions/download-artifact@v4
@@ -41,6 +60,7 @@ jobs:
       - name: Build physical station dataset
         run: |
           python scripts/build_physical_station_dataset.py \
+            --old-stations /tmp/logical-stations.json \
             --audit audit-artifact/physical-station-point-audit.json \
             --output data/stations.json \
             --compact-audit-output data/physical-station-point-audit-compact.json
@@ -48,8 +68,11 @@ jobs:
       - name: Rebuild IDW grid from all physical points
         run: node scripts/build_precomputed_grid.mjs
 
-      - name: Validate generated data
+      - name: Validate generated data and frontend syntax
         run: |
+          node --check js/markers.js
+          node --check js/main.js
+          node --check js/ui.js
           python - <<'PY'
           import hashlib, json
           from pathlib import Path
@@ -59,11 +82,21 @@ jobs:
           stations = doc['stations']
           assert len(stations) == 1563, len(stations)
           assert len({s['id'] for s in stations}) == 1563
+          assert len({s['station'] for s in stations}) == 1563, 'physical display names must be globally unique'
+          assert len({s['logicalStationId'] for s in stations}) == 1318
           assert sum(bool(s.get('excludeFromIdw')) for s in stations) == 0
           assert sum(bool(s.get('labelPrimary')) for s in stations) == 1318
           assert doc['meta']['stationModel']['logicalStations'] == 1318
           assert doc['meta']['stationModel']['physicalPoints'] == 1563
           assert doc['meta']['idwExclusionPolicy']['includedPhysicalPoints'] == 1563
+          assert doc['meta']['idwExclusionPolicy']['excludedPhysicalPoints'] == 0
+          diagnostics = doc['meta']['idwExclusionPolicy']['exactPointAudit']['routeSelectionDiagnostics']
+          assert diagnostics == {
+              'boards-current-physical-point': 976,
+              'boards-different-component': 232,
+              'boards-different-station': 343,
+              'no-rail-boarded': 12,
+          }, diagnostics
 
           meta = json.loads(Path('data/idw-grid.meta.json').read_text(encoding='utf-8'))
           expected_sha = hashlib.sha256(stations_path.read_bytes()).hexdigest()
@@ -75,11 +108,17 @@ jobs:
           by_logical = {}
           for s in stations:
               by_logical.setdefault(s['logicalStation'], []).append(s)
-          for name in ['熊野前', '東京', '武蔵小杉', '池袋', '両国']:
+          for name in ['熊野前', '東京', '武蔵小杉', '池袋', '両国', '弘明寺']:
               rows = by_logical.get(name, [])
               print(name, len(rows))
               for r in rows:
                   print(' ', r['id'], r['station'], r['departureDisplay'], r['line'], r['physicalPointAudit']['reason'])
+          k = by_logical['弘明寺']
+          assert len(k) == 2
+          assert len({r['station'] for r in k}) == 2
+          assert any('ブルーライン' in r['station'] for r in k), [r['station'] for r in k]
+          assert any('本線' in r['station'] for r in k), [r['station'] for r in k]
+
           print('stations sha256', expected_sha)
           print('grid', meta['rows'], meta['cols'], meta['stationCount'])
           PY
