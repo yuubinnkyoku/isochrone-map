@@ -21,7 +21,7 @@ on:
       - index.html
       - .github/workflows/validate-physical-stations.yml
   push:
-    branches: [main]
+    branches: [main, recalc-idw-physical-exclusions]
     paths:
       - data/stations.json
       - data/idw-grid.bin
