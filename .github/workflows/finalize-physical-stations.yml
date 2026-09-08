@@ -1,7 +1,8 @@
 name: Finalize physical station dataset
 
-# Manual until the pinned comparison audit has completed. A later one-line trigger
-# change can run this without re-querying Yahoo.
+# Manual reproducible rebuild from the pinned complete exact-point Yahoo audit.
+# Direct-vs-component audits are diagnostic only: IDW represents accessibility from a
+# coordinate, so every verified exact-point optimum remains a spatial sample.
 on:
   workflow_dispatch:
 
@@ -11,7 +12,6 @@ permissions:
 
 env:
   ACCESS_AUDIT_RUN_ID: '34202370240'
-  IDW_AUDIT_RUN_ID: '34223734409'
   # Last main commit whose data/stations.json is the immutable 1318-row logical source.
   LOGICAL_SOURCE_COMMIT: 'e7e95ab4117be8288606d2c4d4db90b674b37402'
 
@@ -57,7 +57,7 @@ jobs:
           repository: ${{ github.repository }}
           run-id: ${{ env.ACCESS_AUDIT_RUN_ID }}
 
-      - name: Build all 1563 physical station markers
+      - name: Build all 1563 exact-point accessibility samples
         run: |
           python scripts/build_physical_station_dataset.py \
             --old-stations /tmp/logical-stations.json \
@@ -65,78 +65,27 @@ jobs:
             --output data/stations.json \
             --compact-audit-output data/physical-station-point-audit-compact.json
 
-      - name: Download complete direct-vs-unrestricted IDW audit
-        uses: actions/download-artifact@v4
-        with:
-          name: physical-idw-exclusion-audit-resolved
-          path: idw-audit
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          repository: ${{ github.repository }}
-          run-id: ${{ env.IDW_AUDIT_RUN_ID }}
-
-      - name: Require complete strict comparison coverage
+      - name: Enforce exact-point IDW semantics
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
-          p = Path('idw-audit/physical-idw-exclusion-audit-resolved.json')
-          d = json.loads(p.read_text(encoding='utf-8'))
-          s = d['summary']
-          assert s['physicalPoints'] == 1563, s
-          assert s['rows'] == 1563, s
-          assert s['uniqueIds'] == 1563, s
-          assert s['initialUnresolved'] == 475, s
-          assert s['unresolved'] == 0, s
-          assert s['complete'] is True, s
-          assert s['include'] + s['exclude'] == 1563, s
-          print(json.dumps(s, ensure_ascii=False, indent=2))
-          PY
-
-      - name: Apply strict physical-point IDW exclusions
-        run: |
-          python scripts/apply_physical_idw_exclusions.py \
-            --stations data/stations.json \
-            --audit idw-audit/physical-idw-exclusion-audit-resolved.json \
-            --output data/stations.json \
-            --compact-audit-output data/physical-idw-exclusion-audit-compact.json
-
-      - name: Update README and cache versions from generated policy
-        run: |
-          python - <<'PY'
-          import json, re
-          from pathlib import Path
-
           doc = json.loads(Path('data/stations.json').read_text(encoding='utf-8'))
           policy = doc['meta']['idwExclusionPolicy']
-          excluded = int(policy['excludedPhysicalPoints'])
-          included = int(policy['includedPhysicalPoints'])
-          assert included + excluded == 1563
-          assert policy['complete'] is True and policy['unresolved'] == 0
-
-          readme_path = Path('README.md')
-          text = readme_path.read_text(encoding='utf-8')
-          old = ('旧データでは「駅名検索の直接値」と「その地点から歩いて別経路を使う値」が食い違う場合に、直接値をIDW補間から除外していました。新データでは**最初から各物理座標そのものを出発地として最適経路を再計算**しているため、別駅・別構成駅へ歩いてから乗る場合もその地点の正しいアクセシビリティ値です。そのため、1563地点すべてをIDW標本として使用します。')
-          new = (f'各物理地点のマーカーには、その座標からの最適アクセシビリティ値をそのまま表示します。一方IDW補間では、最適経路が別駅・別構成駅へ移動してから乗車する地点について、**その物理駅を直接使う最良経路**も再検索して比較します。別駅・別構成駅へ移動する自由経路の方が1分以上遅く出発できる場合だけ、その地点をIDW標本から除外します。大規模乗換駅など駅名指定だけでは構成駅を固定できない場合は、N02-25 `RailroadSection` から求めた当該駅コードの全隣接駅を経由地として各方向を検証し、未検証方向が1つでも残る地点は除外確定しません。最終監査は未解決0で、**{excluded}地点をIDWから除外し、{included}地点を補間標本として使用**します。')
-          if old not in text:
-              raise SystemExit('README IDW policy paragraph changed unexpectedly')
-          text = text.replace(old, new)
-          text = text.replace('**事前計算IDWグリッド**: 1563物理駅地点とのIDW補間を更新時に', f'**事前計算IDWグリッド**: {included}物理駅地点とのIDW補間を更新時に')
-          readme_path.write_text(text, encoding='utf-8')
-
-          config_path = Path('js/config.js')
-          cfg = config_path.read_text(encoding='utf-8')
-          if 'dataVersion: 22,' not in cfg or 'gridVersion: 11,' not in cfg:
-              raise SystemExit('cache versions changed unexpectedly')
-          cfg = cfg.replace('dataVersion: 22,', 'dataVersion: 23,')
-          cfg = cfg.replace('gridVersion: 11,', 'gridVersion: 12,')
-          config_path.write_text(cfg, encoding='utf-8')
-          print('IDW included/excluded', included, excluded)
+          assert len(doc['stations']) == 1563
+          assert policy['auditedPhysicalPoints'] == 1563, policy
+          assert policy['exactPointAudit']['originVerified'] == 1563, policy
+          assert policy['includedPhysicalPoints'] == 1563, policy
+          assert policy['excludedPhysicalPoints'] == 0, policy
+          assert policy['excludedStations'] == 0, policy
+          assert not any(s.get('excludeFromIdw') for s in doc['stations'])
+          print('all 1563 verified coordinate-accessibility samples retained for IDW')
           PY
 
-      - name: Rebuild IDW grid from included physical points only
+      - name: Rebuild IDW grid from all verified physical points
         run: node scripts/build_precomputed_grid.mjs
 
-      - name: Validate generated data, exclusion provenance, grid and frontend syntax
+      - name: Validate generated data, grid and frontend syntax
         run: |
           python scripts/validate_physical_station_dataset.py
           node --check js/config.js
@@ -147,32 +96,27 @@ jobs:
           import hashlib, json
           from pathlib import Path
           stations_path = Path('data/stations.json')
-          doc = json.loads(stations_path.read_text(encoding='utf-8'))
-          policy = doc['meta']['idwExclusionPolicy']
           meta = json.loads(Path('data/idw-grid.meta.json').read_text(encoding='utf-8'))
           sha = hashlib.sha256(stations_path.read_bytes()).hexdigest()
           assert meta['sourceStationCount'] == 1563, meta
-          assert meta['stationCount'] == policy['includedPhysicalPoints'], (meta, policy)
-          assert meta['excludedStationCount'] == policy['excludedPhysicalPoints'], (meta, policy)
-          assert sorted(meta['excludedStationIds']) == sorted(policy['excludedPhysicalPointIds'])
+          assert meta['stationCount'] == 1563, meta
+          assert meta['excludedStationCount'] == 0, meta
+          assert not meta['excludedStationIds'], meta
           assert meta['stationDataSha256'] == sha, (meta['stationDataSha256'], sha)
-          assert meta['stationCount'] + meta['excludedStationCount'] == 1563
           print('stationDataSha256', sha)
           print('grid', meta['rows'], meta['cols'], 'included', meta['stationCount'], 'excluded', meta['excludedStationCount'])
           PY
 
-      - name: Commit generated dataset, audit summary, docs and grid
+      - name: Commit generated dataset and grid
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add README.md js/config.js \
-            data/stations.json data/physical-station-point-audit-compact.json \
-            data/physical-idw-exclusion-audit-compact.json \
+          git add data/stations.json data/physical-station-point-audit-compact.json \
             data/idw-grid.bin data/idw-grid.bin.gz data/idw-grid.meta.json
           if git diff --cached --quiet; then
             echo 'No generated changes to commit.'
           else
-            git commit -m 'Finalize strict physical-point IDW exclusions'
+            git commit -m 'Rebuild all 1563 exact-point accessibility samples'
             git pull --rebase origin "${GITHUB_REF_NAME}"
             git push origin "HEAD:${GITHUB_REF_NAME}"
           fi
