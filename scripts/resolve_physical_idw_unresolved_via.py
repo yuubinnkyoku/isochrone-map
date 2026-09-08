@@ -1,45 +1,40 @@
 #!/usr/bin/env python3
-"""Resolve unresolved physical IDW comparisons by forcing a same-line neighbour via.
+"""Resolve unresolved direct-component baselines with exact adjacent-station vias.
 
-Yahoo station-origin search cannot reliably be constrained to a specific component of a
-large interchange: e.g. `池袋（山手線）` may still choose the Yurakucho Line.  For an
-unresolved physical point we therefore add a nearby station on the *same N02 line and
-operator* as `via01`.  A candidate is accepted only if route 1's first rail boarding
-still verifies against the queried physical point.  This makes the via station a route
-constraint, not evidence by itself.
+A route that boards a given physical rail component must next reach one of that
+component's route-topological adjacent stations.  N02 adjacency is derived separately
+from RailroadSection geometry by `build_n02_station_adjacency.py`, not guessed from
+straight-line proximity.
 
-The nearest several same-line points are tried because N02 station records do not expose
-a simple ordered adjacency field in the Station GeoJSON, and branches/loops can make a
-single nearest-neighbour guess unsafe.  Among all verified candidates we retain the
-latest departure, i.e. the best route that actually boards the queried component.
+For every initially unresolved physical point, this script constrains Yahoo route 1 with
+`via01` for *each* exact adjacent station of every N02 station code represented by the
+physical point.  A candidate counts only when route 1's first rail boarding verifies as
+the queried physical point.  The latest verified departure across all adjacent links is
+therefore the direct-component baseline.
+
+An exclusion is emitted only when every topological adjacent link has a verified route
+(or an explicitly route-less result) and the unrestricted exact-point departure is at
+least one minute later.  Missing/unverifiable adjacent directions keep the row
+unresolved rather than risking a false exclusion.
 """
 from __future__ import annotations
 
 import argparse
 import json
-import math
 import time
 import urllib.parse
 from pathlib import Path
 
-from audit_address_origin_resolution import query_yahoo
 from audit_physical_idw_exclusions import (
+    LINE_ALIASES,
+    OPERATOR_ALIASES,
     clean_display_label,
     minutes_on_timeline,
+    normalize_line,
     query_with_retry,
 )
 from audit_physical_station_points_full import classify
 from audit_yahoo_targeted import build_url
-
-
-def haversine_m(a_lat: float, a_lng: float, b_lat: float, b_lng: float) -> float:
-    r = 6_371_008.8
-    p1 = math.radians(a_lat)
-    p2 = math.radians(b_lat)
-    dp = math.radians(b_lat - a_lat)
-    dl = math.radians(b_lng - a_lng)
-    h = math.sin(dp / 2) ** 2 + math.cos(p1) * math.cos(p2) * math.sin(dl / 2) ** 2
-    return 2 * r * math.asin(math.sqrt(h))
 
 
 def build_via_url(origin: str, via: str) -> str:
@@ -52,61 +47,35 @@ def build_via_url(origin: str, via: str) -> str:
     )
 
 
-def network_overlap(a: dict, b: dict) -> bool:
-    a_lines = {str(v) for v in (a.get('lines') or [])}
-    b_lines = {str(v) for v in (b.get('lines') or [])}
-    a_ops = {str(v) for v in (a.get('operators') or [])}
-    b_ops = {str(v) for v in (b.get('operators') or [])}
-    return bool(a_lines & b_lines) and bool(a_ops & b_ops)
-
-
-def neighbour_candidates(point: dict, all_points: list[dict], limit: int) -> list[dict]:
-    rows = []
-    for other in all_points:
-        if str(other.get('id')) == str(point.get('id')):
-            continue
-        if str(other.get('logicalStationId')) == str(point.get('logicalStationId')):
-            continue
-        if not network_overlap(point, other):
-            continue
-        rows.append((
-            haversine_m(
-                float(point['lat']), float(point['lng']),
-                float(other['lat']), float(other['lng']),
-            ),
-            other,
-        ))
-    rows.sort(key=lambda item: (item[0], str(item[1].get('logicalStation')), str(item[1].get('id'))))
-
-    # Deduplicate by logical station name so aliases/coincident records do not waste
-    # requests.  Keep a few candidates to cover both directions and branch geometry.
-    out = []
-    seen = set()
-    for dist, other in rows:
-        name = str(other.get('logicalStation') or '').strip()
-        if not name or name in seen:
-            continue
-        seen.add(name)
-        out.append({'distanceM': round(dist, 2), **other})
-        if len(out) >= limit:
-            break
-    return out
-
-
 def origin_labels(row: dict) -> list[str]:
     values = []
-    # The first original attempt is normally the most component-specific display label.
+    # Keep component-specific labels first; the initial audit already generated these
+    # from the exact N02 line/operator metadata.
     for attempt in row.get('attempts') or []:
         label = str(attempt.get('label') or '').strip()
-        if label:
+        if label and label not in values:
             values.append(label)
+        if len(values) >= 3:
             break
     display = clean_display_label(str(row.get('station') or '')).strip()
-    logical = str(row.get('logicalStation') or '').strip()
-    for value in (display, logical):
-        if value:
-            values.append(value)
-    return list(dict.fromkeys(values))[:2]
+    if display and display not in values:
+        values.append(display)
+    return values[:3]
+
+
+def via_labels(adj: dict) -> list[str]:
+    name = str(adj.get('name') or '').strip()
+    line = str(adj.get('line') or '').strip()
+    operator = str(adj.get('operator') or '').strip()
+    qualifiers = []
+    for q in [line, normalize_line(line), *(LINE_ALIASES.get(line) or []), *(OPERATOR_ALIASES.get(operator) or [])]:
+        q = str(q or '').strip()
+        if q and q not in qualifiers:
+            qualifiers.append(q)
+    values = [name]
+    for q in qualifiers[:4]:
+        values.extend((f'{name}({q})', f'{name}（{q}）'))
+    return list(dict.fromkeys(v for v in values if v))
 
 
 def load_rows(input_dir: Path) -> list[dict]:
@@ -115,29 +84,48 @@ def load_rows(input_dir: Path) -> list[dict]:
         raise SystemExit(f'no initial shard files in {input_dir}')
     rows = []
     for path in paths:
-        doc = json.loads(path.read_text(encoding='utf-8'))
-        rows.extend(doc.get('rows') or [])
+        rows.extend(json.loads(path.read_text(encoding='utf-8')).get('rows') or [])
     rows.sort(key=lambda r: int(r['globalIndex']))
     if len(rows) != 1563 or len({str(r.get('id')) for r in rows}) != 1563:
         raise SystemExit(f'initial audit coverage mismatch rows={len(rows)} unique={len({str(r.get("id")) for r in rows})}')
     return rows
 
 
+def adjacency_links(point: dict, adjacency: dict[str, list[dict]]) -> list[dict]:
+    out = []
+    seen = set()
+    point_lines = {str(v) for v in (point.get('lines') or [])}
+    point_ops = {str(v) for v in (point.get('operators') or [])}
+    for code in point.get('n02StationCodes') or []:
+        for adj in adjacency.get(str(code), []):
+            # The mapping is per station-code route already, but retain this guard in
+            # case an input proposal later merges coincident records from several lines.
+            if str(adj.get('line')) not in point_lines or str(adj.get('operator')) not in point_ops:
+                continue
+            key = (str(code), str(adj.get('stationCode')), str(adj.get('line')), str(adj.get('operator')))
+            if key in seen:
+                continue
+            seen.add(key)
+            out.append({'fromStationCode': str(code), **adj})
+    return out
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument('--input-dir', required=True)
     ap.add_argument('--proposal', default='data/physical-station-points-proposal.json')
+    ap.add_argument('--adjacency', default='data/n02-station-adjacency.json')
     ap.add_argument('--shard-index', type=int, required=True)
     ap.add_argument('--shard-count', type=int, required=True)
-    ap.add_argument('--neighbour-limit', type=int, default=6)
     ap.add_argument('--delay-seconds', type=float, default=0.55)
     ap.add_argument('--output', required=True)
     args = ap.parse_args()
 
     rows = load_rows(Path(args.input_dir))
     proposal = json.loads(Path(args.proposal).read_text(encoding='utf-8'))
-    points = proposal['physicalPoints']
-    point_by_id = {str(p['id']): p for p in points}
+    point_by_id = {str(p['id']): p for p in proposal['physicalPoints']}
+    adjacency_doc = json.loads(Path(args.adjacency).read_text(encoding='utf-8'))
+    adjacency = adjacency_doc['adjacency']
     if len(point_by_id) != 1563:
         raise SystemExit(f'proposal physical point count {len(point_by_id)} != 1563')
 
@@ -149,72 +137,107 @@ def main() -> None:
     resolved_rows = []
     for ordinal, row in enumerate(selected, 1):
         point = point_by_id[str(row['id'])]
-        neighbours = neighbour_candidates(point, points, args.neighbour_limit)
+        links = adjacency_links(point, adjacency)
         labels = origin_labels(row)
         attempts = []
-        verified = []
+        link_results = []
 
-        for neighbour in neighbours:
-            via = str(neighbour['logicalStation'])
-            for origin in labels:
-                attempt = {
-                    'originLabel': origin,
-                    'via': via,
-                    'viaPointId': neighbour['id'],
-                    'viaDistanceM': neighbour['distanceM'],
-                }
-                try:
-                    # query_with_retry accepts arbitrary Yahoo URLs and preserves the
-                    # same retry policy as the initial audit.
-                    result = query_with_retry(
-                        build_via_url(origin, via),
-                        float(row['lat']), float(row['lng']),
-                    )
-                    dep = result.get('summaryDeparture')
-                    dep_minutes = minutes_on_timeline(dep)
-                    route_class = classify(point, result.get('excerpt') or [])
-                    attempt.update({
-                        'departure': dep,
-                        'arrival': result.get('summaryArrival'),
-                        'classification': route_class.get('classification'),
-                        'reason': route_class.get('reason'),
-                        'firstRail': route_class.get('firstRail'),
-                    })
-                    if dep_minutes is not None and route_class.get('reason') == 'boards-current-physical-point':
-                        verified.append({
-                            'originLabel': origin,
-                            'via': via,
-                            'viaPointId': neighbour['id'],
-                            'viaDistanceM': neighbour['distanceM'],
+        for link in links:
+            verified = []
+            had_clean_no_route = False
+            link_attempts = 0
+            # Start with unqualified adjacent name; use line/operator-qualified via
+            # variants only when necessary to disambiguate same-name stations.
+            for via in via_labels(link):
+                for origin in labels:
+                    link_attempts += 1
+                    attempt = {
+                        'fromStationCode': link['fromStationCode'],
+                        'adjacentStationCode': link['stationCode'],
+                        'adjacentStation': link['name'],
+                        'adjacentLine': link['line'],
+                        'adjacentOperator': link['operator'],
+                        'networkDistanceM': link['networkDistanceM'],
+                        'originLabel': origin,
+                        'via': via,
+                    }
+                    try:
+                        result = query_with_retry(
+                            build_via_url(origin, via),
+                            float(row['lat']), float(row['lng']),
+                        )
+                        dep = result.get('summaryDeparture')
+                        dep_minutes = minutes_on_timeline(dep)
+                        route_class = classify(point, result.get('excerpt') or [])
+                        attempt.update({
                             'departure': dep,
-                            'minutes': dep_minutes,
+                            'arrival': result.get('summaryArrival'),
+                            'classification': route_class.get('classification'),
+                            'reason': route_class.get('reason'),
                             'firstRail': route_class.get('firstRail'),
                         })
-                except Exception as exc:
-                    attempt['error'] = f'{type(exc).__name__}: {exc}'
-                attempts.append(attempt)
-                time.sleep(args.delay_seconds)
+                        # A successful Yahoo response with no route summary after all
+                        # retries is evidence that this forced adjacent direction has no
+                        # feasible arrival-by-08:18 journey for this query.
+                        if dep_minutes is None and result.get('httpStatus') == 200:
+                            had_clean_no_route = True
+                        if dep_minutes is not None and route_class.get('reason') == 'boards-current-physical-point':
+                            verified.append({
+                                'originLabel': origin,
+                                'via': via,
+                                'departure': dep,
+                                'minutes': dep_minutes,
+                                'firstRail': route_class.get('firstRail'),
+                            })
+                    except Exception as exc:
+                        attempt['error'] = f'{type(exc).__name__}: {exc}'
+                    attempts.append(attempt)
+                    time.sleep(args.delay_seconds)
 
-            # Once a nearby via has produced a verified route, still test one more
-            # neighbour when available.  This covers the opposite direction without
-            # exploding request counts on large lines.
-            if verified and len({v['via'] for v in verified}) >= 2:
-                break
+                # Once this exact adjacent link has a verified direct-component route,
+                # extra aliases cannot improve route-set completeness; stop variants.
+                if verified:
+                    break
 
+            if verified:
+                best = max(verified, key=lambda v: (int(v['minutes']), str(v['originLabel']), str(v['via'])))
+                link_results.append({
+                    **link,
+                    'status': 'verified',
+                    'attempts': link_attempts,
+                    'best': best,
+                })
+            elif had_clean_no_route:
+                link_results.append({**link, 'status': 'no-feasible-route', 'attempts': link_attempts})
+            else:
+                link_results.append({**link, 'status': 'unresolved', 'attempts': link_attempts})
+
+        verified_all = [lr['best'] | {'link': lr} for lr in link_results if lr['status'] == 'verified']
+        incomplete_links = [lr for lr in link_results if lr['status'] == 'unresolved']
         out = dict(row)
+        out['resolutionPass'] = 'exact-n02-adjacent-via'
+        out['adjacentRouteResults'] = link_results
         out['viaResolutionAttempts'] = attempts
-        out['viaNeighbourCandidates'] = [
-            {'id': n['id'], 'station': n['logicalStation'], 'distanceM': n['distanceM']}
-            for n in neighbours
-        ]
-        if verified:
-            best = max(verified, key=lambda v: (int(v['minutes']), -float(v['viaDistanceM']), str(v['via'])))
+
+        if not links:
+            out['decision'] = 'unresolved'
+            out['decisionReason'] = 'no-n02-adjacent-links'
+            out['error'] = out['decisionReason']
+        elif incomplete_links:
+            # Even if a provisional route exists, an unresolved topological direction
+            # might contain a later direct-component journey, so do not exclude.
+            out['decision'] = 'unresolved'
+            out['decisionReason'] = 'unresolved-adjacent-direction'
+            out['error'] = out['decisionReason']
+        elif verified_all:
+            best = max(verified_all, key=lambda v: int(v['minutes']))
             gain = int(row['freeMinutes']) - int(best['minutes'])
+            link = best['link']
             out.update({
                 'directLabel': best['originLabel'],
                 'directVia': best['via'],
-                'directViaPointId': best['viaPointId'],
-                'directViaDistanceM': best['viaDistanceM'],
+                'directViaStationCode': link['stationCode'],
+                'directViaDistanceM': link['networkDistanceM'],
                 'directDeparture': best['departure'],
                 'directMinutes': best['minutes'],
                 'directFirstRail': best['firstRail'],
@@ -225,16 +248,25 @@ def main() -> None:
             })
             out.pop('error', None)
         else:
-            out['decision'] = 'unresolved'
-            out['decisionReason'] = 'no-verified-direct-component-route-after-via'
-            out['error'] = out['decisionReason']
+            # Every adjacent direction was queried successfully but none has a feasible
+            # route to the school by 08:18.  The unrestricted route necessarily uses a
+            # different component/station, so the current component cannot beat it.
+            out.update({
+                'directDeparture': None,
+                'directMinutes': None,
+                'gainMinutes': None,
+                'excludeFromIdw': True,
+                'decision': 'exclude',
+                'decisionReason': 'no-feasible-direct-component-route',
+            })
+            out.pop('error', None)
 
         resolved_rows.append(out)
         print(
             f"[{ordinal}/{len(selected)}] {row['id']} {row.get('logicalStation')} "
             f"decision={out.get('decision')} free={row.get('freeMinutes')} "
             f"direct={out.get('directMinutes')} gain={out.get('gainMinutes')} "
-            f"via={out.get('directVia')} attempts={len(attempts)}"
+            f"links={len(links)} unresolvedLinks={len(incomplete_links)} attempts={len(attempts)}"
         )
 
     summary = {
@@ -245,6 +277,7 @@ def main() -> None:
         'include': sum(r.get('decision') == 'include' for r in resolved_rows),
         'exclude': sum(r.get('decision') == 'exclude' for r in resolved_rows),
         'unresolved': sum(r.get('decision') == 'unresolved' for r in resolved_rows),
+        'exactAdjacencyMethod': True,
     }
     Path(args.output).write_text(
         json.dumps({'summary': summary, 'rows': resolved_rows}, ensure_ascii=False, indent=2) + '\n',
