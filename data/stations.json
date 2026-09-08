@@ -12770,7 +12770,7 @@
     },
     {
       "id": "n02p-003253",
-      "station": "栄町",
+      "station": "栄町（荒川線）",
       "logicalStation": "栄町",
       "logicalStationId": "tokyo23-003253",
       "n02StationCodes": [
@@ -15259,7 +15259,7 @@
     },
     {
       "id": "n02p-003469",
-      "station": "入谷",
+      "station": "入谷（日比谷線）",
       "logicalStation": "入谷",
       "logicalStationId": "tokyo23-003469",
       "n02StationCodes": [
@@ -48863,7 +48863,7 @@
     },
     {
       "id": "n02p-004761",
-      "station": "弘明寺",
+      "station": "弘明寺（横浜市営地下鉄ブルーライン）",
       "logicalStation": "弘明寺",
       "logicalStationId": "n02-004761",
       "n02StationCodes": [
@@ -48943,7 +48943,7 @@
     },
     {
       "id": "n02p-004756",
-      "station": "弘明寺",
+      "station": "弘明寺（本線）",
       "logicalStation": "弘明寺",
       "logicalStationId": "n02-004756",
       "n02StationCodes": [
@@ -49063,7 +49063,7 @@
     },
     {
       "id": "n02p-002874",
-      "station": "霞ヶ関",
+      "station": "霞ヶ関（東上本線）",
       "logicalStation": "霞ヶ関",
       "logicalStationId": "n02-002874",
       "n02StationCodes": [
@@ -51782,7 +51782,7 @@
     },
     {
       "id": "n02p-004169",
-      "station": "栄町",
+      "station": "栄町（1号線）",
       "logicalStation": "栄町",
       "logicalStationId": "n02-004169",
       "n02StationCodes": [
@@ -55526,7 +55526,7 @@
     },
     {
       "id": "n02p-004593",
-      "station": "入谷",
+      "station": "入谷（相模線）",
       "logicalStation": "入谷",
       "logicalStationId": "n02-004593",
       "n02StationCodes": [
