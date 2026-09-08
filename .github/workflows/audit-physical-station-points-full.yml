@@ -1,0 +1,68 @@
+name: Full physical station point audit
+
+on:
+  push:
+    branches: [physical-station-points-recalc]
+    paths:
+      - scripts/audit_physical_station_points_full.py
+      - scripts/combine_physical_station_point_audit.py
+      - .github/workflows/audit-physical-station-points-full.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Prepare physical points
+        run: python scripts/prepare_physical_station_points.py >/dev/null
+      - name: Recalculate exact point routes
+        run: |
+          python scripts/audit_physical_station_points_full.py \
+            --shard-index ${{ matrix.shard }} \
+            --shard-count 4 \
+            --delay-seconds 0.60 \
+            --output data/physical-shard-${{ matrix.shard }}.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: physical-shard-${{ matrix.shard }}
+          path: data/physical-shard-${{ matrix.shard }}.json
+
+  combine:
+    needs: audit
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: physical-shard-*
+          path: data/physical-shards
+          merge-multiple: true
+      - name: Combine
+        run: |
+          python scripts/combine_physical_station_point_audit.py \
+            --input-dir data/physical-shards \
+            --json-output data/physical-station-point-audit.json \
+            --markdown-output data/physical-station-point-audit.md
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: physical-station-point-audit
+          path: |
+            data/physical-station-point-audit.json
+            data/physical-station-point-audit.md
