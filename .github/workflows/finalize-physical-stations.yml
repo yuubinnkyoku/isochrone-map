@@ -1,0 +1,104 @@
+name: Finalize physical station dataset
+
+# This rebuild is intentionally manual. It consumes the pinned full Yahoo audit
+# artifact and regenerates the 1563-point dataset plus the expensive IDW grid.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  AUDIT_RUN_ID: '34202370240'
+  # Last main commit whose data/stations.json is the 1318-row logical source.
+  # Pinning it makes the physical-point expansion reproducible after main switches
+  # to the generated 1563-row physical dataset.
+  LOGICAL_SOURCE_COMMIT: 'e7e95ab4117be8288606d2c4d4db90b674b37402'
+
+jobs:
+  finalize:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Require a branch ref
+        run: test "${GITHUB_REF_TYPE}" = "branch"
+
+      - name: Materialize immutable logical station source
+        run: |
+          git show "${LOGICAL_SOURCE_COMMIT}:data/stations.json" > /tmp/logical-stations.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          doc = json.loads(Path('/tmp/logical-stations.json').read_text(encoding='utf-8'))
+          assert len(doc['stations']) == 1318, len(doc['stations'])
+          assert not any(s.get('logicalStationId') for s in doc['stations'])
+          print('logical source stations', len(doc['stations']))
+          PY
+
+      - name: Rebuild N02 physical point proposal
+        run: |
+          python scripts/prepare_physical_station_points.py \
+            --stations /tmp/logical-stations.json \
+            --output data/physical-station-points-proposal.json
+
+      - name: Download complete 1563-point Yahoo audit
+        uses: actions/download-artifact@v4
+        with:
+          name: physical-station-point-audit
+          path: audit-artifact
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          run-id: ${{ env.AUDIT_RUN_ID }}
+
+      - name: Build physical station dataset
+        run: |
+          python scripts/build_physical_station_dataset.py \
+            --old-stations /tmp/logical-stations.json \
+            --audit audit-artifact/physical-station-point-audit.json \
+            --output data/stations.json \
+            --compact-audit-output data/physical-station-point-audit-compact.json
+
+      - name: Rebuild IDW grid from all physical points
+        run: node scripts/build_precomputed_grid.mjs
+
+      - name: Validate generated data and frontend syntax
+        run: |
+          python scripts/validate_physical_station_dataset.py
+          node --check js/config.js
+          node --check js/main.js
+          node --check js/markers.js
+          node --check js/ui.js
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          stations = Path('data/stations.json')
+          meta = json.loads(Path('data/idw-grid.meta.json').read_text(encoding='utf-8'))
+          sha = hashlib.sha256(stations.read_bytes()).hexdigest()
+          assert meta['stationCount'] == 1563
+          assert meta['sourceStationCount'] == 1563
+          assert meta['excludedStationCount'] == 0
+          assert meta['stationDataSha256'] == sha, (meta['stationDataSha256'], sha)
+          print('stationDataSha256', sha)
+          print('grid', meta['rows'], meta['cols'])
+          PY
+
+      - name: Commit generated dataset and grid
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/stations.json data/physical-station-point-audit-compact.json \
+            data/idw-grid.bin data/idw-grid.bin.gz data/idw-grid.meta.json
+          if git diff --cached --quiet; then
+            echo 'No generated changes to commit.'
+          else
+            git commit -m 'Recompute all 1563 physical station points'
+            git pull --rebase origin "${GITHUB_REF_NAME}"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi

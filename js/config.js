@@ -10,9 +10,9 @@
     defaultZoom: 11,
 
     // stations.json cache-buster. Bump when station data changes.
-    dataVersion: 21,
+    dataVersion: 22,
     // Precomputed IDW grid cache-buster.
-    gridVersion: 10,
+    gridVersion: 11,
 
     // 目的地
     destination: {
@@ -72,7 +72,8 @@
       },
       allLabelsMinZoom: 15,
       collisionMaxZoom: 14,
-      collisionBox: { width: 120, height: 40, gap: 3 },
+      // 物理地点名は「駅名（路線名）」になるため旧120pxより広く取る。
+      collisionBox: { width: 160, height: 40, gap: 3 },
     },
 
     // 目的地同心円（5km/10km/15km/20km/30km/40km/50km）

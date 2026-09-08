@@ -6,6 +6,7 @@
     _settings: null,
     _onUpdate: null,
     _panelOpen: false,
+    _dataMeta: null,
 
     init: function (onUpdate) {
       this._onUpdate = onUpdate;
@@ -141,7 +142,14 @@
     _formatHeightLabel: function (v) { return (v > 0 ? '+' : '') + String(v); },
 
     updateDataInfo: function (meta, stationCount, majorCount) {
-      var html = '<span>' + stationCount + '</span> 駅 ｜ <span>' + majorCount + '</span> 主要';
+      this._dataMeta = meta || null;
+      var stationModel = meta && meta.stationModel;
+      var html;
+      if (stationModel && stationModel.physicalPoints) {
+        html = '<span>' + stationModel.physicalPoints + '</span> 物理駅地点 ｜ <span>' + stationModel.logicalStations + '</span> 論理駅';
+      } else {
+        html = '<span>' + stationCount + '</span> 駅 ｜ <span>' + majorCount + '</span> 主要';
+      }
       if (meta && meta.lastUpdated) html += '<br>データ更新: ' + meta.lastUpdated;
       if (meta && meta.targetArrival && meta.targetArrival !== CONFIG.destination.dataTargetTime) {
         html += '<br><strong>※ 駅時刻は旧 ' + meta.targetArrival + ' 到着基準。高校版 ' + CONFIG.destination.dataTargetTime + ' 到着基準への再調査前です。</strong>';
@@ -149,6 +157,15 @@
         html += '<br>検索上の学校到着: ' + meta.targetArrival + '（1限開始 ' + CONFIG.destination.classStartTime + '）';
       }
       document.getElementById('data-info').innerHTML = html;
+
+      var excludedCount = meta && meta.idwExclusionPolicy
+        ? Number(meta.idwExclusionPolicy.excludedPhysicalPoints || meta.idwExclusionPolicy.excludedStations || 0)
+        : 0;
+      var excludedSelect = document.getElementById('select-excluded-stations');
+      if (excludedSelect && excludedSelect.parentElement) {
+        excludedSelect.parentElement.style.display = excludedCount > 0 ? '' : 'none';
+      }
+      this._buildLegend();
     },
 
     _buildLegend: function () {
@@ -197,7 +214,10 @@
         labels.innerHTML = [r.min, 420, 450, 480, r.max].map(function (v) { return '<span>' + minutesToTimeStr(v) + '</span>'; }).join('');
       }
 
-      var showExcluded = !s.threeDEnabled && (s.excludedStationMode || 'hollow') !== 'hidden';
+      var excludedCount = this._dataMeta && this._dataMeta.idwExclusionPolicy
+        ? Number(this._dataMeta.idwExclusionPolicy.excludedPhysicalPoints || this._dataMeta.idwExclusionPolicy.excludedStations || 0)
+        : 0;
+      var showExcluded = excludedCount > 0 && !s.threeDEnabled && (s.excludedStationMode || 'hollow') !== 'hidden';
       excluded.style.display = showExcluded ? 'flex' : 'none';
       excluded.innerHTML = showExcluded
         ? '<span class="legend-excluded-symbol">○</span><span class="legend-excluded-text">補間対象外（別経路の方が有利）</span>'

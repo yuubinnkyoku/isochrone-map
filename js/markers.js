@@ -148,8 +148,11 @@
         var passengerHtml = Number.isFinite(s.passengers)
           ? '<div class="tt-detail">1日乗降客数: ' + s.passengers.toLocaleString('ja-JP') + '人（' + s.passengerYear + '）</div>'
           : '';
-        var details = (routeHtml || noteHtml || searchDateHtml || passengerHtml)
-          ? '<div class="tt-divider"></div>' + routeHtml + noteHtml + searchDateHtml + passengerHtml
+        var logicalHtml = s.logicalStation && s.logicalStation !== s.station
+          ? '<div class="tt-detail">乗換駅グループ: ' + s.logicalStation + '</div>'
+          : '';
+        var details = (routeHtml || noteHtml || searchDateHtml || passengerHtml || logicalHtml)
+          ? '<div class="tt-divider"></div>' + routeHtml + logicalHtml + noteHtml + searchDateHtml + passengerHtml
           : '';
 
         marker.bindTooltip(
@@ -171,7 +174,7 @@
             html: '<span class="sl-name">' + s.station + '</span><br>' +
               '<span class="sl-time">' + ts + '</span>' +
               '<span class="sl-detail" style="display:none"><br>' + s.line + '</span>',
-            iconSize: [120, 40],
+            iconSize: [160, 40],
             iconAnchor: [-8, 15]
           }),
           interactive: false
@@ -192,11 +195,10 @@
     _labelBox: function (item) {
       var config = CONFIG.stationLabels || {};
       var boxConfig = config.collisionBox || {};
-      var width = boxConfig.width || 120;
+      var width = boxConfig.width || 160;
       var height = boxConfig.height || 40;
       var gap = boxConfig.gap || 0;
       var point = this._map.latLngToContainerPoint(item.marker.getLatLng());
-      // label iconAnchor [-8, 15]: the label begins 8px to the right and 15px above the station.
       return {
         left: point.x + 8 - gap,
         right: point.x + 8 + width + gap,
@@ -244,13 +246,15 @@
 
       var candidates = this._markers.filter(function (item) {
         if (item.data.excludeFromIdw && self._excludedStationMode === 'hidden') return false;
+        // All physical points get their own label once sufficiently zoomed in.  At
+        // lower zooms only one representative label per logical transfer station is
+        // considered, while every physical marker remains visible.
         if (z >= allLabelsMinZoom) return true;
+        if (item.data.labelPrimary === false) return false;
         if (item.isMajor) return true;
         return Number.isFinite(item.data.passengerRank) && item.data.passengerRank <= rankLimit;
       });
 
-      // Major stations first, then stations with more passengers. This ordering also
-      // determines which label survives when two medium-zoom labels collide.
       candidates.sort(function (a, b) {
         if (a.isMajor !== b.isMajor) return a.isMajor ? -1 : 1;
         var ar = Number.isFinite(a.data.passengerRank) ? a.data.passengerRank : Infinity;
@@ -284,8 +288,17 @@
     },
 
     findStationMarker: function (name) {
-      for (var i = 0; i < this._markers.length; i++) {
+      var i;
+      for (i = 0; i < this._markers.length; i++) {
         if (this._markers[i].data.station === name) return this._markers[i].marker;
+      }
+      for (i = 0; i < this._markers.length; i++) {
+        if (this._markers[i].data.logicalStation === name && this._markers[i].data.labelPrimary !== false) {
+          return this._markers[i].marker;
+        }
+      }
+      for (i = 0; i < this._markers.length; i++) {
+        if (this._markers[i].data.logicalStation === name) return this._markers[i].marker;
       }
       return null;
     },

@@ -1,0 +1,74 @@
+name: Full physical station point audit
+
+# This workflow performs 1563 live Yahoo! Transit requests.  Keep it manual so an
+# ordinary code edit cannot accidentally repeat the entire external-data audit.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  LOGICAL_SOURCE_COMMIT: 'e7e95ab4117be8288606d2c4d4db90b674b37402'
+
+jobs:
+  audit:
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Materialize immutable logical station source
+        run: git show "${LOGICAL_SOURCE_COMMIT}:data/stations.json" > /tmp/logical-stations.json
+      - name: Prepare physical points
+        run: |
+          python scripts/prepare_physical_station_points.py \
+            --stations /tmp/logical-stations.json \
+            --output data/physical-station-points-proposal.json >/dev/null
+      - name: Recalculate exact point routes
+        run: |
+          python scripts/audit_physical_station_points_full.py \
+            --shard-index ${{ matrix.shard }} \
+            --shard-count 4 \
+            --delay-seconds 0.60 \
+            --output data/physical-shard-${{ matrix.shard }}.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: physical-shard-${{ matrix.shard }}
+          path: data/physical-shard-${{ matrix.shard }}.json
+
+  combine:
+    needs: audit
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: physical-shard-*
+          path: data/physical-shards
+          merge-multiple: true
+      - name: Combine
+        run: |
+          python scripts/combine_physical_station_point_audit.py \
+            --input-dir data/physical-shards \
+            --json-output data/physical-station-point-audit.json \
+            --markdown-output data/physical-station-point-audit.md
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: physical-station-point-audit
+          path: |
+            data/physical-station-point-audit.json
+            data/physical-station-point-audit.md

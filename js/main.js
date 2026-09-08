@@ -84,12 +84,13 @@
     if (dataList) {
       var uniqueStations = {};
       stations.forEach(function (s) {
-        if (!uniqueStations[s.station]) {
-          uniqueStations[s.station] = true;
+        [s.logicalStation, s.station].forEach(function (name) {
+          if (!name || uniqueStations[name]) return;
+          uniqueStations[name] = true;
           var option = document.createElement('option');
-          option.value = s.station;
+          option.value = name;
           dataList.appendChild(option);
-        }
+        });
       });
     }
 
