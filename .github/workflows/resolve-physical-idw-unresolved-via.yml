@@ -1,4 +1,4 @@
-name: Resolve physical IDW exclusions via same-line routes
+name: Resolve physical IDW exclusions via exact N02 adjacency
 
 on:
   push:
@@ -15,7 +15,24 @@ env:
   INITIAL_RUN_ID: '34219625835'
 
 jobs:
+  adjacency:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Rebuild physical-point proposal
+        run: python scripts/prepare_physical_station_points.py >/dev/null
+      - name: Derive exact N02 adjacent stations
+        run: python scripts/build_n02_station_adjacency.py --output data/n02-station-adjacency.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: n02-station-adjacency-for-idw
+          path: data/n02-station-adjacency.json
+
   resolve:
+    needs: adjacency
     strategy:
       fail-fast: false
       matrix:
@@ -28,6 +45,11 @@ jobs:
           python-version: '3.12'
       - name: Rebuild physical-point proposal
         run: python scripts/prepare_physical_station_points.py >/dev/null
+      - name: Download exact N02 adjacency
+        uses: actions/download-artifact@v4
+        with:
+          name: n02-station-adjacency-for-idw
+          path: data
       - name: Download initial four-shard audit
         uses: actions/download-artifact@v4
         with:
@@ -37,13 +59,13 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           repository: ${{ github.repository }}
           run-id: ${{ env.INITIAL_RUN_ID }}
-      - name: Resolve initial unresolved rows using same-line via constraints
+      - name: Resolve initial unresolved rows using every exact adjacent station
         run: |
           python scripts/resolve_physical_idw_unresolved_via.py \
             --input-dir data/initial-idw-shards \
+            --adjacency data/n02-station-adjacency.json \
             --shard-index ${{ matrix.shard }} \
             --shard-count 4 \
-            --neighbour-limit 6 \
             --delay-seconds 0.55 \
             --output data/physical-idw-via-resolution-${{ matrix.shard }}.json
       - uses: actions/upload-artifact@v4
@@ -53,7 +75,7 @@ jobs:
           path: data/physical-idw-via-resolution-${{ matrix.shard }}.json
 
   combine:
-    needs: resolve
+    needs: [adjacency, resolve]
     if: always()
     runs-on: ubuntu-24.04
     steps:
@@ -70,13 +92,13 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           repository: ${{ github.repository }}
           run-id: ${{ env.INITIAL_RUN_ID }}
-      - name: Download via-resolution shards
+      - name: Download exact-adjacency resolution shards
         uses: actions/download-artifact@v4
         with:
           pattern: physical-idw-via-resolution-*
           path: data/via-resolution-shards
           merge-multiple: true
-      - name: Overlay resolutions and recompute summary
+      - name: Overlay exact-adjacency resolutions and recompute summary
         run: |
           python scripts/merge_physical_idw_resolutions.py \
             --initial-dir data/initial-idw-shards \
