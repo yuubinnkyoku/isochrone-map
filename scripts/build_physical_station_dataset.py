@@ -75,27 +75,46 @@ def line_display(lines: list[str], operators: list[str]) -> str:
     return ' / '.join(result) if result else '鉄道'
 
 
-def unique_display_names(items: list[dict]) -> dict[str, str]:
-    """Give every physical point a human-readable, deterministic station label."""
-    if len(items) == 1:
-        return {items[0]['id']: str(items[0]['logicalStation'])}
+def build_display_names(rows: list[dict], grouped: dict[str, list[dict]]) -> dict[str, str]:
+    """Return globally unique, readable labels for every physical station point.
 
-    base = {}
-    counts = Counter()
-    for row in items:
-        line = line_display(row.get('lines') or [], row.get('operators') or [])
-        candidate = f"{row['logicalStation']}（{line}）"
-        base[row['id']] = candidate
-        counts[candidate] += 1
+    A line qualifier is added not only when one logical transfer station has multiple
+    physical components, but also when two distinct logical stations share the same
+    passenger-facing name (for example the two 弘明寺 stations).  Remaining collisions
+    receive the N02 station code as a deterministic final disambiguator.
+    """
+    logical_name_counts = Counter()
+    for items in grouped.values():
+        if items:
+            logical_name_counts[str(items[0]['logicalStation'])] += 1
 
-    result = {}
-    for row in items:
-        candidate = base[row['id']]
+    candidates: dict[str, str] = {}
+    for row in rows:
+        logical_id = str(row['logicalStationId'])
+        logical_name = str(row['logicalStation'])
+        needs_line = len(grouped[logical_id]) > 1 or logical_name_counts[logical_name] > 1
+        if needs_line:
+            line = line_display(row.get('lines') or [], row.get('operators') or [])
+            candidate = f'{logical_name}（{line}）'
+        else:
+            candidate = logical_name
+        candidates[str(row['id'])] = candidate
+
+    counts = Counter(candidates.values())
+    result: dict[str, str] = {}
+    for row in rows:
+        row_id = str(row['id'])
+        candidate = candidates[row_id]
         if counts[candidate] == 1:
-            result[row['id']] = candidate
+            result[row_id] = candidate
         else:
             code = '+'.join(row.get('n02StationCodes') or [])
-            result[row['id']] = f"{candidate} [{code}]"
+            result[row_id] = f'{candidate} [{code}]'
+
+    # A physical station record must always be independently addressable in the UI.
+    if len(set(result.values())) != len(rows):
+        collisions = [name for name, count in Counter(result.values()).items() if count > 1]
+        raise SystemExit(f'duplicate physical station display names: {collisions[:20]}')
     return result
 
 
@@ -125,12 +144,11 @@ def main() -> None:
         raise SystemExit(f'unresolved physical points: {len(bad)}')
 
     old_by_id = {s['id']: s for s in old['stations']}
-    grouped = defaultdict(list)
+    grouped: dict[str, list[dict]] = defaultdict(list)
     for r in rows:
-        grouped[r['logicalStationId']].append(r)
+        grouped[str(r['logicalStationId'])].append(r)
 
     primary_ids = {}
-    display_names = {}
     for logical_id, items in grouped.items():
         source = old_by_id[logical_id]
         primary = min(
@@ -141,7 +159,8 @@ def main() -> None:
             ),
         )
         primary_ids[logical_id] = primary['id']
-        display_names.update(unique_display_names(items))
+
+    display_names = build_display_names(rows, grouped)
 
     stations = []
     compact_rows = []
@@ -256,7 +275,7 @@ def main() -> None:
             encoding='utf-8',
         )
     print(json.dumps(compact_summary, ensure_ascii=False, indent=2))
-    for name in ('熊野前', '東京', '武蔵小杉', '池袋', '両国', '早稲田(都電)'):
+    for name in ('熊野前', '東京', '武蔵小杉', '池袋', '両国', '弘明寺', '早稲田(都電)'):
         for s in stations:
             if s['logicalStation'] == name:
                 first = (s['physicalPointAudit'].get('firstRail') or {})
