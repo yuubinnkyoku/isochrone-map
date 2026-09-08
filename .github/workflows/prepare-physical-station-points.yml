@@ -1,0 +1,44 @@
+name: Prepare physical station points
+
+on:
+  push:
+    branches:
+      - physical-station-points-recalc
+    paths:
+      - scripts/prepare_physical_station_points.py
+      - .github/workflows/prepare-physical-station-points.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile
+        run: python -m py_compile scripts/prepare_physical_station_points.py
+      - name: Build physical-point proposal
+        run: python scripts/prepare_physical_station_points.py
+      - name: Show key examples
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          doc = json.loads(Path('data/physical-station-points-proposal.json').read_text(encoding='utf-8'))
+          print(json.dumps(doc['meta'], ensure_ascii=False, indent=2))
+          for name in ['熊野前','東京','武蔵小杉','池袋','両国','浅草','早稲田','弘明寺']:
+              rows=[r for r in doc['physicalPoints'] if r['logicalStation']==name or str(r['logicalStation']).startswith(name+'(')]
+              if rows:
+                  print('===',name,'===')
+                  for r in rows:
+                      print(r['id'], r['lat'], r['lng'], r['lines'], r['n02GroupCodes'])
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: physical-station-points-proposal
+          path: data/physical-station-points-proposal.json
