@@ -57,6 +57,17 @@ function validateAnchors(anchorDoc) {
   return anchors;
 }
 
+function alignExtentToAnchor(minValue, maxValue, anchorValue, margin, step) {
+  const desiredMin = minValue - margin;
+  const desiredMax = maxValue + margin;
+  const lowerSteps = Math.ceil((anchorValue - desiredMin) / step);
+  const upperSteps = Math.ceil((desiredMax - anchorValue) / step);
+  return {
+    min: anchorValue - lowerSteps * step,
+    max: anchorValue + upperSteps * step,
+  };
+}
+
 if (!isMainThread) {
   const { rowStart, rowEnd, cols, north, west, step, samples, power, scale, offsetMinutes } = workerData;
   const projected = projectSamples(samples);
@@ -91,10 +102,26 @@ if (!isMainThread) {
   const maxLat = Math.max(...samples.map((s) => Number(s.lat)));
   const minLng = Math.min(...samples.map((s) => Number(s.lng)));
   const maxLng = Math.max(...samples.map((s) => Number(s.lng)));
-  const south = Math.floor((minLat - MARGIN_DEG) / STEP_DEG) * STEP_DEG;
-  const north = Math.ceil((maxLat + MARGIN_DEG) / STEP_DEG) * STEP_DEG;
-  const west = Math.floor((minLng - MARGIN_DEG) / STEP_DEG) * STEP_DEG;
-  const east = Math.ceil((maxLng + MARGIN_DEG) / STEP_DEG) * STEP_DEG;
+
+  // Put the destination itself exactly on a grid node. Without this alignment,
+  // the browser's final bilinear lookup can dilute a known 08:18 destination
+  // sample by interpolating four nearby cells. The extent still retains at
+  // least MARGIN_DEG beyond every interpolation sample.
+  const gridAlignmentAnchor = interpolationAnchors.find((a) => a.kind === 'destination') || interpolationAnchors[0] || null;
+  let south, north, west, east;
+  if (gridAlignmentAnchor) {
+    const latExtent = alignExtentToAnchor(minLat, maxLat, Number(gridAlignmentAnchor.lat), MARGIN_DEG, STEP_DEG);
+    const lngExtent = alignExtentToAnchor(minLng, maxLng, Number(gridAlignmentAnchor.lng), MARGIN_DEG, STEP_DEG);
+    south = latExtent.min;
+    north = latExtent.max;
+    west = lngExtent.min;
+    east = lngExtent.max;
+  } else {
+    south = Math.floor((minLat - MARGIN_DEG) / STEP_DEG) * STEP_DEG;
+    north = Math.ceil((maxLat + MARGIN_DEG) / STEP_DEG) * STEP_DEG;
+    west = Math.floor((minLng - MARGIN_DEG) / STEP_DEG) * STEP_DEG;
+    east = Math.ceil((maxLng + MARGIN_DEG) / STEP_DEG) * STEP_DEG;
+  }
   const rows = Math.round((north - south) / STEP_DEG) + 1;
   const cols = Math.round((east - west) / STEP_DEG) + 1;
 
@@ -103,7 +130,7 @@ if (!isMainThread) {
   const anchorSha256 = crypto.createHash('sha256').update(anchorBytes).digest('hex');
   const workerCount = Math.max(1, Math.min(os.availableParallelism?.() || os.cpus().length || 1, 8, rows));
   console.log(`samples=${samples.length} stations=${stations.length}/${sourceStations.length} anchors=${interpolationAnchors.length} excluded=${excludedStations.length} rows=${rows} cols=${cols} points=${(rows * cols).toLocaleString()} workers=${workerCount}`);
-  console.log(`bounds=${south},${west} .. ${north},${east} step=${STEP_DEG}`);
+  console.log(`bounds=${south},${west} .. ${north},${east} step=${STEP_DEG} alignment=${gridAlignmentAnchor?.id || 'none'}`);
 
   const chunks = [];
   const started = Date.now();
@@ -132,7 +159,7 @@ if (!isMainThread) {
   const compressed = zlib.gzipSync(output, { level: 9 });
   fs.writeFileSync(`${outputBase}.bin.gz`, compressed);
   const meta = {
-    version: 2,
+    version: 3,
     algorithm: 'IDW on Web Mercator coordinates with interpolation-only anchors',
     idwPower: power,
     stationCount: stations.length,
@@ -142,6 +169,7 @@ if (!isMainThread) {
     interpolationAnchorCount: interpolationAnchors.length,
     interpolationAnchorIds: interpolationAnchors.map((a) => a.id),
     sampleCount: samples.length,
+    gridAlignmentAnchorId: gridAlignmentAnchor?.id || null,
     stationDataSha256: stationSha256,
     interpolationAnchorDataSha256: anchorSha256,
     rows,
