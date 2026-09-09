@@ -6,10 +6,12 @@
     "originVerified": 1563,
     "includedPhysicalPoints": 1563,
     "excludedPhysicalPoints": 0,
+    "routeParserVersion": 2,
+    "savedAuditRowsReclassified": 177,
     "routeSelectionDiagnostics": {
-      "boards-current-physical-point": 976,
-      "boards-different-component": 232,
-      "boards-different-station": 343,
+      "boards-current-physical-point": 1123,
+      "boards-different-component": 252,
+      "boards-different-station": 176,
       "no-rail-boarded": 12
     }
   },
@@ -31,7 +33,7 @@
       "routeSelectionClassification": "keep",
       "reason": "no-rail-boarded",
       "firstRail": null,
-      "hasBus": false
+      "hasBus": true
     },
     {
       "id": "n02p-003474",
@@ -50,7 +52,7 @@
       "routeSelectionClassification": "keep",
       "reason": "no-rail-boarded",
       "firstRail": null,
-      "hasBus": false
+      "hasBus": true
     },
     {
       "id": "n02p-003418",
@@ -3117,15 +3119,15 @@
       "arrival": "08:14",
       "minutes": 437,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "東京メトロ有楽町線新木場行",
-        "boardStation": "池袋",
-        "serviceIndex": 43,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "ＪＲ湘南新宿ライン大船行",
+        "boardStation": "東大宮",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:JR湘南新宿ライン"
       },
       "hasBus": false
     },
@@ -3143,15 +3145,15 @@
       "arrival": "08:14",
       "minutes": 440,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "東京メトロ有楽町線新木場行",
-        "boardStation": "池袋",
-        "serviceIndex": 42,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "ＪＲ湘南新宿ライン大船行",
+        "boardStation": "土呂",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:JR湘南新宿ライン"
       },
       "hasBus": false
     },
@@ -3169,15 +3171,15 @@
       "arrival": "08:14",
       "minutes": 444,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "東京メトロ有楽町線新木場行",
-        "boardStation": "池袋",
-        "serviceIndex": 42,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "ＪＲ湘南新宿ライン大船行",
+        "boardStation": "大宮(埼玉県)",
+        "serviceIndex": 29,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:JR湘南新宿ライン"
       },
       "hasBus": false
     },
@@ -3198,12 +3200,12 @@
       "minutes": 446,
       "originDistanceM": 0.0,
       "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "reason": "boards-different-component",
       "firstRail": {
-        "service": "東京メトロ有楽町線新木場行",
-        "boardStation": "池袋",
-        "serviceIndex": 42,
-        "sameLogicalStationBase": false,
+        "service": "ＪＲ湘南新宿ライン大船行",
+        "boardStation": "大宮(埼玉県)",
+        "serviceIndex": 29,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": false,
         "lineMatchReason": null
       },
@@ -3223,15 +3225,15 @@
       "arrival": "08:14",
       "minutes": 445,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "東京メトロ有楽町線新木場行",
-        "boardStation": "池袋",
-        "serviceIndex": 42,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "ＪＲ湘南新宿ライン大船行",
+        "boardStation": "大宮(埼玉県)",
+        "serviceIndex": 29,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:JR湘南新宿ライン"
       },
       "hasBus": false
     },
@@ -3250,12 +3252,12 @@
       "minutes": 444,
       "originDistanceM": 0.0,
       "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "reason": "boards-different-component",
       "firstRail": {
-        "service": "東京メトロ有楽町線新木場行",
-        "boardStation": "池袋",
-        "serviceIndex": 42,
-        "sameLogicalStationBase": false,
+        "service": "ＪＲ湘南新宿ライン大船行",
+        "boardStation": "大宮(埼玉県)",
+        "serviceIndex": 29,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": false,
         "lineMatchReason": null
       },
@@ -3276,12 +3278,12 @@
       "minutes": 444,
       "originDistanceM": 0.0,
       "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "reason": "boards-different-component",
       "firstRail": {
-        "service": "東京メトロ有楽町線新木場行",
-        "boardStation": "池袋",
-        "serviceIndex": 42,
-        "sameLogicalStationBase": false,
+        "service": "ＪＲ湘南新宿ライン大船行",
+        "boardStation": "大宮(埼玉県)",
+        "serviceIndex": 29,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": false,
         "lineMatchReason": null
       },
@@ -3380,15 +3382,15 @@
       "arrival": "08:14",
       "minutes": 453,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "東京メトロ有楽町線新木場行",
-        "boardStation": "池袋",
-        "serviceIndex": 41,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "ＪＲ湘南新宿ライン大船行",
+        "boardStation": "浦和",
+        "serviceIndex": 29,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:JR湘南新宿ライン"
       },
       "hasBus": false
     },
@@ -3614,15 +3616,15 @@
       "arrival": "08:14",
       "minutes": 422,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "東京メトロ有楽町線新木場行",
-        "boardStation": "池袋",
-        "serviceIndex": 57,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武アーバンパークライン大宮行",
+        "boardStation": "東岩槻",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武アーバンパークライン"
       },
       "hasBus": false
     },
@@ -3640,15 +3642,15 @@
       "arrival": "08:14",
       "minutes": 425,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "東京メトロ有楽町線新木場行",
-        "boardStation": "池袋",
-        "serviceIndex": 56,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武アーバンパークライン大宮行",
+        "boardStation": "岩槻",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武アーバンパークライン"
       },
       "hasBus": false
     },
@@ -3666,15 +3668,15 @@
       "arrival": "08:14",
       "minutes": 430,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "東京メトロ有楽町線新木場行",
-        "boardStation": "池袋",
-        "serviceIndex": 55,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武アーバンパークライン大宮行",
+        "boardStation": "七里",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武アーバンパークライン"
       },
       "hasBus": false
     },
@@ -3692,15 +3694,15 @@
       "arrival": "08:14",
       "minutes": 432,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "東京メトロ有楽町線新木場行",
-        "boardStation": "池袋",
-        "serviceIndex": 54,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武アーバンパークライン大宮行",
+        "boardStation": "大和田(埼玉県)",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武アーバンパークライン"
       },
       "hasBus": false
     },
@@ -3718,15 +3720,15 @@
       "arrival": "08:14",
       "minutes": 432,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "東京メトロ有楽町線新木場行",
-        "boardStation": "池袋",
-        "serviceIndex": 51,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武アーバンパークライン大宮行",
+        "boardStation": "大宮公園",
+        "serviceIndex": 26,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武アーバンパークライン"
       },
       "hasBus": false
     },
@@ -3744,15 +3746,15 @@
       "arrival": "08:14",
       "minutes": 437,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "東京メトロ有楽町線新木場行",
-        "boardStation": "池袋",
-        "serviceIndex": 49,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武アーバンパークライン大宮行",
+        "boardStation": "北大宮",
+        "serviceIndex": 26,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武アーバンパークライン"
       },
       "hasBus": false
     },
@@ -4241,9 +4243,9 @@
       "routeSelectionClassification": "exclude",
       "reason": "boards-different-station",
       "firstRail": {
-        "service": "つくばエクスプレス秋葉原行",
-        "boardStation": "北千住",
-        "serviceIndex": 41,
+        "service": "東武スカイツリーライン区間急行浅草行",
+        "boardStation": "新越谷",
+        "serviceIndex": 28,
         "sameLogicalStationBase": false,
         "lineMatchesPhysicalPoint": false,
         "lineMatchReason": null
@@ -6821,13 +6823,13 @@
       "arrival": "08:12",
       "minutes": 446,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
         "service": "小田急小田原線新宿行",
         "boardStation": "梅ケ丘",
         "serviceIndex": 28,
-        "sameLogicalStationBase": false,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": true,
         "lineMatchReason": "line-name"
       },
@@ -6873,13 +6875,13 @@
       "arrival": "08:12",
       "minutes": 440,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
         "service": "小田急小田原線綾瀬行",
         "boardStation": "祖師ケ谷大蔵",
         "serviceIndex": 28,
-        "sameLogicalStationBase": false,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": true,
         "lineMatchReason": "line-name"
       },
@@ -8486,13 +8488,13 @@
       "arrival": "08:14",
       "minutes": 464,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
         "service": "東京メトロ南北線武蔵小杉行",
         "boardStation": "西ケ原",
         "serviceIndex": 30,
-        "sameLogicalStationBase": false,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": true,
         "lineMatchReason": "line-name"
       },
@@ -8512,13 +8514,13 @@
       "arrival": "08:14",
       "minutes": 466,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
         "service": "都電荒川線大塚駅前行",
         "boardStation": "西ケ原四丁目",
         "serviceIndex": 28,
-        "sameLogicalStationBase": false,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": true,
         "lineMatchReason": "line-name"
       },
@@ -9009,12 +9011,12 @@
       "minutes": 476,
       "originDistanceM": 0.0,
       "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "reason": "boards-different-component",
       "firstRail": {
         "service": "東京メトロ有楽町線和光市行",
         "boardStation": "市ケ谷",
         "serviceIndex": 30,
-        "sameLogicalStationBase": false,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": false,
         "lineMatchReason": null
       },
@@ -9035,12 +9037,12 @@
       "minutes": 476,
       "originDistanceM": 0.0,
       "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "reason": "boards-different-component",
       "firstRail": {
         "service": "東京メトロ有楽町線和光市行",
         "boardStation": "市ケ谷",
         "serviceIndex": 30,
-        "sameLogicalStationBase": false,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": false,
         "lineMatchReason": null
       },
@@ -9060,13 +9062,13 @@
       "arrival": "08:16",
       "minutes": 475,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
         "service": "東京メトロ有楽町線和光市行",
         "boardStation": "市ケ谷",
         "serviceIndex": 30,
-        "sameLogicalStationBase": false,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": true,
         "lineMatchReason": "line-name"
       },
@@ -9087,12 +9089,12 @@
       "minutes": 476,
       "originDistanceM": 0.0,
       "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "reason": "boards-different-component",
       "firstRail": {
         "service": "東京メトロ有楽町線和光市行",
         "boardStation": "市ケ谷",
         "serviceIndex": 30,
-        "sameLogicalStationBase": false,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": false,
         "lineMatchReason": null
       },
@@ -10780,15 +10782,15 @@
       "arrival": "08:14",
       "minutes": 447,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "東京メトロ丸ノ内線池袋行",
-        "boardStation": "大手町(東京都)",
-        "serviceIndex": 45,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武スカイツリーライン準急中央林間行",
+        "boardStation": "曳舟",
+        "serviceIndex": 29,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武スカイツリーライン"
       },
       "hasBus": false
     },
@@ -10858,15 +10860,15 @@
       "arrival": "08:12",
       "minutes": 444,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "つくばエクスプレス秋葉原行",
-        "boardStation": "北千住",
-        "serviceIndex": 41,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武スカイツリーライン区間準急館林行",
+        "boardStation": "東向島",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武スカイツリーライン"
       },
       "hasBus": false
     },
@@ -10962,15 +10964,15 @@
       "arrival": "08:14",
       "minutes": 442,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "東京メトロ丸ノ内線池袋行",
-        "boardStation": "大手町(東京都)",
-        "serviceIndex": 54,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武スカイツリーライン区間急行浅草行",
+        "boardStation": "鐘ケ淵",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武スカイツリーライン"
       },
       "hasBus": false
     },
@@ -13268,13 +13270,13 @@
       "arrival": "08:17",
       "minutes": 450,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
         "service": "東京メトロ丸ノ内線荻窪行",
         "boardStation": "南阿佐ケ谷",
         "serviceIndex": 28,
-        "sameLogicalStationBase": false,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": true,
         "lineMatchReason": "line-name"
       },
@@ -13294,13 +13296,13 @@
       "arrival": "08:17",
       "minutes": 443,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
         "service": "京王井の頭線渋谷行",
         "boardStation": "富士見ケ丘",
         "serviceIndex": 28,
-        "sameLogicalStationBase": false,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": true,
         "lineMatchReason": "line-name"
       },
@@ -13555,12 +13557,12 @@
       "minutes": 457,
       "originDistanceM": 0.0,
       "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "reason": "boards-different-component",
       "firstRail": {
         "service": "東京メトロ東西線東葉勝田台行",
         "boardStation": "阿佐ケ谷",
         "serviceIndex": 28,
-        "sameLogicalStationBase": false,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": false,
         "lineMatchReason": null
       },
@@ -15297,13 +15299,13 @@
       "arrival": "08:16",
       "minutes": 467,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
         "service": "ＪＲ総武線千葉行",
         "boardStation": "千駄ケ谷",
         "serviceIndex": 27,
-        "sameLogicalStationBase": false,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": true,
         "lineMatchReason": "route-alias:JR総武線"
       },
@@ -15375,13 +15377,13 @@
       "arrival": "08:16",
       "minutes": 458,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
         "service": "京王新線本八幡行",
         "boardStation": "幡ケ谷",
         "serviceIndex": 29,
-        "sameLogicalStationBase": false,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": true,
         "lineMatchReason": "route-alias:京王新線"
       },
@@ -18391,15 +18393,15 @@
       "arrival": "08:12",
       "minutes": 447,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "つくばエクスプレス秋葉原行",
-        "boardStation": "北千住",
-        "serviceIndex": 40,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武スカイツリーライン中目黒行",
+        "boardStation": "五反野",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武スカイツリーライン"
       },
       "hasBus": false
     },
@@ -18420,9 +18422,9 @@
       "routeSelectionClassification": "exclude",
       "reason": "boards-different-station",
       "firstRail": {
-        "service": "つくばエクスプレス秋葉原行",
-        "boardStation": "北千住",
-        "serviceIndex": 37,
+        "service": "東武スカイツリーライン区間準急館林行",
+        "boardStation": "牛田(東京都)",
+        "serviceIndex": 27,
         "sameLogicalStationBase": false,
         "lineMatchesPhysicalPoint": false,
         "lineMatchReason": null
@@ -18600,15 +18602,15 @@
       "arrival": "08:12",
       "minutes": 449,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "つくばエクスプレス秋葉原行",
-        "boardStation": "北千住",
-        "serviceIndex": 39,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武スカイツリーライン区間準急館林行",
+        "boardStation": "堀切",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武スカイツリーライン"
       },
       "hasBus": false
     },
@@ -18652,15 +18654,15 @@
       "arrival": "08:12",
       "minutes": 448,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "つくばエクスプレス秋葉原行",
-        "boardStation": "北千住",
-        "serviceIndex": 36,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武スカイツリーライン中目黒行",
+        "boardStation": "小菅",
+        "serviceIndex": 26,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武スカイツリーライン"
       },
       "hasBus": false
     },
@@ -18678,15 +18680,15 @@
       "arrival": "08:12",
       "minutes": 444,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "つくばエクスプレス秋葉原行",
-        "boardStation": "北千住",
-        "serviceIndex": 40,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武スカイツリーライン中目黒行",
+        "boardStation": "梅島",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武スカイツリーライン"
       },
       "hasBus": false
     },
@@ -18704,15 +18706,15 @@
       "arrival": "08:12",
       "minutes": 449,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "つくばエクスプレス秋葉原行",
-        "boardStation": "北千住",
-        "serviceIndex": 37,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武スカイツリーライン区間準急館林行",
+        "boardStation": "牛田(東京都)",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武スカイツリーライン"
       },
       "hasBus": false
     },
@@ -18730,15 +18732,15 @@
       "arrival": "08:12",
       "minutes": 441,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "つくばエクスプレス秋葉原行",
-        "boardStation": "北千住",
-        "serviceIndex": 46,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武スカイツリーライン当駅始発中目黒行",
+        "boardStation": "竹ノ塚",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武スカイツリーライン"
       },
       "hasBus": false
     },
@@ -18809,15 +18811,15 @@
       "arrival": "08:12",
       "minutes": 447,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "つくばエクスプレス秋葉原行",
-        "boardStation": "北千住",
-        "serviceIndex": 38,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武スカイツリーライン区間急行浅草行",
+        "boardStation": "西新井",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武スカイツリーライン"
       },
       "hasBus": false
     },
@@ -18965,15 +18967,15 @@
       "arrival": "08:14",
       "minutes": 447,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "東京メトロ丸ノ内線池袋行",
-        "boardStation": "後楽園",
-        "serviceIndex": 49,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "埼玉高速鉄道武蔵小杉行",
+        "boardStation": "南鳩ケ谷",
+        "serviceIndex": 30,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:埼玉高速鉄道"
       },
       "hasBus": false
     },
@@ -18991,15 +18993,15 @@
       "arrival": "08:14",
       "minutes": 445,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "東京メトロ丸ノ内線池袋行",
-        "boardStation": "後楽園",
-        "serviceIndex": 50,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "埼玉高速鉄道武蔵小杉行",
+        "boardStation": "鳩ケ谷",
+        "serviceIndex": 30,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:埼玉高速鉄道"
       },
       "hasBus": false
     },
@@ -19017,15 +19019,15 @@
       "arrival": "08:14",
       "minutes": 449,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "東京メトロ丸ノ内線池袋行",
-        "boardStation": "後楽園",
-        "serviceIndex": 48,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "埼玉高速鉄道武蔵小杉行",
+        "boardStation": "川口元郷",
+        "serviceIndex": 30,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:埼玉高速鉄道"
       },
       "hasBus": false
     },
@@ -19043,15 +19045,15 @@
       "arrival": "08:14",
       "minutes": 440,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "東京メトロ丸ノ内線池袋行",
-        "boardStation": "後楽園",
-        "serviceIndex": 51,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "埼玉高速鉄道武蔵小杉行",
+        "boardStation": "新井宿",
+        "serviceIndex": 30,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:埼玉高速鉄道"
       },
       "hasBus": false
     },
@@ -19095,15 +19097,15 @@
       "arrival": "08:12",
       "minutes": 435,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "つくばエクスプレス秋葉原行",
-        "boardStation": "北千住",
-        "serviceIndex": 44,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武スカイツリーライン中目黒行",
+        "boardStation": "谷塚",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武スカイツリーライン"
       },
       "hasBus": false
     },
@@ -19121,15 +19123,15 @@
       "arrival": "08:12",
       "minutes": 440,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "つくばエクスプレス秋葉原行",
-        "boardStation": "北千住",
-        "serviceIndex": 40,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武スカイツリーライン区間急行浅草行",
+        "boardStation": "草加",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武スカイツリーライン"
       },
       "hasBus": false
     },
@@ -19199,15 +19201,15 @@
       "arrival": "08:12",
       "minutes": 436,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "つくばエクスプレス秋葉原行",
-        "boardStation": "北千住",
-        "serviceIndex": 48,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武スカイツリーライン中目黒行",
+        "boardStation": "獨協大学前",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武スカイツリーライン"
       },
       "hasBus": false
     },
@@ -19251,13 +19253,13 @@
       "arrival": "08:08",
       "minutes": 436,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
         "service": "京王線区間急行本八幡行",
         "boardStation": "つつじケ丘",
         "serviceIndex": 29,
-        "sameLogicalStationBase": false,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": true,
         "lineMatchReason": "line-name"
       },
@@ -19329,15 +19331,15 @@
       "arrival": "08:14",
       "minutes": 438,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "東京メトロ丸ノ内線池袋行",
-        "boardStation": "後楽園",
-        "serviceIndex": 52,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "埼玉高速鉄道武蔵小杉行",
+        "boardStation": "戸塚安行",
+        "serviceIndex": 30,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:埼玉高速鉄道"
       },
       "hasBus": false
     },
@@ -19485,15 +19487,15 @@
       "arrival": "08:12",
       "minutes": 434,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "つくばエクスプレス秋葉原行",
-        "boardStation": "北千住",
-        "serviceIndex": 49,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武スカイツリーライン中目黒行",
+        "boardStation": "新田(埼玉県)",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武スカイツリーライン"
       },
       "hasBus": false
     },
@@ -19563,15 +19565,15 @@
       "arrival": "08:16",
       "minutes": 432,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ武蔵野線東京行",
-        "boardStation": "舞浜",
-        "serviceIndex": 43,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "ディズニーリゾートラインリゾートゲートウェイ・ステーション行",
+        "boardStation": "ベイサイド・ステーション",
+        "serviceIndex": 26,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "line-name"
       },
       "hasBus": false
     },
@@ -19927,13 +19929,13 @@
       "arrival": "08:14",
       "minutes": 446,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
         "service": "西武池袋線準急新木場行",
         "boardStation": "ひばりケ丘(東京都)",
         "serviceIndex": 30,
-        "sameLogicalStationBase": false,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": true,
         "lineMatchReason": "line-name"
       },
@@ -20109,15 +20111,15 @@
       "arrival": "08:16",
       "minutes": 437,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ武蔵野線東京行",
-        "boardStation": "舞浜",
-        "serviceIndex": 41,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "ディズニーリゾートラインリゾートゲートウェイ・ステーション行",
+        "boardStation": "東京ディズニーシー・ステーション",
+        "serviceIndex": 26,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "line-name"
       },
       "hasBus": false
     },
@@ -20135,15 +20137,15 @@
       "arrival": "08:12",
       "minutes": 432,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "つくばエクスプレス秋葉原行",
-        "boardStation": "北千住",
-        "serviceIndex": 51,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武スカイツリーライン中目黒行",
+        "boardStation": "蒲生",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武スカイツリーライン"
       },
       "hasBus": false
     },
@@ -20552,15 +20554,15 @@
       "arrival": "08:12",
       "minutes": 434,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "つくばエクスプレス秋葉原行",
-        "boardStation": "北千住",
-        "serviceIndex": 41,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武スカイツリーライン区間急行浅草行",
+        "boardStation": "新越谷",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武スカイツリーライン"
       },
       "hasBus": false
     },
@@ -20656,13 +20658,13 @@
       "arrival": "08:17",
       "minutes": 440,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
         "service": "小田急小田原線新宿行",
         "boardStation": "向ケ丘遊園",
         "serviceIndex": 28,
-        "sameLogicalStationBase": false,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": true,
         "lineMatchReason": "line-name"
       },
@@ -21046,15 +21048,15 @@
       "arrival": "08:12",
       "minutes": 431,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "つくばエクスプレス秋葉原行",
-        "boardStation": "北千住",
-        "serviceIndex": 41,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武スカイツリーライン区間急行浅草行",
+        "boardStation": "越谷",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武スカイツリーライン"
       },
       "hasBus": false
     },
@@ -21098,15 +21100,15 @@
       "arrival": "08:14",
       "minutes": 432,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "東京メトロ丸ノ内線池袋行",
-        "boardStation": "後楽園",
-        "serviceIndex": 54,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "埼玉高速鉄道当駅始発武蔵小杉行",
+        "boardStation": "浦和美園",
+        "serviceIndex": 30,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:埼玉高速鉄道"
       },
       "hasBus": false
     },
@@ -21723,15 +21725,15 @@
       "arrival": "08:14",
       "minutes": 428,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "東急東横線通勤特急和光市行",
-        "boardStation": "日吉(神奈川県)",
-        "serviceIndex": 37,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "横浜市営地下鉄グリーンライン日吉行",
+        "boardStation": "日吉本町",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:横浜市営地下鉄グリーンライン"
       },
       "hasBus": false
     },
@@ -22091,15 +22093,15 @@
       "arrival": "08:12",
       "minutes": 427,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "つくばエクスプレス秋葉原行",
-        "boardStation": "北千住",
-        "serviceIndex": 43,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武スカイツリーライン準急長津田行",
+        "boardStation": "北越谷",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武スカイツリーライン"
       },
       "hasBus": false
     },
@@ -22143,15 +22145,15 @@
       "arrival": "08:14",
       "minutes": 425,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "東急東横線通勤特急和光市行",
-        "boardStation": "日吉(神奈川県)",
-        "serviceIndex": 42,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "横浜市営地下鉄グリーンライン日吉行",
+        "boardStation": "高田(神奈川県)",
+        "serviceIndex": 30,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:横浜市営地下鉄グリーンライン"
       },
       "hasBus": false
     },
@@ -22195,15 +22197,15 @@
       "arrival": "08:14",
       "minutes": 423,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "東急東横線通勤特急和光市行",
-        "boardStation": "日吉(神奈川県)",
-        "serviceIndex": 43,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "横浜市営地下鉄グリーンライン日吉行",
+        "boardStation": "東山田",
+        "serviceIndex": 30,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:横浜市営地下鉄グリーンライン"
       },
       "hasBus": false
     },
@@ -22221,15 +22223,15 @@
       "arrival": "08:14",
       "minutes": 420,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "東急東横線通勤特急和光市行",
-        "boardStation": "日吉(神奈川県)",
-        "serviceIndex": 44,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "横浜市営地下鉄グリーンライン日吉行",
+        "boardStation": "北山田(神奈川県)",
+        "serviceIndex": 30,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:横浜市営地下鉄グリーンライン"
       },
       "hasBus": false
     },
@@ -22717,15 +22719,15 @@
       "arrival": "08:16",
       "minutes": 423,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "東急田園都市線急行押上行",
-        "boardStation": "あざみ野",
-        "serviceIndex": 38,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "横浜市営地下鉄ブルーラインあざみ野行",
+        "boardStation": "中川(神奈川県)",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:横浜市営地下鉄ブルーライン"
       },
       "hasBus": false
     },
@@ -22769,15 +22771,15 @@
       "arrival": "08:10",
       "minutes": 430,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ総武線三鷹行",
-        "boardStation": "錦糸町",
-        "serviceIndex": 47,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武アーバンパークライン船橋行",
+        "boardStation": "新船橋",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武アーバンパークライン"
       },
       "hasBus": false
     },
@@ -22821,15 +22823,15 @@
       "arrival": "08:14",
       "minutes": 432,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ総武線当駅始発三鷹行",
-        "boardStation": "西船橋",
-        "serviceIndex": 37,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東葉高速鉄道通勤快速中野行",
+        "boardStation": "東海神",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東葉高速鉄道"
       },
       "hasBus": false
     },
@@ -22978,15 +22980,15 @@
       "arrival": "08:12",
       "minutes": 426,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ総武線快速東京行",
-        "boardStation": "船橋",
-        "serviceIndex": 39,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武アーバンパークライン船橋行",
+        "boardStation": "塚田",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武アーバンパークライン"
       },
       "hasBus": false
     },
@@ -23004,13 +23006,13 @@
       "arrival": "08:17",
       "minutes": 432,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
         "service": "小田急小田原線新宿行",
         "boardStation": "百合ケ丘",
         "serviceIndex": 28,
-        "sameLogicalStationBase": false,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": true,
         "lineMatchReason": "line-name"
       },
@@ -23057,12 +23059,12 @@
       "minutes": 419,
       "originDistanceM": 0.0,
       "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "reason": "boards-different-component",
       "firstRail": {
-        "service": "東急田園都市線急行押上行",
-        "boardStation": "あざみ野",
-        "serviceIndex": 41,
-        "sameLogicalStationBase": false,
+        "service": "横浜市営地下鉄ブルーラインあざみ野行",
+        "boardStation": "センター北",
+        "serviceIndex": 29,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": false,
         "lineMatchReason": null
       },
@@ -23082,15 +23084,15 @@
       "arrival": "08:16",
       "minutes": 419,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "東急田園都市線急行押上行",
-        "boardStation": "あざみ野",
-        "serviceIndex": 41,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "横浜市営地下鉄ブルーラインあざみ野行",
+        "boardStation": "センター北",
+        "serviceIndex": 29,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:横浜市営地下鉄ブルーライン"
       },
       "hasBus": false
     },
@@ -23551,15 +23553,15 @@
       "arrival": "08:12",
       "minutes": 424,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "つくばエクスプレス秋葉原行",
-        "boardStation": "北千住",
-        "serviceIndex": 43,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武スカイツリーライン準急長津田行",
+        "boardStation": "大袋",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武スカイツリーライン"
       },
       "hasBus": false
     },
@@ -23681,15 +23683,15 @@
       "arrival": "08:12",
       "minutes": 426,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ新幹線こだま904号東京行",
-        "boardStation": "新横浜",
-        "serviceIndex": 40,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "横浜市営地下鉄ブルーライン湘南台行",
+        "boardStation": "新羽",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:横浜市営地下鉄ブルーライン"
       },
       "hasBus": false
     },
@@ -23785,15 +23787,15 @@
       "arrival": "08:12",
       "minutes": 423,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ総武線快速東京行",
-        "boardStation": "船橋",
-        "serviceIndex": 40,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武アーバンパークライン船橋行",
+        "boardStation": "馬込沢",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武アーバンパークライン"
       },
       "hasBus": false
     },
@@ -23811,15 +23813,15 @@
       "arrival": "08:12",
       "minutes": 419,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ新幹線こだま904号東京行",
-        "boardStation": "新横浜",
-        "serviceIndex": 43,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "横浜市営地下鉄ブルーライン湘南台行",
+        "boardStation": "センター南",
+        "serviceIndex": 29,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:横浜市営地下鉄ブルーライン"
       },
       "hasBus": false
     },
@@ -23838,12 +23840,12 @@
       "minutes": 420,
       "originDistanceM": 0.0,
       "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "reason": "boards-different-component",
       "firstRail": {
-        "service": "ＪＲ新幹線こだま904号東京行",
-        "boardStation": "新横浜",
-        "serviceIndex": 43,
-        "sameLogicalStationBase": false,
+        "service": "横浜市営地下鉄ブルーライン湘南台行",
+        "boardStation": "センター南",
+        "serviceIndex": 29,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": false,
         "lineMatchReason": null
       },
@@ -23864,13 +23866,13 @@
       "arrival": "08:17",
       "minutes": 433,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
         "service": "小田急小田原線快速急行新宿行",
         "boardStation": "新百合ケ丘",
         "serviceIndex": 28,
-        "sameLogicalStationBase": false,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": true,
         "lineMatchReason": "line-name"
       },
@@ -23916,15 +23918,15 @@
       "arrival": "08:12",
       "minutes": 423,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ新幹線こだま904号東京行",
-        "boardStation": "新横浜",
-        "serviceIndex": 41,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "横浜市営地下鉄ブルーライン湘南台行",
+        "boardStation": "仲町台",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:横浜市営地下鉄ブルーライン"
       },
       "hasBus": false
     },
@@ -24098,13 +24100,13 @@
       "arrival": "08:08",
       "minutes": 425,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
         "service": "西武国分寺線国分寺行",
         "boardStation": "恋ケ窪",
         "serviceIndex": 26,
-        "sameLogicalStationBase": false,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": true,
         "lineMatchReason": "line-name"
       },
@@ -24361,15 +24363,15 @@
       "arrival": "08:12",
       "minutes": 428,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ新幹線こだま904号東京行",
-        "boardStation": "新横浜",
-        "serviceIndex": 37,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "横浜市営地下鉄ブルーライン湘南台行",
+        "boardStation": "北新横浜",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:横浜市営地下鉄ブルーライン"
       },
       "hasBus": false
     },
@@ -24491,15 +24493,15 @@
       "arrival": "08:12",
       "minutes": 420,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ総武線快速東京行",
-        "boardStation": "船橋",
-        "serviceIndex": 41,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武アーバンパークライン船橋行",
+        "boardStation": "鎌ケ谷",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武アーバンパークライン"
       },
       "hasBus": false
     },
@@ -24621,15 +24623,15 @@
       "arrival": "08:12",
       "minutes": 425,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "つくばエクスプレス秋葉原行",
-        "boardStation": "北千住",
-        "serviceIndex": 42,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武スカイツリーライン区間急行浅草行",
+        "boardStation": "せんげん台",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武スカイツリーライン"
       },
       "hasBus": false
     },
@@ -24829,15 +24831,15 @@
       "arrival": "08:12",
       "minutes": 429,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "つくばエクスプレス秋葉原行",
-        "boardStation": "流山おおたかの森",
-        "serviceIndex": 36,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武アーバンパークライン柏行",
+        "boardStation": "初石",
+        "serviceIndex": 26,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武アーバンパークライン"
       },
       "hasBus": false
     },
@@ -24855,15 +24857,15 @@
       "arrival": "08:12",
       "minutes": 431,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "つくばエクスプレス秋葉原行",
-        "boardStation": "流山おおたかの森",
-        "serviceIndex": 37,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武アーバンパークライン大宮行",
+        "boardStation": "豊四季",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武アーバンパークライン"
       },
       "hasBus": false
     },
@@ -24934,12 +24936,12 @@
       "minutes": 421,
       "originDistanceM": 0.0,
       "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "reason": "boards-different-component",
       "firstRail": {
         "service": "北総鉄道北総線特急西馬込行",
         "boardStation": "新鎌ケ谷",
         "serviceIndex": 27,
-        "sameLogicalStationBase": false,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": false,
         "lineMatchReason": null
       },
@@ -24960,13 +24962,13 @@
       "arrival": "08:04",
       "minutes": 422,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
         "service": "北総鉄道北総線特急西馬込行",
         "boardStation": "新鎌ケ谷",
         "serviceIndex": 27,
-        "sameLogicalStationBase": false,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": true,
         "lineMatchReason": "line-name"
       },
@@ -24987,12 +24989,12 @@
       "minutes": 421,
       "originDistanceM": 0.0,
       "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "reason": "boards-different-component",
       "firstRail": {
         "service": "北総鉄道北総線特急西馬込行",
         "boardStation": "新鎌ケ谷",
         "serviceIndex": 27,
-        "sameLogicalStationBase": false,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": false,
         "lineMatchReason": null
       },
@@ -25038,15 +25040,15 @@
       "arrival": "08:10",
       "minutes": 420,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ常磐線上野行",
-        "boardStation": "柏",
-        "serviceIndex": 37,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武アーバンパークライン柏行",
+        "boardStation": "新柏",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武アーバンパークライン"
       },
       "hasBus": true
     },
@@ -25064,15 +25066,15 @@
       "arrival": "08:14",
       "minutes": 415,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "東急東横線通勤特急和光市行",
-        "boardStation": "日吉(神奈川県)",
-        "serviceIndex": 46,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "横浜市営地下鉄グリーンライン日吉行",
+        "boardStation": "都筑ふれあいの丘",
+        "serviceIndex": 29,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:横浜市営地下鉄グリーンライン"
       },
       "hasBus": false
     },
@@ -25273,15 +25275,15 @@
       "arrival": "08:10",
       "minutes": 418,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ常磐線上野行",
-        "boardStation": "柏",
-        "serviceIndex": 39,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武アーバンパークライン柏行",
+        "boardStation": "増尾",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武アーバンパークライン"
       },
       "hasBus": true
     },
@@ -25351,15 +25353,15 @@
       "arrival": "08:14",
       "minutes": 415,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ常磐線快速上野行",
-        "boardStation": "柏",
-        "serviceIndex": 43,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武アーバンパークライン柏行",
+        "boardStation": "六実",
+        "serviceIndex": 26,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武アーバンパークライン"
       },
       "hasBus": false
     },
@@ -25377,15 +25379,15 @@
       "arrival": "08:10",
       "minutes": 416,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ常磐線上野行",
-        "boardStation": "柏",
-        "serviceIndex": 40,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武アーバンパークライン柏行",
+        "boardStation": "逆井",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武アーバンパークライン"
       },
       "hasBus": true
     },
@@ -25507,15 +25509,15 @@
       "arrival": "08:12",
       "minutes": 426,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "つくばエクスプレス秋葉原行",
-        "boardStation": "流山おおたかの森",
-        "serviceIndex": 39,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武アーバンパークライン柏行",
+        "boardStation": "江戸川台",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武アーバンパークライン"
       },
       "hasBus": false
     },
@@ -25559,13 +25561,13 @@
       "arrival": "08:04",
       "minutes": 410,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
         "service": "京成松戸線松戸行",
         "boardStation": "鎌ケ谷大仏",
         "serviceIndex": 27,
-        "sameLogicalStationBase": false,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": true,
         "lineMatchReason": "line-name"
       },
@@ -25716,15 +25718,15 @@
       "arrival": "08:12",
       "minutes": 417,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "つくばエクスプレス秋葉原行",
-        "boardStation": "北千住",
-        "serviceIndex": 45,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武スカイツリーライン準急長津田行",
+        "boardStation": "武里",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武スカイツリーライン"
       },
       "hasBus": false
     },
@@ -25794,15 +25796,15 @@
       "arrival": "08:10",
       "minutes": 420,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ常磐線快速上野行",
-        "boardStation": "柏",
-        "serviceIndex": 37,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武アーバンパークライン急行柏行",
+        "boardStation": "高柳",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武アーバンパークライン"
       },
       "hasBus": true
     },
@@ -25872,15 +25874,15 @@
       "arrival": "08:14",
       "minutes": 427,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ総武線当駅始発三鷹行",
-        "boardStation": "西船橋",
-        "serviceIndex": 39,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東葉高速鉄道通勤快速中野行",
+        "boardStation": "飯山満",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東葉高速鉄道"
       },
       "hasBus": false
     },
@@ -26081,15 +26083,15 @@
       "arrival": "08:12",
       "minutes": 415,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ横浜線東神奈川行",
-        "boardStation": "中山(神奈川県)",
-        "serviceIndex": 38,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "横浜市営地下鉄グリーンライン中山行",
+        "boardStation": "川和町",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:横浜市営地下鉄グリーンライン"
       },
       "hasBus": false
     },
@@ -26133,13 +26135,13 @@
       "arrival": "08:04",
       "minutes": 415,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
         "service": "京王線特急新宿行",
         "boardStation": "聖蹟桜ケ丘",
         "serviceIndex": 28,
-        "sameLogicalStationBase": false,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": true,
         "lineMatchReason": "line-name"
       },
@@ -26159,15 +26161,15 @@
       "arrival": "08:12",
       "minutes": 424,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ新幹線こだま904号東京行",
-        "boardStation": "新横浜",
-        "serviceIndex": 38,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "横浜市営地下鉄ブルーラインあざみ野行",
+        "boardStation": "岸根公園",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:横浜市営地下鉄ブルーライン"
       },
       "hasBus": false
     },
@@ -26525,15 +26527,15 @@
       "arrival": "08:12",
       "minutes": 423,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "つくばエクスプレス秋葉原行",
-        "boardStation": "流山おおたかの森",
-        "serviceIndex": 40,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武アーバンパークライン柏行",
+        "boardStation": "運河",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武アーバンパークライン"
       },
       "hasBus": false
     },
@@ -26811,15 +26813,15 @@
       "arrival": "08:12",
       "minutes": 424,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ東海道本線(上野東京ライン)宇都宮行",
-        "boardStation": "横浜",
-        "serviceIndex": 42,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "横浜市営地下鉄ブルーライン湘南台行",
+        "boardStation": "片倉町",
+        "serviceIndex": 29,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:横浜市営地下鉄ブルーライン"
       },
       "hasBus": false
     },
@@ -26863,15 +26865,15 @@
       "arrival": "08:12",
       "minutes": 415,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "つくばエクスプレス秋葉原行",
-        "boardStation": "北千住",
-        "serviceIndex": 45,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武スカイツリーライン準急長津田行",
+        "boardStation": "一ノ割",
+        "serviceIndex": 26,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武スカイツリーライン"
       },
       "hasBus": false
     },
@@ -26941,15 +26943,15 @@
       "arrival": "08:12",
       "minutes": 419,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "つくばエクスプレス秋葉原行",
-        "boardStation": "流山おおたかの森",
-        "serviceIndex": 41,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武アーバンパークライン柏行",
+        "boardStation": "梅郷",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武アーバンパークライン"
       },
       "hasBus": false
     },
@@ -26967,15 +26969,15 @@
       "arrival": "08:14",
       "minutes": 420,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "東京メトロ有楽町線新木場行",
-        "boardStation": "池袋",
-        "serviceIndex": 58,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武アーバンパークライン大宮行",
+        "boardStation": "豊春",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武アーバンパークライン"
       },
       "hasBus": false
     },
@@ -27099,12 +27101,12 @@
       "minutes": 424,
       "originDistanceM": 0.0,
       "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "reason": "boards-different-component",
       "firstRail": {
-        "service": "ＪＲ総武線当駅始発三鷹行",
-        "boardStation": "西船橋",
-        "serviceIndex": 40,
-        "sameLogicalStationBase": false,
+        "service": "東葉高速鉄道通勤快速中野行",
+        "boardStation": "北習志野",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": false,
         "lineMatchReason": null
       },
@@ -27124,15 +27126,15 @@
       "arrival": "08:14",
       "minutes": 424,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ総武線当駅始発三鷹行",
-        "boardStation": "西船橋",
-        "serviceIndex": 40,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東葉高速鉄道通勤快速中野行",
+        "boardStation": "北習志野",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東葉高速鉄道"
       },
       "hasBus": false
     },
@@ -27228,15 +27230,15 @@
       "arrival": "08:12",
       "minutes": 416,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "つくばエクスプレス秋葉原行",
-        "boardStation": "流山おおたかの森",
-        "serviceIndex": 41,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武アーバンパークライン柏行",
+        "boardStation": "野田市",
+        "serviceIndex": 26,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武アーバンパークライン"
       },
       "hasBus": false
     },
@@ -27618,15 +27620,15 @@
       "arrival": "08:12",
       "minutes": 413,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "つくばエクスプレス秋葉原行",
-        "boardStation": "流山おおたかの森",
-        "serviceIndex": 43,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武アーバンパークライン柏行",
+        "boardStation": "愛宕(千葉県)",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武アーバンパークライン"
       },
       "hasBus": false
     },
@@ -27748,15 +27750,15 @@
       "arrival": "08:12",
       "minutes": 428,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ東海道本線(上野東京ライン)宇都宮行",
-        "boardStation": "横浜",
-        "serviceIndex": 39,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "横浜市営地下鉄ブルーライン湘南台行",
+        "boardStation": "三ツ沢下町",
+        "serviceIndex": 29,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:横浜市営地下鉄ブルーライン"
       },
       "hasBus": false
     },
@@ -28008,15 +28010,15 @@
       "arrival": "08:12",
       "minutes": 427,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ東海道本線(上野東京ライン)宇都宮行",
-        "boardStation": "横浜",
-        "serviceIndex": 41,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "横浜市営地下鉄ブルーライン湘南台行",
+        "boardStation": "三ツ沢上町",
+        "serviceIndex": 29,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:横浜市営地下鉄ブルーライン"
       },
       "hasBus": false
     },
@@ -28060,15 +28062,15 @@
       "arrival": "08:14",
       "minutes": 418,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "東京メトロ有楽町線新木場行",
-        "boardStation": "池袋",
-        "serviceIndex": 57,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武アーバンパークライン大宮行",
+        "boardStation": "八木崎",
+        "serviceIndex": 26,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武アーバンパークライン"
       },
       "hasBus": false
     },
@@ -28244,15 +28246,15 @@
       "arrival": "08:12",
       "minutes": 409,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "つくばエクスプレス秋葉原行",
-        "boardStation": "流山おおたかの森",
-        "serviceIndex": 44,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武アーバンパークライン柏行",
+        "boardStation": "清水公園",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武アーバンパークライン"
       },
       "hasBus": false
     },
@@ -28271,12 +28273,12 @@
       "minutes": 418,
       "originDistanceM": 0.0,
       "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "reason": "boards-different-component",
       "firstRail": {
-        "service": "つくばエクスプレス秋葉原行",
-        "boardStation": "北千住",
-        "serviceIndex": 43,
-        "sameLogicalStationBase": false,
+        "service": "東武スカイツリーライン区間急行浅草行",
+        "boardStation": "春日部",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": false,
         "lineMatchReason": null
       },
@@ -28296,15 +28298,15 @@
       "arrival": "08:12",
       "minutes": 419,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "つくばエクスプレス秋葉原行",
-        "boardStation": "北千住",
-        "serviceIndex": 43,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武スカイツリーライン区間急行浅草行",
+        "boardStation": "春日部",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武スカイツリーライン"
       },
       "hasBus": false
     },
@@ -28609,15 +28611,15 @@
       "arrival": "08:11",
       "minutes": 405,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ埼京線通勤快速新木場行",
-        "boardStation": "大宮(埼玉県)",
-        "serviceIndex": 47,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武アーバンパークライン大宮行",
+        "boardStation": "藤の牛島",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武アーバンパークライン"
       },
       "hasBus": false
     },
@@ -28765,15 +28767,15 @@
       "arrival": "08:14",
       "minutes": 422,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ総武線当駅始発三鷹行",
-        "boardStation": "西船橋",
-        "serviceIndex": 40,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東葉高速鉄道通勤快速中野行",
+        "boardStation": "船橋日大前",
+        "serviceIndex": 26,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東葉高速鉄道"
       },
       "hasBus": false
     },
@@ -28947,15 +28949,15 @@
       "arrival": "08:11",
       "minutes": 402,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ埼京線通勤快速新木場行",
-        "boardStation": "大宮(埼玉県)",
-        "serviceIndex": 49,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武アーバンパークライン大宮行",
+        "boardStation": "南桜井",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武アーバンパークライン"
       },
       "hasBus": false
     },
@@ -28973,13 +28975,13 @@
       "arrival": "08:14",
       "minutes": 429,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
         "service": "西武池袋線快速元町・中華街行",
         "boardStation": "狭山ケ丘",
         "serviceIndex": 27,
-        "sameLogicalStationBase": false,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": true,
         "lineMatchReason": "line-name"
       },
@@ -29025,15 +29027,15 @@
       "arrival": "08:14",
       "minutes": 432,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "東京メトロ有楽町線新木場行",
-        "boardStation": "池袋",
-        "serviceIndex": 44,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "ＪＲ湘南新宿ライン大船行",
+        "boardStation": "蓮田",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:JR湘南新宿ライン"
       },
       "hasBus": false
     },
@@ -29103,15 +29105,15 @@
       "arrival": "08:17",
       "minutes": 432,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ東海道本線(上野東京ライン)籠原行",
-        "boardStation": "横浜",
-        "serviceIndex": 38,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "横浜市営地下鉄ブルーラインあざみ野行",
+        "boardStation": "高島町",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:横浜市営地下鉄ブルーライン"
       },
       "hasBus": false
     },
@@ -29129,15 +29131,15 @@
       "arrival": "08:12",
       "minutes": 408,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "つくばエクスプレス秋葉原行",
-        "boardStation": "流山おおたかの森",
-        "serviceIndex": 45,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武アーバンパークライン柏行",
+        "boardStation": "七光台",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武アーバンパークライン"
       },
       "hasBus": false
     },
@@ -29233,15 +29235,15 @@
       "arrival": "08:08",
       "minutes": 409,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "東京メトロ千代田線代々木上原行",
-        "boardStation": "北千住",
-        "serviceIndex": 44,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武スカイツリーライン準急長津田行",
+        "boardStation": "北春日部",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武スカイツリーライン"
       },
       "hasBus": false
     },
@@ -29417,15 +29419,15 @@
       "arrival": "08:12",
       "minutes": 403,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "つくばエクスプレス秋葉原行",
-        "boardStation": "流山おおたかの森",
-        "serviceIndex": 46,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武アーバンパークライン柏行",
+        "boardStation": "川間",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武アーバンパークライン"
       },
       "hasBus": false
     },
@@ -29677,15 +29679,15 @@
       "arrival": "08:14",
       "minutes": 419,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ総武線当駅始発三鷹行",
-        "boardStation": "西船橋",
-        "serviceIndex": 42,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東葉高速鉄道通勤快速中野行",
+        "boardStation": "八千代緑が丘",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東葉高速鉄道"
       },
       "hasBus": false
     },
@@ -30068,12 +30070,12 @@
       "minutes": 427,
       "originDistanceM": 0.0,
       "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "reason": "boards-different-component",
       "firstRail": {
-        "service": "ＪＲ東海道本線(上野東京ライン)籠原行",
-        "boardStation": "横浜",
-        "serviceIndex": 41,
-        "sameLogicalStationBase": false,
+        "service": "横浜市営地下鉄ブルーラインあざみ野行",
+        "boardStation": "関内",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": false,
         "lineMatchReason": null
       },
@@ -30094,15 +30096,15 @@
       "arrival": "08:17",
       "minutes": 428,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ東海道本線(上野東京ライン)籠原行",
-        "boardStation": "横浜",
-        "serviceIndex": 41,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "横浜市営地下鉄ブルーラインあざみ野行",
+        "boardStation": "関内",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:横浜市営地下鉄ブルーライン"
       },
       "hasBus": false
     },
@@ -30146,13 +30148,13 @@
       "arrival": "08:12",
       "minutes": 419,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
         "service": "相鉄本線通勤急行横浜行",
         "boardStation": "鶴ケ峰",
         "serviceIndex": 27,
-        "sameLogicalStationBase": false,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": true,
         "lineMatchReason": "line-name"
       },
@@ -30354,15 +30356,15 @@
       "arrival": "08:17",
       "minutes": 426,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ東海道本線(上野東京ライン)籠原行",
-        "boardStation": "横浜",
-        "serviceIndex": 42,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "横浜市営地下鉄ブルーラインあざみ野行",
+        "boardStation": "伊勢佐木長者町",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:横浜市営地下鉄ブルーライン"
       },
       "hasBus": false
     },
@@ -30380,15 +30382,15 @@
       "arrival": "08:11",
       "minutes": 406,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "東京メトロ千代田線代々木上原行",
-        "boardStation": "北千住",
-        "serviceIndex": 46,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武スカイツリーライン準急長津田行",
+        "boardStation": "姫宮",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武スカイツリーライン"
       },
       "hasBus": true
     },
@@ -30536,13 +30538,13 @@
       "arrival": "08:12",
       "minutes": 426,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
         "service": "ＪＲ横須賀線千葉行",
         "boardStation": "保土ケ谷",
         "serviceIndex": 29,
-        "sameLogicalStationBase": false,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": true,
         "lineMatchReason": "route-alias:JR横須賀線"
       },
@@ -30874,15 +30876,15 @@
       "arrival": "08:17",
       "minutes": 422,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ東海道本線(上野東京ライン)籠原行",
-        "boardStation": "横浜",
-        "serviceIndex": 45,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "横浜市営地下鉄ブルーラインあざみ野行",
+        "boardStation": "吉野町",
+        "serviceIndex": 29,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:横浜市営地下鉄ブルーライン"
       },
       "hasBus": false
     },
@@ -31214,13 +31216,13 @@
       "arrival": "08:17",
       "minutes": 420,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
         "service": "京急本線品川行",
         "boardStation": "井土ケ谷",
         "serviceIndex": 27,
-        "sameLogicalStationBase": false,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": true,
         "lineMatchReason": "generic-line+operator"
       },
@@ -31266,15 +31268,15 @@
       "arrival": "08:14",
       "minutes": 416,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ総武線当駅始発三鷹行",
-        "boardStation": "西船橋",
-        "serviceIndex": 43,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東葉高速鉄道通勤快速中野行",
+        "boardStation": "八千代中央",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東葉高速鉄道"
       },
       "hasBus": false
     },
@@ -31318,15 +31320,15 @@
       "arrival": "08:17",
       "minutes": 420,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ東海道本線(上野東京ライン)籠原行",
-        "boardStation": "横浜",
-        "serviceIndex": 46,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "横浜市営地下鉄ブルーラインあざみ野行",
+        "boardStation": "蒔田",
+        "serviceIndex": 29,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:横浜市営地下鉄ブルーライン"
       },
       "hasBus": false
     },
@@ -31422,15 +31424,15 @@
       "arrival": "08:14",
       "minutes": 427,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "東京メトロ有楽町線新木場行",
-        "boardStation": "池袋",
-        "serviceIndex": 45,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "ＪＲ湘南新宿ライン大船行",
+        "boardStation": "白岡",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:JR湘南新宿ライン"
       },
       "hasBus": false
     },
@@ -31527,15 +31529,15 @@
       "arrival": "08:12",
       "minutes": 412,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "つくばエクスプレス秋葉原行",
-        "boardStation": "北千住",
-        "serviceIndex": 44,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東武スカイツリーライン区間急行浅草行",
+        "boardStation": "東武動物公園",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東武スカイツリーライン"
       },
       "hasBus": false
     },
@@ -31683,13 +31685,13 @@
       "arrival": "08:12",
       "minutes": 411,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
         "service": "相鉄本線通勤急行横浜行",
         "boardStation": "希望ケ丘",
         "serviceIndex": 27,
-        "sameLogicalStationBase": false,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": true,
         "lineMatchReason": "line-name"
       },
@@ -31735,15 +31737,15 @@
       "arrival": "08:17",
       "minutes": 418,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ東海道本線(上野東京ライン)籠原行",
-        "boardStation": "横浜",
-        "serviceIndex": 47,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "横浜市営地下鉄ブルーラインあざみ野行",
+        "boardStation": "弘明寺(横浜市営)",
+        "serviceIndex": 29,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:横浜市営地下鉄ブルーライン"
       },
       "hasBus": false
     },
@@ -31865,13 +31867,13 @@
       "arrival": "08:17",
       "minutes": 428,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
         "service": "東武東上線急行池袋行",
         "boardStation": "霞ケ関(埼玉県)",
         "serviceIndex": 28,
-        "sameLogicalStationBase": false,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": true,
         "lineMatchReason": "route-alias:東武東上線"
       },
@@ -32101,15 +32103,15 @@
       "arrival": "08:14",
       "minutes": 414,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ総武線当駅始発三鷹行",
-        "boardStation": "西船橋",
-        "serviceIndex": 43,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東葉高速鉄道通勤快速中野行",
+        "boardStation": "村上(千葉県)",
+        "serviceIndex": 26,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東葉高速鉄道"
       },
       "hasBus": false
     },
@@ -32231,13 +32233,13 @@
       "arrival": "08:00",
       "minutes": 390,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
         "service": "ＪＲ八高線拝島行",
         "boardStation": "箱根ケ崎",
         "serviceIndex": 27,
-        "sameLogicalStationBase": false,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": true,
         "lineMatchReason": "line-name"
       },
@@ -32312,9 +32314,9 @@
       "routeSelectionClassification": "exclude",
       "reason": "boards-different-station",
       "firstRail": {
-        "service": "ＪＲ総武線三鷹行",
-        "boardStation": "錦糸町",
-        "serviceIndex": 40,
+        "service": "ＪＲ特急しおさい4号東京行",
+        "boardStation": "千葉",
+        "serviceIndex": 28,
         "sameLogicalStationBase": false,
         "lineMatchesPhysicalPoint": false,
         "lineMatchReason": null
@@ -32517,15 +32519,15 @@
       "arrival": "08:14",
       "minutes": 413,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ総武線当駅始発三鷹行",
-        "boardStation": "西船橋",
-        "serviceIndex": 45,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "東葉高速鉄道通勤快速当駅始発中野行",
+        "boardStation": "東葉勝田台",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:東葉高速鉄道"
       },
       "hasBus": false
     },
@@ -32546,9 +32548,9 @@
       "routeSelectionClassification": "exclude",
       "reason": "boards-different-station",
       "firstRail": {
-        "service": "ＪＲ総武線当駅始発三鷹行",
-        "boardStation": "西船橋",
-        "serviceIndex": 45,
+        "service": "東葉高速鉄道通勤快速当駅始発中野行",
+        "boardStation": "東葉勝田台",
+        "serviceIndex": 27,
         "sameLogicalStationBase": false,
         "lineMatchesPhysicalPoint": false,
         "lineMatchReason": null
@@ -33042,9 +33044,9 @@
       "routeSelectionClassification": "exclude",
       "reason": "boards-different-station",
       "firstRail": {
-        "service": "ＪＲ総武線三鷹行",
-        "boardStation": "錦糸町",
-        "serviceIndex": 40,
+        "service": "ＪＲ特急しおさい4号東京行",
+        "boardStation": "千葉",
+        "serviceIndex": 28,
         "sameLogicalStationBase": false,
         "lineMatchesPhysicalPoint": false,
         "lineMatchReason": null
@@ -33091,15 +33093,15 @@
       "arrival": "08:14",
       "minutes": 424,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "東京メトロ有楽町線新木場行",
-        "boardStation": "池袋",
-        "serviceIndex": 46,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "ＪＲ湘南新宿ライン大船行",
+        "boardStation": "新白岡",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:JR湘南新宿ライン"
       },
       "hasBus": false
     },
@@ -33327,12 +33329,12 @@
       "minutes": 423,
       "originDistanceM": 0.0,
       "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "reason": "boards-different-component",
       "firstRail": {
-        "service": "ＪＲ総武線三鷹行",
-        "boardStation": "錦糸町",
-        "serviceIndex": 40,
-        "sameLogicalStationBase": false,
+        "service": "ＪＲ特急しおさい4号東京行",
+        "boardStation": "千葉",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": false,
         "lineMatchReason": null
       },
@@ -33353,12 +33355,12 @@
       "minutes": 423,
       "originDistanceM": 0.0,
       "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "reason": "boards-different-component",
       "firstRail": {
-        "service": "ＪＲ総武線三鷹行",
-        "boardStation": "錦糸町",
-        "serviceIndex": 40,
-        "sameLogicalStationBase": false,
+        "service": "ＪＲ特急しおさい4号東京行",
+        "boardStation": "千葉",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": false,
         "lineMatchReason": null
       },
@@ -33378,15 +33380,15 @@
       "arrival": "08:10",
       "minutes": 424,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ総武線三鷹行",
-        "boardStation": "錦糸町",
-        "serviceIndex": 40,
-        "sameLogicalStationBase": false,
+        "service": "ＪＲ特急しおさい4号東京行",
+        "boardStation": "千葉",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": true,
-        "lineMatchReason": "route-alias:JR総武線"
+        "lineMatchReason": "route-alias:JR特急しおさい"
       },
       "hasBus": false
     },
@@ -33485,9 +33487,9 @@
       "routeSelectionClassification": "exclude",
       "reason": "boards-different-station",
       "firstRail": {
-        "service": "ＪＲ総武線三鷹行",
-        "boardStation": "錦糸町",
-        "serviceIndex": 40,
+        "service": "ＪＲ特急しおさい4号東京行",
+        "boardStation": "千葉",
+        "serviceIndex": 28,
         "sameLogicalStationBase": false,
         "lineMatchesPhysicalPoint": false,
         "lineMatchReason": null
@@ -33641,9 +33643,9 @@
       "routeSelectionClassification": "exclude",
       "reason": "boards-different-station",
       "firstRail": {
-        "service": "ＪＲ総武線三鷹行",
-        "boardStation": "錦糸町",
-        "serviceIndex": 40,
+        "service": "ＪＲ特急しおさい4号東京行",
+        "boardStation": "千葉",
+        "serviceIndex": 28,
         "sameLogicalStationBase": false,
         "lineMatchesPhysicalPoint": false,
         "lineMatchReason": null
@@ -33664,13 +33666,13 @@
       "arrival": "08:17",
       "minutes": 425,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
         "service": "東武東上線急行池袋行",
         "boardStation": "鶴ケ島",
         "serviceIndex": 28,
-        "sameLogicalStationBase": false,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": true,
         "lineMatchReason": "route-alias:東武東上線"
       },
@@ -33694,9 +33696,9 @@
       "routeSelectionClassification": "exclude",
       "reason": "boards-different-station",
       "firstRail": {
-        "service": "ＪＲ総武線三鷹行",
-        "boardStation": "錦糸町",
-        "serviceIndex": 40,
+        "service": "ＪＲ特急しおさい4号東京行",
+        "boardStation": "千葉",
+        "serviceIndex": 28,
         "sameLogicalStationBase": false,
         "lineMatchesPhysicalPoint": false,
         "lineMatchReason": null
@@ -33746,9 +33748,9 @@
       "routeSelectionClassification": "exclude",
       "reason": "boards-different-station",
       "firstRail": {
-        "service": "ＪＲ総武線三鷹行",
-        "boardStation": "錦糸町",
-        "serviceIndex": 40,
+        "service": "ＪＲ特急しおさい4号東京行",
+        "boardStation": "千葉",
+        "serviceIndex": 28,
         "sameLogicalStationBase": false,
         "lineMatchesPhysicalPoint": false,
         "lineMatchReason": null
@@ -33821,15 +33823,15 @@
       "arrival": "08:17",
       "minutes": 422,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "京急本線快特品川行",
-        "boardStation": "上大岡",
-        "serviceIndex": 38,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "横浜市営地下鉄ブルーラインあざみ野行",
+        "boardStation": "港南中央",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:横浜市営地下鉄ブルーライン"
       },
       "hasBus": false
     },
@@ -34186,13 +34188,13 @@
       "arrival": "08:08",
       "minutes": 383,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
         "service": "ＪＲ内房線快速東京行",
         "boardStation": "袖ケ浦",
         "serviceIndex": 28,
-        "sameLogicalStationBase": false,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": true,
         "lineMatchReason": "line-name"
       },
@@ -34368,15 +34370,15 @@
       "arrival": "08:17",
       "minutes": 420,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "京急本線快特品川行",
-        "boardStation": "上大岡",
-        "serviceIndex": 40,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "横浜市営地下鉄ブルーラインあざみ野行",
+        "boardStation": "上永谷",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:横浜市営地下鉄ブルーライン"
       },
       "hasBus": false
     },
@@ -34550,13 +34552,13 @@
       "arrival": "08:17",
       "minutes": 405,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
         "service": "小田急江ノ島線相模大野行",
         "boardStation": "桜ケ丘",
         "serviceIndex": 27,
-        "sameLogicalStationBase": false,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": true,
         "lineMatchReason": "line-name"
       },
@@ -34602,15 +34604,15 @@
       "arrival": "08:17",
       "minutes": 422,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ東海道本線(上野東京ライン)籠原行",
-        "boardStation": "戸塚",
-        "serviceIndex": 41,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "横浜市営地下鉄ブルーライン湘南台行",
+        "boardStation": "下永谷",
+        "serviceIndex": 29,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:横浜市営地下鉄ブルーライン"
       },
       "hasBus": false
     },
@@ -34940,15 +34942,15 @@
       "arrival": "08:17",
       "minutes": 423,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ東海道本線(上野東京ライン)籠原行",
-        "boardStation": "戸塚",
-        "serviceIndex": 38,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "横浜市営地下鉄ブルーライン湘南台行",
+        "boardStation": "舞岡",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:横浜市営地下鉄ブルーライン"
       },
       "hasBus": false
     },
@@ -35044,13 +35046,13 @@
       "arrival": "08:08",
       "minutes": 392,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
         "service": "ＪＲ内房線快速東京行",
         "boardStation": "姉ケ崎",
         "serviceIndex": 27,
-        "sameLogicalStationBase": false,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": true,
         "lineMatchReason": "line-name"
       },
@@ -35229,12 +35231,12 @@
       "minutes": 421,
       "originDistanceM": 0.0,
       "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "reason": "boards-different-component",
       "firstRail": {
-        "service": "東京メトロ有楽町線新木場行",
-        "boardStation": "池袋",
-        "serviceIndex": 47,
-        "sameLogicalStationBase": false,
+        "service": "ＪＲ湘南新宿ライン大船行",
+        "boardStation": "久喜",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": false,
         "lineMatchReason": null
       },
@@ -35254,15 +35256,15 @@
       "arrival": "08:14",
       "minutes": 421,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "東京メトロ有楽町線新木場行",
-        "boardStation": "池袋",
-        "serviceIndex": 47,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "ＪＲ湘南新宿ライン大船行",
+        "boardStation": "久喜",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:JR湘南新宿ライン"
       },
       "hasBus": false
     },
@@ -35384,15 +35386,15 @@
       "arrival": "08:12",
       "minutes": 418,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ東海道本線(上野東京ライン)宇都宮行",
-        "boardStation": "戸塚",
-        "serviceIndex": 41,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "横浜市営地下鉄ブルーラインあざみ野行",
+        "boardStation": "中田(神奈川県)",
+        "serviceIndex": 29,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:横浜市営地下鉄ブルーライン"
       },
       "hasBus": false
     },
@@ -35540,15 +35542,15 @@
       "arrival": "08:12",
       "minutes": 416,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ東海道本線(上野東京ライン)宇都宮行",
-        "boardStation": "戸塚",
-        "serviceIndex": 42,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "横浜市営地下鉄ブルーラインあざみ野行",
+        "boardStation": "立場",
+        "serviceIndex": 29,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:横浜市営地下鉄ブルーライン"
       },
       "hasBus": false
     },
@@ -35593,15 +35595,15 @@
       "arrival": "08:12",
       "minutes": 420,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ東海道本線(上野東京ライン)宇都宮行",
-        "boardStation": "戸塚",
-        "serviceIndex": 38,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "横浜市営地下鉄ブルーラインあざみ野行",
+        "boardStation": "踊場",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:横浜市営地下鉄ブルーライン"
       },
       "hasBus": false
     },
@@ -35619,15 +35621,15 @@
       "arrival": "08:12",
       "minutes": 416,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ総武線三鷹行",
-        "boardStation": "錦糸町",
-        "serviceIndex": 40,
-        "sameLogicalStationBase": false,
+        "service": "ＪＲ特急しおさい4号東京行",
+        "boardStation": "四街道",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": true,
-        "lineMatchReason": "route-alias:JR総武線"
+        "lineMatchReason": "route-alias:JR特急しおさい"
       },
       "hasBus": false
     },
@@ -36482,9 +36484,9 @@
       "routeSelectionClassification": "exclude",
       "reason": "boards-different-station",
       "firstRail": {
-        "service": "ＪＲ東海道本線(上野東京ライン)宇都宮行",
-        "boardStation": "戸塚",
-        "serviceIndex": 41,
+        "service": "横浜市営地下鉄ブルーラインあざみ野行",
+        "boardStation": "下飯田",
+        "serviceIndex": 27,
         "sameLogicalStationBase": false,
         "lineMatchesPhysicalPoint": false,
         "lineMatchReason": null
@@ -36609,15 +36611,15 @@
       "arrival": "08:12",
       "minutes": 414,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ東海道本線(上野東京ライン)宇都宮行",
-        "boardStation": "戸塚",
-        "serviceIndex": 41,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "横浜市営地下鉄ブルーラインあざみ野行",
+        "boardStation": "下飯田",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:横浜市営地下鉄ブルーライン"
       },
       "hasBus": false
     },
@@ -36791,15 +36793,15 @@
       "arrival": "08:14",
       "minutes": 417,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "東京メトロ有楽町線新木場行",
-        "boardStation": "池袋",
-        "serviceIndex": 48,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "ＪＲ湘南新宿ライン大船行",
+        "boardStation": "東鷲宮",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:JR湘南新宿ライン"
       },
       "hasBus": false
     },
@@ -37338,15 +37340,15 @@
       "arrival": "08:12",
       "minutes": 411,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ東海道本線(上野東京ライン)宇都宮行",
-        "boardStation": "戸塚",
-        "serviceIndex": 43,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "横浜市営地下鉄ブルーライン当駅始発あざみ野行",
+        "boardStation": "湘南台",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:横浜市営地下鉄ブルーライン"
       },
       "hasBus": false
     },
@@ -37365,12 +37367,12 @@
       "minutes": 411,
       "originDistanceM": 0.0,
       "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "reason": "boards-different-component",
       "firstRail": {
-        "service": "ＪＲ東海道本線(上野東京ライン)宇都宮行",
-        "boardStation": "戸塚",
-        "serviceIndex": 43,
-        "sameLogicalStationBase": false,
+        "service": "横浜市営地下鉄ブルーライン当駅始発あざみ野行",
+        "boardStation": "湘南台",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": false,
         "lineMatchReason": null
       },
@@ -38225,15 +38227,15 @@
       "arrival": "08:12",
       "minutes": 409,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "ＪＲ総武線三鷹行",
-        "boardStation": "錦糸町",
-        "serviceIndex": 41,
-        "sameLogicalStationBase": false,
+        "service": "ＪＲ特急しおさい4号当駅始発東京行",
+        "boardStation": "佐倉",
+        "serviceIndex": 27,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": true,
-        "lineMatchReason": "route-alias:JR総武線"
+        "lineMatchReason": "route-alias:JR特急しおさい"
       },
       "hasBus": false
     },
@@ -38616,12 +38618,12 @@
       "minutes": 388,
       "originDistanceM": 0.0,
       "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "reason": "boards-different-component",
       "firstRail": {
         "service": "関東鉄道竜ケ崎線当駅始発佐貫行",
         "boardStation": "竜ケ崎",
         "serviceIndex": 26,
-        "sameLogicalStationBase": false,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": false,
         "lineMatchReason": null
       },
@@ -39005,15 +39007,15 @@
       "arrival": "08:14",
       "minutes": 411,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
-        "service": "東京メトロ有楽町線新木場行",
-        "boardStation": "池袋",
-        "serviceIndex": 49,
-        "sameLogicalStationBase": false,
-        "lineMatchesPhysicalPoint": false,
-        "lineMatchReason": null
+        "service": "ＪＲ湘南新宿ライン大船行",
+        "boardStation": "栗橋",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
+        "lineMatchesPhysicalPoint": true,
+        "lineMatchReason": "route-alias:JR湘南新宿ライン"
       },
       "hasBus": false
     },
@@ -39032,12 +39034,12 @@
       "minutes": 411,
       "originDistanceM": 0.0,
       "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "reason": "boards-different-component",
       "firstRail": {
-        "service": "東京メトロ有楽町線新木場行",
-        "boardStation": "池袋",
-        "serviceIndex": 49,
-        "sameLogicalStationBase": false,
+        "service": "ＪＲ湘南新宿ライン大船行",
+        "boardStation": "栗橋",
+        "serviceIndex": 28,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": false,
         "lineMatchReason": null
       },
@@ -40383,13 +40385,13 @@
       "arrival": "08:03",
       "minutes": 389,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
         "service": "江ノ島電鉄鎌倉行",
         "boardStation": "稲村ケ崎",
         "serviceIndex": 26,
-        "sameLogicalStationBase": false,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": true,
         "lineMatchReason": "route-alias:江ノ島電鉄"
       },
@@ -40565,13 +40567,13 @@
       "arrival": "08:03",
       "minutes": 382,
       "originDistanceM": 0.0,
-      "routeSelectionClassification": "exclude",
-      "reason": "boards-different-station",
+      "routeSelectionClassification": "keep",
+      "reason": "boards-current-physical-point",
       "firstRail": {
         "service": "江ノ島電鉄鎌倉行",
         "boardStation": "七里ケ浜",
         "serviceIndex": 26,
-        "sameLogicalStationBase": false,
+        "sameLogicalStationBase": true,
         "lineMatchesPhysicalPoint": true,
         "lineMatchReason": "route-alias:江ノ島電鉄"
       },
