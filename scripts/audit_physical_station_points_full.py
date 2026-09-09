@@ -2,14 +2,14 @@
 """Recalculate every distinct physical N02 station point with Yahoo exact-point routing.
 
 Every successful exact-point query is a valid spatial accessibility sample and is used
-by the final IDW dataset.  This audit additionally records a route-selection diagnostic:
+by the final IDW dataset. This audit additionally records a route-selection diagnostic:
 ``keep`` means the best journey boards rail at the queried physical component (or does
 not board rail), while ``exclude`` means it first walks/buses to a different component
-or station before boarding.  Those historical field names describe only the boarding
+or station before boarding. Those historical field names describe only the boarding
 origin diagnostic; they are NOT final IDW inclusion/exclusion flags.
 
 The Yahoo request uses the same project conditions: 2026-08-28, arrival by 08:18,
-quick walking, local buses enabled and highway buses disabled.  The first walking
+quick walking, local buses enabled and highway buses disabled. The first walking
 link must preserve the requested flatlon to within 5 m.
 """
 from __future__ import annotations
@@ -39,6 +39,9 @@ def compact(value: object) -> str:
 
 def station_base(value: object) -> str:
     text = unicodedata.normalize('NFKC', str(value or '')).strip()
+    # N02 and Yahoo use both small ヶ and full-size ケ for the same station names.
+    # Treat those orthographic variants as identical before comparing boarding points.
+    text = text.replace('ヶ', 'ケ').replace('ヵ', 'カ')
     text = text.split('/', 1)[0].strip()
     while re.search(r'[\(（][^\(（））]*[\)）]$', text):
         text = re.sub(r'[\(（][^\(（））]*[\)）]$', '', text).strip()
@@ -59,7 +62,14 @@ def is_timeish(line: str) -> bool:
 
 def is_bus_service(line: str) -> bool:
     s = compact(line)
-    return 'バス・' in line or ('バス' in s and ('行' in s or '方面' in s))
+    if not s:
+        return False
+    if 'バス・' in line or ('バス' in s and ('行' in s or '方面' in s)):
+        return True
+    # Yahoo labels Bーぐる without the word バス, but it is a community-bus service.
+    if any(token in s for token in ('bーぐる', 'b-ぐる', 'bぐる')):
+        return '行' in s or '方面' in s
+    return False
 
 
 def is_rail_service(line: str) -> bool:
@@ -67,8 +77,11 @@ def is_rail_service(line: str) -> bool:
     if not s or is_bus_service(line):
         return False
     motion = any(token in s for token in ('行', '方面', '当駅始発'))
+    # Yahoo service branding often omits the literal suffix 「線」. Examples from the
+    # saved 1563-point audit include 埼玉高速鉄道, 東葉高速鉄道, 湘南新宿ライン,
+    # スカイツリーライン, アーバンパークライン and JR特急 names.
     rail = any(token in s for token in (
-        '線', '新幹線', 'ライナー', 'モノレール', 'ゆりかもめ',
+        '線', 'ライン', '鉄道', '特急', '新幹線', 'ライナー', 'モノレール', 'ゆりかもめ',
         'エクスプレス', 'ニューシャトル', 'シーサイドライン',
         '江ノ島電鉄', '江ノ電', '小湊鐵道', '小湊鉄道', 'つくばエクスプレス',
     ))
@@ -137,9 +150,8 @@ def line_matches_point(point: dict, service: str) -> tuple[bool, str | None]:
     return False, None
 
 
-def classify(point: dict, excerpt: list[str]) -> dict:
-    """Classify where route 1 first boards rail; not whether the point enters IDW."""
-    section = detailed_route1(excerpt)
+def classify_route1(point: dict, section: list[str]) -> dict:
+    """Classify a saved detailed route-1 section with the current parser."""
     if not section:
         return {'classification': 'unparsed', 'reason': 'route1-section-missing', 'route1': []}
     rail = first_rail_event(section)
@@ -176,6 +188,11 @@ def classify(point: dict, excerpt: list[str]) -> dict:
         'hasBus': has_bus_service(section),
         'route1': section,
     }
+
+
+def classify(point: dict, excerpt: list[str]) -> dict:
+    """Classify where route 1 first boards rail; not whether the point enters IDW."""
+    return classify_route1(point, detailed_route1(excerpt))
 
 
 def main() -> None:
