@@ -397,10 +397,17 @@ body {
 
 .legend-gradient-labels {
   display: none;
-  justify-content: space-between;
+  position: relative;
+  height: 14px;
   font-family: 'JetBrains Mono', monospace;
   font-size: 10px;
   color: var(--text-muted);
+}
+
+.legend-gradient-labels span {
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
 }
 
 .legend-excluded {
