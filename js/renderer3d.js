@@ -28,7 +28,7 @@
     _requestId: 0,
     _container: null,
     _animFrameId: null,
-    _pendingGrid: null,
+    _gridExtent: null,
     _mapMode: 'texture',  // 'texture' or 'flat'
     _flatPlaneHeight: 4,
     _flatMesh: null,
@@ -74,6 +74,30 @@
       window.addEventListener('resize', this._boundResize);
     },
 
+    _resetFailedScene: function () {
+      if (this._boundResize) {
+        window.removeEventListener('resize', this._boundResize);
+        this._boundResize = null;
+      }
+      if (this._controls && this._controls.dispose) this._controls.dispose();
+      if (this._renderer && this._renderer.dispose) this._renderer.dispose();
+      if (this._container) {
+        while (this._container.firstChild) this._container.removeChild(this._container.firstChild);
+      }
+      this._scene = null;
+      this._camera = null;
+      this._renderer = null;
+      this._controls = null;
+      this._mapMesh = null;
+      this._gradMesh = null;
+      this._peakMarker = null;
+      this._flatMesh = null;
+      this._lastGrid = null;
+      this._lastMapTexture = null;
+      this._lastUV = null;
+      this._active = false;
+    },
+
     _updateBackground: function () {
       if (!this._scene) return;
       var theme = document.documentElement.getAttribute('data-theme');
@@ -81,7 +105,7 @@
     },
 
     _onResize: function () {
-      if (!this._renderer) return;
+      if (!this._renderer || !this._camera) return;
       var w = window.innerWidth;
       var h = window.innerHeight;
       this._camera.aspect = w / h;
@@ -111,10 +135,11 @@
       latMin -= dLat; latMax += dLat;
       lngMin -= dLng; lngMax += dLng;
 
-      this._gridExtent = { latMin: latMin, latMax: latMax, lngMin: lngMin, lngMax: lngMax };
+      var extent = { latMin: latMin, latMax: latMax, lngMin: lngMin, lngMax: lngMax };
+      this._gridExtent = extent;
 
       if (!window.PrecomputedGrid || !PrecomputedGrid.ready) return;
-      this._requestId++;
+      var requestId = ++this._requestId;
       var cols = 200, rows = 200;
       var grid = new Float32Array(cols * rows);
       var rowStep = (latMax - latMin) / (rows - 1);
@@ -127,13 +152,19 @@
           grid[r * cols + c] = value === null ? 0 : value;
         }
       }
-      this._pendingGrid = { grid: grid, cols: cols, rows: rows };
-      this._loadMapTiles();
+      this._loadMapTiles({
+        requestId: requestId,
+        grid: grid,
+        cols: cols,
+        rows: rows,
+        extent: extent
+      });
     },
 
     // --- Map tile loading ---
-    _loadMapTiles: function () {
-      var ext = this._gridExtent;
+    _loadMapTiles: function (request) {
+      if (!request || request.requestId !== this._requestId) return;
+      var ext = request.extent;
       var zoom = 11;
       var txMin = lng2tile(ext.lngMin, zoom);
       var txMax = lng2tile(ext.lngMax, zoom);
@@ -150,7 +181,8 @@
       cv.height = tilesY * tileSize;
       var ctx = cv.getContext('2d');
 
-      // Get current tile URL template
+      // Get current tile URL template at the start of this request. Later UI
+      // changes create a new request and invalidate this one by requestId.
       var settings = UIManager.getSettings();
       var tileId = settings.tileId || CONFIG.defaultTile[settings.theme];
       var tileDef = CONFIG.tiles[tileId] || CONFIG.tiles['gsi-pale'];
@@ -164,26 +196,29 @@
       var loaded = 0;
       var self = this;
 
+      function finishOne() {
+        loaded++;
+        if (loaded >= total) {
+          self._onTilesLoaded(cv, zoom, txMin, tyMin, txMax, tyMax, request);
+        }
+      }
+
       for (var ty = tyMin; ty <= tyMax; ty++) {
         for (var tx = txMin; tx <= txMax; tx++) {
           (function (tx2, ty2) {
             var img = new Image();
             img.crossOrigin = 'anonymous';
             img.onload = function () {
-              var dx = (tx2 - txMin) * tileSize;
-              var dy = (ty2 - tyMin) * tileSize;
-              ctx.drawImage(img, dx, dy, tileSize, tileSize);
-              loaded++;
-              if (loaded >= total) {
-                self._onTilesLoaded(cv, zoom, txMin, tyMin, txMax, tyMax);
+              // Obsolete requests still need their callbacks to complete, but
+              // avoid spending canvas work on tiles that can no longer be shown.
+              if (request.requestId === self._requestId) {
+                var dx = (tx2 - txMin) * tileSize;
+                var dy = (ty2 - tyMin) * tileSize;
+                ctx.drawImage(img, dx, dy, tileSize, tileSize);
               }
+              finishOne();
             };
-            img.onerror = function () {
-              loaded++;
-              if (loaded >= total) {
-                self._onTilesLoaded(cv, zoom, txMin, tyMin, txMax, tyMax);
-              }
-            };
+            img.onerror = finishOne;
             var url = urlTemplate.replace('{z}', zoom).replace('{x}', tx2).replace('{y}', ty2);
             img.src = url;
           })(tx, ty);
@@ -191,11 +226,12 @@
       }
     },
 
-    _onTilesLoaded: function (cv, zoom, txMin, tyMin, txMax, tyMax) {
-      if (!this._pendingGrid || !this._scene) return;
+    _onTilesLoaded: function (cv, zoom, txMin, tyMin, txMax, tyMax, request) {
+      if (!request || request.requestId !== this._requestId || !this._scene) return;
 
-      var pg = this._pendingGrid;
-      this._pendingGrid = null;
+      var pg = request;
+      var ext = request.extent;
+      this._gridExtent = ext;
 
       // Tile extent in geographic coords
       var tileLngMin = tile2lng(txMin, zoom);
@@ -204,10 +240,10 @@
       var tileLatMax = tile2lat(tyMin, zoom);
 
       // Compute UV mapping: how the grid extent maps into the tile canvas
-      var uMin = (this._gridExtent.lngMin - tileLngMin) / (tileLngMax - tileLngMin);
-      var uMax = (this._gridExtent.lngMax - tileLngMin) / (tileLngMax - tileLngMin);
-      var vMin = 1 - (this._gridExtent.latMax - tileLatMin) / (tileLatMax - tileLatMin);
-      var vMax = 1 - (this._gridExtent.latMin - tileLatMin) / (tileLatMax - tileLatMin);
+      var uMin = (ext.lngMin - tileLngMin) / (tileLngMax - tileLngMin);
+      var uMax = (ext.lngMax - tileLngMin) / (tileLngMax - tileLngMin);
+      var vMin = 1 - (ext.latMax - tileLatMin) / (tileLatMax - tileLatMin);
+      var vMax = 1 - (ext.latMin - tileLatMin) / (tileLatMax - tileLatMin);
 
       // Create texture
       var texture = new THREE.CanvasTexture(cv);
@@ -408,12 +444,19 @@
     refreshMapTexture: function () {
       // Reuse cached terrain data and rebuild only the map texture with current tile setting.
       if (!this._scene || !this._gridExtent || !this._lastGrid) return;
-      this._pendingGrid = {
+      var requestId = ++this._requestId;
+      this._loadMapTiles({
+        requestId: requestId,
         grid: this._lastGrid.grid,
         cols: this._lastGrid.cols,
-        rows: this._lastGrid.rows
-      };
-      this._loadMapTiles();
+        rows: this._lastGrid.rows,
+        extent: {
+          latMin: this._gridExtent.latMin,
+          latMax: this._gridExtent.latMax,
+          lngMin: this._gridExtent.lngMin,
+          lngMax: this._gridExtent.lngMax
+        }
+      });
     },
 
     setFlatPlaneHeight: function (height) {
@@ -429,9 +472,10 @@
       try {
         this._ensureScene();
       } catch (e) {
-        console.error('WebGL初期化失敗:', e.message);
-        alert('WebGLが利用できません。\nabout:config で webgl.force-enabled を true にしてください。');
-        return;
+        console.error('WebGL初期化失敗:', e && e.message ? e.message : e);
+        this._resetFailedScene();
+        alert('WebGLが利用できないため、2D地図を継続して表示します。');
+        return false;
       }
       this._container.style.display = 'block';
       this._active = true;
@@ -441,10 +485,11 @@
         this._requestGrid();
       }
       this._onResize();
+      return true;
     },
 
     hide: function () {
-      this._container.style.display = 'none';
+      if (this._container) this._container.style.display = 'none';
       this._active = false;
       this._stopLoop();
     },
