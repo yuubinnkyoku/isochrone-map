@@ -12,8 +12,8 @@
     // stations.json cache-buster. Bump when station data changes.
     dataVersion: 22,
     // Precomputed grid cache-busters.
-    gridVersion: 11,
-    accessGridVersion: 2,
+    gridVersion: 12,
+    accessGridVersion: 3,
     // 駅からの距離による徒歩アクセス減点をデフォルトにし、従来IDWも比較用に残す。
     defaultInterpolationMode: 'access',
 
@@ -28,18 +28,19 @@
       dataTargetMinutes: 498,
     },
 
-    // 表示する時刻範囲
+    // 表示する時刻範囲。学校自身を08:18の補間アンカーとして含める。
     timeRange: {
       min: 390,          // data load may extend this earlier
-      max: 495,          // 08:15
+      max: 498,          // 08:18 destination anchor
       contourMin: 390,   // data load may extend this earlier
-      contourMax: 495,   // 08:15
+      contourMax: 498,   // 08:18 destination anchor
       denseContourMin: 390,      // 06:30 onward follows the selected 3/5/10-minute interval
       earlyContourInterval: 60,  // before 06:30, use hourly lines to avoid clutter
     },
 
     // カラースケール（OKLCH）。
     // 06:30〜08:10 は10分ごとの OKLab ΔE ≈ 0.082、08:15 は5分なので約半分。
+    // 08:15〜08:18は最終色を維持する。
     // L は時刻とともに単調増加し、全区間を補間しても sRGB gamut 内に収まる。
     colorStops: [
       { min: 390, oklch: [0.540000, 0.238411, 305.000000] }, // 06:30

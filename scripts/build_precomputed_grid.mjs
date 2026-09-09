@@ -18,21 +18,21 @@ function mercatorY(latDeg) {
   return Math.log(Math.tan(Math.PI / 4 + lat / 2));
 }
 
-function projectStations(stations) {
-  return stations.map((s) => ({
-    x: s.lng * Math.PI / 180,
-    y: mercatorY(s.lat),
-    minutes: s.minutes,
+function projectSamples(samples) {
+  return samples.map((s) => ({
+    x: Number(s.lng) * Math.PI / 180,
+    y: mercatorY(Number(s.lat)),
+    minutes: Number(s.minutes),
   }));
 }
 
-function calcValue(lat, lng, stations, halfPower) {
+function calcValue(lat, lng, samples, halfPower) {
   const x = lng * Math.PI / 180;
   const y = mercatorY(lat);
   let num = 0;
   let den = 0;
-  for (let i = 0; i < stations.length; i++) {
-    const s = stations[i];
+  for (let i = 0; i < samples.length; i++) {
+    const s = samples[i];
     const dx = x - s.x;
     const dy = y - s.y;
     const distSq = dx * dx + dy * dy;
@@ -44,9 +44,33 @@ function calcValue(lat, lng, stations, halfPower) {
   return den > 0 ? num / den : 0;
 }
 
+function validateAnchors(anchorDoc) {
+  const anchors = Array.isArray(anchorDoc?.anchors) ? anchorDoc.anchors : [];
+  const ids = new Set();
+  for (const anchor of anchors) {
+    if (!anchor.id || ids.has(anchor.id)) throw new Error(`Invalid or duplicate interpolation anchor id: ${anchor.id}`);
+    ids.add(anchor.id);
+    for (const key of ['lat', 'lng', 'minutes']) {
+      if (!Number.isFinite(Number(anchor[key]))) throw new Error(`Invalid ${key} for interpolation anchor ${anchor.id}`);
+    }
+  }
+  return anchors;
+}
+
+function alignExtentToAnchor(minValue, maxValue, anchorValue, margin, step) {
+  const desiredMin = minValue - margin;
+  const desiredMax = maxValue + margin;
+  const lowerSteps = Math.ceil((anchorValue - desiredMin) / step);
+  const upperSteps = Math.ceil((desiredMax - anchorValue) / step);
+  return {
+    min: anchorValue - lowerSteps * step,
+    max: anchorValue + upperSteps * step,
+  };
+}
+
 if (!isMainThread) {
-  const { rowStart, rowEnd, cols, north, west, step, stations, power, scale, offsetMinutes } = workerData;
-  const projected = projectStations(stations);
+  const { rowStart, rowEnd, cols, north, west, step, samples, power, scale, offsetMinutes } = workerData;
+  const projected = projectSamples(samples);
   const halfPower = power / 2;
   const out = new Uint16Array((rowEnd - rowStart) * cols);
   let k = 0;
@@ -63,28 +87,50 @@ if (!isMainThread) {
   const root = fileURLToPath(new URL('..', import.meta.url));
   const stationsPath = process.argv[2] || `${root}/data/stations.json`;
   const outputBase = process.argv[3] || `${root}/data/idw-grid`;
-  const doc = JSON.parse(fs.readFileSync(stationsPath, 'utf8'));
-  const sourceStations = doc.stations;
+  const anchorsPath = process.argv[4] || `${root}/data/interpolation-anchors.json`;
+
+  const stationDoc = JSON.parse(fs.readFileSync(stationsPath, 'utf8'));
+  const sourceStations = stationDoc.stations;
   const stations = sourceStations.filter((s) => !s.excludeFromIdw);
   const excludedStations = sourceStations.filter((s) => s.excludeFromIdw);
+  const anchorBytes = fs.readFileSync(anchorsPath);
+  const interpolationAnchors = validateAnchors(JSON.parse(anchorBytes.toString('utf8')));
+  const samples = stations.concat(interpolationAnchors);
   const power = DEFAULT_POWER;
 
-  const minLat = Math.min(...stations.map((s) => s.lat));
-  const maxLat = Math.max(...stations.map((s) => s.lat));
-  const minLng = Math.min(...stations.map((s) => s.lng));
-  const maxLng = Math.max(...stations.map((s) => s.lng));
-  const south = Math.floor((minLat - MARGIN_DEG) / STEP_DEG) * STEP_DEG;
-  const north = Math.ceil((maxLat + MARGIN_DEG) / STEP_DEG) * STEP_DEG;
-  const west = Math.floor((minLng - MARGIN_DEG) / STEP_DEG) * STEP_DEG;
-  const east = Math.ceil((maxLng + MARGIN_DEG) / STEP_DEG) * STEP_DEG;
+  const minLat = Math.min(...samples.map((s) => Number(s.lat)));
+  const maxLat = Math.max(...samples.map((s) => Number(s.lat)));
+  const minLng = Math.min(...samples.map((s) => Number(s.lng)));
+  const maxLng = Math.max(...samples.map((s) => Number(s.lng)));
+
+  // Put the destination itself exactly on a grid node. Without this alignment,
+  // the browser's final bilinear lookup can dilute a known 08:18 destination
+  // sample by interpolating four nearby cells. The extent still retains at
+  // least MARGIN_DEG beyond every interpolation sample.
+  const gridAlignmentAnchor = interpolationAnchors.find((a) => a.kind === 'destination') || interpolationAnchors[0] || null;
+  let south, north, west, east;
+  if (gridAlignmentAnchor) {
+    const latExtent = alignExtentToAnchor(minLat, maxLat, Number(gridAlignmentAnchor.lat), MARGIN_DEG, STEP_DEG);
+    const lngExtent = alignExtentToAnchor(minLng, maxLng, Number(gridAlignmentAnchor.lng), MARGIN_DEG, STEP_DEG);
+    south = latExtent.min;
+    north = latExtent.max;
+    west = lngExtent.min;
+    east = lngExtent.max;
+  } else {
+    south = Math.floor((minLat - MARGIN_DEG) / STEP_DEG) * STEP_DEG;
+    north = Math.ceil((maxLat + MARGIN_DEG) / STEP_DEG) * STEP_DEG;
+    west = Math.floor((minLng - MARGIN_DEG) / STEP_DEG) * STEP_DEG;
+    east = Math.ceil((maxLng + MARGIN_DEG) / STEP_DEG) * STEP_DEG;
+  }
   const rows = Math.round((north - south) / STEP_DEG) + 1;
   const cols = Math.round((east - west) / STEP_DEG) + 1;
 
   const stationBytes = fs.readFileSync(stationsPath);
   const stationSha256 = crypto.createHash('sha256').update(stationBytes).digest('hex');
+  const anchorSha256 = crypto.createHash('sha256').update(anchorBytes).digest('hex');
   const workerCount = Math.max(1, Math.min(os.availableParallelism?.() || os.cpus().length || 1, 8, rows));
-  console.log(`stations=${stations.length}/${sourceStations.length} IDW/source excluded=${excludedStations.length} rows=${rows} cols=${cols} points=${(rows * cols).toLocaleString()} workers=${workerCount}`);
-  console.log(`bounds=${south},${west} .. ${north},${east} step=${STEP_DEG}`);
+  console.log(`samples=${samples.length} stations=${stations.length}/${sourceStations.length} anchors=${interpolationAnchors.length} excluded=${excludedStations.length} rows=${rows} cols=${cols} points=${(rows * cols).toLocaleString()} workers=${workerCount}`);
+  console.log(`bounds=${south},${west} .. ${north},${east} step=${STEP_DEG} alignment=${gridAlignmentAnchor?.id || 'none'}`);
 
   const chunks = [];
   const started = Date.now();
@@ -93,7 +139,7 @@ if (!isMainThread) {
     const rowEnd = Math.floor(rows * (i + 1) / workerCount);
     chunks.push(new Promise((resolve, reject) => {
       const worker = new Worker(new URL(import.meta.url), {
-        workerData: { rowStart, rowEnd, cols, north, west, step: STEP_DEG, stations, power, scale: SCALE, offsetMinutes: OFFSET_MINUTES },
+        workerData: { rowStart, rowEnd, cols, north, west, step: STEP_DEG, samples, power, scale: SCALE, offsetMinutes: OFFSET_MINUTES },
       });
       worker.on('message', resolve);
       worker.on('error', reject);
@@ -113,14 +159,19 @@ if (!isMainThread) {
   const compressed = zlib.gzipSync(output, { level: 9 });
   fs.writeFileSync(`${outputBase}.bin.gz`, compressed);
   const meta = {
-    version: 1,
-    algorithm: 'IDW on Web Mercator coordinates',
+    version: 3,
+    algorithm: 'IDW on Web Mercator coordinates with interpolation-only anchors',
     idwPower: power,
     stationCount: stations.length,
     sourceStationCount: sourceStations.length,
     excludedStationCount: excludedStations.length,
     excludedStationIds: excludedStations.map((s) => s.id),
+    interpolationAnchorCount: interpolationAnchors.length,
+    interpolationAnchorIds: interpolationAnchors.map((a) => a.id),
+    sampleCount: samples.length,
+    gridAlignmentAnchorId: gridAlignmentAnchor?.id || null,
     stationDataSha256: stationSha256,
+    interpolationAnchorDataSha256: anchorSha256,
     rows,
     cols,
     north,
@@ -138,5 +189,5 @@ if (!isMainThread) {
   console.log(`wrote ${outputBase}.bin (${output.length.toLocaleString()} bytes)`);
   console.log(`wrote ${outputBase}.bin.gz (${compressed.length.toLocaleString()} bytes)`);
   console.log(`wrote ${outputBase}.meta.json`);
-  console.log(`elapsed=${((Date.now() - started) / 1000).toFixed(1)}s sha256=${stationSha256}`);
+  console.log(`elapsed=${((Date.now() - started) / 1000).toFixed(1)}s stationSha256=${stationSha256} anchorSha256=${anchorSha256}`);
 }

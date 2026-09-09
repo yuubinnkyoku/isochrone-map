@@ -65,7 +65,7 @@ jobs:
             --output data/stations.json \
             --compact-audit-output data/physical-station-point-audit-compact.json
 
-      - name: Rebuild legacy IDW grid from all physical points
+      - name: Rebuild legacy IDW grid from stations and interpolation anchors
         run: node scripts/build_precomputed_grid.mjs
 
       - name: Rebuild walking-access-adjusted grid
@@ -74,6 +74,7 @@ jobs:
       - name: Validate generated data, both grids and frontend syntax
         run: |
           python scripts/validate_physical_station_dataset.py
+          node --check scripts/build_precomputed_grid.mjs
           node --check scripts/build_access_grid.mjs
           node --check js/config.js
           node --check js/precomputed-grid.js
@@ -85,15 +86,27 @@ jobs:
           from pathlib import Path
 
           stations = Path('data/stations.json')
+          anchors = Path('data/interpolation-anchors.json')
           idw = json.loads(Path('data/idw-grid.meta.json').read_text(encoding='utf-8'))
           access = json.loads(Path('data/access-grid.meta.json').read_text(encoding='utf-8'))
-          sha = hashlib.sha256(stations.read_bytes()).hexdigest()
+          station_sha = hashlib.sha256(stations.read_bytes()).hexdigest()
+          anchor_sha = hashlib.sha256(anchors.read_bytes()).hexdigest()
+          anchor_doc = json.loads(anchors.read_text(encoding='utf-8'))
+
+          assert len(anchor_doc['anchors']) == 1
+          school = anchor_doc['anchors'][0]
+          assert school['id'] == 'destination-tsukufu'
+          assert school['minutes'] == 498
 
           for meta in (idw, access):
               assert meta['stationCount'] == 1563
               assert meta['sourceStationCount'] == 1563
               assert meta['excludedStationCount'] == 0
-              assert meta['stationDataSha256'] == sha, (meta['stationDataSha256'], sha)
+              assert meta['interpolationAnchorCount'] == 1
+              assert meta['interpolationAnchorIds'] == ['destination-tsukufu']
+              assert meta['sampleCount'] == 1564
+              assert meta['stationDataSha256'] == station_sha, (meta['stationDataSha256'], station_sha)
+              assert meta['interpolationAnchorDataSha256'] == anchor_sha, (meta['interpolationAnchorDataSha256'], anchor_sha)
           for key in ('rows', 'cols', 'north', 'south', 'west', 'east', 'latStep', 'lngStep', 'scale', 'offsetMinutes', 'nodata'):
               assert access[key] == idw[key], (key, access[key], idw[key])
           assert access['mode'] == 'access'
@@ -103,7 +116,9 @@ jobs:
           assert Path('data/access-grid.bin').stat().st_size == access['rows'] * access['cols'] * 2
           assert Path('data/access-grid.bin.gz').stat().st_size > 0
 
-          print('stationDataSha256', sha)
+          print('stationDataSha256', station_sha)
+          print('interpolationAnchorDataSha256', anchor_sha)
+          print('samples', idw['sampleCount'])
           print('grid', idw['rows'], idw['cols'])
           print('access effective straight-line speed', access['effectiveStraightLineSpeedMetersPerMinute'])
           PY

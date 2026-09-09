@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "description": "Interpolation-only anchors that are not railway station markers.",
+  "anchors": [
+    {
+      "id": "destination-tsukufu",
+      "kind": "destination",
+      "name": "筑波大学附属高等学校",
+      "lat": 35.716741,
+      "lng": 139.7308823,
+      "minutes": 498,
+      "time": "08:18",
+      "note": "The map's routing target arrival time. Being at the school itself at 08:18 is therefore an exact interpolation anchor."
+    }
+  ]
+}
