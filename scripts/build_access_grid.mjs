@@ -6,11 +6,10 @@ import zlib from 'node:zlib';
 import { Worker, isMainThread, parentPort, workerData } from 'node:worker_threads';
 import { fileURLToPath } from 'node:url';
 
-// The access-aware surface intentionally starts from the already validated IDW
-// field and then subtracts an explicit penalty for distance to the nearest
-// physical station. This avoids the max-plus failure mode where an unrealistically
-// cheap straight-line walk across a river, railway or mountain can make another
-// station appear better even at a station whose exact-point Yahoo value is known.
+// The access-aware surface starts from the validated IDW field and then
+// subtracts an explicit access penalty based on distance to the nearest known
+// interpolation anchor. Anchors include every physical station and the school
+// destination itself, so the destination remains a true 08:18 endpoint.
 const WALKING_SPEED_M_PER_MIN = 80;
 const DETOUR_FACTOR = 1.25;
 const PENALTY_MIN_PER_M = DETOUR_FACTOR / WALKING_SPEED_M_PER_MIN;
@@ -25,8 +24,8 @@ function project(lat, lng) {
   };
 }
 
-function projectStations(stations) {
-  return stations.map((s) => {
+function projectAnchors(anchors) {
+  return anchors.map((s) => {
     const p = project(Number(s.lat), Number(s.lng));
     return { x: p.x, y: p.y, id: s.id };
   });
@@ -70,9 +69,22 @@ function encode(value, meta) {
   return Math.max(0, Math.min(65534, Math.round((value + (meta.offsetMinutes || 0)) * meta.scale)));
 }
 
+function validateInterpolationAnchors(anchorDoc) {
+  const anchors = Array.isArray(anchorDoc?.anchors) ? anchorDoc.anchors : [];
+  const ids = new Set();
+  for (const anchor of anchors) {
+    if (!anchor.id || ids.has(anchor.id)) throw new Error(`Invalid or duplicate interpolation anchor id: ${anchor.id}`);
+    ids.add(anchor.id);
+    for (const key of ['lat', 'lng', 'minutes']) {
+      if (!Number.isFinite(Number(anchor[key]))) throw new Error(`Invalid ${key} for interpolation anchor ${anchor.id}`);
+    }
+  }
+  return anchors;
+}
+
 if (!isMainThread) {
-  const { rowStart, rowEnd, stations, idwPath, meta } = workerData;
-  const projected = projectStations(stations);
+  const { rowStart, rowEnd, accessAnchors, idwPath, meta } = workerData;
+  const projected = projectAnchors(accessAnchors);
   const tree = buildKdTree(projected.slice());
   const idw = fs.readFileSync(idwPath);
   const out = new Uint16Array((rowEnd - rowStart) * meta.cols);
@@ -103,11 +115,15 @@ if (!isMainThread) {
   const stationsPath = process.argv[2] || `${root}/data/stations.json`;
   const outputBase = process.argv[3] || `${root}/data/access-grid`;
   const idwBase = process.argv[4] || `${root}/data/idw-grid`;
+  const anchorsPath = process.argv[5] || `${root}/data/interpolation-anchors.json`;
   const idwPath = `${idwBase}.bin`;
   const idwMetaPath = `${idwBase}.meta.json`;
 
-  const doc = JSON.parse(fs.readFileSync(stationsPath, 'utf8'));
-  const stations = doc.stations;
+  const stationDoc = JSON.parse(fs.readFileSync(stationsPath, 'utf8'));
+  const stations = stationDoc.stations;
+  const anchorBytes = fs.readFileSync(anchorsPath);
+  const interpolationAnchors = validateInterpolationAnchors(JSON.parse(anchorBytes.toString('utf8')));
+  const accessAnchors = stations.concat(interpolationAnchors);
   const meta = JSON.parse(fs.readFileSync(idwMetaPath, 'utf8'));
   const expectedBytes = meta.rows * meta.cols * 2;
   if (fs.statSync(idwPath).size !== expectedBytes) {
@@ -116,16 +132,23 @@ if (!isMainThread) {
   if (meta.sourceStationCount !== stations.length || meta.stationCount !== stations.length || meta.excludedStationCount !== 0) {
     throw new Error(`IDW metadata does not represent all ${stations.length} physical stations`);
   }
+  if (meta.interpolationAnchorCount !== interpolationAnchors.length || meta.sampleCount !== accessAnchors.length) {
+    throw new Error(`IDW metadata does not represent all interpolation anchors: expected ${accessAnchors.length} samples`);
+  }
 
   const stationBytes = fs.readFileSync(stationsPath);
   const stationSha256 = crypto.createHash('sha256').update(stationBytes).digest('hex');
+  const anchorSha256 = crypto.createHash('sha256').update(anchorBytes).digest('hex');
   if (meta.stationDataSha256 !== stationSha256) {
     throw new Error(`IDW grid was built from different stations.json: ${meta.stationDataSha256} != ${stationSha256}`);
   }
+  if (meta.interpolationAnchorDataSha256 !== anchorSha256) {
+    throw new Error(`IDW grid was built from different interpolation anchors: ${meta.interpolationAnchorDataSha256} != ${anchorSha256}`);
+  }
 
   const workerCount = Math.max(1, Math.min(os.availableParallelism?.() || os.cpus().length || 1, 8, meta.rows));
-  console.log(`stations=${stations.length} rows=${meta.rows} cols=${meta.cols} points=${(meta.rows * meta.cols).toLocaleString()} workers=${workerCount}`);
-  console.log('model=IDW(x) - detourFactor * nearestStationDistance(x) / walkingSpeed');
+  console.log(`accessAnchors=${accessAnchors.length} stations=${stations.length} extraAnchors=${interpolationAnchors.length} rows=${meta.rows} cols=${meta.cols} points=${(meta.rows * meta.cols).toLocaleString()} workers=${workerCount}`);
+  console.log('model=IDW(x) - detourFactor * nearestInterpolationAnchorDistance(x) / walkingSpeed');
   console.log(`walkingSpeed=${WALKING_SPEED_M_PER_MIN}m/min detourFactor=${DETOUR_FACTOR} effective=${(WALKING_SPEED_M_PER_MIN / DETOUR_FACTOR).toFixed(2)}m/min`);
 
   const chunks = [];
@@ -135,7 +158,7 @@ if (!isMainThread) {
     const rowEnd = Math.floor(meta.rows * (i + 1) / workerCount);
     chunks.push(new Promise((resolve, reject) => {
       const worker = new Worker(new URL(import.meta.url), {
-        workerData: { rowStart, rowEnd, stations, idwPath, meta },
+        workerData: { rowStart, rowEnd, accessAnchors, idwPath, meta },
       });
       worker.on('message', resolve);
       worker.on('error', reject);
@@ -157,11 +180,11 @@ if (!isMainThread) {
 
   const accessMeta = {
     ...meta,
-    version: 2,
+    version: 3,
     mode: 'access',
-    algorithm: 'IDW with nearest-station walking-access penalty',
-    formula: 'IDW(x) - streetDetourFactor * nearestPhysicalStationDistanceMeters(x) / walkingSpeedMetersPerMinute',
-    approximation: 'Nearest-station distance is straight-line distance multiplied by a fixed street-detour factor; not a pedestrian-network route search',
+    algorithm: 'IDW with nearest interpolation-anchor walking-access penalty',
+    formula: 'IDW(x) - streetDetourFactor * nearestInterpolationAnchorDistanceMeters(x) / walkingSpeedMetersPerMinute',
+    approximation: 'Nearest anchor distance is straight-line distance multiplied by a fixed street-detour factor; anchors are physical stations plus the school destination; not a pedestrian-network route search',
     baseGrid: 'idw-grid',
     baseAlgorithm: meta.algorithm,
     walkingSpeedMetersPerMinute: WALKING_SPEED_M_PER_MIN,
@@ -169,10 +192,11 @@ if (!isMainThread) {
     effectiveStraightLineSpeedMetersPerMinute: WALKING_SPEED_M_PER_MIN / DETOUR_FACTOR,
     projectionLatitude: PROJECTION_LAT_DEG,
     stationDataSha256: stationSha256,
+    interpolationAnchorDataSha256: anchorSha256,
   };
   fs.writeFileSync(`${outputBase}.meta.json`, JSON.stringify(accessMeta, null, 2) + '\n');
   console.log(`wrote ${outputBase}.bin (${output.length.toLocaleString()} bytes)`);
   console.log(`wrote ${outputBase}.bin.gz (${compressed.length.toLocaleString()} bytes)`);
   console.log(`wrote ${outputBase}.meta.json`);
-  console.log(`elapsed=${((Date.now() - started) / 1000).toFixed(1)}s sha256=${stationSha256}`);
+  console.log(`elapsed=${((Date.now() - started) / 1000).toFixed(1)}s stationSha256=${stationSha256} anchorSha256=${anchorSha256}`);
 }
