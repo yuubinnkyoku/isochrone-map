@@ -47,12 +47,14 @@
     var padY = Math.round(sz.y * pad);
     var width = sz.x + padX * 2;
     var height = sz.y + padY * 2;
+    var northWest = map.containerPointToLatLng([-padX, -padY]);
+    var southEast = map.containerPointToLatLng([sz.x + padX, sz.y + padY]);
     return {
       cvWidth: width,
       cvHeight: height,
-      pos: map.containerPointToLayerPoint([-padX, -padY]),
+      pos: map.latLngToLayerPoint(northWest),
       renderZoom: map.getZoom(),
-      renderTopLeft: map.containerPointToLatLng([-padX, -padY]),
+      renderBounds: L.latLngBounds(northWest, southEast),
       padX: padX,
       padY: padY,
       step: step,
@@ -106,28 +108,37 @@
     if (cv.height !== height) cv.height = height;
   }
 
-  // The canvas deliberately includes padding around the viewport. As long as a
-  // pan remains inside that already-rendered geographic area, Leaflet can move
-  // the existing canvas with its normal pane transform and no scalar sampling or
-  // Marching Squares pass is needed at moveend.
+  // Coverage must be remembered in geographic coordinates. Leaflet changes the
+  // layer-point origin after a completed pan, so comparing layer-point rectangles
+  // from different view states can incorrectly claim a cached canvas is aligned.
   function viewportCovered(layer, map, step) {
-    var bounds = layer._renderLayerBounds;
+    var bounds = layer._renderBounds;
     if (!bounds || layer._renderZoom !== map.getZoom() || layer._renderStep !== step) return false;
-    var sz = map.getSize();
-    var topLeft = map.containerPointToLayerPoint([0, 0]);
-    var bottomRight = map.containerPointToLayerPoint([sz.x, sz.y]);
-    return topLeft.x >= bounds.left && topLeft.y >= bounds.top &&
-      bottomRight.x <= bounds.right && bottomRight.y <= bounds.bottom;
+    var view = map.getBounds();
+    return bounds.contains(view.getNorthWest()) && bounds.contains(view.getSouthEast());
   }
 
   function rememberRenderCoverage(layer, state) {
-    layer._renderLayerBounds = {
-      left: state.pos.x,
-      top: state.pos.y,
-      right: state.pos.x + state.cvWidth,
-      bottom: state.pos.y + state.cvHeight
-    };
+    layer._renderBounds = state.renderBounds;
     layer._renderStep = state.step;
+  }
+
+  // Re-anchor the already-rendered bitmap immediately after Leaflet commits a
+  // pan/zoom. Heavy resampling can remain debounced, but the visible overlay must
+  // never spend that debounce interval at an old layer-point origin or scale.
+  function positionExistingCanvas(layer) {
+    if (!layer._cv || !layer._map || !layer._renderBounds || !Number.isFinite(layer._renderZoom)) return;
+    var map = layer._map;
+    var topLeft = map.latLngToLayerPoint(layer._renderBounds.getNorthWest());
+    var scale = map.getZoomScale(map.getZoom(), layer._renderZoom);
+    L.DomUtil.setTransform(layer._cv, topLeft, scale);
+  }
+
+  function animateCanvasZoom(layer, e) {
+    if (!layer._cv || !layer._map || !layer._renderBounds || !Number.isFinite(layer._renderZoom)) return;
+    var scale = layer._map.getZoomScale(e.zoom, layer._renderZoom);
+    var newPos = layer._map._latLngToNewLayerPoint(layer._renderBounds.getNorthWest(), e.zoom, e.center);
+    L.DomUtil.setTransform(layer._cv, newPos, scale);
   }
 
   var ContourOverlay = L.Layer.extend({
@@ -139,7 +150,7 @@
       this._visible = opts.visible !== false;
       this._debounceTimer = null;
       this._sampleWorkspace = {};
-      this._renderLayerBounds = null;
+      this._renderBounds = null;
       this._renderStep = null;
     },
 
@@ -149,23 +160,29 @@
       Object.assign(this._cv.style, { position: 'absolute', pointerEvents: 'none', zIndex: '250' });
       this._cv.style.willChange = 'transform';
       map.getPanes().overlayPane.appendChild(this._cv);
-      map.on('moveend zoomend resize', this._debouncedRender, this);
+      map.on('moveend zoomend', this._onMapSettled, this);
+      map.on('resize', this._debouncedRender, this);
       map.on('zoomanim', this._onZoomAnim, this);
       this._render(true);
     },
 
     onRemove: function (map) {
       L.DomUtil.remove(this._cv);
-      map.off('moveend zoomend resize', this._debouncedRender, this);
+      map.off('moveend zoomend', this._onMapSettled, this);
+      map.off('resize', this._debouncedRender, this);
       map.off('zoomanim', this._onZoomAnim, this);
     },
 
     _onZoomAnim: function (e) {
-      var map = this._map;
-      if (!this._renderZoom) return;
-      var scale = map.getZoomScale(e.zoom, this._renderZoom);
-      var newPos = map._latLngToNewLayerPoint(this._renderTopLeft, e.zoom, e.center);
-      L.DomUtil.setTransform(this._cv, newPos, scale);
+      animateCanvasZoom(this, e);
+    },
+
+    _onMapSettled: function () {
+      if (!this._map) return;
+      positionExistingCanvas(this);
+      var step = CONFIG.gridSize(this._map.getZoom());
+      if (viewportCovered(this, this._map, step)) return;
+      this._debouncedRender();
     },
 
     _debouncedRender: function () {
@@ -193,7 +210,10 @@
       }
 
       var step = CONFIG.gridSize(map.getZoom());
-      if (!force && viewportCovered(this, map, step)) return;
+      if (!force && viewportCovered(this, map, step)) {
+        positionExistingCanvas(this);
+        return;
+      }
       var state = buildRenderState(map, step);
       var values = sampleCanvasGrid(map, state, this._gridData, this._sampleWorkspace);
       this._drawContours(values, state);
@@ -205,7 +225,6 @@
       ensureCanvasSize(cv, state.cvWidth, state.cvHeight);
       L.DomUtil.setTransform(cv, state.pos, 1);
       this._renderZoom = state.renderZoom;
-      this._renderTopLeft = state.renderTopLeft;
       rememberRenderCoverage(this, state);
 
       var ctx = cv.getContext('2d');
@@ -294,7 +313,7 @@
       this._visible = opts.visible || false;
       this._debounceTimer = null;
       this._sampleWorkspace = {};
-      this._renderLayerBounds = null;
+      this._renderBounds = null;
       this._renderStep = null;
     },
 
@@ -304,23 +323,30 @@
       Object.assign(this._cv.style, { position: 'absolute', pointerEvents: 'none', zIndex: '200' });
       this._cv.style.willChange = 'transform';
       map.getPanes().overlayPane.appendChild(this._cv);
-      map.on('moveend zoomend resize', this._debouncedRender, this);
+      map.on('moveend zoomend', this._onMapSettled, this);
+      map.on('resize', this._debouncedRender, this);
       map.on('zoomanim', this._onZoomAnim, this);
       this._render(true);
     },
 
     onRemove: function (map) {
       L.DomUtil.remove(this._cv);
-      map.off('moveend zoomend resize', this._debouncedRender, this);
+      map.off('moveend zoomend', this._onMapSettled, this);
+      map.off('resize', this._debouncedRender, this);
       map.off('zoomanim', this._onZoomAnim, this);
     },
 
     _onZoomAnim: function (e) {
-      var map = this._map;
-      if (!this._renderZoom) return;
-      var scale = map.getZoomScale(e.zoom, this._renderZoom);
-      var newPos = map._latLngToNewLayerPoint(this._renderTopLeft, e.zoom, e.center);
-      L.DomUtil.setTransform(this._cv, newPos, scale);
+      animateCanvasZoom(this, e);
+    },
+
+    _onMapSettled: function () {
+      if (!this._map) return;
+      positionExistingCanvas(this);
+      var sz = this._map.getSize();
+      var step = Math.max(4, Math.floor(Math.min(sz.x, sz.y) / 180));
+      if (viewportCovered(this, this._map, step)) return;
+      this._debouncedRender();
     },
 
     _debouncedRender: function () {
@@ -348,7 +374,10 @@
 
       var sz = map.getSize();
       var step = Math.max(4, Math.floor(Math.min(sz.x, sz.y) / 180));
-      if (!force && viewportCovered(this, map, step)) return;
+      if (!force && viewportCovered(this, map, step)) {
+        positionExistingCanvas(this);
+        return;
+      }
       var state = buildRenderState(map, step);
       var values = sampleCanvasGrid(map, state, this._gridData, this._sampleWorkspace);
       this._drawGradient(values, state);
@@ -360,7 +389,6 @@
       ensureCanvasSize(cv, state.cvWidth, state.cvHeight);
       L.DomUtil.setTransform(cv, state.pos, 1);
       this._renderZoom = state.renderZoom;
-      this._renderTopLeft = state.renderTopLeft;
       rememberRenderCoverage(this, state);
 
       var ctx = cv.getContext('2d');
