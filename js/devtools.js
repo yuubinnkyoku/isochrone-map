@@ -150,13 +150,16 @@
       document.getElementById('dev-station').value = '';
       document.getElementById('dev-lat').value = '';
       document.getElementById('dev-lng').value = '';
-      this._showValidationSuccess('✓ 駅を追加しました: ' + station.station);
+      this._showValidationSuccess('✓ 駅を追加しました: ' + station.station + '。等時線・グラデーションへの反映には補間グリッドの再生成が必要です。');
     },
 
     _refreshAll: function () {
       var stations = DataManager.stations, meta = DataManager.meta;
-      if (app.contourOverlay) app.contourOverlay.setStations(stations);
-      if (app.gradientOverlay) app.gradientOverlay.setStations(stations);
+      // ContourOverlay / GradientOverlay now consume immutable precomputed
+      // grids, not station arrays. Updating station data in the browser must not
+      // call the removed setStations() API; regenerated grid files are required
+      // before interpolation surfaces can reflect the edit.
+      if (window.updateTimeRangeFromStations) updateTimeRangeFromStations(stations);
       if (app.renderer3d) app.renderer3d.setStations(stations);
       if (MarkerManager.refresh) MarkerManager.refresh(stations, meta);
       UIManager.updateDataInfo(meta, stations.length, DataManager.getMajorCount());
@@ -195,7 +198,7 @@
           if (data.meta) DataManager.meta = data.meta;
           DataManager.stations = data.stations;
           self._refreshAll();
-          self._showValidationSuccess('✓ ' + data.stations.length + '駅をインポートしました');
+          self._showValidationSuccess('✓ ' + data.stations.length + '駅をインポートしました。等時線・グラデーションへの反映には補間グリッドの再生成が必要です。');
         } catch (err) { self._showValidationErrors(['JSONパースエラー: ' + err.message]); }
       };
       reader.readAsText(file);
@@ -221,7 +224,7 @@
     _showValidationSuccess: function (msg) {
       var el = document.getElementById('dev-validation');
       if (el) el.innerHTML = '<div class="devtools-success">' + msg + '</div>';
-      var self = this; setTimeout(function () { self._runValidation(); }, 2000);
+      var self = this; setTimeout(function () { self._runValidation(); }, 4000);
     }
   };
 
