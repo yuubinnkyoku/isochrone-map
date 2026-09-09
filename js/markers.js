@@ -180,12 +180,20 @@
         if (s.route) {
           var routeParts = String(s.route).split(' → ');
           var routeLines = [];
-          for (var routeIndex = 0; routeIndex < routeParts.length; routeIndex += 2) {
-            var routeLine = routeParts.slice(routeIndex, routeIndex + 2).join(' → ');
-            if (routeIndex > 0) routeLine = '→ ' + routeLine;
-            routeLines.push(routeLine);
+          var routeLine = routeParts[0] || '';
+          for (var routeIndex = 1; routeIndex < routeParts.length; routeIndex++) {
+            var candidateLine = routeLine + ' → ' + routeParts[routeIndex];
+            if (candidateLine.length <= 24) {
+              routeLine = candidateLine;
+            } else {
+              routeLines.push(routeLine);
+              routeLine = '→ ' + routeParts[routeIndex];
+            }
           }
-          routeHtml = '<div class="tt-line tt-route">' + routeLines.join('<br>') + '</div>';
+          if (routeLine) routeLines.push(routeLine);
+          routeHtml = '<div class="tt-line tt-route">' + routeLines.map(function (line) {
+            return '<span class="tt-route-line">' + line + '</span>';
+          }).join('') + '</div>';
         }
         var routeUsageHtml = self._alternateRouteStatusHtml(s);
         var noteHtml = s.note ? '<div class="tt-detail">' + s.note + '</div>' : '';
