@@ -1,8 +1,15 @@
 // ============================================================
-// renderer.js — precomputed IDW grid -> contours / gradient Canvas
+// renderer.js — precomputed scalar grid -> Leaflet-managed canvas tiles
 // ============================================================
 (function () {
   'use strict';
+
+  var TILE_SIZE = 256;
+  var GRADIENT_ALPHA = Math.round(255 * 0.28);
+  var COLOR_LUT_STEPS_PER_MINUTE = 4;
+  var colorLut = null;
+  var tileQueue = [];
+  var queueScheduled = false;
 
   function buildContourBreaks(interval) {
     var breaks = [];
@@ -19,9 +26,6 @@
       breaks.push(value);
     }
 
-    // Early-morning / previous-day values can be many hours away from the
-    // normal school-morning scale. Keep those lines sparse so the map remains
-    // readable, while retaining the user-selected interval from 06:30 onward.
     if (min < denseMin) {
       var earlyFirst = Math.ceil(min / earlyInterval) * earlyInterval;
       for (var e = earlyFirst; e < denseMin; e += earlyInterval) addBreak(e);
@@ -30,9 +34,7 @@
     var first = Math.ceil(Math.max(min, denseMin) / interval) * interval;
     for (var m = first; m <= max; m += interval) addBreak(m);
 
-    // Ten-minute lines are the labelled visual anchors in the legend. Include
-    // them even when the selected interval (notably 3 minutes) is not a divisor
-    // of ten, otherwise the legend can advertise lines that are never drawn.
+    // Keep labelled 10-minute anchors present for intervals such as 3 minutes.
     var mainFirst = Math.ceil(Math.max(min, denseMin) / 10) * 10;
     for (var main = mainFirst; main <= max; main += 10) addBreak(main);
 
@@ -40,375 +42,480 @@
     return breaks;
   }
 
-  function buildRenderState(map, step) {
-    var sz = map.getSize();
-    var pad = CONFIG.canvasPadding;
-    var padX = Math.round(sz.x * pad);
-    var padY = Math.round(sz.y * pad);
-    var width = sz.x + padX * 2;
-    var height = sz.y + padY * 2;
-    var northWest = map.containerPointToLatLng([-padX, -padY]);
-    var southEast = map.containerPointToLatLng([sz.x + padX, sz.y + padY]);
-    return {
-      cvWidth: width,
-      cvHeight: height,
-      pos: map.latLngToLayerPoint(northWest),
-      renderZoom: map.getZoom(),
-      renderBounds: L.latLngBounds(northWest, southEast),
-      padX: padX,
-      padY: padY,
-      step: step,
-      cols: Math.ceil(width / step) + 1,
-      rows: Math.ceil(height / step) + 1,
-    };
+  function scheduleTileRender(fn) {
+    tileQueue.push(fn);
+    if (queueScheduled) return;
+    queueScheduled = true;
+    requestAnimationFrame(runTileQueue);
   }
 
-  function ensureTypedArray(workspace, key, Type, length) {
-    var current = workspace[key];
-    if (!current || current.length < length) {
-      current = new Type(length);
-      workspace[key] = current;
+  function runTileQueue() {
+    queueScheduled = false;
+    var started = performance.now();
+
+    // Keep a frame responsive even when several new tiles become visible at once.
+    while (tileQueue.length && performance.now() - started < 7) {
+      var fn = tileQueue.shift();
+      fn();
     }
-    return current;
+
+    if (tileQueue.length) {
+      queueScheduled = true;
+      requestAnimationFrame(runTileQueue);
+    }
   }
 
-  // Web Mercator is separable: longitude depends only on x and latitude only on y.
-  // Convert one coordinate per column/row, then bilinearly sample the static grid.
-  // Buffers are kept on each overlay and reused across renders to avoid repeated
-  // allocations and garbage collection during pan/zoom interactions.
-  function sampleCanvasGrid(map, state, gridData, workspace) {
-    var cols = state.cols;
-    var rows = state.rows;
-    var step = state.step;
-    var lngs = ensureTypedArray(workspace, 'lngs', Float64Array, cols);
-    var lats = ensureTypedArray(workspace, 'lats', Float64Array, rows);
-    var values = ensureTypedArray(workspace, 'values', Float32Array, cols * rows);
-    var c, r;
+  function worldSize(zoom) {
+    return TILE_SIZE * Math.pow(2, zoom);
+  }
 
-    for (c = 0; c < cols; c++) {
-      lngs[c] = map.containerPointToLatLng([c * step - state.padX, 0]).lng;
-    }
-    for (r = 0; r < rows; r++) {
-      lats[r] = map.containerPointToLatLng([0, r * step - state.padY]).lat;
-    }
+  function longitudeAtWorldX(x, zoom) {
+    return x / worldSize(zoom) * 360 - 180;
+  }
 
-    for (r = 0; r < rows; r++) {
-      var lat = lats[r];
-      var base = r * cols;
-      for (c = 0; c < cols; c++) {
-        var value = gridData.sample(lat, lngs[c]);
-        values[base + c] = value === null ? NaN : value;
+  function latitudeAtWorldY(y, zoom) {
+    var size = worldSize(zoom);
+    var n = Math.PI - 2 * Math.PI * y / size;
+    return Math.atan(Math.sinh(n)) * 180 / Math.PI;
+  }
+
+  function tileIntersectsGrid(meta, coords) {
+    if (!meta) return false;
+    var left = coords.x * TILE_SIZE;
+    var top = coords.y * TILE_SIZE;
+    var west = longitudeAtWorldX(left, coords.z);
+    var east = longitudeAtWorldX(left + TILE_SIZE, coords.z);
+    var north = latitudeAtWorldY(top, coords.z);
+    var south = latitudeAtWorldY(top + TILE_SIZE, coords.z);
+    return !(east < meta.west || west > meta.east || south > meta.north || north < meta.south);
+  }
+
+  function buildLongitudeAxis(meta, coords, count, step, centered) {
+    var indices = new Int32Array(count);
+    var fractions = new Float32Array(count);
+    var origin = coords.x * TILE_SIZE;
+
+    for (var i = 0; i < count; i++) {
+      var local = i * step + (centered ? step / 2 : 0);
+      var lng = longitudeAtWorldX(origin + local, coords.z);
+      var col = (lng - meta.west) / meta.lngStep;
+      if (col < 0 || col > meta.cols - 1) {
+        indices[i] = -1;
+        continue;
+      }
+      var c0 = Math.floor(col);
+      if (c0 >= meta.cols - 1) c0 = meta.cols - 2;
+      indices[i] = c0;
+      fractions[i] = Math.max(0, Math.min(1, col - c0));
+    }
+    return { indices: indices, fractions: fractions };
+  }
+
+  function buildLatitudeAxis(meta, coords, count, step, centered) {
+    var indices = new Int32Array(count);
+    var fractions = new Float32Array(count);
+    var origin = coords.y * TILE_SIZE;
+
+    for (var i = 0; i < count; i++) {
+      var local = i * step + (centered ? step / 2 : 0);
+      var lat = latitudeAtWorldY(origin + local, coords.z);
+      var row = (meta.north - lat) / meta.latStep;
+      if (row < 0 || row > meta.rows - 1) {
+        indices[i] = -1;
+        continue;
+      }
+      var r0 = Math.floor(row);
+      if (r0 >= meta.rows - 1) r0 = meta.rows - 2;
+      indices[i] = r0;
+      fractions[i] = Math.max(0, Math.min(1, row - r0));
+    }
+    return { indices: indices, fractions: fractions };
+  }
+
+  function samplePrepared(meta, values, row0, fr, col0, fc) {
+    if (row0 < 0 || col0 < 0) return NaN;
+    var base = row0 * meta.cols + col0;
+    var v00 = values[base];
+    var v10 = values[base + 1];
+    var v01 = values[base + meta.cols];
+    var v11 = values[base + meta.cols + 1];
+    if (v00 === meta.nodata || v10 === meta.nodata || v01 === meta.nodata || v11 === meta.nodata) return NaN;
+    var top = v00 + (v10 - v00) * fc;
+    var bottom = v01 + (v11 - v01) * fc;
+    return (top + (bottom - top) * fr) / meta.scale - (meta.offsetMinutes || 0);
+  }
+
+  function sampleTileGrid(gridData, coords, step) {
+    var meta = gridData.meta;
+    var values = gridData.values;
+    var count = Math.floor(TILE_SIZE / step) + 1;
+    var xAxis = buildLongitudeAxis(meta, coords, count, step, false);
+    var yAxis = buildLatitudeAxis(meta, coords, count, step, false);
+    var samples = new Float32Array(count * count);
+
+    for (var r = 0; r < count; r++) {
+      var r0 = yAxis.indices[r];
+      var fr = yAxis.fractions[r];
+      var rowBase = r * count;
+      for (var c = 0; c < count; c++) {
+        samples[rowBase + c] = samplePrepared(
+          meta,
+          values,
+          r0,
+          fr,
+          xAxis.indices[c],
+          xAxis.fractions[c]
+        );
       }
     }
-    return values;
+
+    return { values: samples, count: count, step: step };
   }
 
-  function ensureCanvasSize(cv, width, height) {
-    if (cv.width !== width) cv.width = width;
-    if (cv.height !== height) cv.height = height;
+  function ensureColorLut() {
+    var first = CONFIG.colorStops[0].min;
+    var last = CONFIG.colorStops[CONFIG.colorStops.length - 1].min;
+    var key = first + ':' + last + ':' + COLOR_LUT_STEPS_PER_MINUTE;
+    if (colorLut && colorLut.key === key) return colorLut;
+
+    var count = Math.round((last - first) * COLOR_LUT_STEPS_PER_MINUTE) + 1;
+    var rgba = new Uint8ClampedArray(count * 4);
+    for (var i = 0; i < count; i++) {
+      var minute = first + i / COLOR_LUT_STEPS_PER_MINUTE;
+      var color = minutesToColor(minute);
+      var j = i * 4;
+      rgba[j] = color[0];
+      rgba[j + 1] = color[1];
+      rgba[j + 2] = color[2];
+      rgba[j + 3] = GRADIENT_ALPHA;
+    }
+
+    colorLut = { key: key, min: first, max: last, rgba: rgba, count: count };
+    return colorLut;
   }
 
-  // Coverage must be remembered in geographic coordinates. Leaflet changes the
-  // layer-point origin after a completed pan, so comparing layer-point rectangles
-  // from different view states can incorrectly claim a cached canvas is aligned.
-  function viewportCovered(layer, map, step) {
-    var bounds = layer._renderBounds;
-    if (!bounds || layer._renderZoom !== map.getZoom() || layer._renderStep !== step) return false;
-    var view = map.getBounds();
-    return bounds.contains(view.getNorthWest()) && bounds.contains(view.getSouthEast());
+  function writeGradientPixel(data, offset, minute, lut) {
+    var index;
+    if (minute <= lut.min) index = 0;
+    else if (minute >= lut.max) index = lut.count - 1;
+    else index = Math.round((minute - lut.min) * COLOR_LUT_STEPS_PER_MINUTE);
+    var source = index * 4;
+    data[offset] = lut.rgba[source];
+    data[offset + 1] = lut.rgba[source + 1];
+    data[offset + 2] = lut.rgba[source + 2];
+    data[offset + 3] = lut.rgba[source + 3];
   }
 
-  function rememberRenderCoverage(layer, state) {
-    layer._renderBounds = state.renderBounds;
-    layer._renderStep = state.step;
+  function drawGradientTile(tile, gridData, coords) {
+    var meta = gridData.meta;
+    if (!tileIntersectsGrid(meta, coords)) return;
+
+    var ctx = tile.getContext('2d', { alpha: true });
+    var image = ctx.createImageData(TILE_SIZE, TILE_SIZE);
+    var data = image.data;
+    var xAxis = buildLongitudeAxis(meta, coords, TILE_SIZE, 1, true);
+    var yAxis = buildLatitudeAxis(meta, coords, TILE_SIZE, 1, true);
+    var lut = ensureColorLut();
+
+    for (var y = 0; y < TILE_SIZE; y++) {
+      var r0 = yAxis.indices[y];
+      var fr = yAxis.fractions[y];
+      var pixelBase = y * TILE_SIZE * 4;
+      for (var x = 0; x < TILE_SIZE; x++) {
+        var col0 = xAxis.indices[x];
+        if (r0 < 0 || col0 < 0) continue;
+        var minute = samplePrepared(meta, gridData.values, r0, fr, col0, xAxis.fractions[x]);
+        if (!Number.isFinite(minute)) continue;
+        writeGradientPixel(data, pixelBase + x * 4, minute, lut);
+      }
+    }
+
+    ctx.putImageData(image, 0, 0);
   }
 
-  // Re-anchor the already-rendered bitmap immediately after Leaflet commits a
-  // pan/zoom. Heavy resampling can remain debounced, but the visible overlay must
-  // never spend that debounce interval at an old layer-point origin or scale.
-  function positionExistingCanvas(layer) {
-    if (!layer._cv || !layer._map || !layer._renderBounds || !Number.isFinite(layer._renderZoom)) return;
-    var map = layer._map;
-    var topLeft = map.latLngToLayerPoint(layer._renderBounds.getNorthWest());
-    var scale = map.getZoomScale(map.getZoom(), layer._renderZoom);
-    L.DomUtil.setTransform(layer._cv, topLeft, scale);
+  function contourStepForZoom(zoom) {
+    // Tile edges must land on the same sample lattice. Both values divide 256,
+    // so neighbouring tiles share identical boundary samples and never drift.
+    return zoom <= 10 ? 8 : 4;
   }
 
-  function animateCanvasZoom(layer, e) {
-    if (!layer._cv || !layer._map || !layer._renderBounds || !Number.isFinite(layer._renderZoom)) return;
-    var scale = layer._map.getZoomScale(e.zoom, layer._renderZoom);
-    var newPos = layer._map._latLngToNewLayerPoint(layer._renderBounds.getNorthWest(), e.zoom, e.center);
-    L.DomUtil.setTransform(layer._cv, newPos, scale);
+  function interpolateEdge(level, a, b) {
+    var den = b - a;
+    if (Math.abs(den) < 1e-9) return 0.5;
+    return Math.max(0, Math.min(1, (level - a) / den));
   }
 
-  var ContourOverlay = L.Layer.extend({
-    options: { pane: 'overlayPane' },
+  function shouldLabelContour(coords, level) {
+    var divisor = coords.z <= 10 ? 2 : (coords.z <= 12 ? 3 : 4);
+    var hash = Math.abs(coords.x * 31 + coords.y * 17 + Math.round(level) * 13);
+    return hash % divisor === 0;
+  }
+
+  function appendContourSegment(ctx, a, b, candidate) {
+    ctx.moveTo(a[0], a[1]);
+    ctx.lineTo(b[0], b[1]);
+    if (!candidate) return;
+
+    var x = (a[0] + b[0]) / 2;
+    var y = (a[1] + b[1]) / 2;
+    if (x < 28 || x > TILE_SIZE - 28 || y < 16 || y > TILE_SIZE - 16) return;
+    var dx = x - TILE_SIZE / 2;
+    var dy = y - TILE_SIZE / 2;
+    var distance = dx * dx + dy * dy;
+    if (distance < candidate.distance) {
+      candidate.distance = distance;
+      candidate.x = x;
+      candidate.y = y;
+    }
+  }
+
+  function drawContourLabel(ctx, candidate, level, color) {
+    if (!candidate || !Number.isFinite(candidate.x)) return;
+    var text = minutesToTimeStr(level);
+    ctx.save();
+    ctx.font = '600 11px "JetBrains Mono", monospace';
+    ctx.textBaseline = 'alphabetic';
+    var width = ctx.measureText(text).width;
+    var x = Math.max(3, Math.min(TILE_SIZE - width - 7, candidate.x - width / 2));
+    var y = Math.max(13, Math.min(TILE_SIZE - 4, candidate.y + 4));
+    var background = getComputedStyle(document.documentElement).getPropertyValue('--contour-label-bg').trim() || 'rgba(255,255,255,0.82)';
+    ctx.fillStyle = background;
+    ctx.fillRect(x - 3, y - 11, width + 6, 14);
+    ctx.fillStyle = colorToCSS(color, 1);
+    ctx.fillText(text, x, y);
+    ctx.restore();
+  }
+
+  function drawContourTile(tile, gridData, coords, interval) {
+    var meta = gridData.meta;
+    if (!tileIntersectsGrid(meta, coords)) return;
+
+    var step = contourStepForZoom(coords.z);
+    var sampled = sampleTileGrid(gridData, coords, step);
+    var grid = sampled.values;
+    var count = sampled.count;
+    var ctx = tile.getContext('2d', { alpha: true });
+    var breaks = buildContourBreaks(interval);
+    var denseMin = CONFIG.timeRange.denseContourMin || CONFIG.timeRange.contourMin;
+
+    ctx.lineCap = 'butt';
+    ctx.lineJoin = 'round';
+
+    for (var bi = 0; bi < breaks.length; bi++) {
+      var level = breaks[bi];
+      var isEarly = level < denseMin;
+      var isMain = isEarly ? (level % 60 === 0) : (level % 10 === 0);
+      var color = minutesToColor(level);
+      ctx.strokeStyle = colorToCSS(color, isMain ? 0.9 : 0.45);
+      ctx.lineWidth = isMain ? 3 : 1.2;
+      ctx.beginPath();
+      var labelCandidate = isMain && shouldLabelContour(coords, level) ? { distance: Infinity, x: NaN, y: NaN } : null;
+
+      for (var r = 0; r < count - 1; r++) {
+        var row0 = r * count;
+        var row1 = (r + 1) * count;
+        var y0 = r * step;
+        for (var c = 0; c < count - 1; c++) {
+          var v00 = grid[row0 + c];
+          var v10 = grid[row0 + c + 1];
+          var v01 = grid[row1 + c];
+          var v11 = grid[row1 + c + 1];
+          if (!Number.isFinite(v00) || !Number.isFinite(v10) || !Number.isFinite(v01) || !Number.isFinite(v11)) continue;
+
+          var code = (v00 >= level ? 8 : 0) |
+            (v10 >= level ? 4 : 0) |
+            (v11 >= level ? 2 : 0) |
+            (v01 >= level ? 1 : 0);
+          if (code === 0 || code === 15) continue;
+
+          var x0 = c * step;
+          var top = [x0 + interpolateEdge(level, v00, v10) * step, y0];
+          var bottom = [x0 + interpolateEdge(level, v01, v11) * step, y0 + step];
+          var left = [x0, y0 + interpolateEdge(level, v00, v01) * step];
+          var right = [x0 + step, y0 + interpolateEdge(level, v10, v11) * step];
+
+          switch (code) {
+            case 1: case 14:
+              appendContourSegment(ctx, left, bottom, labelCandidate); break;
+            case 2: case 13:
+              appendContourSegment(ctx, bottom, right, labelCandidate); break;
+            case 3: case 12:
+              appendContourSegment(ctx, left, right, labelCandidate); break;
+            case 4: case 11:
+              appendContourSegment(ctx, top, right, labelCandidate); break;
+            case 5:
+              appendContourSegment(ctx, left, top, labelCandidate);
+              appendContourSegment(ctx, bottom, right, labelCandidate); break;
+            case 6: case 9:
+              appendContourSegment(ctx, top, bottom, labelCandidate); break;
+            case 7: case 8:
+              appendContourSegment(ctx, left, top, labelCandidate); break;
+            case 10:
+              appendContourSegment(ctx, top, right, labelCandidate);
+              appendContourSegment(ctx, left, bottom, labelCandidate); break;
+          }
+        }
+      }
+      ctx.stroke();
+      drawContourLabel(ctx, labelCandidate, level, color);
+    }
+  }
+
+  function makeTileCanvas(className) {
+    var tile = L.DomUtil.create('canvas', className);
+    tile.width = TILE_SIZE;
+    tile.height = TILE_SIZE;
+    tile.style.width = TILE_SIZE + 'px';
+    tile.style.height = TILE_SIZE + 'px';
+    tile.style.pointerEvents = 'none';
+    return tile;
+  }
+
+  function finishTile(done, error, tile) {
+    if (typeof done === 'function') done(error || null, tile);
+  }
+
+  function syncLayerVisibility(layer) {
+    var container = layer.getContainer && layer.getContainer();
+    if (container) container.style.display = layer._visible ? '' : 'none';
+  }
+
+  var ContourOverlay = L.GridLayer.extend({
+    options: {
+      pane: 'overlayPane',
+      tileSize: TILE_SIZE,
+      zIndex: 250,
+      opacity: 1,
+      noWrap: true,
+      keepBuffer: 2,
+      updateWhenIdle: true,
+      updateWhenZooming: false,
+    },
 
     initialize: function (opts) {
+      opts = opts || {};
+      L.setOptions(this, opts);
       this._gridData = opts.grid || null;
       this._interval = opts.interval || 5;
       this._visible = opts.visible !== false;
-      this._debounceTimer = null;
-      this._sampleWorkspace = {};
-      this._renderBounds = null;
-      this._renderStep = null;
+      this._generation = 0;
     },
 
     onAdd: function (map) {
-      this._map = map;
-      this._cv = L.DomUtil.create('canvas', 'leaflet-layer leaflet-zoom-animated');
-      Object.assign(this._cv.style, { position: 'absolute', pointerEvents: 'none', zIndex: '250' });
-      this._cv.style.willChange = 'transform';
-      map.getPanes().overlayPane.appendChild(this._cv);
-      map.on('moveend zoomend', this._onMapSettled, this);
-      map.on('resize', this._debouncedRender, this);
-      map.on('zoomanim', this._onZoomAnim, this);
-      this._render(true);
+      L.GridLayer.prototype.onAdd.call(this, map);
+      syncLayerVisibility(this);
     },
 
-    onRemove: function (map) {
-      L.DomUtil.remove(this._cv);
-      map.off('moveend zoomend', this._onMapSettled, this);
-      map.off('resize', this._debouncedRender, this);
-      map.off('zoomanim', this._onZoomAnim, this);
-    },
-
-    _onZoomAnim: function (e) {
-      animateCanvasZoom(this, e);
-    },
-
-    _onMapSettled: function () {
-      if (!this._map) return;
-      positionExistingCanvas(this);
-      var step = CONFIG.gridSize(this._map.getZoom());
-      if (viewportCovered(this, this._map, step)) return;
-      this._debouncedRender();
-    },
-
-    _debouncedRender: function () {
+    createTile: function (coords, done) {
+      var tile = makeTileCanvas('isochrone-contour-tile');
+      var generation = this._generation;
       var self = this;
-      if (this._debounceTimer) clearTimeout(this._debounceTimer);
-      this._debounceTimer = setTimeout(function () { self._render(false); }, CONFIG.renderDebounceMs);
-    },
 
-    setVisible: function (v) { this._visible = v; this._render(true); },
-    setInterval: function (interval) { this._interval = interval; this._render(true); },
-    setGrid: function (grid) { this._gridData = grid; this._render(true); },
-    refresh: function () { if (this._map) this._render(true); },
-
-    _clear: function () {
-      if (!this._cv) return;
-      this._cv.getContext('2d').clearRect(0, 0, this._cv.width, this._cv.height);
-    },
-
-    _render: function (force) {
-      var map = this._map;
-      if (!map) return;
-      if (!this._visible || !this._gridData || !this._gridData.ready) {
-        this._clear();
-        return;
-      }
-
-      var step = CONFIG.gridSize(map.getZoom());
-      if (!force && viewportCovered(this, map, step)) {
-        positionExistingCanvas(this);
-        return;
-      }
-      var state = buildRenderState(map, step);
-      var values = sampleCanvasGrid(map, state, this._gridData, this._sampleWorkspace);
-      this._drawContours(values, state);
-    },
-
-    _drawContours: function (grid, state) {
-      if (!this._visible || !this._map) return;
-      var cv = this._cv;
-      ensureCanvasSize(cv, state.cvWidth, state.cvHeight);
-      L.DomUtil.setTransform(cv, state.pos, 1);
-      this._renderZoom = state.renderZoom;
-      rememberRenderCoverage(this, state);
-
-      var ctx = cv.getContext('2d');
-      ctx.clearRect(0, 0, cv.width, cv.height);
-      var rows = state.rows, cols = state.cols, cell = state.step;
-      var breaks = buildContourBreaks(this._interval);
-      var r, c;
-
-      for (var bi = 0; bi < breaks.length; bi++) {
-        var level = breaks[bi];
-        var col = minutesToColor(level);
-        var denseMin = CONFIG.timeRange.denseContourMin || CONFIG.timeRange.contourMin;
-        var isEarly = level < denseMin;
-        var isMain = isEarly ? (level % 60 === 0) : (level % 10 === 0);
-        ctx.strokeStyle = colorToCSS(col, isMain ? 0.9 : 0.45);
-        ctx.lineWidth = isMain ? 3 : 1.2;
-        ctx.beginPath();
-
-        for (r = 0; r < rows - 1; r++) {
-          for (c = 0; c < cols - 1; c++) {
-            var v00 = grid[r * cols + c], v10 = grid[r * cols + c + 1];
-            var v01 = grid[(r + 1) * cols + c], v11 = grid[(r + 1) * cols + c + 1];
-            if (!Number.isFinite(v00) || !Number.isFinite(v10) || !Number.isFinite(v01) || !Number.isFinite(v11)) continue;
-            var ci = (v00 >= level ? 8 : 0) | (v10 >= level ? 4 : 0) | (v11 >= level ? 2 : 0) | (v01 >= level ? 1 : 0);
-            if (ci === 0 || ci === 15) continue;
-
-            var x0 = c * cell, y0 = r * cell;
-            var lx = function (va, vb) { return x0 + (level - va) / (vb - va) * cell; };
-            var ly = function (va, vb) { return y0 + (level - va) / (vb - va) * cell; };
-            var tTop = [lx(v00, v10), y0];
-            var tBot = [lx(v01, v11), y0 + cell];
-            var tLft = [x0, ly(v00, v01)];
-            var tRgt = [x0 + cell, ly(v10, v11)];
-            var segs = [];
-
-            switch (ci) {
-              case 1: case 14: segs.push([tLft, tBot]); break;
-              case 2: case 13: segs.push([tBot, tRgt]); break;
-              case 3: case 12: segs.push([tLft, tRgt]); break;
-              case 4: case 11: segs.push([tTop, tRgt]); break;
-              case 5: segs.push([tLft, tTop], [tBot, tRgt]); break;
-              case 6: case 9: segs.push([tTop, tBot]); break;
-              case 7: case 8: segs.push([tLft, tTop]); break;
-              case 10: segs.push([tTop, tRgt], [tLft, tBot]); break;
-            }
-            for (var si = 0; si < segs.length; si++) {
-              ctx.moveTo(segs[si][0][0], segs[si][0][1]);
-              ctx.lineTo(segs[si][1][0], segs[si][1][1]);
-            }
+      scheduleTileRender(function () {
+        try {
+          if (generation === self._generation && self._visible && self._gridData && self._gridData.ready) {
+            drawContourTile(tile, self._gridData, coords, self._interval);
           }
+          finishTile(done, null, tile);
+        } catch (err) {
+          console.error('等時線タイル描画エラー:', err);
+          finishTile(done, err, tile);
         }
-        ctx.stroke();
+      });
+      return tile;
+    },
 
-        if (isMain) {
-          var txt = minutesToTimeStr(level);
-          ctx.font = '600 11px "JetBrains Mono", monospace';
-          var placed = 0;
-          var rowStep = Math.max(1, Math.floor(rows / 4));
-          for (r = rowStep; r < rows - 1 && placed < 3; r += rowStep) {
-            for (c = 0; c < cols - 1 && placed < 3; c++) {
-              var v = grid[r * cols + c], vn = grid[r * cols + c + 1];
-              if (!Number.isFinite(v) || !Number.isFinite(vn)) continue;
-              if ((v < level) !== (vn < level)) {
-                var px = c * cell, py = r * cell;
-                var tw = ctx.measureText(txt).width;
-                var labelBg = getComputedStyle(document.documentElement).getPropertyValue('--contour-label-bg').trim() || 'rgba(255,255,255,0.82)';
-                ctx.fillStyle = labelBg;
-                ctx.fillRect(px - 2, py - 11, tw + 4, 14);
-                ctx.fillStyle = colorToCSS(col, 1);
-                ctx.fillText(txt, px, py);
-                placed++;
-                c += Math.floor(cols / 4);
-              }
-            }
-          }
-        }
-      }
-    }
+    _invalidateTiles: function () {
+      this._generation++;
+      if (this._map) this.redraw();
+    },
+
+    setVisible: function (visible) {
+      this._visible = !!visible;
+      this._generation++;
+      syncLayerVisibility(this);
+      if (this._visible && this._map) this.redraw();
+    },
+
+    setInterval: function (interval) {
+      this._interval = interval;
+      this._invalidateTiles();
+    },
+
+    setGrid: function (grid) {
+      this._gridData = grid;
+      this._invalidateTiles();
+    },
+
+    refresh: function () {
+      this._invalidateTiles();
+    },
   });
 
-  var GradientOverlay = L.Layer.extend({
-    options: { pane: 'overlayPane' },
+  var GradientOverlay = L.GridLayer.extend({
+    options: {
+      pane: 'overlayPane',
+      tileSize: TILE_SIZE,
+      zIndex: 200,
+      opacity: 1,
+      noWrap: true,
+      keepBuffer: 2,
+      updateWhenIdle: true,
+      updateWhenZooming: false,
+    },
 
     initialize: function (opts) {
+      opts = opts || {};
+      L.setOptions(this, opts);
       this._gridData = opts.grid || null;
-      this._visible = opts.visible || false;
-      this._debounceTimer = null;
-      this._sampleWorkspace = {};
-      this._renderBounds = null;
-      this._renderStep = null;
+      this._visible = !!opts.visible;
+      this._generation = 0;
     },
 
     onAdd: function (map) {
-      this._map = map;
-      this._cv = L.DomUtil.create('canvas', 'leaflet-layer leaflet-zoom-animated');
-      Object.assign(this._cv.style, { position: 'absolute', pointerEvents: 'none', zIndex: '200' });
-      this._cv.style.willChange = 'transform';
-      map.getPanes().overlayPane.appendChild(this._cv);
-      map.on('moveend zoomend', this._onMapSettled, this);
-      map.on('resize', this._debouncedRender, this);
-      map.on('zoomanim', this._onZoomAnim, this);
-      this._render(true);
+      L.GridLayer.prototype.onAdd.call(this, map);
+      syncLayerVisibility(this);
     },
 
-    onRemove: function (map) {
-      L.DomUtil.remove(this._cv);
-      map.off('moveend zoomend', this._onMapSettled, this);
-      map.off('resize', this._debouncedRender, this);
-      map.off('zoomanim', this._onZoomAnim, this);
-    },
-
-    _onZoomAnim: function (e) {
-      animateCanvasZoom(this, e);
-    },
-
-    _onMapSettled: function () {
-      if (!this._map) return;
-      positionExistingCanvas(this);
-      var sz = this._map.getSize();
-      var step = Math.max(4, Math.floor(Math.min(sz.x, sz.y) / 180));
-      if (viewportCovered(this, this._map, step)) return;
-      this._debouncedRender();
-    },
-
-    _debouncedRender: function () {
+    createTile: function (coords, done) {
+      var tile = makeTileCanvas('isochrone-gradient-tile');
+      var generation = this._generation;
       var self = this;
-      if (this._debounceTimer) clearTimeout(this._debounceTimer);
-      this._debounceTimer = setTimeout(function () { self._render(false); }, CONFIG.renderDebounceMs);
-    },
 
-    setVisible: function (v) { this._visible = v; this._render(true); },
-    setGrid: function (grid) { this._gridData = grid; this._render(true); },
-    refresh: function () { if (this._map) this._render(true); },
-
-    _clear: function () {
-      if (!this._cv) return;
-      this._cv.getContext('2d').clearRect(0, 0, this._cv.width, this._cv.height);
-    },
-
-    _render: function (force) {
-      var map = this._map;
-      if (!map) return;
-      if (!this._visible || !this._gridData || !this._gridData.ready) {
-        this._clear();
-        return;
-      }
-
-      var sz = map.getSize();
-      var step = Math.max(4, Math.floor(Math.min(sz.x, sz.y) / 180));
-      if (!force && viewportCovered(this, map, step)) {
-        positionExistingCanvas(this);
-        return;
-      }
-      var state = buildRenderState(map, step);
-      var values = sampleCanvasGrid(map, state, this._gridData, this._sampleWorkspace);
-      this._drawGradient(values, state);
-    },
-
-    _drawGradient: function (values, state) {
-      if (!this._visible || !this._map) return;
-      var cv = this._cv;
-      ensureCanvasSize(cv, state.cvWidth, state.cvHeight);
-      L.DomUtil.setTransform(cv, state.pos, 1);
-      this._renderZoom = state.renderZoom;
-      rememberRenderCoverage(this, state);
-
-      var ctx = cv.getContext('2d');
-      ctx.clearRect(0, 0, cv.width, cv.height);
-      var step = state.step;
-      var cols = state.cols;
-      var rows = state.rows;
-
-      for (var r = 0; r < rows; r++) {
-        var y = r * step;
-        for (var c = 0; c < cols; c++) {
-          var x = c * step;
-          var val = values[r * cols + c];
-          if (Number.isFinite(val)) {
-            ctx.fillStyle = colorToCSS(minutesToColor(val), 0.28);
-            ctx.fillRect(x, y, step, step);
+      scheduleTileRender(function () {
+        try {
+          if (generation === self._generation && self._visible && self._gridData && self._gridData.ready) {
+            drawGradientTile(tile, self._gridData, coords);
           }
+          finishTile(done, null, tile);
+        } catch (err) {
+          console.error('グラデーションタイル描画エラー:', err);
+          finishTile(done, err, tile);
         }
-      }
-    }
+      });
+      return tile;
+    },
+
+    _invalidateTiles: function () {
+      this._generation++;
+      if (this._map) this.redraw();
+    },
+
+    setVisible: function (visible) {
+      this._visible = !!visible;
+      this._generation++;
+      syncLayerVisibility(this);
+      if (this._visible && this._map) this.redraw();
+    },
+
+    setGrid: function (grid) {
+      this._gridData = grid;
+      this._invalidateTiles();
+    },
+
+    refresh: function () {
+      this._invalidateTiles();
+    },
   });
 
   window.ContourOverlay = ContourOverlay;
