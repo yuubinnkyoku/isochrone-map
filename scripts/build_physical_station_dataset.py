@@ -1,11 +1,15 @@
 #!/usr/bin/env python3
 """Build stations.json from the complete physical-point Yahoo audit.
 
-Every distinct N02 physical station point becomes its own map record.  The value used
+Every distinct N02 physical station point becomes its own map record. The value used
 for IDW is the best Yahoo route from that exact coordinate, so a point remains a valid
 spatial sample even when its best journey walks to another component or another nearby
-station before boarding.  The first-rail classification from the audit is retained as
-diagnostic provenance, not as a reason to discard the recomputed point.
+station before boarding.
+
+The saved audit is treated as raw Yahoo evidence. Route summaries and first-rail
+classifications are always recomputed with the current parser instead of trusting the
+classification fields embedded in an older audit artifact. This lets parser bugs be
+fixed without issuing another 1563 Yahoo requests.
 """
 from __future__ import annotations
 
@@ -16,7 +20,7 @@ import re
 from collections import Counter, defaultdict
 from pathlib import Path
 
-from audit_physical_station_points_full import is_bus_service, is_rail_service
+from audit_physical_station_points_full import classify_route1, is_bus_service, is_rail_service
 
 TARGET_MINUTES = 8 * 60 + 18
 
@@ -27,7 +31,7 @@ def hhmm_minutes(value: str | None) -> int | None:
     h, m = map(int, value.split(':'))
     raw = h * 60 + m
     # In an arrival-by-08:18 search, a displayed clock time after 08:18 belongs to
-    # the previous day.  Store it on the continuous timeline used by the map.
+    # the previous day. Store it on the continuous timeline used by the map.
     return raw - 1440 if raw > TARGET_MINUTES else raw
 
 
@@ -76,13 +80,7 @@ def line_display(lines: list[str], operators: list[str]) -> str:
 
 
 def build_display_names(rows: list[dict], grouped: dict[str, list[dict]]) -> dict[str, str]:
-    """Return globally unique, readable labels for every physical station point.
-
-    A line qualifier is added not only when one logical transfer station has multiple
-    physical components, but also when two distinct logical stations share the same
-    passenger-facing name (for example the two 弘明寺 stations).  Remaining collisions
-    receive the N02 station code as a deterministic final disambiguator.
-    """
+    """Return globally unique, readable labels for every physical station point."""
     logical_name_counts = Counter()
     for items in grouped.values():
         if items:
@@ -111,11 +109,22 @@ def build_display_names(rows: list[dict], grouped: dict[str, list[dict]]) -> dic
             code = '+'.join(row.get('n02StationCodes') or [])
             result[row_id] = f'{candidate} [{code}]'
 
-    # A physical station record must always be independently addressable in the UI.
     if len(set(result.values())) != len(rows):
         collisions = [name for name, count in Counter(result.values()).items() if count > 1]
         raise SystemExit(f'duplicate physical station display names: {collisions[:20]}')
     return result
+
+
+def parser_signature(row: dict) -> tuple:
+    first = row.get('firstRail') or {}
+    return (
+        row.get('classification'),
+        row.get('reason'),
+        first.get('service'),
+        first.get('boardStation'),
+        first.get('sameLogicalStationBase'),
+        first.get('lineMatchesPhysicalPoint'),
+    )
 
 
 def main() -> None:
@@ -136,12 +145,19 @@ def main() -> None:
         raise SystemExit(f'physical audit coverage mismatch rows={len(rows)} expected={expected}')
     if len({r.get('id') for r in rows}) != expected:
         raise SystemExit('duplicate/missing physical point IDs')
-    bad = [
-        r for r in rows
-        if r.get('error') or not r.get('originVerified') or r.get('classification') not in {'keep', 'exclude'}
-    ]
+    bad = [r for r in rows if r.get('error') or not r.get('originVerified') or not r.get('route1')]
     if bad:
-        raise SystemExit(f'unresolved physical points: {len(bad)}')
+        raise SystemExit(f'unresolved raw physical points: {len(bad)}')
+
+    reparsed: dict[str, dict] = {}
+    legacy_parser_changes = 0
+    for r in rows:
+        parsed = classify_route1(r, r.get('route1') or [])
+        if parsed.get('classification') not in {'keep', 'exclude'}:
+            raise SystemExit(f"route parser unresolved for {r.get('id')}: {parsed.get('reason')}")
+        reparsed[str(r['id'])] = parsed
+        if parser_signature(r) != parser_signature(parsed):
+            legacy_parser_changes += 1
 
     old_by_id = {s['id']: s for s in old['stations']}
     grouped: dict[str, list[dict]] = defaultdict(list)
@@ -166,6 +182,7 @@ def main() -> None:
     compact_rows = []
     reason_counts = Counter()
     for r in sorted(rows, key=lambda x: int(x['globalIndex'])):
+        parsed = reparsed[str(r['id'])]
         source = old_by_id[r['logicalStationId']]
         minutes = hhmm_minutes(r.get('departure'))
         arrival_minutes = hhmm_minutes(r.get('arrival'))
@@ -174,8 +191,15 @@ def main() -> None:
         if arrival_minutes < minutes:
             arrival_minutes += 1440
 
-        reason_counts[str(r.get('reason'))] += 1
+        reason_counts[str(parsed.get('reason'))] += 1
         line = line_display(r.get('lines') or [], r.get('operators') or [])
+        route = route_summary(r.get('route1') or [])
+        if not route:
+            raise SystemExit(f"empty route summary for {r['id']}")
+        first_rail = parsed.get('firstRail')
+        if first_rail and first_rail.get('service') not in route:
+            raise SystemExit(f"first rail missing from route summary for {r['id']}: {first_rail.get('service')}")
+
         station = {
             'id': r['id'],
             'station': display_names[r['id']],
@@ -188,21 +212,18 @@ def main() -> None:
             'minutes': minutes,
             'departureDisplay': ('前日' + r['departure']) if minutes < 0 else r['departure'],
             'line': line,
-            'route': route_summary(r.get('route1') or []),
+            'route': route,
             'searchDate': '2026-08-28',
             'outside': bool(source.get('outside', False)),
             'duration': arrival_minutes - minutes,
             'major': bool(source.get('major', False)),
             'labelPrimary': r['id'] == primary_ids[r['logicalStationId']],
-            # All exact-point results are valid spatial samples.  The old exclusion
-            # policy was needed only because station-name search could attach a value
-            # to the wrong physical point.
             'excludeFromIdw': False,
             'physicalPointAudit': {
-                'routeSelectionClassification': r['classification'],
-                'reason': r.get('reason'),
+                'routeSelectionClassification': parsed['classification'],
+                'reason': parsed.get('reason'),
                 'originDistanceM': r.get('originDistanceM'),
-                'firstRail': r.get('firstRail'),
+                'firstRail': parsed.get('firstRail'),
             },
         }
         for key in ('passengers', 'passengerYear', 'passengerRank'):
@@ -223,15 +244,15 @@ def main() -> None:
             'arrival': r.get('arrival'),
             'minutes': minutes,
             'originDistanceM': r.get('originDistanceM'),
-            'routeSelectionClassification': r['classification'],
-            'reason': r.get('reason'),
-            'firstRail': r.get('firstRail'),
-            'hasBus': r.get('hasBus', False),
+            'routeSelectionClassification': parsed['classification'],
+            'reason': parsed.get('reason'),
+            'firstRail': parsed.get('firstRail'),
+            'hasBus': parsed.get('hasBus', False),
         })
 
     meta = dict(old['meta'])
     meta['version'] = 3
-    meta['lastUpdated'] = '2026-09-08'
+    meta['lastUpdated'] = '2026-09-09'
     meta['stationModel'] = {
         'logicalStations': proposal['meta']['logicalStations'],
         'physicalPoints': expected,
@@ -254,6 +275,8 @@ def main() -> None:
             'searchDate': '2026-08-28',
             'targetArrival': '08:18',
             'originVerified': expected,
+            'routeParserVersion': 2,
+            'savedAuditRowsReclassified': legacy_parser_changes,
             'routeSelectionDiagnostics': dict(sorted(reason_counts.items())),
         },
     }
@@ -267,6 +290,8 @@ def main() -> None:
         'originVerified': expected,
         'includedPhysicalPoints': expected,
         'excludedPhysicalPoints': 0,
+        'routeParserVersion': 2,
+        'savedAuditRowsReclassified': legacy_parser_changes,
         'routeSelectionDiagnostics': dict(sorted(reason_counts.items())),
     }
     if args.compact_audit_output:
@@ -275,13 +300,14 @@ def main() -> None:
             encoding='utf-8',
         )
     print(json.dumps(compact_summary, ensure_ascii=False, indent=2))
-    for name in ('熊野前', '東京', '武蔵小杉', '池袋', '両国', '弘明寺', '早稲田(都電)'):
+    for name in ('浦和美園', '熊野前', '東京', '武蔵小杉', '池袋', '両国', '弘明寺', '早稲田(都電)'):
         for s in stations:
             if s['logicalStation'] == name:
                 first = (s['physicalPointAudit'].get('firstRail') or {})
                 print(
                     'CHECK', name, s['id'], s['station'], s['line'], s['departureDisplay'],
-                    s['physicalPointAudit']['reason'], first.get('boardStation'), first.get('service')
+                    s['physicalPointAudit']['reason'], first.get('boardStation'), first.get('service'),
+                    'route=', s['route']
                 )
 
 

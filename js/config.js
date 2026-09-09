@@ -10,7 +10,7 @@
     defaultZoom: 11,
 
     // stations.json cache-buster. Bump when station data changes.
-    dataVersion: 22,
+    dataVersion: 23,
     // Precomputed grid cache-busters.
     gridVersion: 12,
     accessGridVersion: 3,
