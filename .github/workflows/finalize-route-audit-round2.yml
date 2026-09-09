@@ -1,0 +1,306 @@
+name: Finalize second-pass route audit fixes
+
+on:
+  push:
+    branches: [deep-route-audit-round2]
+    paths:
+      - .github/workflows/finalize-route-audit-round2.yml
+
+permissions:
+  contents: write
+
+env:
+  AUDIT_RUN_ID: '34202370240'
+  LOGICAL_SOURCE_COMMIT: 'e7e95ab4117be8288606d2c4d4db90b674b37402'
+
+jobs:
+  finalize:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Bump parser and cache versions
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          p = Path('scripts/build_physical_station_dataset.py')
+          text = p.read_text(encoding='utf-8')
+          assert text.count("'routeParserVersion': 2") == 2
+          text = text.replace("'routeParserVersion': 2", "'routeParserVersion': 3")
+          p.write_text(text, encoding='utf-8')
+
+          p = Path('js/config.js')
+          text = p.read_text(encoding='utf-8')
+          for old, new in (
+              ('dataVersion: 23', 'dataVersion: 24'),
+              ('gridVersion: 12', 'gridVersion: 13'),
+              ('accessGridVersion: 3', 'accessGridVersion: 4'),
+          ):
+              assert old in text, old
+              text = text.replace(old, new, 1)
+          p.write_text(text, encoding='utf-8')
+
+          p = Path('index.html')
+          text = p.read_text(encoding='utf-8')
+          assert 'js/config.js?v=28' in text
+          p.write_text(text.replace('js/config.js?v=28', 'js/config.js?v=29', 1), encoding='utf-8')
+          PY
+          python -m py_compile scripts/build_physical_station_dataset.py
+          node --check js/config.js
+
+      - name: Materialize immutable logical station source
+        run: |
+          git show "${LOGICAL_SOURCE_COMMIT}:data/stations.json" > /tmp/logical-stations.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          doc = json.loads(Path('/tmp/logical-stations.json').read_text(encoding='utf-8'))
+          assert len(doc['stations']) == 1318
+          PY
+
+      - name: Rebuild physical-point proposal
+        run: |
+          python scripts/prepare_physical_station_points.py \
+            --stations /tmp/logical-stations.json \
+            --output data/physical-station-points-proposal.json
+
+      - name: Download original Yahoo exact-point audit
+        uses: actions/download-artifact@v4
+        with:
+          name: physical-station-point-audit
+          path: audit-artifact
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          run-id: ${{ env.AUDIT_RUN_ID }}
+
+      - name: Rebuild all 1563 station records with parser v3
+        run: |
+          python scripts/build_physical_station_dataset.py \
+            --old-stations /tmp/logical-stations.json \
+            --audit audit-artifact/physical-station-point-audit.json \
+            --output data/stations.json \
+            --compact-audit-output data/physical-station-point-audit-compact.json
+
+      - name: Update validator and documentation from rebuilt data
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          doc = json.loads(Path('data/stations.json').read_text(encoding='utf-8'))
+          exact = doc['meta']['idwExclusionPolicy']['exactPointAudit']
+          diag = exact['routeSelectionDiagnostics']
+          expected = {
+              'boards-current-physical-point': 1157,
+              'boards-different-component': 217,
+              'boards-different-station': 177,
+              'no-rail-boarded': 12,
+          }
+          assert diag == expected, diag
+          assert exact['routeParserVersion'] == 3
+          reparsed = int(exact['savedAuditRowsReclassified'])
+          assert reparsed > 177, reparsed
+          print('savedAuditRowsReclassified', reparsed)
+
+          p = Path('scripts/validate_physical_station_dataset.py')
+          text = p.read_text(encoding='utf-8')
+          old_diag = '''EXPECTED_DIAGNOSTICS = {
+              'boards-current-physical-point': 1123,
+              'boards-different-component': 252,
+              'boards-different-station': 176,
+              'no-rail-boarded': 12,
+          }
+          EXPECTED_REPARSED_ROWS = 177'''
+          new_diag = f'''EXPECTED_DIAGNOSTICS = {{
+              'boards-current-physical-point': 1157,
+              'boards-different-component': 217,
+              'boards-different-station': 177,
+              'no-rail-boarded': 12,
+          }}
+          EXPECTED_REPARSED_ROWS = {reparsed}'''
+          assert old_diag in text
+          text = text.replace(old_diag, new_diag, 1)
+          assert "routeParserVersion') != 2" in text
+          text = text.replace("routeParserVersion') != 2", "routeParserVersion') != 3", 1)
+          assert "!= 2\")" in text
+          text = text.replace("!= 2\")", "!= 3\")", 1)
+
+          marker = '    # Every parsed first-rail service must be present in the human-readable route too.\n'
+          assert marker in text
+          regression = '''    # Second-pass regressions: Yahoo service branding can differ from the N02
+              # infrastructure line, and same-name stations can still be separate stations.
+              by_id = {s['id']: s for s in stations}
+              expected_current = {
+                  'n02p-004322': '東急目黒線',       # 元住吉: service on N02 東横線 infrastructure
+                  'n02p-002891': 'ＪＲ埼京線',       # 指扇: service on N02 川越線
+                  'n02p-003573': '東京メトロ東西線', # 高円寺: through service on N02 中央線
+                  'n02p-003928': 'ＪＲ武蔵野線',     # 潮見: service on N02 京葉線
+                  'n02p-004535': '小湊鐵道',         # spelling variant: 小湊鐵道線
+                  'n02p-002886': '関東鉄道竜ケ崎線', # ケ/ヶ line-name variant
+                  'n02p-004675': 'ＪＲ横浜線',       # 桜木町: service on N02 根岸線
+                  'n02p-003373': 'ＪＲ山手線',       # 西日暮里: service on N02 東北線
+              }
+              for sid, service_token in expected_current.items():
+                  s = by_id[sid]
+                  audit = s['physicalPointAudit']
+                  first = audit.get('firstRail') or {}
+                  if audit.get('reason') != 'boards-current-physical-point':
+                      raise SystemExit(f'{sid} infrastructure/service mapping regressed: {audit}')
+                  if service_token not in str(first.get('service')):
+                      raise SystemExit(f'{sid} unexpected first service: {first}')
+
+              asakusa = by_id['n02p-003513']
+              asakusa_first = asakusa['physicalPointAudit'].get('firstRail') or {}
+              if asakusa['physicalPointAudit'].get('reason') != 'boards-different-station':
+                  raise SystemExit(f'TX浅草 must be a separate same-name station: {asakusa["physicalPointAudit"]}')
+              if 'つくばエクスプレス' not in str(asakusa_first.get('service')) or '浅草' not in str(asakusa_first.get('boardStation')):
+                  raise SystemExit(f'TX浅草 first boarding unexpected: {asakusa_first}')
+
+          '''
+          text = text.replace(marker, regression + marker, 1)
+          p.write_text(text, encoding='utf-8')
+
+          p = Path('README.md')
+          text = p.read_text(encoding='utf-8')
+          replacements = {
+              '- 最初の鉄道乗車がその物理地点自身：1123地点': '- 最初の鉄道乗車がその物理地点自身：1157地点',
+              '- 同じ論理駅の別物理地点へ歩いてから乗車：252地点': '- 同じ論理駅の別物理地点へ歩いてから乗車：217地点',
+              '- 別の駅へ移動してから乗車：176地点': '- 別の駅へ移動してから乗車：177地点',
+              'その物理地点の鉄道を最適経路で使わない440地点': 'その物理地点の鉄道を最適経路で使わない406地点',
+          }
+          for old, new in replacements.items():
+              assert old in text, old
+              text = text.replace(old, new, 1)
+          first_note = '保存済みYahoo経路を2026-09-09に現行パーサーで全1563地点再検証し、**177地点の乗車地点診断と230地点の経路要約を修正**しました。Yahooへの再問い合わせではなく、元の全件監査に保存された生の経路を再解析しています。詳細は `docs/route-parser-revalidation.md` を参照してください。'
+          assert first_note in text
+          second_note = first_note + f'\n\nさらに第二監査で、Yahooのサービス名とN02の線路名称が異なる43候補を全件精査しました。**42件の路線・線路名称対応不足**を修正し、残る1件は地下鉄・東武の浅草から徒歩でTX浅草へ移る同名別駅ケースだったため、論理駅グループまで照合して `boards-different-station` と判定するよう修正しました。最終パーサーv3では元監査から **{reparsed}地点**の診断が再分類されています。'
+          text = text.replace(first_note, second_note, 1)
+          p.write_text(text, encoding='utf-8')
+
+          p = Path('docs/route-parser-revalidation.md')
+          text = p.read_text(encoding='utf-8')
+          heading = '## 第二監査: N02線路名称と同名別駅\n'
+          assert heading not in text
+          text += f'''\n\n{heading}
+          PR #36 の修正後、保存済み1563経路を別の観点でも全件走査した。Yahooの各乗車サービスを、
+          同じ論理駅に含まれる全N02物理地点の線路名称と照合したところ43候補が残った。
+
+          - 42件はサービス名とN02インフラ名称の差だった。例: 山手線→東北線/東海道線、埼京線→川越線、武蔵野線→京葉線、東西線直通→中央線、横浜線→根岸線、小湊鐵道の表記差など。
+          - 1件は地下鉄・東武側の浅草地点から徒歩で **浅草(TX)** に移って乗車するケースだった。同名だけで同じ論理駅と判断していたため、別構成駅と誤分類していた。
+          - 論理駅内の全物理地点までサービス照合するパーサーv3に変更し、浅草(TX)は `boards-different-station` と判定する。
+          - Yahoo詳細経路でホーム情報 `[発] ... → [着] ...` を伴う **4401交通区間**も独立に走査し、認識不能サービスは **0件**だった（鉄道4279、バス122）。
+
+          最終分類は current=1157 / different-component=217 / different-station=177 / no-rail=12、
+          元監査artifactからの再分類は {reparsed}地点。時刻・座標・IDW標本値は変更していない。
+          '''
+          p.write_text(text, encoding='utf-8')
+          PY
+          python -m py_compile scripts/validate_physical_station_dataset.py
+
+      - name: Rebuild interpolation grids for new station provenance hash
+        run: |
+          node scripts/build_precomputed_grid.mjs
+          node scripts/build_access_grid.mjs
+
+      - name: Run full consistency and regression validation
+        env:
+          PYTHONPATH: scripts
+        run: |
+          python scripts/validate_physical_station_dataset.py
+          python - <<'PY'
+          import json
+          from collections import defaultdict
+          from pathlib import Path
+          from audit_physical_station_points_full import classify_route1, is_bus_service, is_rail_service
+
+          raw = json.loads(Path('audit-artifact/physical-station-point-audit.json').read_text(encoding='utf-8'))['rows']
+          current = json.loads(Path('data/stations.json').read_text(encoding='utf-8'))['stations']
+          by_id = {s['id']: s for s in current}
+          groups = defaultdict(list)
+          for r in raw:
+              groups[str(r['logicalStationId'])].append(r)
+
+          mismatches = []
+          platform_segments = 0
+          unknown_segments = []
+          for r in raw:
+              parsed = classify_route1(r, r.get('route1') or [], groups[str(r['logicalStationId'])])
+              s = by_id[r['id']]
+              audit = s['physicalPointAudit']
+              a = audit.get('firstRail') or {}
+              b = parsed.get('firstRail') or {}
+              sig_stored = (audit.get('reason'), a.get('service'), a.get('boardStation'), a.get('lineMatchesPhysicalPoint'))
+              sig_parsed = (parsed.get('reason'), b.get('service'), b.get('boardStation'), b.get('lineMatchesPhysicalPoint'))
+              if sig_stored != sig_parsed:
+                  mismatches.append((r['id'], sig_stored, sig_parsed))
+
+              section = r.get('route1') or []
+              for i, line in enumerate(section[:-1]):
+                  if not str(section[i + 1]).strip().startswith('[発]'):
+                      continue
+                  platform_segments += 1
+                  if not is_rail_service(str(line)) and not is_bus_service(str(line)):
+                      unknown_segments.append((r['id'], line, section[i + 1]))
+
+          assert not mismatches, mismatches[:10]
+          assert platform_segments == 4401, platform_segments
+          assert not unknown_segments, unknown_segments[:20]
+          print('parser/stored mismatches', len(mismatches))
+          print('platform-linked transport segments', platform_segments)
+          print('unrecognized platform-linked services', len(unknown_segments))
+          PY
+          python -m py_compile \
+            scripts/audit_route_origin_alignment.py \
+            scripts/audit_physical_station_points_full.py \
+            scripts/build_physical_station_dataset.py \
+            scripts/validate_physical_station_dataset.py
+          node --check scripts/build_precomputed_grid.mjs
+          node --check scripts/build_access_grid.mjs
+          node --check js/config.js
+          node --check js/precomputed-grid.js
+          node --check js/main.js
+          node --check js/markers.js
+          node --check js/ui.js
+
+      - name: Validate grid hashes
+        run: |
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          station_sha = hashlib.sha256(Path('data/stations.json').read_bytes()).hexdigest()
+          anchor_sha = hashlib.sha256(Path('data/interpolation-anchors.json').read_bytes()).hexdigest()
+          for name in ('idw-grid.meta.json', 'access-grid.meta.json'):
+              meta = json.loads(Path('data', name).read_text(encoding='utf-8'))
+              assert meta['stationCount'] == 1563
+              assert meta['sourceStationCount'] == 1563
+              assert meta['excludedStationCount'] == 0
+              assert meta['stationDataSha256'] == station_sha
+              assert meta['interpolationAnchorDataSha256'] == anchor_sha
+              assert meta['sampleCount'] == 1564
+          print('stationDataSha256', station_sha)
+          PY
+
+      - name: Commit production fixes and regenerated data
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add \
+            README.md docs/route-parser-revalidation.md \
+            scripts/audit_route_origin_alignment.py \
+            scripts/audit_physical_station_points_full.py \
+            scripts/build_physical_station_dataset.py \
+            scripts/validate_physical_station_dataset.py \
+            js/config.js index.html \
+            data/stations.json data/physical-station-point-audit-compact.json \
+            data/idw-grid.bin data/idw-grid.bin.gz data/idw-grid.meta.json \
+            data/access-grid.bin data/access-grid.bin.gz data/access-grid.meta.json
+          git commit -m 'Fix second-pass route classification bugs'
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
