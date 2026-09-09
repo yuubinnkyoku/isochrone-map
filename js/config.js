@@ -10,10 +10,10 @@
     defaultZoom: 11,
 
     // stations.json cache-buster. Bump when station data changes.
-    dataVersion: 24,
+    dataVersion: 25,
     // Precomputed grid cache-busters.
-    gridVersion: 13,
-    accessGridVersion: 4,
+    gridVersion: 14,
+    accessGridVersion: 5,
     // 駅からの距離による徒歩アクセス減点をデフォルトにし、従来IDWも比較用に残す。
     defaultInterpolationMode: 'access',
 
