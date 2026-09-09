@@ -23,6 +23,26 @@
     getSettings: function () { return this._settings; },
     refreshLegend: function () { this._buildLegend(); },
 
+    // Keep the select in sync with the mode that PrecomputedGrid could actually
+    // activate without overwriting the user's persisted preference. A transient
+    // access-grid failure can therefore recover on the next page load.
+    syncInterpolationMode: function (mode) {
+      var select = document.getElementById('select-interpolation');
+      if (select && (mode === 'access' || mode === 'idw')) select.value = mode;
+      this._buildLegend();
+    },
+
+    // Runtime failures (for example unavailable WebGL) must be able to turn 3D
+    // off without recursively firing the normal setting-change callback.
+    setThreeDEnabledSilently: function (enabled) {
+      this._settings.threeDEnabled = !!enabled;
+      var toggle = document.getElementById('toggle-3d');
+      if (toggle) toggle.checked = !!enabled;
+      this._sync3DControlRows();
+      this._buildLegend();
+      this._saveSettings();
+    },
+
     _defaults: function () {
       var dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
       return {
@@ -161,8 +181,15 @@
         Number(diagnostics['no-rail-boarded'] || 0);
     },
 
+    _effectiveInterpolationMode: function () {
+      if (window.PrecomputedGrid && PrecomputedGrid.ready && (PrecomputedGrid.mode === 'idw' || PrecomputedGrid.mode === 'access')) {
+        return PrecomputedGrid.mode;
+      }
+      return (this._settings && this._settings.interpolationMode) || 'access';
+    },
+
     _interpolationLabel: function () {
-      return (this._settings && this._settings.interpolationMode) === 'idw'
+      return this._effectiveInterpolationMode() === 'idw'
         ? '従来IDW'
         : '徒歩アクセス考慮';
     },
@@ -208,7 +235,7 @@
       var labels = document.getElementById('legend-grad-labels');
       var excluded = document.getElementById('legend-excluded');
 
-      var modeSuffix = s.interpolationMode === 'idw' ? '・IDW' : '・徒歩アクセス考慮';
+      var modeSuffix = this._effectiveInterpolationMode() === 'idw' ? '・IDW' : '・徒歩アクセス考慮';
       title.textContent = (s.threeDEnabled ? '出発時刻（3D地形）' :
         (s.contourEnabled && s.gradientEnabled ? '出発時刻（等時線＋グラデーション）' :
         (s.contourEnabled ? '出発時刻（' + s.contourInterval + '分刻み等時線）' :
@@ -234,14 +261,30 @@
 
       var showGrad = s.gradientEnabled || s.threeDEnabled;
       bar.style.display = showGrad ? 'block' : 'none';
-      labels.style.display = showGrad ? 'flex' : 'none';
+      labels.style.display = showGrad ? 'block' : 'none';
       if (showGrad) {
         var stops = [];
+        var span = r.max - r.min;
         for (var x = r.min; x <= r.max; x += 2) {
-          stops.push(colorToCSS(minutesToColor(x)) + ' ' + (((x - r.min) / (r.max - r.min)) * 100).toFixed(1) + '%');
+          stops.push(colorToCSS(minutesToColor(x)) + ' ' + (span > 0 ? (((x - r.min) / span) * 100).toFixed(1) : '0') + '%');
+        }
+        if (!stops.length || x - 2 < r.max) {
+          stops.push(colorToCSS(minutesToColor(r.max)) + ' 100%');
         }
         bar.style.background = 'linear-gradient(90deg,' + stops.join(',') + ')';
-        labels.innerHTML = [r.min, 420, 450, 480, r.max].map(function (v) { return '<span>' + minutesToTimeStr(v) + '</span>'; }).join('');
+
+        var labelValues = [r.min, 420, 450, 480, r.max];
+        var seenLabels = {};
+        labels.innerHTML = labelValues.filter(function (v) {
+          if (v < r.min || v > r.max || seenLabels[v]) return false;
+          seenLabels[v] = true;
+          return true;
+        }).map(function (v) {
+          var pct = span > 0 ? ((v - r.min) / span) * 100 : 0;
+          pct = Math.max(0, Math.min(100, pct));
+          var transform = pct <= 0 ? 'translateX(0)' : (pct >= 100 ? 'translateX(-100%)' : 'translateX(-50%)');
+          return '<span style="left:' + pct.toFixed(2) + '%;transform:' + transform + '">' + minutesToTimeStr(v) + '</span>';
+        }).join('');
       }
 
       var alternateCount = this._alternateRouteCount(this._dataMeta);

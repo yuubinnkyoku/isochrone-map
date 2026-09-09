@@ -6,21 +6,37 @@
 
   function buildContourBreaks(interval) {
     var breaks = [];
+    var seen = {};
     var range = CONFIG.timeRange;
     var min = range.contourMin;
     var max = range.contourMax;
     var denseMin = range.denseContourMin || min;
     var earlyInterval = range.earlyContourInterval || 60;
 
+    function addBreak(value) {
+      if (value < min || value > max || seen[value]) return;
+      seen[value] = true;
+      breaks.push(value);
+    }
+
     // Early-morning / previous-day values can be many hours away from the
     // normal school-morning scale. Keep those lines sparse so the map remains
     // readable, while retaining the user-selected interval from 06:30 onward.
     if (min < denseMin) {
       var earlyFirst = Math.ceil(min / earlyInterval) * earlyInterval;
-      for (var e = earlyFirst; e < denseMin; e += earlyInterval) breaks.push(e);
+      for (var e = earlyFirst; e < denseMin; e += earlyInterval) addBreak(e);
     }
+
     var first = Math.ceil(Math.max(min, denseMin) / interval) * interval;
-    for (var m = first; m <= max; m += interval) breaks.push(m);
+    for (var m = first; m <= max; m += interval) addBreak(m);
+
+    // Ten-minute lines are the labelled visual anchors in the legend. Include
+    // them even when the selected interval (notably 3 minutes) is not a divisor
+    // of ten, otherwise the legend can advertise lines that are never drawn.
+    var mainFirst = Math.ceil(Math.max(min, denseMin) / 10) * 10;
+    for (var main = mainFirst; main <= max; main += 10) addBreak(main);
+
+    breaks.sort(function (a, b) { return a - b; });
     return breaks;
   }
 
@@ -45,14 +61,26 @@
     };
   }
 
+  function ensureTypedArray(workspace, key, Type, length) {
+    var current = workspace[key];
+    if (!current || current.length < length) {
+      current = new Type(length);
+      workspace[key] = current;
+    }
+    return current;
+  }
+
   // Web Mercator is separable: longitude depends only on x and latitude only on y.
   // Convert one coordinate per column/row, then bilinearly sample the static grid.
-  function sampleCanvasGrid(map, state, gridData) {
+  // Buffers are kept on each overlay and reused across renders to avoid repeated
+  // allocations and garbage collection during pan/zoom interactions.
+  function sampleCanvasGrid(map, state, gridData, workspace) {
     var cols = state.cols;
     var rows = state.rows;
     var step = state.step;
-    var lngs = new Float64Array(cols);
-    var lats = new Float64Array(rows);
+    var lngs = ensureTypedArray(workspace, 'lngs', Float64Array, cols);
+    var lats = ensureTypedArray(workspace, 'lats', Float64Array, rows);
+    var values = ensureTypedArray(workspace, 'values', Float32Array, cols * rows);
     var c, r;
 
     for (c = 0; c < cols; c++) {
@@ -62,7 +90,6 @@
       lats[r] = map.containerPointToLatLng([0, r * step - state.padY]).lat;
     }
 
-    var values = new Float32Array(cols * rows);
     for (r = 0; r < rows; r++) {
       var lat = lats[r];
       var base = r * cols;
@@ -74,6 +101,11 @@
     return values;
   }
 
+  function ensureCanvasSize(cv, width, height) {
+    if (cv.width !== width) cv.width = width;
+    if (cv.height !== height) cv.height = height;
+  }
+
   var ContourOverlay = L.Layer.extend({
     options: { pane: 'overlayPane' },
 
@@ -82,6 +114,7 @@
       this._interval = opts.interval || 5;
       this._visible = opts.visible !== false;
       this._debounceTimer = null;
+      this._sampleWorkspace = {};
     },
 
     onAdd: function (map) {
@@ -134,15 +167,14 @@
       }
 
       var state = buildRenderState(map, CONFIG.gridSize(map.getZoom()));
-      var values = sampleCanvasGrid(map, state, this._gridData);
+      var values = sampleCanvasGrid(map, state, this._gridData, this._sampleWorkspace);
       this._drawContours(values, state);
     },
 
     _drawContours: function (grid, state) {
       if (!this._visible || !this._map) return;
       var cv = this._cv;
-      cv.width = state.cvWidth;
-      cv.height = state.cvHeight;
+      ensureCanvasSize(cv, state.cvWidth, state.cvHeight);
       L.DomUtil.setTransform(cv, state.pos, 1);
       this._renderZoom = state.renderZoom;
       this._renderTopLeft = state.renderTopLeft;
@@ -232,6 +264,7 @@
       this._gridData = opts.grid || null;
       this._visible = opts.visible || false;
       this._debounceTimer = null;
+      this._sampleWorkspace = {};
     },
 
     onAdd: function (map) {
@@ -285,15 +318,14 @@
       var sz = map.getSize();
       var step = Math.max(4, Math.floor(Math.min(sz.x, sz.y) / 180));
       var state = buildRenderState(map, step);
-      var values = sampleCanvasGrid(map, state, this._gridData);
+      var values = sampleCanvasGrid(map, state, this._gridData, this._sampleWorkspace);
       this._drawGradient(values, state);
     },
 
     _drawGradient: function (values, state) {
       if (!this._visible || !this._map) return;
       var cv = this._cv;
-      cv.width = state.cvWidth;
-      cv.height = state.cvHeight;
+      ensureCanvasSize(cv, state.cvWidth, state.cvHeight);
       L.DomUtil.setTransform(cv, state.pos, 1);
       this._renderZoom = state.renderZoom;
       this._renderTopLeft = state.renderTopLeft;
