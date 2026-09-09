@@ -474,6 +474,13 @@ body {
   line-height: 1.5;
 }
 
+.tt-route {
+  max-width: min(360px, calc(100vw - 48px));
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.65;
+}
+
 .tt-detail {
   font-size: 10px;
   color: var(--text-muted);
