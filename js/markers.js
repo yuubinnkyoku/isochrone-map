@@ -181,11 +181,25 @@
           var routeParts = String(s.route).split(' → ');
           var routeLines = [];
           for (var routeIndex = 0; routeIndex < routeParts.length; routeIndex += 2) {
-            var routeLine = routeParts.slice(routeIndex, routeIndex + 2).join(' → ');
-            if (routeIndex > 0) routeLine = '→ ' + routeLine;
-            routeLines.push(routeLine);
+            var prefix = routeIndex > 0 ? '→ ' : '';
+            var routeFrom = routeParts[routeIndex];
+            var routeTo = routeParts[routeIndex + 1];
+            if (routeTo === undefined) {
+              routeLines.push(prefix + routeFrom);
+              continue;
+            }
+
+            var pairedLine = prefix + routeFrom + ' → ' + routeTo;
+            if (pairedLine.length <= 24) {
+              routeLines.push(pairedLine);
+            } else {
+              routeLines.push(prefix + routeFrom);
+              routeLines.push('→ ' + routeTo);
+            }
           }
-          routeHtml = '<div class="tt-line tt-route">' + routeLines.join('<br>') + '</div>';
+          routeHtml = '<div class="tt-line tt-route">' + routeLines.map(function (line) {
+            return '<span class="tt-route-line">' + line + '</span>';
+          }).join('') + '</div>';
         }
         var routeUsageHtml = self._alternateRouteStatusHtml(s);
         var noteHtml = s.note ? '<div class="tt-detail">' + s.note + '</div>' : '';
