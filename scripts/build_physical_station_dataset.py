@@ -45,15 +45,44 @@ def haversine_m(a_lat: float, a_lng: float, b_lat: float, b_lng: float) -> float
     return 2 * r * math.asin(math.sqrt(x))
 
 
+def _is_route_clock_label(value: str) -> bool:
+    return bool(re.fullmatch(r'\(?\d{1,2}:\d{2}(?:着|発)?\)?', value.strip()))
+
+
+def _is_route_station_event(section: list[str], index: int) -> bool:
+    """Identify boarding/alighting/transfer station or bus-stop lines."""
+    if index <= 0:
+        return False
+    line = str(section[index]).strip()
+    if not line:
+        return False
+    if _is_route_clock_label(line) or is_bus_service(line) or is_rail_service(line):
+        return False
+    if line in {'発', '着', '早', '楽', '安', '地図', '出口', '時刻表'}:
+        return False
+    if line.startswith('徒歩'):
+        return False
+    if line.startswith(('出口：', '乗車位置：', 'IC優先', '乗換：', '定期の種類', '[発]', '[着]')):
+        return False
+    if re.fullmatch(r'\d+駅', line) or re.fullmatch(r'[\d,]+円', line) or re.fullmatch(r'\d+(?:\.\d+)?km', line):
+        return False
+    previous = str(section[index - 1]).strip()
+    if _is_route_clock_label(previous):
+        return True
+    return previous in {'発', '着'} and index >= 2 and _is_route_clock_label(str(section[index - 2]).strip())
+
+
 def route_summary(section: list[str]) -> str:
+    """Build a transfer chain that retains station/stop names as well as modes."""
     parts = []
-    for raw in section:
+    for i, raw in enumerate(section):
         line = str(raw).strip()
         if not line:
             continue
-        if line.startswith('徒歩') and re.match(r'^徒歩\d+分$', line):
-            parts.append(line)
-        elif is_bus_service(line) or is_rail_service(line):
+        if _is_route_station_event(section, i):
+            if '物理駅地点-' not in line:
+                parts.append(line)
+        elif re.fullmatch(r'徒歩\d+分', line) or is_bus_service(line) or is_rail_service(line):
             parts.append(line)
     out = []
     for part in parts:
@@ -284,6 +313,7 @@ def main() -> None:
             'targetArrival': '08:18',
             'originVerified': expected,
             'routeParserVersion': 3,
+            'routeSummaryVersion': 2,
             'savedAuditRowsReclassified': legacy_parser_changes,
             'routeSelectionDiagnostics': dict(sorted(reason_counts.items())),
         },
@@ -299,6 +329,7 @@ def main() -> None:
         'includedPhysicalPoints': expected,
         'excludedPhysicalPoints': 0,
         'routeParserVersion': 3,
+        'routeSummaryVersion': 2,
         'savedAuditRowsReclassified': legacy_parser_changes,
         'routeSelectionDiagnostics': dict(sorted(reason_counts.items())),
     }

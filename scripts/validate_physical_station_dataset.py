@@ -80,6 +80,8 @@ def main() -> None:
         raise SystemExit(f'route-selection diagnostics changed: {diagnostics}')
     if exact.get('routeParserVersion') != 3:
         raise SystemExit(f"route parser version {exact.get('routeParserVersion')} != 3")
+    if exact.get('routeSummaryVersion') != 2:
+        raise SystemExit(f"route summary version {exact.get('routeSummaryVersion')} != 2")
     if exact.get('savedAuditRowsReclassified') != EXPECTED_REPARSED_ROWS:
         raise SystemExit(
             f"saved audit reparse changes {exact.get('savedAuditRowsReclassified')} != {EXPECTED_REPARSED_ROWS}"
@@ -152,6 +154,29 @@ def main() -> None:
         raise SystemExit(f'TX浅草 must be a separate same-name station: {asakusa["physicalPointAudit"]}')
     if 'つくばエクスプレス' not in str(asakusa_first.get('service')) or '浅草' not in str(asakusa_first.get('boardStation')):
         raise SystemExit(f'TX浅草 first boarding unexpected: {asakusa_first}')
+
+    # Route summaries must retain transfer station/stop names, not just service names.
+    required_urawa_route_tokens = [
+        '浦和美園', '埼玉高速鉄道', '後楽園', '東京メトロ丸ノ内線',
+        '茗荷谷', '筑波大学附属高等学校',
+    ]
+    urawa_route = urawa.get('route', '')
+    positions = []
+    for token in required_urawa_route_tokens:
+        pos = urawa_route.find(token)
+        if pos < 0:
+            raise SystemExit(f'浦和美園 route summary missing {token}: {urawa_route}')
+        positions.append(pos)
+    if positions != sorted(positions):
+        raise SystemExit(f'浦和美園 route summary order broken: {urawa_route}')
+
+    for station in stations:
+        route = station.get('route', '')
+        if '筑波大学附属高等学校' not in route:
+            raise SystemExit(f"route destination missing: {station['id']} {route}")
+        first = (station.get('physicalPointAudit') or {}).get('firstRail') or {}
+        if first.get('service') and route.count(' → ') < 2:
+            raise SystemExit(f"route station chain missing: {station['id']} {route}")
 
     # Every parsed first-rail service must be present in the human-readable route too.
     for station in stations:
