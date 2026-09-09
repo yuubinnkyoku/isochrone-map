@@ -1,0 +1,109 @@
+name: Apply route semantic wrap
+
+on:
+  push:
+    branches: [fix-route-semantic-wrap]
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix-route-semantic-wrap
+          fetch-depth: 0
+      - name: Patch route tooltip wrapping
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          p = Path('js/markers.js')
+          s = p.read_text()
+          old = """        if (s.route) {
+          var routeParts = String(s.route).split(' → ');
+          var routeLines = [];
+          for (var routeIndex = 0; routeIndex < routeParts.length; routeIndex += 2) {
+            var routeLine = routeParts.slice(routeIndex, routeIndex + 2).join(' → ');
+            if (routeIndex > 0) routeLine = '→ ' + routeLine;
+            routeLines.push(routeLine);
+          }
+          routeHtml = '<div class=\"tt-line tt-route\">' + routeLines.join('<br>') + '</div>';
+        }
+"""
+          new = """        if (s.route) {
+          var routeParts = String(s.route).split(' → ');
+          var routeLines = [];
+          for (var routeIndex = 0; routeIndex < routeParts.length; routeIndex += 2) {
+            var prefix = routeIndex > 0 ? '→ ' : '';
+            var routeFrom = routeParts[routeIndex];
+            var routeTo = routeParts[routeIndex + 1];
+            if (routeTo === undefined) {
+              routeLines.push(prefix + routeFrom);
+              continue;
+            }
+
+            var pairedLine = prefix + routeFrom + ' → ' + routeTo;
+            if (pairedLine.length <= 24) {
+              routeLines.push(pairedLine);
+            } else {
+              routeLines.push(prefix + routeFrom);
+              routeLines.push('→ ' + routeTo);
+            }
+          }
+          routeHtml = '<div class=\"tt-line tt-route\">' + routeLines.map(function (line) {
+            return '<span class=\"tt-route-line\">' + line + '</span>';
+          }).join('') + '</div>';
+        }
+"""
+          if old not in s:
+              raise SystemExit('markers.js target block not found')
+          p.write_text(s.replace(old, new))
+
+          p = Path('css/style.css')
+          s = p.read_text()
+          old = """.tt-route {
+  max-width: min(360px, calc(100vw - 48px));
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.65;
+}
+"""
+          new = """.tt-route {
+  white-space: normal;
+  overflow-wrap: normal;
+  word-break: keep-all;
+  line-height: 1.65;
+  font-size: 10px;
+}
+
+.tt-route-line {
+  display: block;
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: keep-all;
+}
+"""
+          if old not in s:
+              raise SystemExit('style.css target block not found')
+          p.write_text(s.replace(old, new))
+
+          p = Path('index.html')
+          s = p.read_text()
+          s = s.replace('css/style.css?v=4', 'css/style.css?v=5')
+          s = s.replace('js/markers.js?v=18', 'js/markers.js?v=19')
+          p.write_text(s)
+          PY
+
+          node --check js/markers.js
+          git diff --check
+      - name: Commit
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add js/markers.js css/style.css index.html
+          git commit -m 'Prevent mid-name route tooltip wrapping'
+          git push origin HEAD:fix-route-semantic-wrap
