@@ -23,70 +23,74 @@ jobs:
 
           p = Path('js/markers.js')
           s = p.read_text()
-          old = """        if (s.route) {
-          var routeParts = String(s.route).split(' → ');
-          var routeLines = [];
-          for (var routeIndex = 0; routeIndex < routeParts.length; routeIndex += 2) {
-            var routeLine = routeParts.slice(routeIndex, routeIndex + 2).join(' → ');
-            if (routeIndex > 0) routeLine = '→ ' + routeLine;
-            routeLines.push(routeLine);
-          }
-          routeHtml = '<div class=\"tt-line tt-route\">' + routeLines.join('<br>') + '</div>';
-        }
-"""
-          new = """        if (s.route) {
-          var routeParts = String(s.route).split(' → ');
-          var routeLines = [];
-          for (var routeIndex = 0; routeIndex < routeParts.length; routeIndex += 2) {
-            var prefix = routeIndex > 0 ? '→ ' : '';
-            var routeFrom = routeParts[routeIndex];
-            var routeTo = routeParts[routeIndex + 1];
-            if (routeTo === undefined) {
-              routeLines.push(prefix + routeFrom);
-              continue;
-            }
-
-            var pairedLine = prefix + routeFrom + ' → ' + routeTo;
-            if (pairedLine.length <= 24) {
-              routeLines.push(pairedLine);
-            } else {
-              routeLines.push(prefix + routeFrom);
-              routeLines.push('→ ' + routeTo);
-            }
-          }
-          routeHtml = '<div class=\"tt-line tt-route\">' + routeLines.map(function (line) {
-            return '<span class=\"tt-route-line\">' + line + '</span>';
-          }).join('') + '</div>';
-        }
-"""
+          old = (
+              "        if (s.route) {\n"
+              "          var routeParts = String(s.route).split(' → ');\n"
+              "          var routeLines = [];\n"
+              "          for (var routeIndex = 0; routeIndex < routeParts.length; routeIndex += 2) {\n"
+              "            var routeLine = routeParts.slice(routeIndex, routeIndex + 2).join(' → ');\n"
+              "            if (routeIndex > 0) routeLine = '→ ' + routeLine;\n"
+              "            routeLines.push(routeLine);\n"
+              "          }\n"
+              "          routeHtml = '<div class=\"tt-line tt-route\">' + routeLines.join('<br>') + '</div>';\n"
+              "        }\n"
+          )
+          new = (
+              "        if (s.route) {\n"
+              "          var routeParts = String(s.route).split(' → ');\n"
+              "          var routeLines = [];\n"
+              "          for (var routeIndex = 0; routeIndex < routeParts.length; routeIndex += 2) {\n"
+              "            var prefix = routeIndex > 0 ? '→ ' : '';\n"
+              "            var routeFrom = routeParts[routeIndex];\n"
+              "            var routeTo = routeParts[routeIndex + 1];\n"
+              "            if (routeTo === undefined) {\n"
+              "              routeLines.push(prefix + routeFrom);\n"
+              "              continue;\n"
+              "            }\n"
+              "\n"
+              "            var pairedLine = prefix + routeFrom + ' → ' + routeTo;\n"
+              "            if (pairedLine.length <= 24) {\n"
+              "              routeLines.push(pairedLine);\n"
+              "            } else {\n"
+              "              routeLines.push(prefix + routeFrom);\n"
+              "              routeLines.push('→ ' + routeTo);\n"
+              "            }\n"
+              "          }\n"
+              "          routeHtml = '<div class=\"tt-line tt-route\">' + routeLines.map(function (line) {\n"
+              "            return '<span class=\"tt-route-line\">' + line + '</span>';\n"
+              "          }).join('') + '</div>';\n"
+              "        }\n"
+          )
           if old not in s:
               raise SystemExit('markers.js target block not found')
           p.write_text(s.replace(old, new))
 
           p = Path('css/style.css')
           s = p.read_text()
-          old = """.tt-route {
-  max-width: min(360px, calc(100vw - 48px));
-  white-space: normal;
-  overflow-wrap: anywhere;
-  line-height: 1.65;
-}
-"""
-          new = """.tt-route {
-  white-space: normal;
-  overflow-wrap: normal;
-  word-break: keep-all;
-  line-height: 1.65;
-  font-size: 10px;
-}
-
-.tt-route-line {
-  display: block;
-  white-space: nowrap;
-  overflow-wrap: normal;
-  word-break: keep-all;
-}
-"""
+          old = (
+              ".tt-route {\n"
+              "  max-width: min(360px, calc(100vw - 48px));\n"
+              "  white-space: normal;\n"
+              "  overflow-wrap: anywhere;\n"
+              "  line-height: 1.65;\n"
+              "}\n"
+          )
+          new = (
+              ".tt-route {\n"
+              "  white-space: normal;\n"
+              "  overflow-wrap: normal;\n"
+              "  word-break: keep-all;\n"
+              "  line-height: 1.65;\n"
+              "  font-size: 10px;\n"
+              "}\n"
+              "\n"
+              ".tt-route-line {\n"
+              "  display: block;\n"
+              "  white-space: nowrap;\n"
+              "  overflow-wrap: normal;\n"
+              "  word-break: keep-all;\n"
+              "}\n"
+          )
           if old not in s:
               raise SystemExit('style.css target block not found')
           p.write_text(s.replace(old, new))
