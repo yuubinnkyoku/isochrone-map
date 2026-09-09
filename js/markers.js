@@ -180,23 +180,17 @@
         if (s.route) {
           var routeParts = String(s.route).split(' → ');
           var routeLines = [];
-          for (var routeIndex = 0; routeIndex < routeParts.length; routeIndex += 2) {
-            var prefix = routeIndex > 0 ? '→ ' : '';
-            var routeFrom = routeParts[routeIndex];
-            var routeTo = routeParts[routeIndex + 1];
-            if (routeTo === undefined) {
-              routeLines.push(prefix + routeFrom);
-              continue;
-            }
-
-            var pairedLine = prefix + routeFrom + ' → ' + routeTo;
-            if (pairedLine.length <= 24) {
-              routeLines.push(pairedLine);
+          var routeLine = routeParts[0] || '';
+          for (var routeIndex = 1; routeIndex < routeParts.length; routeIndex++) {
+            var candidateLine = routeLine + ' → ' + routeParts[routeIndex];
+            if (candidateLine.length <= 24) {
+              routeLine = candidateLine;
             } else {
-              routeLines.push(prefix + routeFrom);
-              routeLines.push('→ ' + routeTo);
+              routeLines.push(routeLine);
+              routeLine = '→ ' + routeParts[routeIndex];
             }
           }
+          if (routeLine) routeLines.push(routeLine);
           routeHtml = '<div class="tt-line tt-route">' + routeLines.map(function (line) {
             return '<span class="tt-route-line">' + line + '</span>';
           }).join('') + '</div>';
