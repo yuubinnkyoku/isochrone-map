@@ -19,6 +19,9 @@
       breaks.push(value);
     }
 
+    // Early-morning / previous-day values can be many hours away from the
+    // normal school-morning scale. Keep those lines sparse so the map remains
+    // readable, while retaining the user-selected interval from 06:30 onward.
     if (min < denseMin) {
       var earlyFirst = Math.ceil(min / earlyInterval) * earlyInterval;
       for (var e = earlyFirst; e < denseMin; e += earlyInterval) addBreak(e);
@@ -27,6 +30,9 @@
     var first = Math.ceil(Math.max(min, denseMin) / interval) * interval;
     for (var m = first; m <= max; m += interval) addBreak(m);
 
+    // Ten-minute lines are the labelled visual anchors in the legend. Include
+    // them even when the selected interval (notably 3 minutes) is not a divisor
+    // of ten, otherwise the legend can advertise lines that are never drawn.
     var mainFirst = Math.ceil(Math.max(min, denseMin) / 10) * 10;
     for (var main = mainFirst; main <= max; main += 10) addBreak(main);
 
@@ -66,6 +72,10 @@
     return current;
   }
 
+  // Web Mercator is separable: longitude depends only on x and latitude only on y.
+  // Convert one coordinate per column/row, then bilinearly sample the static grid.
+  // Buffers are kept on each overlay and reused across renders to avoid repeated
+  // allocations and garbage collection during pan/zoom interactions.
   function sampleCanvasGrid(map, state, gridData, workspace) {
     var cols = state.cols;
     var rows = state.rows;
@@ -98,6 +108,9 @@
     if (cv.height !== height) cv.height = height;
   }
 
+  // Coverage must be remembered in geographic coordinates. Leaflet changes the
+  // layer-point origin after a completed pan, so comparing layer-point rectangles
+  // from different view states can incorrectly claim a cached canvas is aligned.
   function viewportCovered(layer, map, step) {
     var bounds = layer._renderBounds;
     if (!bounds || layer._renderZoom !== map.getZoom() || layer._renderStep !== step) return false;
@@ -110,6 +123,8 @@
     layer._renderStep = state.step;
   }
 
+  // Even when the bitmap itself can be reused, its CSS position must be reset
+  // against Leaflet's current layer-point origin after moveend.
   function positionExistingCanvas(layer) {
     if (!layer._cv || !layer._map || !layer._renderBounds) return;
     var topLeft = layer._map.latLngToLayerPoint(layer._renderBounds.getNorthWest());
