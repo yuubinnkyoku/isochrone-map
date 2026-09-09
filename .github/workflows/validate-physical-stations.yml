@@ -67,9 +67,10 @@ jobs:
       - name: Validate interpolation metadata and anchor hashes
         run: |
           python - <<'PY'
-          import hashlib, json, math, statistics, struct
+          import hashlib, json, math, statistics, sys
           from pathlib import Path
 
+          assert sys.byteorder == 'little'
           stations_path = Path('data/stations.json')
           anchors_path = Path('data/interpolation-anchors.json')
           stations_doc = json.loads(stations_path.read_text(encoding='utf-8'))
@@ -94,6 +95,7 @@ jobs:
               assert meta['interpolationAnchorCount'] == 1
               assert meta['interpolationAnchorIds'] == ['destination-tsukufu']
               assert meta['sampleCount'] == 1564
+              assert meta['gridAlignmentAnchorId'] == 'destination-tsukufu'
               assert meta['stationDataSha256'] == station_sha, (meta['stationDataSha256'], station_sha)
               assert meta['interpolationAnchorDataSha256'] == anchor_sha, (meta['interpolationAnchorDataSha256'], anchor_sha)
 
@@ -103,41 +105,49 @@ jobs:
           assert access['walkingSpeedMetersPerMinute'] == 80
           assert access['streetDetourFactor'] == 1.25
 
-          raw = Path('data/access-grid.bin').read_bytes()
-          assert len(raw) == access['rows'] * access['cols'] * 2
+          expected_bytes = access['rows'] * access['cols'] * 2
+          idw_raw = Path('data/idw-grid.bin').read_bytes()
+          access_raw = Path('data/access-grid.bin').read_bytes()
+          assert len(idw_raw) == expected_bytes
+          assert len(access_raw) == expected_bytes
+          assert Path('data/idw-grid.bin.gz').stat().st_size > 0
           assert Path('data/access-grid.bin.gz').stat().st_size > 0
-          values = struct.unpack('<' + 'H' * (len(raw) // 2), raw)
-          valid = [v for v in values if v != access['nodata']]
-          assert valid
-          assert min(valid) > 0, min(valid)
-          assert max(valid) < 65534, max(valid)
+
+          # memoryview avoids allocating multi-million-element Python tuples. More
+          # importantly, decode each grid once rather than once per station sample.
+          idw_values = memoryview(idw_raw).cast('H')
+          access_values = memoryview(access_raw).cast('H')
+          valid = (v for v in access_values if v != access['nodata'])
+          min_valid = min(valid)
+          valid = (v for v in access_values if v != access['nodata'])
+          max_valid = max(valid)
+          assert min_valid > 0, min_valid
+          assert max_valid < 65534, max_valid
 
           def decode(v, meta):
               return v / meta['scale'] - meta['offsetMinutes']
 
-          def sample(base, meta, lat, lng):
-              raw2 = Path(base + '.bin').read_bytes()
-              vals = struct.unpack('<' + 'H' * (len(raw2) // 2), raw2)
+          def sample(values, meta, lat, lng):
               row = (meta['north'] - lat) / meta['latStep']
               col = (lng - meta['west']) / meta['lngStep']
               r0 = max(0, min(meta['rows'] - 2, math.floor(row)))
               c0 = max(0, min(meta['cols'] - 2, math.floor(col)))
               fr = max(0.0, min(1.0, row - r0)); fc = max(0.0, min(1.0, col - c0))
               i = r0 * meta['cols'] + c0
-              v00, v10 = vals[i], vals[i + 1]
-              v01, v11 = vals[i + meta['cols']], vals[i + meta['cols'] + 1]
+              v00, v10 = values[i], values[i + 1]
+              v01, v11 = values[i + meta['cols']], values[i + meta['cols'] + 1]
               top = v00 + (v10 - v00) * fc
               bottom = v01 + (v11 - v01) * fc
               return decode(top + (bottom - top) * fr, meta)
 
-          idw_school = sample('data/idw-grid', idw, school['lat'], school['lng'])
-          access_school = sample('data/access-grid', access, school['lat'], school['lng'])
-          assert abs(idw_school - 498) < 1.0, idw_school
-          assert abs(access_school - 498) < 1.5, access_school
+          idw_school = sample(idw_values, idw, school['lat'], school['lng'])
+          access_school = sample(access_values, access, school['lat'], school['lng'])
+          assert abs(idw_school - 498) < 0.05, idw_school
+          assert abs(access_school - 498) < 0.05, access_school
 
           errors = []
           for s in stations_doc['stations']:
-              errors.append((sample('data/access-grid', access, float(s['lat']), float(s['lng'])) - float(s['minutes']), s['station'], s['id']))
+              errors.append((sample(access_values, access, float(s['lat']), float(s['lng'])) - float(s['minutes']), s['station'], s['id']))
           abs_errors = [abs(e[0]) for e in errors]
 
           print('stationDataSha256', station_sha)
@@ -146,7 +156,7 @@ jobs:
           print('grid', idw['rows'], idw['cols'])
           print('school IDW/access', idw_school, access_school)
           print('access effective straight-line speed', access['effectiveStraightLineSpeedMetersPerMinute'], 'm/min')
-          print('access decoded range', decode(min(valid), access), decode(max(valid), access))
+          print('access decoded range', decode(min_valid, access), decode(max_valid, access))
           print('station anchor error median/max abs', statistics.median(abs_errors), max(abs_errors))
           print('largest station-anchor differences')
           for e, name, sid in sorted(errors, key=lambda x: abs(x[0]), reverse=True)[:10]:
