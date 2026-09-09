@@ -149,10 +149,18 @@ def main() -> None:
     if bad:
         raise SystemExit(f'unresolved raw physical points: {len(bad)}')
 
+    reparse_groups: dict[str, list[dict]] = defaultdict(list)
+    for r in rows:
+        reparse_groups[str(r['logicalStationId'])].append(r)
+
     reparsed: dict[str, dict] = {}
     legacy_parser_changes = 0
     for r in rows:
-        parsed = classify_route1(r, r.get('route1') or [])
+        parsed = classify_route1(
+            r,
+            r.get('route1') or [],
+            reparse_groups[str(r['logicalStationId'])],
+        )
         if parsed.get('classification') not in {'keep', 'exclude'}:
             raise SystemExit(f"route parser unresolved for {r.get('id')}: {parsed.get('reason')}")
         reparsed[str(r['id'])] = parsed
