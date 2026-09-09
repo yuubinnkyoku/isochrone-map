@@ -106,6 +106,30 @@
     if (cv.height !== height) cv.height = height;
   }
 
+  // The canvas deliberately includes padding around the viewport. As long as a
+  // pan remains inside that already-rendered geographic area, Leaflet can move
+  // the existing canvas with its normal pane transform and no scalar sampling or
+  // Marching Squares pass is needed at moveend.
+  function viewportCovered(layer, map, step) {
+    var bounds = layer._renderLayerBounds;
+    if (!bounds || layer._renderZoom !== map.getZoom() || layer._renderStep !== step) return false;
+    var sz = map.getSize();
+    var topLeft = map.containerPointToLayerPoint([0, 0]);
+    var bottomRight = map.containerPointToLayerPoint([sz.x, sz.y]);
+    return topLeft.x >= bounds.left && topLeft.y >= bounds.top &&
+      bottomRight.x <= bounds.right && bottomRight.y <= bounds.bottom;
+  }
+
+  function rememberRenderCoverage(layer, state) {
+    layer._renderLayerBounds = {
+      left: state.pos.x,
+      top: state.pos.y,
+      right: state.pos.x + state.cvWidth,
+      bottom: state.pos.y + state.cvHeight
+    };
+    layer._renderStep = state.step;
+  }
+
   var ContourOverlay = L.Layer.extend({
     options: { pane: 'overlayPane' },
 
@@ -115,6 +139,8 @@
       this._visible = opts.visible !== false;
       this._debounceTimer = null;
       this._sampleWorkspace = {};
+      this._renderLayerBounds = null;
+      this._renderStep = null;
     },
 
     onAdd: function (map) {
@@ -125,7 +151,7 @@
       map.getPanes().overlayPane.appendChild(this._cv);
       map.on('moveend zoomend resize', this._debouncedRender, this);
       map.on('zoomanim', this._onZoomAnim, this);
-      this._render();
+      this._render(true);
     },
 
     onRemove: function (map) {
@@ -145,20 +171,20 @@
     _debouncedRender: function () {
       var self = this;
       if (this._debounceTimer) clearTimeout(this._debounceTimer);
-      this._debounceTimer = setTimeout(function () { self._render(); }, CONFIG.renderDebounceMs);
+      this._debounceTimer = setTimeout(function () { self._render(false); }, CONFIG.renderDebounceMs);
     },
 
-    setVisible: function (v) { this._visible = v; this._render(); },
-    setInterval: function (interval) { this._interval = interval; this._render(); },
-    setGrid: function (grid) { this._gridData = grid; this._render(); },
-    refresh: function () { if (this._map) this._render(); },
+    setVisible: function (v) { this._visible = v; this._render(true); },
+    setInterval: function (interval) { this._interval = interval; this._render(true); },
+    setGrid: function (grid) { this._gridData = grid; this._render(true); },
+    refresh: function () { if (this._map) this._render(true); },
 
     _clear: function () {
       if (!this._cv) return;
       this._cv.getContext('2d').clearRect(0, 0, this._cv.width, this._cv.height);
     },
 
-    _render: function () {
+    _render: function (force) {
       var map = this._map;
       if (!map) return;
       if (!this._visible || !this._gridData || !this._gridData.ready) {
@@ -166,7 +192,9 @@
         return;
       }
 
-      var state = buildRenderState(map, CONFIG.gridSize(map.getZoom()));
+      var step = CONFIG.gridSize(map.getZoom());
+      if (!force && viewportCovered(this, map, step)) return;
+      var state = buildRenderState(map, step);
       var values = sampleCanvasGrid(map, state, this._gridData, this._sampleWorkspace);
       this._drawContours(values, state);
     },
@@ -178,6 +206,7 @@
       L.DomUtil.setTransform(cv, state.pos, 1);
       this._renderZoom = state.renderZoom;
       this._renderTopLeft = state.renderTopLeft;
+      rememberRenderCoverage(this, state);
 
       var ctx = cv.getContext('2d');
       ctx.clearRect(0, 0, cv.width, cv.height);
@@ -265,6 +294,8 @@
       this._visible = opts.visible || false;
       this._debounceTimer = null;
       this._sampleWorkspace = {};
+      this._renderLayerBounds = null;
+      this._renderStep = null;
     },
 
     onAdd: function (map) {
@@ -275,7 +306,7 @@
       map.getPanes().overlayPane.appendChild(this._cv);
       map.on('moveend zoomend resize', this._debouncedRender, this);
       map.on('zoomanim', this._onZoomAnim, this);
-      this._render();
+      this._render(true);
     },
 
     onRemove: function (map) {
@@ -295,19 +326,19 @@
     _debouncedRender: function () {
       var self = this;
       if (this._debounceTimer) clearTimeout(this._debounceTimer);
-      this._debounceTimer = setTimeout(function () { self._render(); }, CONFIG.renderDebounceMs);
+      this._debounceTimer = setTimeout(function () { self._render(false); }, CONFIG.renderDebounceMs);
     },
 
-    setVisible: function (v) { this._visible = v; this._render(); },
-    setGrid: function (grid) { this._gridData = grid; this._render(); },
-    refresh: function () { if (this._map) this._render(); },
+    setVisible: function (v) { this._visible = v; this._render(true); },
+    setGrid: function (grid) { this._gridData = grid; this._render(true); },
+    refresh: function () { if (this._map) this._render(true); },
 
     _clear: function () {
       if (!this._cv) return;
       this._cv.getContext('2d').clearRect(0, 0, this._cv.width, this._cv.height);
     },
 
-    _render: function () {
+    _render: function (force) {
       var map = this._map;
       if (!map) return;
       if (!this._visible || !this._gridData || !this._gridData.ready) {
@@ -317,6 +348,7 @@
 
       var sz = map.getSize();
       var step = Math.max(4, Math.floor(Math.min(sz.x, sz.y) / 180));
+      if (!force && viewportCovered(this, map, step)) return;
       var state = buildRenderState(map, step);
       var values = sampleCanvasGrid(map, state, this._gridData, this._sampleWorkspace);
       this._drawGradient(values, state);
@@ -329,6 +361,7 @@
       L.DomUtil.setTransform(cv, state.pos, 1);
       this._renderZoom = state.renderZoom;
       this._renderTopLeft = state.renderTopLeft;
+      rememberRenderCoverage(this, state);
 
       var ctx = cv.getContext('2d');
       ctx.clearRect(0, 0, cv.width, cv.height);
