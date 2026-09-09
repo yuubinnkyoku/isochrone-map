@@ -124,12 +124,14 @@ jobs:
           repository: ${{ github.repository }}
           run-id: ${{ env.AUDIT_RUN_ID }}
       - name: Verify Asakusa disambiguation and print counts
+        env:
+          PYTHONPATH: scripts
         run: |
           python - <<'PY'
           import json
           from collections import Counter, defaultdict
           from pathlib import Path
-          from scripts.audit_physical_station_points_full import classify_route1
+          from audit_physical_station_points_full import classify_route1
 
           rows = json.loads(Path('audit-artifact/physical-station-point-audit.json').read_text(encoding='utf-8'))['rows']
           groups = defaultdict(list)
