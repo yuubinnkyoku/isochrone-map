@@ -177,16 +177,16 @@
         }).addTo(self._map);
 
         var routeHtml = '';
-if (s.route) {
-  var routeParts = String(s.route).split(' → ');
-  var routeLines = [];
-  for (var routeIndex = 0; routeIndex < routeParts.length; routeIndex += 2) {
-    var routeLine = routeParts.slice(routeIndex, routeIndex + 2).join(' → ');
-    if (routeIndex > 0) routeLine = '→ ' + routeLine;
-    routeLines.push(routeLine);
-  }
-  routeHtml = '<div class="tt-line tt-route">' + routeLines.join('<br>') + '</div>';
-}
+        if (s.route) {
+          var routeParts = String(s.route).split(' → ');
+          var routeLines = [];
+          for (var routeIndex = 0; routeIndex < routeParts.length; routeIndex += 2) {
+            var routeLine = routeParts.slice(routeIndex, routeIndex + 2).join(' → ');
+            if (routeIndex > 0) routeLine = '→ ' + routeLine;
+            routeLines.push(routeLine);
+          }
+          routeHtml = '<div class="tt-line tt-route">' + routeLines.join('<br>') + '</div>';
+        }
         var routeUsageHtml = self._alternateRouteStatusHtml(s);
         var noteHtml = s.note ? '<div class="tt-detail">' + s.note + '</div>' : '';
         var searchDateHtml = s.searchDate ? '<div class="tt-detail">検索日: ' + s.searchDate + '</div>' : '';
