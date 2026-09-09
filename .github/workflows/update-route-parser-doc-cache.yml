@@ -1,0 +1,73 @@
+name: Update route-parser docs and cache versions
+
+on:
+  push:
+    branches: [fix-route-parser-revalidation]
+    paths:
+      - .github/workflows/update-route-parser-doc-cache.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Update README and station-data cache version
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          readme = Path('README.md')
+          text = readme.read_text(encoding='utf-8')
+          replacements = {
+              '- 最初の鉄道乗車がその物理地点自身：976地点': '- 最初の鉄道乗車がその物理地点自身：1123地点',
+              '- 同じ論理駅の別物理地点へ歩いてから乗車：232地点': '- 同じ論理駅の別物理地点へ歩いてから乗車：252地点',
+              '- 別の駅へ移動してから乗車：343地点': '- 別の駅へ移動してから乗車：176地点',
+              '- **最適経路の乗車地点表示**: その物理地点の鉄道を最適経路で使わない587地点を中抜き・強調・非表示で区別': '- **最適経路の乗車地点表示**: その物理地点の鉄道を最適経路で使わない440地点を中抜き・強調・非表示で区別',
+          }
+          for old, new in replacements.items():
+              assert old in text, old
+              text = text.replace(old, new)
+          marker = '- 最適経路で鉄道に乗らない：12地点\n'
+          addition = (
+              marker + '\n'
+              '保存済みYahoo経路を2026-09-09に現行パーサーで全1563地点再検証し、'
+              '**177地点の乗車地点診断と230地点の経路要約を修正**しました。'
+              'Yahooへの再問い合わせではなく、元の全件監査に保存された生の経路を再解析しています。'
+              '詳細は `docs/route-parser-revalidation.md` を参照してください。\n'
+          )
+          assert marker in text
+          text = text.replace(marker, addition, 1)
+          readme.write_text(text, encoding='utf-8')
+
+          config = Path('js/config.js')
+          text = config.read_text(encoding='utf-8')
+          assert 'dataVersion: 22' in text
+          config.write_text(text.replace('dataVersion: 22', 'dataVersion: 23', 1), encoding='utf-8')
+
+          index = Path('index.html')
+          text = index.read_text(encoding='utf-8')
+          assert 'js/config.js?v=27' in text
+          index.write_text(text.replace('js/config.js?v=27', 'js/config.js?v=28', 1), encoding='utf-8')
+          PY
+      - name: Validate replacements
+        run: |
+          grep -F 'その物理地点自身：1123地点' README.md
+          grep -F '別の駅へ移動してから乗車：176地点' README.md
+          grep -F '使わない440地点' README.md
+          grep -F 'dataVersion: 23' js/config.js
+          grep -F 'js/config.js?v=28' index.html
+          node --check js/config.js
+      - name: Commit
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add README.md js/config.js index.html
+          git commit -m 'Update route parser diagnostics and station cache version'
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
