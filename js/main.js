@@ -52,9 +52,14 @@
     if (window.updateTimeRangeFromStations) updateTimeRangeFromStations(stations);
 
     if (PrecomputedGrid.ready) {
-      PrecomputedGrid.setMode(settings.interpolationMode || 'access');
+      var requestedMode = settings.interpolationMode || 'access';
+      var actualMode = PrecomputedGrid.setMode(requestedMode);
+      UIManager.syncInterpolationMode(actualMode);
       contourOverlay.setGrid(PrecomputedGrid);
       gradientOverlay.setGrid(PrecomputedGrid);
+      if (actualMode !== requestedMode) {
+        console.warn('指定した補間グリッドを利用できないため ' + actualMode + ' にフォールバックしました');
+      }
     }
     UIManager.refreshLegend();
     Renderer3D.setStations(stations);
@@ -69,8 +74,13 @@
     if (settings.threeDEnabled) {
       Renderer3D.setMapMode(settings.threeDMapMode || 'texture');
       Renderer3D.setFlatPlaneHeight(settings.threeDFlatHeight);
-      Renderer3D.show();
-      document.getElementById('map').style.display = 'none';
+      if (Renderer3D.show()) {
+        document.getElementById('map').style.display = 'none';
+      } else {
+        UIManager.setThreeDEnabledSilently(false);
+        document.getElementById('map').style.display = '';
+        map.invalidateSize();
+      }
     }
 
     initSearch(stations, map);
@@ -133,6 +143,7 @@
       case 'interpolationMode':
         if (PrecomputedGrid.ready) {
           var actualMode = PrecomputedGrid.setMode(value);
+          UIManager.syncInterpolationMode(actualMode);
           contourOverlay.refresh();
           gradientOverlay.refresh();
           UIManager.updateDataInfo(DataManager.meta, DataManager.stations.length, DataManager.getMajorCount());
@@ -169,8 +180,13 @@
         if (value) {
           Renderer3D.setMapMode(UIManager.getSettings().threeDMapMode || 'texture');
           Renderer3D.setFlatPlaneHeight(UIManager.getSettings().threeDFlatHeight);
-          Renderer3D.show();
-          document.getElementById('map').style.display = 'none';
+          if (Renderer3D.show()) {
+            document.getElementById('map').style.display = 'none';
+          } else {
+            UIManager.setThreeDEnabledSilently(false);
+            document.getElementById('map').style.display = '';
+            map.invalidateSize();
+          }
         } else {
           Renderer3D.hide();
           document.getElementById('map').style.display = '';
