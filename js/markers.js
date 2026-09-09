@@ -237,14 +237,6 @@
       });
     },
 
-    _getLabelRankLimit: function (zoom) {
-      var config = CONFIG.stationLabels || {};
-      if (zoom >= (config.allLabelsMinZoom || 15)) return Infinity;
-      if (zoom <= (config.majorOnlyMaxZoom || 11)) return 0;
-      var limits = config.rankLimits || {};
-      return limits[zoom] || 0;
-    },
-
     _labelBox: function (item) {
       var config = CONFIG.stationLabels || {};
       var boxConfig = config.collisionBox || {};
@@ -274,12 +266,16 @@
     },
 
     _updateDisplay: function () {
+      // Settings are interactive before station data finishes loading. Treat
+      // pre-init updates as no-ops; init() reapplies the current settings later.
+      if (!this._map) return;
+
       var z = this._map.getZoom();
       var self = this;
       var labelConfig = CONFIG.stationLabels || {};
       var allLabelsMinZoom = labelConfig.allLabelsMinZoom || 15;
+      var majorOnlyMaxZoom = labelConfig.majorOnlyMaxZoom || 11;
       var collisionMaxZoom = labelConfig.collisionMaxZoom || 14;
-      var rankLimit = this._getLabelRankLimit(z);
 
       var markerStroke = this._getMarkerStroke();
       var excludedStroke = this._getExcludedMarkerStroke();
@@ -299,13 +295,14 @@
 
       var candidates = this._markers.filter(function (item) {
         if (self._isAlternateRoutePoint(item.data) && self._excludedStationMode === 'hidden') return false;
-        // All physical points get their own label once sufficiently zoomed in.  At
-        // lower zooms only one representative label per logical transfer station is
-        // considered, while every physical marker remains visible.
+        // At high zoom every physical point gets a label. At lower zooms only
+        // one representative point per logical station is considered. Between
+        // those levels passenger counts decide collision priority, not whether
+        // an otherwise isolated station is allowed to appear at all.
         if (z >= allLabelsMinZoom) return true;
         if (item.data.labelPrimary === false) return false;
-        if (item.isMajor) return true;
-        return Number.isFinite(item.data.passengerRank) && item.data.passengerRank <= rankLimit;
+        if (z <= majorOnlyMaxZoom) return item.isMajor;
+        return true;
       });
 
       candidates.sort(function (a, b) {
@@ -317,10 +314,10 @@
       });
 
       var occupied = [];
-      var useCollision = z <= collisionMaxZoom && z > (labelConfig.majorOnlyMaxZoom || 11);
+      var useCollision = z <= collisionMaxZoom && z > majorOnlyMaxZoom;
       candidates.forEach(function (item) {
         var box = self._labelBox(item);
-        var collides = useCollision && !item.isMajor && occupied.some(function (other) {
+        var collides = useCollision && occupied.some(function (other) {
           return self._boxesOverlap(box, other);
         });
         if (collides) return;
@@ -357,6 +354,7 @@
     },
 
     refresh: function (stations, meta) {
+      if (!this._map) return;
       var self = this;
       this._markers.forEach(function (item) {
         if (self._map.hasLayer(item.marker)) self._map.removeLayer(item.marker);
@@ -371,7 +369,7 @@
     updateTheme: function () {
       this._updateDisplay();
 
-      if (this._destRings.length) {
+      if (this._destRings.length && this._map) {
         var ringStyle = this._getDestinationRingStyles();
         var cs = getComputedStyle(document.documentElement);
         this._destRings.forEach(function (ring) {
