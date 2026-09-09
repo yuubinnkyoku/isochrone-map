@@ -150,8 +150,13 @@ def line_matches_point(point: dict, service: str) -> tuple[bool, str | None]:
     return False, None
 
 
-def classify_route1(point: dict, section: list[str]) -> dict:
-    """Classify a saved detailed route-1 section with the current parser."""
+def classify_route1(point: dict, section: list[str], logical_points: list[dict] | None = None) -> dict:
+    """Classify a saved detailed route-1 section with the current parser.
+
+    ``logical_points`` disambiguates distinct same-name stations: if Yahoo boards a
+    service that matches no physical component in the current logical station group,
+    the boarding point is a different station rather than a different component.
+    """
     if not section:
         return {'classification': 'unparsed', 'reason': 'route1-section-missing', 'route1': []}
     rail = first_rail_event(section)
@@ -167,15 +172,21 @@ def classify_route1(point: dict, section: list[str]) -> dict:
     board = rail.get('boardStation')
     same_station = bool(board) and station_base(board) == station_base(point.get('logicalStation'))
     line_match, line_reason = line_matches_point(point, rail['service'])
+    same_logical_service_match = line_match
+    if same_station and not line_match and logical_points:
+        same_logical_service_match = any(
+            line_matches_point(candidate, rail['service'])[0]
+            for candidate in logical_points
+        )
     if same_station and line_match:
         classification = 'keep'
         reason = 'boards-current-physical-point'
+    elif same_station and same_logical_service_match:
+        classification = 'exclude'
+        reason = 'boards-different-component'
     else:
         classification = 'exclude'
-        if not same_station:
-            reason = 'boards-different-station'
-        else:
-            reason = 'boards-different-component'
+        reason = 'boards-different-station'
     return {
         'classification': classification,
         'reason': reason,
@@ -190,9 +201,9 @@ def classify_route1(point: dict, section: list[str]) -> dict:
     }
 
 
-def classify(point: dict, excerpt: list[str]) -> dict:
+def classify(point: dict, excerpt: list[str], logical_points: list[dict] | None = None) -> dict:
     """Classify where route 1 first boards rail; not whether the point enters IDW."""
-    return classify_route1(point, detailed_route1(excerpt))
+    return classify_route1(point, detailed_route1(excerpt), logical_points)
 
 
 def main() -> None:
@@ -207,6 +218,9 @@ def main() -> None:
 
     proposal = json.loads(Path(args.proposal).read_text(encoding='utf-8'))
     all_points = proposal['physicalPoints']
+    logical_points_by_id = {}
+    for candidate in all_points:
+        logical_points_by_id.setdefault(str(candidate.get('logicalStationId')), []).append(candidate)
     selected = [
         (i, point) for i, point in enumerate(all_points)
         if i % args.shard_count == args.shard_index
@@ -227,7 +241,11 @@ def main() -> None:
             origin_dist = None if not origin else origin.get('distanceFromStationM')
             departure = result.get('summaryDeparture')
             departure_minutes = hhmm_to_minutes(departure)
-            route_class = classify(point, result.get('excerpt') or [])
+            route_class = classify(
+                point,
+                result.get('excerpt') or [],
+                logical_points_by_id.get(str(point.get('logicalStationId')), []),
+            )
             row.update({
                 'departure': departure,
                 'arrival': result.get('summaryArrival'),

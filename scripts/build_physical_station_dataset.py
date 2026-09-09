@@ -149,10 +149,18 @@ def main() -> None:
     if bad:
         raise SystemExit(f'unresolved raw physical points: {len(bad)}')
 
+    reparse_groups: dict[str, list[dict]] = defaultdict(list)
+    for r in rows:
+        reparse_groups[str(r['logicalStationId'])].append(r)
+
     reparsed: dict[str, dict] = {}
     legacy_parser_changes = 0
     for r in rows:
-        parsed = classify_route1(r, r.get('route1') or [])
+        parsed = classify_route1(
+            r,
+            r.get('route1') or [],
+            reparse_groups[str(r['logicalStationId'])],
+        )
         if parsed.get('classification') not in {'keep', 'exclude'}:
             raise SystemExit(f"route parser unresolved for {r.get('id')}: {parsed.get('reason')}")
         reparsed[str(r['id'])] = parsed
@@ -275,7 +283,7 @@ def main() -> None:
             'searchDate': '2026-08-28',
             'targetArrival': '08:18',
             'originVerified': expected,
-            'routeParserVersion': 2,
+            'routeParserVersion': 3,
             'savedAuditRowsReclassified': legacy_parser_changes,
             'routeSelectionDiagnostics': dict(sorted(reason_counts.items())),
         },
@@ -290,7 +298,7 @@ def main() -> None:
         'originVerified': expected,
         'includedPhysicalPoints': expected,
         'excludedPhysicalPoints': 0,
-        'routeParserVersion': 2,
+        'routeParserVersion': 3,
         'savedAuditRowsReclassified': legacy_parser_changes,
         'routeSelectionDiagnostics': dict(sorted(reason_counts.items())),
     }
