@@ -14,12 +14,12 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 EXPECTED_DIAGNOSTICS = {
-    'boards-current-physical-point': 1123,
-    'boards-different-component': 252,
-    'boards-different-station': 176,
+    'boards-current-physical-point': 1157,
+    'boards-different-component': 217,
+    'boards-different-station': 177,
     'no-rail-boarded': 12,
 }
-EXPECTED_REPARSED_ROWS = 177
+EXPECTED_REPARSED_ROWS = 210
 
 
 def main() -> None:
@@ -78,8 +78,8 @@ def main() -> None:
     diagnostics = exact.get('routeSelectionDiagnostics')
     if diagnostics != EXPECTED_DIAGNOSTICS:
         raise SystemExit(f'route-selection diagnostics changed: {diagnostics}')
-    if exact.get('routeParserVersion') != 2:
-        raise SystemExit(f"route parser version {exact.get('routeParserVersion')} != 2")
+    if exact.get('routeParserVersion') != 3:
+        raise SystemExit(f"route parser version {exact.get('routeParserVersion')} != 3")
     if exact.get('savedAuditRowsReclassified') != EXPECTED_REPARSED_ROWS:
         raise SystemExit(
             f"saved audit reparse changes {exact.get('savedAuditRowsReclassified')} != {EXPECTED_REPARSED_ROWS}"
@@ -123,6 +123,35 @@ def main() -> None:
         station = next(s for s in stations if s['id'] == sid)
         if station['physicalPointAudit'].get('reason') != 'boards-current-physical-point':
             raise SystemExit(f'{sid} orthographic station-name normalization regressed')
+
+    # Second-pass regressions: Yahoo service branding can differ from the N02
+    # infrastructure line, and same-name stations can still be separate stations.
+    by_id = {s['id']: s for s in stations}
+    expected_current = {
+        'n02p-004322': '東急目黒線',       # 元住吉: service on N02 東横線 infrastructure
+        'n02p-002891': 'ＪＲ埼京線',       # 指扇: service on N02 川越線
+        'n02p-003573': '東京メトロ東西線', # 高円寺: through service on N02 中央線
+        'n02p-003928': 'ＪＲ武蔵野線',     # 潮見: service on N02 京葉線
+        'n02p-004535': '小湊鐵道',         # spelling variant: 小湊鐵道線
+        'n02p-002886': '関東鉄道竜ケ崎線', # ケ/ヶ line-name variant
+        'n02p-004675': 'ＪＲ横浜線',       # 桜木町: service on N02 根岸線
+        'n02p-003373': 'ＪＲ山手線',       # 西日暮里: service on N02 東北線
+    }
+    for sid, service_token in expected_current.items():
+        s = by_id[sid]
+        audit = s['physicalPointAudit']
+        first = audit.get('firstRail') or {}
+        if audit.get('reason') != 'boards-current-physical-point':
+            raise SystemExit(f'{sid} infrastructure/service mapping regressed: {audit}')
+        if service_token not in str(first.get('service')):
+            raise SystemExit(f'{sid} unexpected first service: {first}')
+
+    asakusa = by_id['n02p-003513']
+    asakusa_first = asakusa['physicalPointAudit'].get('firstRail') or {}
+    if asakusa['physicalPointAudit'].get('reason') != 'boards-different-station':
+        raise SystemExit(f'TX浅草 must be a separate same-name station: {asakusa["physicalPointAudit"]}')
+    if 'つくばエクスプレス' not in str(asakusa_first.get('service')) or '浅草' not in str(asakusa_first.get('boardStation')):
+        raise SystemExit(f'TX浅草 first boarding unexpected: {asakusa_first}')
 
     # Every parsed first-rail service must be present in the human-readable route too.
     for station in stations:

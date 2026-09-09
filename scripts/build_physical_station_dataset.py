@@ -283,7 +283,7 @@ def main() -> None:
             'searchDate': '2026-08-28',
             'targetArrival': '08:18',
             'originVerified': expected,
-            'routeParserVersion': 2,
+            'routeParserVersion': 3,
             'savedAuditRowsReclassified': legacy_parser_changes,
             'routeSelectionDiagnostics': dict(sorted(reason_counts.items())),
         },
@@ -298,7 +298,7 @@ def main() -> None:
         'originVerified': expected,
         'includedPhysicalPoints': expected,
         'excludedPhysicalPoints': 0,
-        'routeParserVersion': 2,
+        'routeParserVersion': 3,
         'savedAuditRowsReclassified': legacy_parser_changes,
         'routeSelectionDiagnostics': dict(sorted(reason_counts.items())),
     }
