@@ -6,6 +6,7 @@ on:
     paths:
       - scripts/audit_physical_station_points_full.py
       - scripts/build_physical_station_dataset.py
+      - scripts/validate_physical_station_dataset.py
       - .github/workflows/revalidate-saved-route-parser.yml
   workflow_dispatch:
 
@@ -79,32 +80,35 @@ jobs:
           assert all(not s.get('excludeFromIdw') for s in after['stations'])
           assert all(s.get('route') for s in after['stations'])
 
-          diag = after['meta']['idwExclusionPolicy']['exactPointAudit']['routeSelectionDiagnostics']
-          assert sum(diag.values()) == 1563, diag
-          assert after['meta']['idwExclusionPolicy']['exactPointAudit']['routeParserVersion'] == 2
-          reparsed = after['meta']['idwExclusionPolicy']['exactPointAudit']['savedAuditRowsReclassified']
-          assert reparsed > 0
+          exact = after['meta']['idwExclusionPolicy']['exactPointAudit']
+          diag = exact['routeSelectionDiagnostics']
+          assert diag == {
+              'boards-current-physical-point': 1123,
+              'boards-different-component': 252,
+              'boards-different-station': 176,
+              'no-rail-boarded': 12,
+          }, diag
+          assert exact['routeParserVersion'] == 2
+          assert exact['savedAuditRowsReclassified'] == 177
 
           by_id = {s['id']: s for s in after['stations']}
           urawa = by_id['n02p-002933']
-          first = urawa['physicalPointAudit']['firstRail']
+          urawa_first = urawa['physicalPointAudit']['firstRail']
           assert urawa['station'] == '浦和美園'
           assert urawa['departureDisplay'] == '07:12'
           assert urawa['line'] == '埼玉高速鉄道線'
-          assert first['boardStation'] == '浦和美園', first
-          assert '埼玉高速鉄道' in first['service'], first
-          assert first['sameLogicalStationBase'] is True
-          assert first['lineMatchesPhysicalPoint'] is True
+          assert urawa_first['boardStation'] == '浦和美園', urawa_first
+          assert '埼玉高速鉄道' in urawa_first['service'], urawa_first
+          assert urawa_first['sameLogicalStationBase'] is True
+          assert urawa_first['lineMatchesPhysicalPoint'] is True
           assert urawa['physicalPointAudit']['reason'] == 'boards-current-physical-point'
           assert '埼玉高速鉄道' in urawa['route']
           assert '東京メトロ丸ノ内線池袋行' in urawa['route']
 
-          # Orthographic Yahoo/N02 variants must not create fake different-station flags.
           for sid in ('n02p-003945', 'n02p-004024', 'n02p-003279', 'n02p-003289', 'n02p-003671'):
               s = by_id[sid]
               assert s['physicalPointAudit']['reason'] == 'boards-current-physical-point', (sid, s['physicalPointAudit'])
 
-          # Every stored first-rail service must also appear in the human route summary.
           for s in after['stations']:
               first = (s.get('physicalPointAudit') or {}).get('firstRail') or {}
               service = first.get('service')
@@ -122,11 +126,11 @@ jobs:
                   diagnostic_changes += 1
 
           print('routeSelectionDiagnostics', diag)
-          print('savedAuditRowsReclassified', reparsed)
+          print('savedAuditRowsReclassified', exact['savedAuditRowsReclassified'])
           print('stored route summaries changed', route_changes)
           print('stored route diagnostics changed', diagnostic_changes)
           print('浦和美園 route', urawa['route'])
-          print('浦和美園 first rail', first)
+          print('浦和美園 first rail', urawa_first)
           PY
 
       - name: Rebuild interpolation grids because stations.json provenance changed
@@ -137,7 +141,7 @@ jobs:
       - name: Run repository validation
         run: |
           python scripts/validate_physical_station_dataset.py
-          node --check scripts/audit_physical_station_points_full.py
+          python -m py_compile scripts/audit_physical_station_points_full.py scripts/build_physical_station_dataset.py
           node --check scripts/build_precomputed_grid.mjs
           node --check scripts/build_access_grid.mjs
           node --check js/config.js
