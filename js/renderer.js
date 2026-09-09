@@ -123,12 +123,15 @@
     layer._renderStep = state.step;
   }
 
-  // Even when the bitmap itself can be reused, its CSS position must be reset
-  // against Leaflet's current layer-point origin after moveend.
+  // Re-anchor the already-rendered bitmap immediately after Leaflet commits a
+  // pan/zoom. Heavy resampling can remain debounced, but the visible overlay must
+  // never spend that debounce interval at an old layer-point origin or scale.
   function positionExistingCanvas(layer) {
-    if (!layer._cv || !layer._map || !layer._renderBounds) return;
-    var topLeft = layer._map.latLngToLayerPoint(layer._renderBounds.getNorthWest());
-    L.DomUtil.setTransform(layer._cv, topLeft, 1);
+    if (!layer._cv || !layer._map || !layer._renderBounds || !Number.isFinite(layer._renderZoom)) return;
+    var map = layer._map;
+    var topLeft = map.latLngToLayerPoint(layer._renderBounds.getNorthWest());
+    var scale = map.getZoomScale(map.getZoom(), layer._renderZoom);
+    L.DomUtil.setTransform(layer._cv, topLeft, scale);
   }
 
   function animateCanvasZoom(layer, e) {
@@ -157,19 +160,29 @@
       Object.assign(this._cv.style, { position: 'absolute', pointerEvents: 'none', zIndex: '250' });
       this._cv.style.willChange = 'transform';
       map.getPanes().overlayPane.appendChild(this._cv);
-      map.on('moveend zoomend resize', this._debouncedRender, this);
+      map.on('moveend zoomend', this._onMapSettled, this);
+      map.on('resize', this._debouncedRender, this);
       map.on('zoomanim', this._onZoomAnim, this);
       this._render(true);
     },
 
     onRemove: function (map) {
       L.DomUtil.remove(this._cv);
-      map.off('moveend zoomend resize', this._debouncedRender, this);
+      map.off('moveend zoomend', this._onMapSettled, this);
+      map.off('resize', this._debouncedRender, this);
       map.off('zoomanim', this._onZoomAnim, this);
     },
 
     _onZoomAnim: function (e) {
       animateCanvasZoom(this, e);
+    },
+
+    _onMapSettled: function () {
+      if (!this._map) return;
+      positionExistingCanvas(this);
+      var step = CONFIG.gridSize(this._map.getZoom());
+      if (viewportCovered(this, this._map, step)) return;
+      this._debouncedRender();
     },
 
     _debouncedRender: function () {
@@ -310,19 +323,30 @@
       Object.assign(this._cv.style, { position: 'absolute', pointerEvents: 'none', zIndex: '200' });
       this._cv.style.willChange = 'transform';
       map.getPanes().overlayPane.appendChild(this._cv);
-      map.on('moveend zoomend resize', this._debouncedRender, this);
+      map.on('moveend zoomend', this._onMapSettled, this);
+      map.on('resize', this._debouncedRender, this);
       map.on('zoomanim', this._onZoomAnim, this);
       this._render(true);
     },
 
     onRemove: function (map) {
       L.DomUtil.remove(this._cv);
-      map.off('moveend zoomend resize', this._debouncedRender, this);
+      map.off('moveend zoomend', this._onMapSettled, this);
+      map.off('resize', this._debouncedRender, this);
       map.off('zoomanim', this._onZoomAnim, this);
     },
 
     _onZoomAnim: function (e) {
       animateCanvasZoom(this, e);
+    },
+
+    _onMapSettled: function () {
+      if (!this._map) return;
+      positionExistingCanvas(this);
+      var sz = this._map.getSize();
+      var step = Math.max(4, Math.floor(Math.min(sz.x, sz.y) / 180));
+      if (viewportCovered(this, this._map, step)) return;
+      this._debouncedRender();
     },
 
     _debouncedRender: function () {
