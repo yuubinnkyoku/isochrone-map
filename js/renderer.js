@@ -19,9 +19,6 @@
       breaks.push(value);
     }
 
-    // Early-morning / previous-day values can be many hours away from the
-    // normal school-morning scale. Keep those lines sparse so the map remains
-    // readable, while retaining the user-selected interval from 06:30 onward.
     if (min < denseMin) {
       var earlyFirst = Math.ceil(min / earlyInterval) * earlyInterval;
       for (var e = earlyFirst; e < denseMin; e += earlyInterval) addBreak(e);
@@ -30,9 +27,6 @@
     var first = Math.ceil(Math.max(min, denseMin) / interval) * interval;
     for (var m = first; m <= max; m += interval) addBreak(m);
 
-    // Ten-minute lines are the labelled visual anchors in the legend. Include
-    // them even when the selected interval (notably 3 minutes) is not a divisor
-    // of ten, otherwise the legend can advertise lines that are never drawn.
     var mainFirst = Math.ceil(Math.max(min, denseMin) / 10) * 10;
     for (var main = mainFirst; main <= max; main += 10) addBreak(main);
 
@@ -47,12 +41,14 @@
     var padY = Math.round(sz.y * pad);
     var width = sz.x + padX * 2;
     var height = sz.y + padY * 2;
+    var northWest = map.containerPointToLatLng([-padX, -padY]);
+    var southEast = map.containerPointToLatLng([sz.x + padX, sz.y + padY]);
     return {
       cvWidth: width,
       cvHeight: height,
-      pos: map.containerPointToLayerPoint([-padX, -padY]),
+      pos: map.latLngToLayerPoint(northWest),
       renderZoom: map.getZoom(),
-      renderTopLeft: map.containerPointToLatLng([-padX, -padY]),
+      renderBounds: L.latLngBounds(northWest, southEast),
       padX: padX,
       padY: padY,
       step: step,
@@ -70,10 +66,6 @@
     return current;
   }
 
-  // Web Mercator is separable: longitude depends only on x and latitude only on y.
-  // Convert one coordinate per column/row, then bilinearly sample the static grid.
-  // Buffers are kept on each overlay and reused across renders to avoid repeated
-  // allocations and garbage collection during pan/zoom interactions.
   function sampleCanvasGrid(map, state, gridData, workspace) {
     var cols = state.cols;
     var rows = state.rows;
@@ -106,28 +98,29 @@
     if (cv.height !== height) cv.height = height;
   }
 
-  // The canvas deliberately includes padding around the viewport. As long as a
-  // pan remains inside that already-rendered geographic area, Leaflet can move
-  // the existing canvas with its normal pane transform and no scalar sampling or
-  // Marching Squares pass is needed at moveend.
   function viewportCovered(layer, map, step) {
-    var bounds = layer._renderLayerBounds;
+    var bounds = layer._renderBounds;
     if (!bounds || layer._renderZoom !== map.getZoom() || layer._renderStep !== step) return false;
-    var sz = map.getSize();
-    var topLeft = map.containerPointToLayerPoint([0, 0]);
-    var bottomRight = map.containerPointToLayerPoint([sz.x, sz.y]);
-    return topLeft.x >= bounds.left && topLeft.y >= bounds.top &&
-      bottomRight.x <= bounds.right && bottomRight.y <= bounds.bottom;
+    var view = map.getBounds();
+    return bounds.contains(view.getNorthWest()) && bounds.contains(view.getSouthEast());
   }
 
   function rememberRenderCoverage(layer, state) {
-    layer._renderLayerBounds = {
-      left: state.pos.x,
-      top: state.pos.y,
-      right: state.pos.x + state.cvWidth,
-      bottom: state.pos.y + state.cvHeight
-    };
+    layer._renderBounds = state.renderBounds;
     layer._renderStep = state.step;
+  }
+
+  function positionExistingCanvas(layer) {
+    if (!layer._cv || !layer._map || !layer._renderBounds) return;
+    var topLeft = layer._map.latLngToLayerPoint(layer._renderBounds.getNorthWest());
+    L.DomUtil.setTransform(layer._cv, topLeft, 1);
+  }
+
+  function animateCanvasZoom(layer, e) {
+    if (!layer._cv || !layer._map || !layer._renderBounds || !Number.isFinite(layer._renderZoom)) return;
+    var scale = layer._map.getZoomScale(e.zoom, layer._renderZoom);
+    var newPos = layer._map._latLngToNewLayerPoint(layer._renderBounds.getNorthWest(), e.zoom, e.center);
+    L.DomUtil.setTransform(layer._cv, newPos, scale);
   }
 
   var ContourOverlay = L.Layer.extend({
@@ -139,7 +132,7 @@
       this._visible = opts.visible !== false;
       this._debounceTimer = null;
       this._sampleWorkspace = {};
-      this._renderLayerBounds = null;
+      this._renderBounds = null;
       this._renderStep = null;
     },
 
@@ -161,11 +154,7 @@
     },
 
     _onZoomAnim: function (e) {
-      var map = this._map;
-      if (!this._renderZoom) return;
-      var scale = map.getZoomScale(e.zoom, this._renderZoom);
-      var newPos = map._latLngToNewLayerPoint(this._renderTopLeft, e.zoom, e.center);
-      L.DomUtil.setTransform(this._cv, newPos, scale);
+      animateCanvasZoom(this, e);
     },
 
     _debouncedRender: function () {
@@ -193,7 +182,10 @@
       }
 
       var step = CONFIG.gridSize(map.getZoom());
-      if (!force && viewportCovered(this, map, step)) return;
+      if (!force && viewportCovered(this, map, step)) {
+        positionExistingCanvas(this);
+        return;
+      }
       var state = buildRenderState(map, step);
       var values = sampleCanvasGrid(map, state, this._gridData, this._sampleWorkspace);
       this._drawContours(values, state);
@@ -205,7 +197,6 @@
       ensureCanvasSize(cv, state.cvWidth, state.cvHeight);
       L.DomUtil.setTransform(cv, state.pos, 1);
       this._renderZoom = state.renderZoom;
-      this._renderTopLeft = state.renderTopLeft;
       rememberRenderCoverage(this, state);
 
       var ctx = cv.getContext('2d');
@@ -294,7 +285,7 @@
       this._visible = opts.visible || false;
       this._debounceTimer = null;
       this._sampleWorkspace = {};
-      this._renderLayerBounds = null;
+      this._renderBounds = null;
       this._renderStep = null;
     },
 
@@ -316,11 +307,7 @@
     },
 
     _onZoomAnim: function (e) {
-      var map = this._map;
-      if (!this._renderZoom) return;
-      var scale = map.getZoomScale(e.zoom, this._renderZoom);
-      var newPos = map._latLngToNewLayerPoint(this._renderTopLeft, e.zoom, e.center);
-      L.DomUtil.setTransform(this._cv, newPos, scale);
+      animateCanvasZoom(this, e);
     },
 
     _debouncedRender: function () {
@@ -348,7 +335,10 @@
 
       var sz = map.getSize();
       var step = Math.max(4, Math.floor(Math.min(sz.x, sz.y) / 180));
-      if (!force && viewportCovered(this, map, step)) return;
+      if (!force && viewportCovered(this, map, step)) {
+        positionExistingCanvas(this);
+        return;
+      }
       var state = buildRenderState(map, step);
       var values = sampleCanvasGrid(map, state, this._gridData, this._sampleWorkspace);
       this._drawGradient(values, state);
@@ -360,7 +350,6 @@
       ensureCanvasSize(cv, state.cvWidth, state.cvHeight);
       L.DomUtil.setTransform(cv, state.pos, 1);
       this._renderZoom = state.renderZoom;
-      this._renderTopLeft = state.renderTopLeft;
       rememberRenderCoverage(this, state);
 
       var ctx = cv.getContext('2d');
