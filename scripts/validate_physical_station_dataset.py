@@ -2,7 +2,7 @@
 """Validate the final exact-point stations.json against its N02 proposal.
 
 All physical points are valid IDW samples because their departure values were queried
-from the exact coordinates themselves.  Route-selection classifications are retained
+from the exact coordinates themselves. Route-selection classifications are retained
 only as provenance showing whether the best journey boards at that component, another
 component, another station, or never boards rail.
 """
@@ -14,11 +14,12 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 EXPECTED_DIAGNOSTICS = {
-    'boards-current-physical-point': 976,
-    'boards-different-component': 232,
-    'boards-different-station': 343,
+    'boards-current-physical-point': 1123,
+    'boards-different-component': 252,
+    'boards-different-station': 176,
     'no-rail-boarded': 12,
 }
+EXPECTED_REPARSED_ROWS = 177
 
 
 def main() -> None:
@@ -73,9 +74,16 @@ def main() -> None:
         if policy.get(key) != value:
             raise SystemExit(f'policy {key} {policy.get(key)} != {value}')
 
-    diagnostics = policy.get('exactPointAudit', {}).get('routeSelectionDiagnostics')
+    exact = policy.get('exactPointAudit', {})
+    diagnostics = exact.get('routeSelectionDiagnostics')
     if diagnostics != EXPECTED_DIAGNOSTICS:
         raise SystemExit(f'route-selection diagnostics changed: {diagnostics}')
+    if exact.get('routeParserVersion') != 2:
+        raise SystemExit(f"route parser version {exact.get('routeParserVersion')} != 2")
+    if exact.get('savedAuditRowsReclassified') != EXPECTED_REPARSED_ROWS:
+        raise SystemExit(
+            f"saved audit reparse changes {exact.get('savedAuditRowsReclassified')} != {EXPECTED_REPARSED_ROWS}"
+        )
 
     if sum(1 for s in stations if s.get('labelPrimary')) != 1318:
         raise SystemExit('each logical station must have exactly one primary label')
@@ -88,9 +96,40 @@ def main() -> None:
         if not isinstance(s.get('minutes'), int)
         or not isinstance(s.get('lat'), (int, float))
         or not isinstance(s.get('lng'), (int, float))
+        or not s.get('route')
     ]
     if bad:
-        raise SystemExit(f'invalid numeric fields: {bad[:10]}')
+        raise SystemExit(f'invalid numeric/route fields: {bad[:10]}')
+
+    # The screenshot-triggering regression: service branding omitted 「線」 and the
+    # old parser skipped the Saitama Railway leg, incorrectly claiming first boarding
+    # was at Korakuen on the Marunouchi Line.
+    urawa = next((s for s in stations if s['id'] == 'n02p-002933'), None)
+    if not urawa:
+        raise SystemExit('浦和美園 missing')
+    urawa_first = (urawa['physicalPointAudit'].get('firstRail') or {})
+    if urawa['departureDisplay'] != '07:12' or urawa['line'] != '埼玉高速鉄道線':
+        raise SystemExit(f'浦和美園 base fields unexpected: {urawa}')
+    if urawa['physicalPointAudit'].get('reason') != 'boards-current-physical-point':
+        raise SystemExit(f'浦和美園 route diagnosis wrong: {urawa["physicalPointAudit"]}')
+    if urawa_first.get('boardStation') != '浦和美園' or '埼玉高速鉄道' not in str(urawa_first.get('service')):
+        raise SystemExit(f'浦和美園 first rail wrong: {urawa_first}')
+    if '埼玉高速鉄道' not in urawa.get('route', ''):
+        raise SystemExit(f'浦和美園 route summary lost first rail: {urawa.get("route")}')
+
+    # Yahoo and N02 differ between ヶ and ケ in many station names. These should not
+    # be rendered as fake walk-to-another-station cases.
+    for sid in ('n02p-003945', 'n02p-004024', 'n02p-003279', 'n02p-003289', 'n02p-003671'):
+        station = next(s for s in stations if s['id'] == sid)
+        if station['physicalPointAudit'].get('reason') != 'boards-current-physical-point':
+            raise SystemExit(f'{sid} orthographic station-name normalization regressed')
+
+    # Every parsed first-rail service must be present in the human-readable route too.
+    for station in stations:
+        first = (station.get('physicalPointAudit') or {}).get('firstRail') or {}
+        service = first.get('service')
+        if service and service not in station.get('route', ''):
+            raise SystemExit(f"first rail absent from route summary: {station['id']} {service}")
 
     kuma = {
         code: next((s for s in stations if code in s.get('n02StationCodes', [])), None)
@@ -119,6 +158,13 @@ def main() -> None:
         'included': len(included),
         'excluded': len(excluded),
         'diagnostics': EXPECTED_DIAGNOSTICS,
+        'savedAuditRowsReclassified': EXPECTED_REPARSED_ROWS,
+        'urawaMisono': {
+            'departure': urawa['departureDisplay'],
+            'reason': urawa['physicalPointAudit']['reason'],
+            'firstRail': urawa_first,
+            'route': urawa['route'],
+        },
         'kumanomae': {
             'arakawa': {
                 'id': kuma['003266']['id'],
