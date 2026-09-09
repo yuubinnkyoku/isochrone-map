@@ -1,0 +1,100 @@
+name: Tidy route tooltip formatting
+
+on:
+  push:
+    branches: [format-route-tooltip-lines]
+    paths:
+      - .github/workflows/tidy-route-tooltip-formatting.yml
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Tidy route tooltip code and wrapping
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          markers = Path('js/markers.js')
+          text = markers.read_text(encoding='utf-8')
+          old = """        var routeHtml = '';
+          if (s.route) {
+            var routeParts = String(s.route).split(' → ');
+            var routeLines = [];
+            for (var routeIndex = 0; routeIndex < routeParts.length; routeIndex += 2) {
+              var routeLine = routeParts.slice(routeIndex, routeIndex + 2).join(' → ');
+              if (routeIndex > 0) routeLine = '→ ' + routeLine;
+              routeLines.push(routeLine);
+            }
+            routeHtml = '<div class=\"tt-line tt-route\">' + routeLines.join('<br>') + '</div>';
+          }"""
+          # The first one-shot workflow's YAML indentation is stripped by the shell
+          # before Python sees the replacement literal, so match the actual generated block.
+          actual = """        var routeHtml = '';
+          if (s.route) {
+            var routeParts = String(s.route).split(' → ');
+            var routeLines = [];
+            for (var routeIndex = 0; routeIndex < routeParts.length; routeIndex += 2) {
+              var routeLine = routeParts.slice(routeIndex, routeIndex + 2).join(' → ');
+              if (routeIndex > 0) routeLine = '→ ' + routeLine;
+              routeLines.push(routeLine);
+            }
+            routeHtml = '<div class=\"tt-line tt-route\">' + routeLines.join('<br>') + '</div>';
+          }"""
+          # Normalize only this block by locating its bounds and rebuilding it explicitly.
+          start = text.index("        var routeHtml = '';\n")
+          end = text.index("        var routeUsageHtml", start)
+          replacement = (
+              "        var routeHtml = '';\n"
+              "        if (s.route) {\n"
+              "          var routeParts = String(s.route).split(' → ');\n"
+              "          var routeLines = [];\n"
+              "          for (var routeIndex = 0; routeIndex < routeParts.length; routeIndex += 2) {\n"
+              "            var routeLine = routeParts.slice(routeIndex, routeIndex + 2).join(' → ');\n"
+              "            if (routeIndex > 0) routeLine = '→ ' + routeLine;\n"
+              "            routeLines.push(routeLine);\n"
+              "          }\n"
+              "          routeHtml = '<div class=\"tt-line tt-route\">' + routeLines.join('<br>') + '</div>';\n"
+              "        }\n"
+          )
+          markers.write_text(text[:start] + replacement + text[end:], encoding='utf-8')
+
+          style = Path('css/style.css')
+          text = style.read_text(encoding='utf-8')
+          old_css = """.tt-route {
+            max-width: min(360px, calc(100vw - 48px));
+            white-space: normal;
+            line-height: 1.65;
+          }
+          """
+          new_css = """.tt-route {
+            max-width: min(360px, calc(100vw - 48px));
+            white-space: normal;
+            overflow-wrap: anywhere;
+            line-height: 1.65;
+          }
+          """
+          assert old_css in text
+          style.write_text(text.replace(old_css, new_css, 1), encoding='utf-8')
+          PY
+
+      - name: Validate
+        run: |
+          node --check js/markers.js
+          git diff --check
+
+      - name: Commit tidy patch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git rm .github/workflows/tidy-route-tooltip-formatting.yml
+          git add js/markers.js css/style.css
+          git commit -m 'Tidy route tooltip line formatting'
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
