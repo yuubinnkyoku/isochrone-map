@@ -17,11 +17,8 @@ on:
       - scripts/build_physical_station_dataset.py
       - scripts/build_precomputed_grid.mjs
       - scripts/build_access_grid.mjs
-      - js/config.js
-      - js/precomputed-grid.js
-      - js/main.js
-      - js/markers.js
-      - js/ui.js
+      - js/**
+      - css/**
       - index.html
       - .github/workflows/validate-physical-stations.yml
   push:
@@ -40,11 +37,8 @@ on:
       - scripts/build_physical_station_dataset.py
       - scripts/build_precomputed_grid.mjs
       - scripts/build_access_grid.mjs
-      - js/config.js
-      - js/precomputed-grid.js
-      - js/main.js
-      - js/markers.js
-      - js/ui.js
+      - js/**
+      - css/**
       - index.html
       - .github/workflows/validate-physical-stations.yml
   workflow_dispatch:
@@ -166,8 +160,6 @@ jobs:
         run: |
           node --check scripts/build_precomputed_grid.mjs
           node --check scripts/build_access_grid.mjs
-          node --check js/config.js
-          node --check js/precomputed-grid.js
-          node --check js/main.js
-          node --check js/markers.js
-          node --check js/ui.js
+          for file in js/*.js; do
+            node --check "$file"
+          done
