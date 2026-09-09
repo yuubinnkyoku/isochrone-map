@@ -1,0 +1,234 @@
+name: Apply route station summary fix
+
+on:
+  push:
+    branches: [fix-route-station-summary-work]
+    paths:
+      - .github/workflows/apply-route-station-summary-fix.yml
+
+permissions:
+  contents: write
+
+env:
+  AUDIT_RUN_ID: '34202370240'
+  LOGICAL_SOURCE_COMMIT: 'e7e95ab4117be8288606d2c4d4db90b674b37402'
+
+jobs:
+  apply:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Patch route summary generation and regressions
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          builder = Path('scripts/build_physical_station_dataset.py')
+          text = builder.read_text(encoding='utf-8')
+          new_block = r'''def _is_route_clock_label(value: str) -> bool:
+              return bool(re.fullmatch(r'\(?\d{1,2}:\d{2}(?:着|発)?\)?', value.strip()))
+
+
+          def _is_route_station_event(section: list[str], index: int) -> bool:
+              """Return True for a boarding/alighting/transfer station or bus stop line.
+
+              Yahoo's detailed route places a station/stop immediately after its arrival/
+              departure clock labels.  Using those structural markers avoids confusing
+              intermediate-stop rows such as ``07:18東川口`` with transfer points.
+              """
+              if index <= 0:
+                  return False
+              line = str(section[index]).strip()
+              if not line:
+                  return False
+              if _is_route_clock_label(line) or is_bus_service(line) or is_rail_service(line):
+                  return False
+              if line in {'発', '着', '早', '楽', '安', '地図', '出口', '時刻表'}:
+                  return False
+              if line.startswith('徒歩'):
+                  return False
+              if line.startswith(('出口：', '乗車位置：', 'IC優先', '乗換：', '定期の種類', '[発]', '[着]')):
+                  return False
+              if re.fullmatch(r'\d+駅', line) or re.fullmatch(r'[\d,]+円', line) or re.fullmatch(r'\d+(?:\.\d+)?km', line):
+                  return False
+
+              previous = str(section[index - 1]).strip()
+              if _is_route_clock_label(previous):
+                  return True
+              return (
+                  previous in {'発', '着'}
+                  and index >= 2
+                  and _is_route_clock_label(str(section[index - 2]).strip())
+              )
+
+
+          def route_summary(section: list[str]) -> str:
+              """Build a human-readable transfer chain including station/stop names."""
+              parts = []
+              for i, raw in enumerate(section):
+                  line = str(raw).strip()
+                  if not line:
+                      continue
+                  if _is_route_station_event(section, i):
+                      # The exact-point query origin is a synthetic Yahoo label, not a
+                      # public station name.  Keep the first actual boarding station.
+                      if '物理駅地点-' not in line:
+                          parts.append(line)
+                  elif re.fullmatch(r'徒歩\d+分', line) or is_bus_service(line) or is_rail_service(line):
+                      parts.append(line)
+
+              out = []
+              for part in parts:
+                  if not out or out[-1] != part:
+                      out.append(part)
+              return ' → '.join(out)
+
+
+          def line_display'''
+          pattern = r'def route_summary\(section: list\[str\]\) -> str:\n.*?\n\ndef line_display'
+          text, count = re.subn(pattern, new_block, text, flags=re.S)
+          assert count == 1, count
+          text = text.replace(
+              "            'routeParserVersion': 3,\n            'savedAuditRowsReclassified': legacy_parser_changes,",
+              "            'routeParserVersion': 3,\n            'routeSummaryVersion': 2,\n            'savedAuditRowsReclassified': legacy_parser_changes,",
+              1,
+          )
+          text = text.replace(
+              "        'routeParserVersion': 3,\n        'savedAuditRowsReclassified': legacy_parser_changes,",
+              "        'routeParserVersion': 3,\n        'routeSummaryVersion': 2,\n        'savedAuditRowsReclassified': legacy_parser_changes,",
+              1,
+          )
+          builder.write_text(text, encoding='utf-8')
+
+          validator = Path('scripts/validate_physical_station_dataset.py')
+          text = validator.read_text(encoding='utf-8')
+          text = text.replace(
+              "    if exact.get('routeParserVersion') != 3:\n        raise SystemExit(f\"route parser version {exact.get('routeParserVersion')} != 3\")\n",
+              "    if exact.get('routeParserVersion') != 3:\n        raise SystemExit(f\"route parser version {exact.get('routeParserVersion')} != 3\")\n    if exact.get('routeSummaryVersion') != 2:\n        raise SystemExit(f\"route summary version {exact.get('routeSummaryVersion')} != 2\")\n",
+              1,
+          )
+          marker = "    # Every parsed first-rail service must be present in the human-readable route too.\n"
+          insert = r'''    # Route summaries must retain actual boarding/alighting/transfer station names,
+              # not just transport-service names.  This was the user-visible regression where
+              # 浦和美園 displayed only the Saitama Railway and Marunouchi services.
+              required_urawa_route_tokens = [
+                  '浦和美園', '埼玉高速鉄道', '後楽園', '東京メトロ丸ノ内線',
+                  '茗荷谷', '筑波大学附属高等学校',
+              ]
+              urawa_route = urawa.get('route', '')
+              positions = []
+              for token in required_urawa_route_tokens:
+                  pos = urawa_route.find(token)
+                  if pos < 0:
+                      raise SystemExit(f'浦和美園 route summary missing {token}: {urawa_route}')
+                  positions.append(pos)
+              if positions != sorted(positions):
+                  raise SystemExit(f'浦和美園 route summary order broken: {urawa_route}')
+
+              # Every route must end at the school, and every route with a recognized rail
+              # service must contain at least two structural station/stop labels.  The latter
+              # catches future regressions that collapse a route back to transport names only.
+              for station in stations:
+                  route = station.get('route', '')
+                  if '筑波大学附属高等学校' not in route:
+                      raise SystemExit(f"route destination missing: {station['id']} {route}")
+                  first = (station.get('physicalPointAudit') or {}).get('firstRail') or {}
+                  if first.get('service'):
+                      separators = [part.strip() for part in route.split(' → ') if part.strip()]
+                      non_mode = [
+                          part for part in separators
+                          if not part.startswith('徒歩')
+                          and '行' not in part
+                          and '方面' not in part
+                          and '当駅始発' not in part
+                      ]
+                      if len(non_mode) < 2:
+                          raise SystemExit(f"route station chain missing: {station['id']} {route}")
+
+          '''
+          assert marker in text
+          text = text.replace(marker, insert + marker, 1)
+          validator.write_text(text, encoding='utf-8')
+
+          config = Path('js/config.js')
+          text = config.read_text(encoding='utf-8')
+          text = text.replace('dataVersion: 24,', 'dataVersion: 25,', 1)
+          text = text.replace('gridVersion: 13,', 'gridVersion: 14,', 1)
+          text = text.replace('accessGridVersion: 4,', 'accessGridVersion: 5,', 1)
+          config.write_text(text, encoding='utf-8')
+
+          index = Path('index.html')
+          text = index.read_text(encoding='utf-8')
+          text = text.replace('js/config.js?v=29', 'js/config.js?v=30', 1)
+          index.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Materialize immutable logical station source
+        run: |
+          git show "${LOGICAL_SOURCE_COMMIT}:data/stations.json" > /tmp/logical-stations.json
+
+      - name: Rebuild N02 physical point proposal
+        run: |
+          python scripts/prepare_physical_station_points.py \
+            --stations /tmp/logical-stations.json \
+            --output data/physical-station-points-proposal.json
+
+      - name: Download saved Yahoo exact-point audit
+        uses: actions/download-artifact@v4
+        with:
+          name: physical-station-point-audit
+          path: audit-artifact
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          run-id: ${{ env.AUDIT_RUN_ID }}
+
+      - name: Rebuild station routes with station/stop names
+        run: |
+          python scripts/build_physical_station_dataset.py \
+            --old-stations /tmp/logical-stations.json \
+            --audit audit-artifact/physical-station-point-audit.json \
+            --output data/stations.json \
+            --compact-audit-output data/physical-station-point-audit-compact.json
+
+      - name: Rebuild interpolation metadata and grids
+        run: |
+          node scripts/build_precomputed_grid.mjs
+          node scripts/build_access_grid.mjs
+
+      - name: Validate
+        run: |
+          python scripts/validate_physical_station_dataset.py
+          node --check js/config.js
+          node --check js/markers.js
+          node --check js/main.js
+          node --check js/ui.js
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          doc = json.loads(Path('data/stations.json').read_text(encoding='utf-8'))
+          assert len(doc['stations']) == 1563
+          assert doc['meta']['idwExclusionPolicy']['exactPointAudit']['routeSummaryVersion'] == 2
+          urawa = next(s for s in doc['stations'] if s['id'] == 'n02p-002933')
+          assert urawa['route'] == '徒歩1分 → 浦和美園 → 埼玉高速鉄道当駅始発武蔵小杉行 → 後楽園 → 東京メトロ丸ノ内線池袋行 → 茗荷谷 → 徒歩8分 → 筑波大学附属高等学校', urawa['route']
+          print('浦和美園:', urawa['route'])
+          PY
+
+      - name: Commit fix and generated data
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git rm .github/workflows/apply-route-station-summary-fix.yml
+          git add scripts/build_physical_station_dataset.py scripts/validate_physical_station_dataset.py \
+            js/config.js index.html data/stations.json data/physical-station-point-audit-compact.json \
+            data/idw-grid.bin data/idw-grid.bin.gz data/idw-grid.meta.json \
+            data/access-grid.bin data/access-grid.bin.gz data/access-grid.meta.json
+          git commit -m 'Include stations and stops in route summaries'
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
