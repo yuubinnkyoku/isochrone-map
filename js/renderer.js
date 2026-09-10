@@ -263,9 +263,22 @@
   }
 
   function contourStepForZoom(zoom) {
-    // Tile edges must land on the same sample lattice. Both values divide 256,
-    // so neighbouring tiles share identical boundary samples and never drift.
-    return zoom <= 10 ? 8 : 4;
+    // Finer geometry matters most during animated zoom, because Leaflet may
+    // temporarily scale the previous zoom's tile by nearly 2x. A 2px lattice
+    // keeps those scaled line segments visually smooth. Low zooms still use 4px
+    // to cap work while remaining twice as fine as the previous 8px setting.
+    return zoom <= 8 ? 4 : 2;
+  }
+
+  function firstBreakAbove(breaks, value) {
+    var lo = 0;
+    var hi = breaks.length;
+    while (lo < hi) {
+      var mid = (lo + hi) >> 1;
+      if (breaks[mid] <= value) lo = mid + 1;
+      else hi = mid;
+    }
+    return lo;
   }
 
   function interpolateEdge(level, a, b) {
@@ -349,34 +362,53 @@
     var count = sampled.count;
     var breaks = buildContourBreaks(interval);
     var denseMin = CONFIG.timeRange.denseContourMin || CONFIG.timeRange.contourMin;
+    var states = new Array(breaks.length);
     var fragment = document.createDocumentFragment();
 
+    // Prepare one path accumulator per contour level, then scan the sampled grid
+    // once. The previous implementation scanned every cell once per contour
+    // level. With a 2px lattice that would be unnecessarily expensive; a smooth
+    // scalar field usually crosses only zero or one levels inside a single cell.
     for (var bi = 0; bi < breaks.length; bi++) {
       var level = breaks[bi];
       var isEarly = level < denseMin;
       var isMain = isEarly ? (level % 60 === 0) : (level % 10 === 0);
-      var color = minutesToColor(level);
-      var labelCandidate = isMain && shouldLabelContour(coords, level) ? { distance: Infinity, x: NaN, y: NaN } : null;
-      var pathData = [];
+      states[bi] = {
+        level: level,
+        isMain: isMain,
+        color: minutesToColor(level),
+        pathData: [],
+        labelCandidate: isMain && shouldLabelContour(coords, level) ? { distance: Infinity, x: NaN, y: NaN } : null,
+      };
+    }
 
-      for (var r = 0; r < count - 1; r++) {
-        var row0 = r * count;
-        var row1 = (r + 1) * count;
-        var y0 = r * step;
-        for (var c = 0; c < count - 1; c++) {
-          var v00 = grid[row0 + c];
-          var v10 = grid[row0 + c + 1];
-          var v01 = grid[row1 + c];
-          var v11 = grid[row1 + c + 1];
-          if (!Number.isFinite(v00) || !Number.isFinite(v10) || !Number.isFinite(v01) || !Number.isFinite(v11)) continue;
+    for (var r = 0; r < count - 1; r++) {
+      var row0 = r * count;
+      var row1 = (r + 1) * count;
+      var y0 = r * step;
 
+      for (var c = 0; c < count - 1; c++) {
+        var v00 = grid[row0 + c];
+        var v10 = grid[row0 + c + 1];
+        var v01 = grid[row1 + c];
+        var v11 = grid[row1 + c + 1];
+        if (!Number.isFinite(v00) || !Number.isFinite(v10) || !Number.isFinite(v01) || !Number.isFinite(v11)) continue;
+
+        var cellMin = Math.min(v00, v10, v01, v11);
+        var cellMax = Math.max(v00, v10, v01, v11);
+        var first = firstBreakAbove(breaks, cellMin);
+        if (first >= breaks.length || breaks[first] > cellMax) continue;
+
+        var x0 = c * step;
+        for (bi = first; bi < breaks.length && breaks[bi] <= cellMax; bi++) {
+          var state = states[bi];
+          level = state.level;
           var code = (v00 >= level ? 8 : 0) |
             (v10 >= level ? 4 : 0) |
             (v11 >= level ? 2 : 0) |
             (v01 >= level ? 1 : 0);
           if (code === 0 || code === 15) continue;
 
-          var x0 = c * step;
           var top = [x0 + interpolateEdge(level, v00, v10) * step, y0];
           var bottom = [x0 + interpolateEdge(level, v01, v11) * step, y0 + step];
           var left = [x0, y0 + interpolateEdge(level, v00, v01) * step];
@@ -384,42 +416,46 @@
 
           switch (code) {
             case 1: case 14:
-              appendContourSegment(pathData, left, bottom, labelCandidate); break;
+              appendContourSegment(state.pathData, left, bottom, state.labelCandidate); break;
             case 2: case 13:
-              appendContourSegment(pathData, bottom, right, labelCandidate); break;
+              appendContourSegment(state.pathData, bottom, right, state.labelCandidate); break;
             case 3: case 12:
-              appendContourSegment(pathData, left, right, labelCandidate); break;
+              appendContourSegment(state.pathData, left, right, state.labelCandidate); break;
             case 4: case 11:
-              appendContourSegment(pathData, top, right, labelCandidate); break;
+              appendContourSegment(state.pathData, top, right, state.labelCandidate); break;
             case 5:
-              appendContourSegment(pathData, left, top, labelCandidate);
-              appendContourSegment(pathData, bottom, right, labelCandidate); break;
+              appendContourSegment(state.pathData, left, top, state.labelCandidate);
+              appendContourSegment(state.pathData, bottom, right, state.labelCandidate); break;
             case 6: case 9:
-              appendContourSegment(pathData, top, bottom, labelCandidate); break;
+              appendContourSegment(state.pathData, top, bottom, state.labelCandidate); break;
             case 7: case 8:
-              appendContourSegment(pathData, left, top, labelCandidate); break;
+              appendContourSegment(state.pathData, left, top, state.labelCandidate); break;
             case 10:
-              appendContourSegment(pathData, top, right, labelCandidate);
-              appendContourSegment(pathData, left, bottom, labelCandidate); break;
+              appendContourSegment(state.pathData, top, right, state.labelCandidate);
+              appendContourSegment(state.pathData, left, bottom, state.labelCandidate); break;
           }
         }
       }
+    }
 
-      if (pathData.length) {
-        var path = svgElement('path');
-        path.setAttribute('d', pathData.join(' '));
-        path.setAttribute('fill', 'none');
-        path.setAttribute('stroke', 'rgb(' + color[0] + ',' + color[1] + ',' + color[2] + ')');
-        path.setAttribute('stroke-opacity', isMain ? '0.9' : '0.45');
-        path.setAttribute('stroke-width', isMain ? '3' : '1.2');
-        path.setAttribute('stroke-linecap', 'butt');
-        path.setAttribute('stroke-linejoin', 'round');
-        // SVG remains vector while Leaflet transforms tiles during animated zoom.
-        // Non-scaling strokes also prevent line widths from ballooning mid-zoom.
-        path.setAttribute('vector-effect', 'non-scaling-stroke');
-        fragment.appendChild(path);
-        appendContourLabel(fragment, labelCandidate, level, color);
-      }
+    for (bi = 0; bi < states.length; bi++) {
+      state = states[bi];
+      if (!state.pathData.length) continue;
+
+      var path = svgElement('path');
+      path.setAttribute('d', state.pathData.join(' '));
+      path.setAttribute('fill', 'none');
+      path.setAttribute('stroke', 'rgb(' + state.color[0] + ',' + state.color[1] + ',' + state.color[2] + ')');
+      path.setAttribute('stroke-opacity', state.isMain ? '0.9' : '0.45');
+      path.setAttribute('stroke-width', state.isMain ? '3' : '1.2');
+      // Each Marching Squares cell is currently a separate subpath. Rounded caps
+      // hide subpixel seams at cell boundaries, especially while a tile is being
+      // scaled during the zoom animation.
+      path.setAttribute('stroke-linecap', 'round');
+      path.setAttribute('stroke-linejoin', 'round');
+      path.setAttribute('vector-effect', 'non-scaling-stroke');
+      fragment.appendChild(path);
+      appendContourLabel(fragment, state.labelCandidate, state.level, state.color);
     }
 
     svg.replaceChildren(fragment);
