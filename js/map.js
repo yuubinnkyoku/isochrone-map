@@ -4,6 +4,29 @@
 (function () {
   'use strict';
 
+  // The isochrone overlays are client-rendered GridLayers. Leaflet's keepBuffer
+  // only retains tiles that were already created; it does not request tiles just
+  // outside the viewport. Expand the requested pixel bounds by one tile for
+  // overlayPane GridLayers so the next ring is rendered before a pan or zoom-out
+  // exposes it. Base-map TileLayers stay unchanged.
+  (function installOverlayTilePrefetch() {
+    if (!window.L || !L.GridLayer || !L.GridLayer.prototype._getTiledPixelBounds) return;
+    var originalGetTiledPixelBounds = L.GridLayer.prototype._getTiledPixelBounds;
+    if (originalGetTiledPixelBounds._isochronePrefetchPatched) return;
+
+    function getPrefetchedBounds(center) {
+      var bounds = originalGetTiledPixelBounds.call(this, center);
+      if (!this.options || this.options.pane !== 'overlayPane') return bounds;
+
+      var tileSize = this.getTileSize();
+      var pad = L.point(tileSize.x, tileSize.y);
+      return L.bounds(bounds.min.subtract(pad), bounds.max.add(pad));
+    }
+
+    getPrefetchedBounds._isochronePrefetchPatched = true;
+    L.GridLayer.prototype._getTiledPixelBounds = getPrefetchedBounds;
+  })();
+
   var MapManager = {
     map: null,
     currentTileId: null,

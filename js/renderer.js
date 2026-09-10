@@ -43,8 +43,16 @@
     return breaks;
   }
 
-  function scheduleTileRender(fn, isCurrent) {
-    tileQueue.push({ fn: fn, isCurrent: isCurrent });
+  function tilePriority(layer, coords) {
+    if (!layer || !layer._map) return 0;
+    var center = layer._map.project(layer._map.getCenter(), coords.z).divideBy(TILE_SIZE);
+    var dx = coords.x + 0.5 - center.x;
+    var dy = coords.y + 0.5 - center.y;
+    return dx * dx + dy * dy;
+  }
+
+  function scheduleTileRender(fn, isCurrent, priority) {
+    tileQueue.push({ fn: fn, isCurrent: isCurrent, priority: priority });
     if (queueScheduled) return;
     queueScheduled = true;
     requestAnimationFrame(runTileQueue);
@@ -53,9 +61,27 @@
   function runTileQueue() {
     queueScheduled = false;
     var started = performance.now();
+    var active = [];
 
-    // New zoom levels invalidate queued work from the previous level. Stale
-    // jobs still run their completion callback, but skip the expensive drawing.
+    // Finish stale requests immediately without spending the frame budget on
+    // their expensive drawing. This prevents old pan/zoom work from sitting in
+    // front of tiles that have become visible meanwhile.
+    for (var i = 0; i < tileQueue.length; i++) {
+      var queued = tileQueue[i];
+      if (queued.isCurrent && !queued.isCurrent()) queued.fn(false);
+      else active.push(queued);
+    }
+    tileQueue = active;
+
+    // Leaflet initially requests tiles center-out, but new requests can arrive
+    // while older peripheral work is still queued. Re-rank every frame using the
+    // current map center so the tiles the user is actually looking at win.
+    tileQueue.sort(function (a, b) {
+      var pa = typeof a.priority === 'function' ? a.priority() : (a.priority || 0);
+      var pb = typeof b.priority === 'function' ? b.priority() : (b.priority || 0);
+      return pa - pb;
+    });
+
     while (tileQueue.length && performance.now() - started < 7) {
       var job = tileQueue.shift();
       var shouldRender = !job.isCurrent || job.isCurrent();
@@ -486,7 +512,9 @@
           finishTile(done, err, tile);
         }
       }, function () {
-        return generation === self._generation && self._tileZoom === coords.z && tile.isConnected;
+        return tileJobCurrent(self, tile, generation, coords);
+      }, function () {
+        return tilePriority(self, coords);
       });
       return tile;
     },
@@ -560,7 +588,9 @@
           finishTile(done, err, tile);
         }
       }, function () {
-        return generation === self._generation && self._tileZoom === coords.z && tile.isConnected;
+        return tileJobCurrent(self, tile, generation, coords);
+      }, function () {
+        return tilePriority(self, coords);
       });
       return tile;
     },
