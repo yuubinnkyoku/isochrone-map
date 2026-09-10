@@ -54,12 +54,12 @@
     queueScheduled = false;
     var started = performance.now();
 
-    // New zoom levels invalidate queued work from the previous level. Skipping
-    // stale jobs prevents a rapid zoom-out from being blocked by tiles that are
-    // no longer visible while newly exposed areas wait blank.
+    // New zoom levels invalidate queued work from the previous level. Stale
+    // jobs still run their completion callback, but skip the expensive drawing.
     while (tileQueue.length && performance.now() - started < 7) {
       var job = tileQueue.shift();
-      if (!job.isCurrent || job.isCurrent()) job.fn();
+      var shouldRender = !job.isCurrent || job.isCurrent();
+      job.fn(shouldRender);
     }
 
     if (tileQueue.length) {
@@ -475,9 +475,9 @@
       var generation = this._generation;
       var self = this;
 
-      scheduleTileRender(function () {
+      scheduleTileRender(function (shouldRender) {
         try {
-          if (tileJobCurrent(self, tile, generation, coords)) {
+          if (shouldRender && tileJobCurrent(self, tile, generation, coords)) {
             drawContourTile(tile, self._gridData, coords, self._interval);
           }
           finishTile(done, null, tile);
@@ -549,9 +549,9 @@
       var generation = this._generation;
       var self = this;
 
-      scheduleTileRender(function () {
+      scheduleTileRender(function (shouldRender) {
         try {
-          if (tileJobCurrent(self, tile, generation, coords)) {
+          if (shouldRender && tileJobCurrent(self, tile, generation, coords)) {
             drawGradientTile(tile, self._gridData, coords);
           }
           finishTile(done, null, tile);
