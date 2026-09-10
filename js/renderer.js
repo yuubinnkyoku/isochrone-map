@@ -1,10 +1,11 @@
 // ============================================================
-// renderer.js — precomputed scalar grid -> Leaflet-managed canvas tiles
+// renderer.js — precomputed scalar grid -> Leaflet-managed render tiles
 // ============================================================
 (function () {
   'use strict';
 
   var TILE_SIZE = 256;
+  var SVG_NS = 'http://www.w3.org/2000/svg';
   var GRADIENT_ALPHA = Math.round(255 * 0.28);
   var COLOR_LUT_STEPS_PER_MINUTE = 4;
   var colorLut = null;
@@ -42,8 +43,8 @@
     return breaks;
   }
 
-  function scheduleTileRender(fn) {
-    tileQueue.push(fn);
+  function scheduleTileRender(fn, isCurrent) {
+    tileQueue.push({ fn: fn, isCurrent: isCurrent });
     if (queueScheduled) return;
     queueScheduled = true;
     requestAnimationFrame(runTileQueue);
@@ -53,10 +54,12 @@
     queueScheduled = false;
     var started = performance.now();
 
-    // Keep a frame responsive even when several new tiles become visible at once.
+    // New zoom levels invalidate queued work from the previous level. Skipping
+    // stale jobs prevents a rapid zoom-out from being blocked by tiles that are
+    // no longer visible while newly exposed areas wait blank.
     while (tileQueue.length && performance.now() - started < 7) {
-      var fn = tileQueue.shift();
-      fn();
+      var job = tileQueue.shift();
+      if (!job.isCurrent || job.isCurrent()) job.fn();
     }
 
     if (tileQueue.length) {
@@ -251,9 +254,12 @@
     return hash % divisor === 0;
   }
 
-  function appendContourSegment(ctx, a, b, candidate) {
-    ctx.moveTo(a[0], a[1]);
-    ctx.lineTo(b[0], b[1]);
+  function rounded(value) {
+    return Math.round(value * 100) / 100;
+  }
+
+  function appendContourSegment(pathData, a, b, candidate) {
+    pathData.push('M', rounded(a[0]), rounded(a[1]), 'L', rounded(b[0]), rounded(b[1]));
     if (!candidate) return;
 
     var x = (a[0] + b[0]) / 2;
@@ -269,24 +275,45 @@
     }
   }
 
-  function drawContourLabel(ctx, candidate, level, color) {
-    if (!candidate || !Number.isFinite(candidate.x)) return;
-    var text = minutesToTimeStr(level);
-    ctx.save();
-    ctx.font = '600 11px "JetBrains Mono", monospace';
-    ctx.textBaseline = 'alphabetic';
-    var width = ctx.measureText(text).width;
-    var x = Math.max(3, Math.min(TILE_SIZE - width - 7, candidate.x - width / 2));
-    var y = Math.max(13, Math.min(TILE_SIZE - 4, candidate.y + 4));
-    var background = getComputedStyle(document.documentElement).getPropertyValue('--contour-label-bg').trim() || 'rgba(255,255,255,0.82)';
-    ctx.fillStyle = background;
-    ctx.fillRect(x - 3, y - 11, width + 6, 14);
-    ctx.fillStyle = colorToCSS(color, 1);
-    ctx.fillText(text, x, y);
-    ctx.restore();
+  function svgElement(name) {
+    return document.createElementNS(SVG_NS, name);
   }
 
-  function drawContourTile(tile, gridData, coords, interval) {
+  function appendContourLabel(fragment, candidate, level, color) {
+    if (!candidate || !Number.isFinite(candidate.x)) return;
+
+    var textValue = minutesToTimeStr(level);
+    // Keep labels lightweight: an exact DOM text measurement would force layout
+    // for every tile. This estimate is deliberately slightly generous.
+    var width = Math.max(30, textValue.length * 7.2 + 6);
+    var x = Math.max(3, Math.min(TILE_SIZE - width - 3, candidate.x - width / 2));
+    var y = Math.max(14, Math.min(TILE_SIZE - 4, candidate.y + 4));
+    var background = getComputedStyle(document.documentElement).getPropertyValue('--contour-label-bg').trim() || 'rgba(255,255,255,0.82)';
+
+    var group = svgElement('g');
+    var rect = svgElement('rect');
+    rect.setAttribute('x', rounded(x));
+    rect.setAttribute('y', rounded(y - 12));
+    rect.setAttribute('width', rounded(width));
+    rect.setAttribute('height', '15');
+    rect.setAttribute('rx', '1');
+    rect.setAttribute('fill', background);
+
+    var text = svgElement('text');
+    text.setAttribute('x', rounded(x + 3));
+    text.setAttribute('y', rounded(y));
+    text.setAttribute('fill', 'rgb(' + color[0] + ',' + color[1] + ',' + color[2] + ')');
+    text.setAttribute('font-size', '11');
+    text.setAttribute('font-weight', '600');
+    text.setAttribute('font-family', 'JetBrains Mono, monospace');
+    text.textContent = textValue;
+
+    group.appendChild(rect);
+    group.appendChild(text);
+    fragment.appendChild(group);
+  }
+
+  function drawContourTile(svg, gridData, coords, interval) {
     var meta = gridData.meta;
     if (!tileIntersectsGrid(meta, coords)) return;
 
@@ -294,22 +321,17 @@
     var sampled = sampleTileGrid(gridData, coords, step);
     var grid = sampled.values;
     var count = sampled.count;
-    var ctx = tile.getContext('2d', { alpha: true });
     var breaks = buildContourBreaks(interval);
     var denseMin = CONFIG.timeRange.denseContourMin || CONFIG.timeRange.contourMin;
-
-    ctx.lineCap = 'butt';
-    ctx.lineJoin = 'round';
+    var fragment = document.createDocumentFragment();
 
     for (var bi = 0; bi < breaks.length; bi++) {
       var level = breaks[bi];
       var isEarly = level < denseMin;
       var isMain = isEarly ? (level % 60 === 0) : (level % 10 === 0);
       var color = minutesToColor(level);
-      ctx.strokeStyle = colorToCSS(color, isMain ? 0.9 : 0.45);
-      ctx.lineWidth = isMain ? 3 : 1.2;
-      ctx.beginPath();
       var labelCandidate = isMain && shouldLabelContour(coords, level) ? { distance: Infinity, x: NaN, y: NaN } : null;
+      var pathData = [];
 
       for (var r = 0; r < count - 1; r++) {
         var row0 = r * count;
@@ -336,33 +358,64 @@
 
           switch (code) {
             case 1: case 14:
-              appendContourSegment(ctx, left, bottom, labelCandidate); break;
+              appendContourSegment(pathData, left, bottom, labelCandidate); break;
             case 2: case 13:
-              appendContourSegment(ctx, bottom, right, labelCandidate); break;
+              appendContourSegment(pathData, bottom, right, labelCandidate); break;
             case 3: case 12:
-              appendContourSegment(ctx, left, right, labelCandidate); break;
+              appendContourSegment(pathData, left, right, labelCandidate); break;
             case 4: case 11:
-              appendContourSegment(ctx, top, right, labelCandidate); break;
+              appendContourSegment(pathData, top, right, labelCandidate); break;
             case 5:
-              appendContourSegment(ctx, left, top, labelCandidate);
-              appendContourSegment(ctx, bottom, right, labelCandidate); break;
+              appendContourSegment(pathData, left, top, labelCandidate);
+              appendContourSegment(pathData, bottom, right, labelCandidate); break;
             case 6: case 9:
-              appendContourSegment(ctx, top, bottom, labelCandidate); break;
+              appendContourSegment(pathData, top, bottom, labelCandidate); break;
             case 7: case 8:
-              appendContourSegment(ctx, left, top, labelCandidate); break;
+              appendContourSegment(pathData, left, top, labelCandidate); break;
             case 10:
-              appendContourSegment(ctx, top, right, labelCandidate);
-              appendContourSegment(ctx, left, bottom, labelCandidate); break;
+              appendContourSegment(pathData, top, right, labelCandidate);
+              appendContourSegment(pathData, left, bottom, labelCandidate); break;
           }
         }
       }
-      ctx.stroke();
-      drawContourLabel(ctx, labelCandidate, level, color);
+
+      if (pathData.length) {
+        var path = svgElement('path');
+        path.setAttribute('d', pathData.join(' '));
+        path.setAttribute('fill', 'none');
+        path.setAttribute('stroke', 'rgb(' + color[0] + ',' + color[1] + ',' + color[2] + ')');
+        path.setAttribute('stroke-opacity', isMain ? '0.9' : '0.45');
+        path.setAttribute('stroke-width', isMain ? '3' : '1.2');
+        path.setAttribute('stroke-linecap', 'butt');
+        path.setAttribute('stroke-linejoin', 'round');
+        // SVG remains vector while Leaflet transforms tiles during animated zoom.
+        // Non-scaling strokes also prevent line widths from ballooning mid-zoom.
+        path.setAttribute('vector-effect', 'non-scaling-stroke');
+        fragment.appendChild(path);
+        appendContourLabel(fragment, labelCandidate, level, color);
+      }
     }
+
+    svg.replaceChildren(fragment);
   }
 
-  function makeTileCanvas(className) {
-    var tile = L.DomUtil.create('canvas', className);
+  function makeContourSvg() {
+    var svg = svgElement('svg');
+    svg.setAttribute('viewBox', '0 0 ' + TILE_SIZE + ' ' + TILE_SIZE);
+    svg.setAttribute('width', String(TILE_SIZE));
+    svg.setAttribute('height', String(TILE_SIZE));
+    svg.setAttribute('preserveAspectRatio', 'none');
+    svg.setAttribute('shape-rendering', 'geometricPrecision');
+    svg.classList.add('isochrone-contour-tile');
+    svg.style.width = TILE_SIZE + 'px';
+    svg.style.height = TILE_SIZE + 'px';
+    svg.style.pointerEvents = 'none';
+    svg.style.overflow = 'hidden';
+    return svg;
+  }
+
+  function makeGradientCanvas() {
+    var tile = L.DomUtil.create('canvas', 'isochrone-gradient-tile');
     tile.width = TILE_SIZE;
     tile.height = TILE_SIZE;
     tile.style.width = TILE_SIZE + 'px';
@@ -380,6 +433,14 @@
     if (container) container.style.display = layer._visible ? '' : 'none';
   }
 
+  function tileJobCurrent(layer, tile, generation, coords) {
+    return generation === layer._generation &&
+      layer._visible &&
+      layer._gridData && layer._gridData.ready &&
+      layer._tileZoom === coords.z &&
+      tile.isConnected;
+  }
+
   var ContourOverlay = L.GridLayer.extend({
     options: {
       pane: 'overlayPane',
@@ -387,9 +448,12 @@
       zIndex: 250,
       opacity: 1,
       noWrap: true,
-      keepBuffer: 2,
-      updateWhenIdle: true,
-      updateWhenZooming: false,
+      keepBuffer: 4,
+      // Continue requesting tiles during pan/zoom so a zoom-out never exposes an
+      // area that remains empty until the interaction fully settles.
+      updateWhenIdle: false,
+      updateWhenZooming: true,
+      updateInterval: 50,
     },
 
     initialize: function (opts) {
@@ -407,13 +471,13 @@
     },
 
     createTile: function (coords, done) {
-      var tile = makeTileCanvas('isochrone-contour-tile');
+      var tile = makeContourSvg();
       var generation = this._generation;
       var self = this;
 
       scheduleTileRender(function () {
         try {
-          if (generation === self._generation && self._visible && self._gridData && self._gridData.ready) {
+          if (tileJobCurrent(self, tile, generation, coords)) {
             drawContourTile(tile, self._gridData, coords, self._interval);
           }
           finishTile(done, null, tile);
@@ -421,6 +485,8 @@
           console.error('等時線タイル描画エラー:', err);
           finishTile(done, err, tile);
         }
+      }, function () {
+        return generation === self._generation && self._tileZoom === coords.z && tile.isConnected;
       });
       return tile;
     },
@@ -459,9 +525,10 @@
       zIndex: 200,
       opacity: 1,
       noWrap: true,
-      keepBuffer: 2,
-      updateWhenIdle: true,
-      updateWhenZooming: false,
+      keepBuffer: 4,
+      updateWhenIdle: false,
+      updateWhenZooming: true,
+      updateInterval: 50,
     },
 
     initialize: function (opts) {
@@ -478,13 +545,13 @@
     },
 
     createTile: function (coords, done) {
-      var tile = makeTileCanvas('isochrone-gradient-tile');
+      var tile = makeGradientCanvas();
       var generation = this._generation;
       var self = this;
 
       scheduleTileRender(function () {
         try {
-          if (generation === self._generation && self._visible && self._gridData && self._gridData.ready) {
+          if (tileJobCurrent(self, tile, generation, coords)) {
             drawGradientTile(tile, self._gridData, coords);
           }
           finishTile(done, null, tile);
@@ -492,6 +559,8 @@
           console.error('グラデーションタイル描画エラー:', err);
           finishTile(done, err, tile);
         }
+      }, function () {
+        return generation === self._generation && self._tileZoom === coords.z && tile.isConnected;
       });
       return tile;
     },
