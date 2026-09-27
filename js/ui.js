@@ -372,9 +372,9 @@
         var thresholdHtml = showThreshold
           ? '<span class="legend-threshold-symbol" style="color:' +
             colorToCSS(minutesToColor(s.departureThresholdMinutes)) + '"></span>' +
-            '<span class="legend-threshold-text">' +
+            '<span class="legend-threshold-text">指定した時刻（' +
             minutesToTimeStr(s.departureThresholdMinutes) +
-            '以降に出ても間に合う範囲を明るく表示</span>'
+            '）に出て間に合う範囲を強調</span>'
           : '';
 
         var alternateCount = this._alternateRouteCount(this._dataMeta);
