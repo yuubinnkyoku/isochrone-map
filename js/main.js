@@ -35,8 +35,17 @@
   gradientOverlay.addTo(map);
   app.gradientOverlay = gradientOverlay;
 
+  var departureThresholdOverlay = new DepartureThresholdOverlay({
+    grid: null,
+    visible: settings.departureThresholdEnabled,
+    thresholdMinutes: settings.departureThresholdMinutes,
+  });
+  departureThresholdOverlay.addTo(map);
+  app.departureThresholdOverlay = departureThresholdOverlay;
+
   Renderer3D.init();
   Renderer3D.setFlatPlaneHeight(settings.threeDFlatHeight);
+  Renderer3D.setDepartureThreshold(settings.departureThresholdEnabled, settings.departureThresholdMinutes);
   app.renderer3d = Renderer3D;
 
   Promise.all([
@@ -57,6 +66,7 @@
       UIManager.syncInterpolationMode(actualMode);
       contourOverlay.setGrid(PrecomputedGrid);
       gradientOverlay.setGrid(PrecomputedGrid);
+      departureThresholdOverlay.setGrid(PrecomputedGrid);
       if (actualMode !== requestedMode) {
         console.warn('指定した補間グリッドを利用できないため ' + actualMode + ' にフォールバックしました');
       }
@@ -129,6 +139,7 @@
         MapManager.onThemeChanged(value);
         MarkerManager.updateTheme();
         contourOverlay.refresh();
+        departureThresholdOverlay.refresh();
         Renderer3D.updateTheme();
         if (UIManager.getSettings().threeDEnabled) {
           Renderer3D.refreshMapTexture();
@@ -146,6 +157,7 @@
           UIManager.syncInterpolationMode(actualMode);
           contourOverlay.refresh();
           gradientOverlay.refresh();
+          departureThresholdOverlay.refresh();
           UIManager.updateDataInfo(DataManager.meta, DataManager.stations.length, DataManager.getMajorCount());
           // 3D samples PrecomputedGrid when it builds its terrain. Re-request the
           // terrain only when it is active; otherwise the next show() uses the
@@ -167,6 +179,14 @@
       case 'gradient':
         gradientOverlay.setVisible(value);
         break;
+      case 'departureThresholdEnabled':
+        departureThresholdOverlay.setVisible(value);
+        Renderer3D.setDepartureThreshold(value, UIManager.getSettings().departureThresholdMinutes);
+        break;
+      case 'departureThresholdMinutes':
+        departureThresholdOverlay.setThresholdMinutes(value);
+        Renderer3D.setDepartureThreshold(UIManager.getSettings().departureThresholdEnabled, value);
+        break;
       case 'labels':
         MarkerManager.setLabelsEnabled(value);
         break;
@@ -180,6 +200,10 @@
         if (value) {
           Renderer3D.setMapMode(UIManager.getSettings().threeDMapMode || 'texture');
           Renderer3D.setFlatPlaneHeight(UIManager.getSettings().threeDFlatHeight);
+          Renderer3D.setDepartureThreshold(
+            UIManager.getSettings().departureThresholdEnabled,
+            UIManager.getSettings().departureThresholdMinutes
+          );
           if (Renderer3D.show()) {
             document.getElementById('map').style.display = 'none';
           } else {
