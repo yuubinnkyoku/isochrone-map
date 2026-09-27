@@ -208,6 +208,7 @@
       document.addEventListener('visibilitychange', function () {
         if (!document.hidden) refreshSoon();
       });
+      refreshSoon();
     },
 
     _commit: function (key, value) {
