@@ -61,6 +61,8 @@
     defaultContourInterval: 5,
     defaultContourEnabled: true,
     defaultGradientEnabled: false,
+    defaultDepartureThresholdEnabled: false,
+    defaultDepartureThresholdMinutes: 420, // 07:00
     defaultLabelsEnabled: true,
     defaultLegendEnabled: true,
     defaultExcludedStationMode: 'hollow',
@@ -216,6 +218,15 @@
     return time;
   }
 
+  function timeStrToMinutes(value) {
+    var match = /^(\d{1,2}):(\d{2})$/.exec(String(value || '').trim());
+    if (!match) return null;
+    var hour = Number(match[1]);
+    var minute = Number(match[2]);
+    if (!Number.isInteger(hour) || !Number.isInteger(minute) || hour < 0 || hour > 23 || minute < 0 || minute > 59) return null;
+    return hour * 60 + minute;
+  }
+
   function updateTimeRangeFromStations(stations) {
     if (!stations || !stations.length) return;
     var min = Math.min.apply(null, stations.filter(function (s) { return !s.excludeFromIdw; }).map(function (s) { return s.minutes; }).filter(Number.isFinite));
@@ -236,5 +247,6 @@
   window.minutesToColor = minutesToColor;
   window.colorToCSS = colorToCSS;
   window.minutesToTimeStr = minutesToTimeStr;
+  window.timeStrToMinutes = timeStrToMinutes;
   window.updateTimeRangeFromStations = updateTimeRangeFromStations;
 })();
