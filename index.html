@@ -20,7 +20,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
-  <link rel="stylesheet" href="css/style.css?v=6">
+  <link rel="stylesheet" href="css/style.css?v=7">
 </head>
 <body>
 
@@ -102,6 +102,15 @@
       <span class="ctrl-label">グラデーション</span>
     </label>
     <label class="ctrl-row">
+      <input type="checkbox" id="toggle-departure-threshold">
+      <span class="ctrl-toggle"></span>
+      <span class="ctrl-label">指定時刻以降に出て間に合う範囲</span>
+    </label>
+    <div class="ctrl-select" id="departure-threshold-row" style="display:none">
+      <span class="ctrl-label">出発時刻</span>
+      <input type="time" id="input-departure-threshold" class="ctrl-time" value="07:00" step="60" max="08:18" aria-label="出発時刻">
+    </div>
+    <label class="ctrl-row">
       <input type="checkbox" id="toggle-labels" checked>
       <span class="ctrl-toggle"></span>
       <span class="ctrl-label">駅名ラベル</span>
@@ -138,6 +147,7 @@
   <div class="legend-lines" id="legend-lines"></div>
   <div class="legend-gradient-bar" id="legend-grad"></div>
   <div class="legend-gradient-labels" id="legend-grad-labels"></div>
+  <div class="legend-threshold" id="legend-threshold"></div>
   <div class="legend-excluded" id="legend-excluded"></div>
 </div>
 
@@ -145,15 +155,15 @@
 <div id="map"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-<script src="js/config.js?v=30"></script>
+<script src="js/config.js?v=31"></script>
 <script src="js/data.js?v=13"></script>
 <script src="js/precomputed-grid.js?v=3"></script>
 <script src="js/map.js?v=10"></script>
-<script src="js/renderer.js?v=21"></script>
-<script src="js/renderer3d.js?v=16"></script>
+<script src="js/renderer.js?v=22"></script>
+<script src="js/renderer3d.js?v=17"></script>
 <script src="js/markers.js?v=21"></script>
-<script src="js/ui.js?v=19"></script>
-<script src="js/main.js?v=18"></script>
+<script src="js/ui.js?v=20"></script>
+<script src="js/main.js?v=19"></script>
 <script src="js/devtools.js?v=12"></script>
 </body>
 </html>
