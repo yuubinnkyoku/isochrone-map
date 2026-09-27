@@ -7,6 +7,7 @@
   var TILE_SIZE = 256;
   var SVG_NS = 'http://www.w3.org/2000/svg';
   var GRADIENT_ALPHA = Math.round(255 * 0.28);
+  var THRESHOLD_MASK_ALPHA = Math.round(255 * 0.42);
   var COLOR_LUT_STEPS_PER_MINUTE = 4;
   var colorLut = null;
   var tileQueue = [];
@@ -262,6 +263,111 @@
     ctx.putImageData(image, 0, 0);
   }
 
+  function appendCanvasSegment(ctx, a, b) {
+    ctx.moveTo(a[0], a[1]);
+    ctx.lineTo(b[0], b[1]);
+  }
+
+  function drawDepartureThresholdTile(tile, gridData, coords, thresholdMinutes) {
+    var meta = gridData.meta;
+    if (!tileIntersectsGrid(meta, coords)) return;
+
+    var ctx = tile.getContext('2d', { alpha: true });
+    var image = ctx.createImageData(TILE_SIZE, TILE_SIZE);
+    var data = image.data;
+    var xAxis = buildLongitudeAxis(meta, coords, TILE_SIZE, 1, true);
+    var yAxis = buildLatitudeAxis(meta, coords, TILE_SIZE, 1, true);
+
+    // Dim locations whose latest possible departure is earlier than the selected
+    // time. Feasible locations remain fully transparent so the base map and the
+    // normal isochrone layers stay readable.
+    for (var y = 0; y < TILE_SIZE; y++) {
+      var r0 = yAxis.indices[y];
+      var fr = yAxis.fractions[y];
+      var pixelBase = y * TILE_SIZE * 4;
+      for (var x = 0; x < TILE_SIZE; x++) {
+        var col0 = xAxis.indices[x];
+        if (r0 < 0 || col0 < 0) continue;
+        var minute = samplePrepared(meta, gridData.values, r0, fr, col0, xAxis.fractions[x]);
+        if (!Number.isFinite(minute) || minute >= thresholdMinutes) continue;
+        var offset = pixelBase + x * 4;
+        data[offset] = 0;
+        data[offset + 1] = 0;
+        data[offset + 2] = 0;
+        data[offset + 3] = THRESHOLD_MASK_ALPHA;
+      }
+    }
+    ctx.putImageData(image, 0, 0);
+
+    // Draw the selected departure-time boundary on top of the mask. Reusing the
+    // same scalar field as the normal contours means the highlighted region is
+    // exactly "latest departure >= selected time".
+    var step = contourStepForZoom(coords.z);
+    var sampled = sampleTileGrid(gridData, coords, step);
+    var grid = sampled.values;
+    var count = sampled.count;
+    var boundaryColor = minutesToColor(thresholdMinutes);
+    ctx.beginPath();
+
+    for (var r = 0; r < count - 1; r++) {
+      var row0 = r * count;
+      var row1 = (r + 1) * count;
+      var y0 = r * step;
+      for (var col = 0; col < count - 1; col++) {
+        var v00 = grid[row0 + col];
+        var v10 = grid[row0 + col + 1];
+        var v01 = grid[row1 + col];
+        var v11 = grid[row1 + col + 1];
+        if (!Number.isFinite(v00) || !Number.isFinite(v10) || !Number.isFinite(v01) || !Number.isFinite(v11)) continue;
+
+        var cellMin = Math.min(v00, v10, v01, v11);
+        var cellMax = Math.max(v00, v10, v01, v11);
+        if (thresholdMinutes <= cellMin || thresholdMinutes > cellMax) continue;
+
+        var x0 = col * step;
+        var code = (v00 >= thresholdMinutes ? 8 : 0) |
+          (v10 >= thresholdMinutes ? 4 : 0) |
+          (v11 >= thresholdMinutes ? 2 : 0) |
+          (v01 >= thresholdMinutes ? 1 : 0);
+        if (code === 0 || code === 15) continue;
+
+        var top = [x0 + interpolateEdge(thresholdMinutes, v00, v10) * step, y0];
+        var bottom = [x0 + interpolateEdge(thresholdMinutes, v01, v11) * step, y0 + step];
+        var left = [x0, y0 + interpolateEdge(thresholdMinutes, v00, v01) * step];
+        var right = [x0 + step, y0 + interpolateEdge(thresholdMinutes, v10, v11) * step];
+
+        switch (code) {
+          case 1: case 14:
+            appendCanvasSegment(ctx, left, bottom); break;
+          case 2: case 13:
+            appendCanvasSegment(ctx, bottom, right); break;
+          case 3: case 12:
+            appendCanvasSegment(ctx, left, right); break;
+          case 4: case 11:
+            appendCanvasSegment(ctx, top, right); break;
+          case 5:
+            appendCanvasSegment(ctx, left, top);
+            appendCanvasSegment(ctx, bottom, right); break;
+          case 6: case 9:
+            appendCanvasSegment(ctx, top, bottom); break;
+          case 7: case 8:
+            appendCanvasSegment(ctx, left, top); break;
+          case 10:
+            appendCanvasSegment(ctx, top, right);
+            appendCanvasSegment(ctx, left, bottom); break;
+        }
+      }
+    }
+
+    ctx.strokeStyle = 'rgb(' + boundaryColor[0] + ',' + boundaryColor[1] + ',' + boundaryColor[2] + ')';
+    ctx.globalAlpha = 0.98;
+    ctx.lineWidth = 3;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+  }
+
   function contourStepForZoom(zoom) {
     // Finer geometry matters most during animated zoom, because Leaflet may
     // temporarily scale the previous zoom's tile by nearly 2x. A 2px lattice
@@ -486,6 +592,16 @@
     return tile;
   }
 
+  function makeDepartureThresholdCanvas() {
+    var tile = L.DomUtil.create('canvas', 'isochrone-departure-threshold-tile');
+    tile.width = TILE_SIZE;
+    tile.height = TILE_SIZE;
+    tile.style.width = TILE_SIZE + 'px';
+    tile.style.height = TILE_SIZE + 'px';
+    tile.style.pointerEvents = 'none';
+    return tile;
+  }
+
   function finishTile(done, error, tile) {
     if (typeof done === 'function') done(error || null, tile);
   }
@@ -653,6 +769,85 @@
     },
   });
 
+  var DepartureThresholdOverlay = L.GridLayer.extend({
+    options: {
+      pane: 'overlayPane',
+      tileSize: TILE_SIZE,
+      zIndex: 225,
+      opacity: 1,
+      noWrap: true,
+      keepBuffer: 4,
+      updateWhenIdle: false,
+      updateWhenZooming: true,
+      updateInterval: 50,
+    },
+
+    initialize: function (opts) {
+      opts = opts || {};
+      L.setOptions(this, opts);
+      this._gridData = opts.grid || null;
+      this._thresholdMinutes = Number.isFinite(opts.thresholdMinutes) ? opts.thresholdMinutes : 420;
+      this._visible = !!opts.visible;
+      this._generation = 0;
+    },
+
+    onAdd: function (map) {
+      L.GridLayer.prototype.onAdd.call(this, map);
+      syncLayerVisibility(this);
+    },
+
+    createTile: function (coords, done) {
+      var tile = makeDepartureThresholdCanvas();
+      var generation = this._generation;
+      var self = this;
+
+      scheduleTileRender(function (shouldRender) {
+        try {
+          if (shouldRender && tileJobCurrent(self, tile, generation, coords)) {
+            drawDepartureThresholdTile(tile, self._gridData, coords, self._thresholdMinutes);
+          }
+          finishTile(done, null, tile);
+        } catch (err) {
+          console.error('指定出発時刻範囲タイル描画エラー:', err);
+          finishTile(done, err, tile);
+        }
+      }, function () {
+        return tileJobCurrent(self, tile, generation, coords);
+      }, function () {
+        return tilePriority(self, coords);
+      });
+      return tile;
+    },
+
+    _invalidateTiles: function () {
+      this._generation++;
+      if (this._map) this.redraw();
+    },
+
+    setVisible: function (visible) {
+      this._visible = !!visible;
+      this._generation++;
+      syncLayerVisibility(this);
+      if (this._visible && this._map) this.redraw();
+    },
+
+    setThresholdMinutes: function (minutes) {
+      if (!Number.isFinite(minutes)) return;
+      this._thresholdMinutes = minutes;
+      this._invalidateTiles();
+    },
+
+    setGrid: function (grid) {
+      this._gridData = grid;
+      this._invalidateTiles();
+    },
+
+    refresh: function () {
+      this._invalidateTiles();
+    },
+  });
+
   window.ContourOverlay = ContourOverlay;
   window.GradientOverlay = GradientOverlay;
+  window.DepartureThresholdOverlay = DepartureThresholdOverlay;
 })();
