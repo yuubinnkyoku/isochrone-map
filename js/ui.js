@@ -52,6 +52,8 @@
         contourEnabled: CONFIG.defaultContourEnabled,
         contourInterval: CONFIG.defaultContourInterval,
         gradientEnabled: CONFIG.defaultGradientEnabled,
+        departureThresholdEnabled: !!CONFIG.defaultDepartureThresholdEnabled,
+        departureThresholdMinutes: CONFIG.defaultDepartureThresholdMinutes || 420,
         labelsEnabled: CONFIG.defaultLabelsEnabled,
         legendEnabled: CONFIG.defaultLegendEnabled,
         // 互換性のため設定キーは旧名のまま。現在は「最適経路でこの地点から乗らない駅」の表示方法。
@@ -74,6 +76,10 @@
         if (['highlight', 'hollow', 'hidden'].indexOf(parsed.excludedStationMode) === -1) {
           parsed.excludedStationMode = defaults.excludedStationMode;
         }
+        parsed.departureThresholdEnabled = !!parsed.departureThresholdEnabled;
+        var thresholdMinutes = Number(parsed.departureThresholdMinutes);
+        if (!Number.isFinite(thresholdMinutes)) thresholdMinutes = defaults.departureThresholdMinutes;
+        parsed.departureThresholdMinutes = Math.max(0, Math.min(CONFIG.destination.dataTargetMinutes, Math.round(thresholdMinutes)));
         return parsed;
       } catch (e) { return defaults; }
     },
@@ -95,6 +101,9 @@
       document.getElementById('select-interpolation').value = s.interpolationMode || 'access';
       document.getElementById('toggle-contour').checked = s.contourEnabled;
       document.getElementById('toggle-gradient').checked = s.gradientEnabled;
+      document.getElementById('toggle-departure-threshold').checked = s.departureThresholdEnabled;
+      document.getElementById('input-departure-threshold').value = this._minutesToTimeInputValue(s.departureThresholdMinutes);
+      document.getElementById('departure-threshold-row').style.display = s.departureThresholdEnabled ? '' : 'none';
       document.getElementById('toggle-labels').checked = s.labelsEnabled;
       document.getElementById('select-excluded-stations').value = s.excludedStationMode || 'hollow';
       document.getElementById('toggle-legend').checked = s.legendEnabled;
@@ -137,6 +146,24 @@
         self._settings.contourInterval = parseInt(this.value, 10); self._buildLegend(); self._commit('interval', self._settings.contourInterval);
       });
       bind('toggle-gradient', 'change', function () { self._settings.gradientEnabled = this.checked; self._buildLegend(); self._commit('gradient', this.checked); });
+      bind('toggle-departure-threshold', 'change', function () {
+        self._settings.departureThresholdEnabled = this.checked;
+        document.getElementById('departure-threshold-row').style.display = this.checked ? '' : 'none';
+        self._buildLegend();
+        self._commit('departureThresholdEnabled', this.checked);
+      });
+      bind('input-departure-threshold', 'change', function () {
+        var parsed = timeStrToMinutes(this.value);
+        if (!Number.isFinite(parsed)) {
+          this.value = self._minutesToTimeInputValue(self._settings.departureThresholdMinutes);
+          return;
+        }
+        parsed = Math.max(0, Math.min(CONFIG.destination.dataTargetMinutes, parsed));
+        self._settings.departureThresholdMinutes = parsed;
+        this.value = self._minutesToTimeInputValue(parsed);
+        self._buildLegend();
+        self._commit('departureThresholdMinutes', parsed);
+      });
       bind('toggle-labels', 'change', function () { self._settings.labelsEnabled = this.checked; self._commit('labels', this.checked); });
       bind('select-excluded-stations', 'change', function () {
         self._settings.excludedStationMode = this.value;
@@ -171,6 +198,11 @@
     },
 
     _formatHeightLabel: function (v) { return (v > 0 ? '+' : '') + String(v); },
+
+    _minutesToTimeInputValue: function (minutes) {
+      var total = Math.max(0, Math.min(1439, Math.round(Number(minutes) || 0)));
+      return String(Math.floor(total / 60)).padStart(2, '0') + ':' + String(total % 60).padStart(2, '0');
+    },
 
     _alternateRouteCount: function (meta) {
       var policy = meta && meta.idwExclusionPolicy;
@@ -233,6 +265,7 @@
       var title = document.getElementById('legend-title');
       var bar = document.getElementById('legend-grad');
       var labels = document.getElementById('legend-grad-labels');
+      var threshold = document.getElementById('legend-threshold');
       var excluded = document.getElementById('legend-excluded');
 
       var modeSuffix = this._effectiveInterpolationMode() === 'idw' ? '・IDW' : '・徒歩アクセス考慮';
@@ -286,6 +319,13 @@
           return '<span style="left:' + pct.toFixed(2) + '%;transform:' + transform + '">' + minutesToTimeStr(v) + '</span>';
         }).join('');
       }
+
+      var showThreshold = !!s.departureThresholdEnabled;
+      threshold.style.display = showThreshold ? 'flex' : 'none';
+      threshold.innerHTML = showThreshold
+        ? '<span class="legend-threshold-symbol" style="color:' + colorToCSS(minutesToColor(s.departureThresholdMinutes)) + '"></span>' +
+          '<span class="legend-threshold-text">' + minutesToTimeStr(s.departureThresholdMinutes) + '以降に出ても間に合う範囲を明るく表示</span>'
+        : '';
 
       var alternateCount = this._alternateRouteCount(this._dataMeta);
       var showExcluded = alternateCount > 0 && !s.threeDEnabled && (s.excludedStationMode || 'hollow') !== 'hidden';
