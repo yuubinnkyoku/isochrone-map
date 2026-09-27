@@ -408,7 +408,6 @@
         console.error('凡例の再構築エラー:', err);
       }
     }
-    }
   };
 
   window.UIManager = UIManager;
