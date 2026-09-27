@@ -35,6 +35,8 @@
     _lastGrid: null,
     _lastMapTexture: null,
     _lastUV: null,
+    _departureThresholdEnabled: false,
+    _departureThresholdMinutes: 420,
 
     init: function () {
       this._container = document.getElementById('canvas-3d');
@@ -318,7 +320,8 @@
       for (var r = 0; r < rows; r++) {
         for (var c = 0; c < cols; c++) {
           var idx = r * cols + c;
-          var val = grid[idx];
+          var rawVal = grid[idx];
+          var val = rawVal;
           if (val < minMin) val = minMin;
           if (val > maxMin) val = maxMin;
 
@@ -331,8 +334,12 @@
           var vv = 1 - (vMin + (r / (rows - 1)) * (vMax - vMin));
           uvAttr.setXY(idx, u, vv);
 
-          // Vertex colors for gradient overlay
-          var rgb = minutesToColor(val);
+          // Vertex colors for gradient overlay. In departure-threshold mode,
+          // points that require leaving earlier than the selected time are
+          // darkened while feasible points keep the normal time color.
+          var rgb = this._departureThresholdEnabled && rawVal < this._departureThresholdMinutes
+            ? [18, 18, 22]
+            : minutesToColor(val);
           colorArr[idx * 3] = rgb[0] / 255;
           colorArr[idx * 3 + 1] = rgb[1] / 255;
           colorArr[idx * 3 + 2] = rgb[2] / 255;
@@ -424,6 +431,23 @@
         this._controls.target.set(0, peakY * 0.3, 0);
         this._controls.update();
       }
+    },
+
+    setDepartureThreshold: function (enabled, minutes) {
+      var threshold = Number(minutes);
+      if (!Number.isFinite(threshold)) threshold = this._departureThresholdMinutes;
+      var nextEnabled = !!enabled;
+      var changed = nextEnabled !== this._departureThresholdEnabled || threshold !== this._departureThresholdMinutes;
+      this._departureThresholdEnabled = nextEnabled;
+      this._departureThresholdMinutes = threshold;
+      if (!changed || !this._lastGrid || !this._lastMapTexture || !this._scene) return;
+
+      var g = this._lastGrid;
+      var uv = this._lastUV;
+      var tex = this._lastMapTexture.clone();
+      tex.needsUpdate = true;
+      this._lastMapTexture = tex;
+      this._buildMesh(g.grid, g.cols, g.rows, tex, uv.uMin, uv.uMax, uv.vMin, uv.vMax);
     },
 
     setMapMode: function (mode) {
