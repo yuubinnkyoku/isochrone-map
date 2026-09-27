@@ -7,6 +7,7 @@
     _onUpdate: null,
     _panelOpen: false,
     _dataMeta: null,
+    _legendRefreshFrame: null,
 
     init: function (onUpdate) {
       this._onUpdate = onUpdate;
@@ -16,6 +17,7 @@
       document.getElementById('settings-panel').classList.toggle('open', this._panelOpen);
       this._applyTheme(this._settings.theme);
       this._bindEvents();
+      this._bindLegendRecovery();
       this._syncUI();
       this._buildLegend();
     },
@@ -186,6 +188,28 @@
       bind('btn-devtools', 'click', function () { if (window.DevTools) DevTools.toggle(); });
     },
 
+    _bindLegendRecovery: function () {
+      var self = this;
+      function refreshSoon() {
+        if (!self._settings || !self._settings.legendEnabled) return;
+        if (self._legendRefreshFrame !== null) cancelAnimationFrame(self._legendRefreshFrame);
+        self._legendRefreshFrame = requestAnimationFrame(function () {
+          self._legendRefreshFrame = null;
+          self._buildLegend();
+        });
+      }
+
+      // Mobile browsers can restore a page from BFCache or change the visual
+      // viewport when their address bar appears/disappears. Rebuild the legend
+      // after those transitions so a partially restored dynamic legend cannot
+      // remain as a title-only card.
+      window.addEventListener('pageshow', refreshSoon);
+      window.addEventListener('resize', refreshSoon);
+      document.addEventListener('visibilitychange', function () {
+        if (!document.hidden) refreshSoon();
+      });
+    },
+
     _commit: function (key, value) {
       this._saveSettings();
       if (this._onUpdate) this._onUpdate(key, value);
@@ -257,82 +281,133 @@
     },
 
     _buildLegend: function () {
-      var s = this._settings, r = CONFIG.timeRange;
+      var s = this._settings;
+      var r = CONFIG.timeRange;
       var legend = document.getElementById('legend');
+      if (!legend || !s) return;
+
       legend.style.display = s.legendEnabled ? '' : 'none';
       if (!s.legendEnabled) return;
-      var lines = document.getElementById('legend-lines');
-      var title = document.getElementById('legend-title');
-      var bar = document.getElementById('legend-grad');
-      var labels = document.getElementById('legend-grad-labels');
-      var threshold = document.getElementById('legend-threshold');
-      var excluded = document.getElementById('legend-excluded');
 
-      var modeSuffix = this._effectiveInterpolationMode() === 'idw' ? '・IDW' : '・徒歩アクセス考慮';
-      title.textContent = (s.threeDEnabled ? '出発時刻（3D地形）' :
-        (s.contourEnabled && s.gradientEnabled ? '出発時刻（等時線＋グラデーション）' :
-        (s.contourEnabled ? '出発時刻（' + s.contourInterval + '分刻み等時線）' :
-        (s.gradientEnabled ? '出発時刻（グラデーション）' : '出発時刻')))) + modeSuffix;
+      try {
+        var lines = document.getElementById('legend-lines');
+        var title = document.getElementById('legend-title');
+        var bar = document.getElementById('legend-grad');
+        var labels = document.getElementById('legend-grad-labels');
+        var threshold = document.getElementById('legend-threshold');
+        var excluded = document.getElementById('legend-excluded');
+        if (!lines || !title || !bar || !labels || !threshold || !excluded) {
+          throw new Error('凡例DOMが不足しています');
+        }
 
-      lines.innerHTML = '';
-      lines.style.display = (s.contourEnabled && !s.threeDEnabled) ? '' : 'none';
-      if (s.contourEnabled) {
-        var denseMin = r.denseContourMin || r.contourMin;
-        if (r.contourMin < denseMin) {
-          var early = document.createElement('div');
-          early.className = 'legend-item';
-          early.innerHTML = '<span class="legend-swatch thick" style="background:' + colorToCSS(minutesToColor(r.contourMin)) + '"></span><span class="legend-time">06:30以前（1時間刻み）</span>';
-          lines.appendChild(early);
+        var requiredRangeValues = [r && r.min, r && r.max, r && r.contourMin, r && r.contourMax];
+        if (requiredRangeValues.some(function (v) { return !Number.isFinite(Number(v)); })) {
+          throw new Error('凡例の時刻範囲が不正です');
         }
-        for (var m = Math.ceil(denseMin / 10) * 10; m <= r.contourMax; m += 10) {
-          var item = document.createElement('div');
-          item.className = 'legend-item';
-          item.innerHTML = '<span class="legend-swatch thick" style="background:' + colorToCSS(minutesToColor(m)) + '"></span><span class="legend-time">' + minutesToTimeStr(m) + '</span>';
-          lines.appendChild(item);
+
+        // Build every dynamic part off-DOM first. The previous implementation
+        // cleared legend-lines before rebuilding it; if a rebuild was interrupted
+        // on a mobile restore/resize, the page could be left with only the title.
+        // Commit only after all calculations succeed.
+        var modeSuffix = this._effectiveInterpolationMode() === 'idw' ? '・IDW' : '・徒歩アクセス考慮';
+        var titleText = (s.threeDEnabled ? '出発時刻（3D地形）' :
+          (s.contourEnabled && s.gradientEnabled ? '出発時刻（等時線＋グラデーション）' :
+          (s.contourEnabled ? '出発時刻（' + s.contourInterval + '分刻み等時線）' :
+          (s.gradientEnabled ? '出発時刻（グラデーション）' : '出発時刻')))) + modeSuffix;
+
+        var lineFragment = document.createDocumentFragment();
+        if (s.contourEnabled) {
+          var denseMin = Number(r.denseContourMin) || Number(r.contourMin);
+          if (Number(r.contourMin) < denseMin) {
+            var early = document.createElement('div');
+            early.className = 'legend-item';
+            early.innerHTML = '<span class="legend-swatch thick" style="background:' +
+              colorToCSS(minutesToColor(Number(r.contourMin))) +
+              '"></span><span class="legend-time">06:30以前（1時間刻み）</span>';
+            lineFragment.appendChild(early);
+          }
+          for (var m = Math.ceil(denseMin / 10) * 10; m <= Number(r.contourMax); m += 10) {
+            var item = document.createElement('div');
+            item.className = 'legend-item';
+            item.innerHTML = '<span class="legend-swatch thick" style="background:' +
+              colorToCSS(minutesToColor(m)) +
+              '"></span><span class="legend-time">' + minutesToTimeStr(m) + '</span>';
+            lineFragment.appendChild(item);
+          }
         }
+
+        var showGrad = s.gradientEnabled || s.threeDEnabled;
+        var gradientBackground = '';
+        var gradientLabelsHtml = '';
+        if (showGrad) {
+          var stops = [];
+          var span = Number(r.max) - Number(r.min);
+          var x;
+          for (x = Number(r.min); x <= Number(r.max); x += 2) {
+            stops.push(colorToCSS(minutesToColor(x)) + ' ' +
+              (span > 0 ? (((x - Number(r.min)) / span) * 100).toFixed(1) : '0') + '%');
+          }
+          if (!stops.length || x - 2 < Number(r.max)) {
+            stops.push(colorToCSS(minutesToColor(Number(r.max))) + ' 100%');
+          }
+          gradientBackground = 'linear-gradient(90deg,' + stops.join(',') + ')';
+
+          var labelValues = [Number(r.min), 420, 450, 480, Number(r.max)];
+          var seenLabels = {};
+          gradientLabelsHtml = labelValues.filter(function (v) {
+            if (v < Number(r.min) || v > Number(r.max) || seenLabels[v]) return false;
+            seenLabels[v] = true;
+            return true;
+          }).map(function (v) {
+            var pct = span > 0 ? ((v - Number(r.min)) / span) * 100 : 0;
+            pct = Math.max(0, Math.min(100, pct));
+            var transform = pct <= 0 ? 'translateX(0)' : (pct >= 100 ? 'translateX(-100%)' : 'translateX(-50%)');
+            return '<span style="left:' + pct.toFixed(2) + '%;transform:' + transform + '">' +
+              minutesToTimeStr(v) + '</span>';
+          }).join('');
+        }
+
+        var showThreshold = !!s.departureThresholdEnabled;
+        var thresholdHtml = showThreshold
+          ? '<span class="legend-threshold-symbol" style="color:' +
+            colorToCSS(minutesToColor(s.departureThresholdMinutes)) + '"></span>' +
+            '<span class="legend-threshold-text">' +
+            minutesToTimeStr(s.departureThresholdMinutes) +
+            '以降に出ても間に合う範囲を明るく表示</span>'
+          : '';
+
+        var alternateCount = this._alternateRouteCount(this._dataMeta);
+        var showExcluded = alternateCount > 0 && !s.threeDEnabled &&
+          (s.excludedStationMode || 'hollow') !== 'hidden';
+        var excludedHtml = showExcluded
+          ? '<span class="legend-excluded-symbol">○</span>' +
+            '<span class="legend-excluded-text">最適経路でこの地点の鉄道を使わない（' +
+            alternateCount + '地点）</span>'
+          : '';
+
+        // Atomic-ish commit: no destructive mutation happens before the complete
+        // next legend has been prepared.
+        title.textContent = titleText;
+        lines.replaceChildren(lineFragment);
+        lines.style.display = (s.contourEnabled && !s.threeDEnabled) ? '' : 'none';
+
+        bar.style.display = showGrad ? 'block' : 'none';
+        labels.style.display = showGrad ? 'block' : 'none';
+        if (showGrad) {
+          bar.style.background = gradientBackground;
+          labels.innerHTML = gradientLabelsHtml;
+        }
+
+        threshold.style.display = showThreshold ? 'flex' : 'none';
+        threshold.innerHTML = thresholdHtml;
+
+        excluded.style.display = showExcluded ? 'flex' : 'none';
+        excluded.innerHTML = excludedHtml;
+      } catch (err) {
+        // Keep the last successfully rendered legend instead of clearing it.
+        console.error('凡例の再構築エラー:', err);
       }
-
-      var showGrad = s.gradientEnabled || s.threeDEnabled;
-      bar.style.display = showGrad ? 'block' : 'none';
-      labels.style.display = showGrad ? 'block' : 'none';
-      if (showGrad) {
-        var stops = [];
-        var span = r.max - r.min;
-        for (var x = r.min; x <= r.max; x += 2) {
-          stops.push(colorToCSS(minutesToColor(x)) + ' ' + (span > 0 ? (((x - r.min) / span) * 100).toFixed(1) : '0') + '%');
-        }
-        if (!stops.length || x - 2 < r.max) {
-          stops.push(colorToCSS(minutesToColor(r.max)) + ' 100%');
-        }
-        bar.style.background = 'linear-gradient(90deg,' + stops.join(',') + ')';
-
-        var labelValues = [r.min, 420, 450, 480, r.max];
-        var seenLabels = {};
-        labels.innerHTML = labelValues.filter(function (v) {
-          if (v < r.min || v > r.max || seenLabels[v]) return false;
-          seenLabels[v] = true;
-          return true;
-        }).map(function (v) {
-          var pct = span > 0 ? ((v - r.min) / span) * 100 : 0;
-          pct = Math.max(0, Math.min(100, pct));
-          var transform = pct <= 0 ? 'translateX(0)' : (pct >= 100 ? 'translateX(-100%)' : 'translateX(-50%)');
-          return '<span style="left:' + pct.toFixed(2) + '%;transform:' + transform + '">' + minutesToTimeStr(v) + '</span>';
-        }).join('');
-      }
-
-      var showThreshold = !!s.departureThresholdEnabled;
-      threshold.style.display = showThreshold ? 'flex' : 'none';
-      threshold.innerHTML = showThreshold
-        ? '<span class="legend-threshold-symbol" style="color:' + colorToCSS(minutesToColor(s.departureThresholdMinutes)) + '"></span>' +
-          '<span class="legend-threshold-text">' + minutesToTimeStr(s.departureThresholdMinutes) + '以降に出ても間に合う範囲を明るく表示</span>'
-        : '';
-
-      var alternateCount = this._alternateRouteCount(this._dataMeta);
-      var showExcluded = alternateCount > 0 && !s.threeDEnabled && (s.excludedStationMode || 'hollow') !== 'hidden';
-      excluded.style.display = showExcluded ? 'flex' : 'none';
-      excluded.innerHTML = showExcluded
-        ? '<span class="legend-excluded-symbol">○</span><span class="legend-excluded-text">最適経路でこの地点の鉄道を使わない（' + alternateCount + '地点）</span>'
-        : '';
+    }
     }
   };
 
