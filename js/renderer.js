@@ -577,8 +577,10 @@
     svg.classList.add('isochrone-contour-tile');
     svg.style.width = TILE_SIZE + 'px';
     svg.style.height = TILE_SIZE + 'px';
+    svg.style.display = 'block';
     svg.style.pointerEvents = 'none';
     svg.style.overflow = 'hidden';
+    svg.style.background = 'transparent';
     return svg;
   }
 
