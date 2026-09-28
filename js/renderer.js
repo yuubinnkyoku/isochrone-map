@@ -8,6 +8,7 @@
   var SVG_NS = 'http://www.w3.org/2000/svg';
   var GRADIENT_ALPHA = Math.round(255 * 0.28);
   var THRESHOLD_MASK_ALPHA = Math.round(255 * 0.42);
+  var THRESHOLD_MASK_MAX_DIM = 2048;
   var COLOR_LUT_STEPS_PER_MINUTE = 4;
   var colorLut = null;
   var tileQueue = [];
@@ -106,6 +107,17 @@
   function latitudeAtWorldY(y, zoom) {
     var size = worldSize(zoom);
     var n = Math.PI - 2 * Math.PI * y / size;
+    return Math.atan(Math.sinh(n)) * 180 / Math.PI;
+  }
+
+  function normalizedMercatorY(lat) {
+    var clamped = Math.max(-85.05112878, Math.min(85.05112878, lat));
+    var sin = Math.sin(clamped * Math.PI / 180);
+    return 0.5 - Math.log((1 + sin) / (1 - sin)) / (4 * Math.PI);
+  }
+
+  function latitudeAtNormalizedMercatorY(y) {
+    var n = Math.PI - 2 * Math.PI * y;
     return Math.atan(Math.sinh(n)) * 180 / Math.PI;
   }
 
@@ -348,28 +360,75 @@
 
     var meta = gridData.meta;
     var values = gridData.values;
-    var cols = Number(meta.cols);
-    var rows = Number(meta.rows);
-    if (!Number.isFinite(cols) || !Number.isFinite(rows) || cols < 2 || rows < 2) return;
+    var northY = normalizedMercatorY(Number(meta.north));
+    var southY = normalizedMercatorY(Number(meta.south));
+    var projectedWidth = Math.abs(Number(meta.east) - Number(meta.west)) / 360;
+    var projectedHeight = Math.abs(southY - northY);
+    if (!(projectedWidth > 0) || !(projectedHeight > 0)) return;
 
-    if (canvas.width !== cols) canvas.width = cols;
-    if (canvas.height !== rows) canvas.height = rows;
+    // The mask image is sampled in Web Mercator space so stretching the single
+    // canvas to its Leaflet bounds stays aligned with the tiled contour layer.
+    // A ~4 MP cap keeps memory/render time reasonable on mobile devices.
+    var aspect = projectedWidth / projectedHeight;
+    var width;
+    var height;
+    if (aspect >= 1) {
+      width = THRESHOLD_MASK_MAX_DIM;
+      height = Math.max(2, Math.round(THRESHOLD_MASK_MAX_DIM / aspect));
+    } else {
+      height = THRESHOLD_MASK_MAX_DIM;
+      width = Math.max(2, Math.round(THRESHOLD_MASK_MAX_DIM * aspect));
+    }
+
+    if (canvas.width !== width) canvas.width = width;
+    if (canvas.height !== height) canvas.height = height;
 
     var ctx = canvas.getContext('2d', { alpha: true });
-    var image = ctx.createImageData(cols, rows);
+    var image = ctx.createImageData(width, height);
     var data = image.data;
-    var scale = Number(meta.scale) || 1;
-    var offsetMinutes = Number(meta.offsetMinutes) || 0;
-    var nodata = meta.nodata;
 
-    // One source-grid pixel becomes one mask pixel. The browser smoothly scales
-    // this single image with the map, so there are no 256px tile boundaries to
-    // expose during Android pan/zoom compositing.
-    for (var i = 0, alphaIndex = 3; i < values.length; i++, alphaIndex += 4) {
-      var raw = values[i];
-      if (raw === nodata) continue;
-      var minute = raw / scale - offsetMinutes;
-      if (minute < thresholdMinutes) data[alphaIndex] = THRESHOLD_MASK_ALPHA;
+    var xIndices = new Int32Array(width);
+    var xFractions = new Float32Array(width);
+    var yIndices = new Int32Array(height);
+    var yFractions = new Float32Array(height);
+
+    for (var x = 0; x < width; x++) {
+      var lng = Number(meta.west) + (x + 0.5) / width * (Number(meta.east) - Number(meta.west));
+      var col = (lng - Number(meta.west)) / Number(meta.lngStep);
+      var c0 = Math.floor(col);
+      if (c0 < 0 || c0 >= Number(meta.cols) - 1) {
+        xIndices[x] = -1;
+      } else {
+        xIndices[x] = c0;
+        xFractions[x] = Math.max(0, Math.min(1, col - c0));
+      }
+    }
+
+    for (var y = 0; y < height; y++) {
+      var mercatorY = northY + (y + 0.5) / height * (southY - northY);
+      var lat = latitudeAtNormalizedMercatorY(mercatorY);
+      var row = (Number(meta.north) - lat) / Number(meta.latStep);
+      var r0 = Math.floor(row);
+      if (r0 < 0 || r0 >= Number(meta.rows) - 1) {
+        yIndices[y] = -1;
+      } else {
+        yIndices[y] = r0;
+        yFractions[y] = Math.max(0, Math.min(1, row - r0));
+      }
+    }
+
+    for (var py = 0; py < height; py++) {
+      var row0 = yIndices[py];
+      if (row0 < 0) continue;
+      var fr = yFractions[py];
+      var pixelBase = py * width * 4;
+      for (var px = 0; px < width; px++) {
+        var col0 = xIndices[px];
+        if (col0 < 0) continue;
+        var minute = samplePrepared(meta, values, row0, fr, col0, xFractions[px]);
+        if (!Number.isFinite(minute) || minute >= thresholdMinutes) continue;
+        data[pixelBase + px * 4 + 3] = THRESHOLD_MASK_ALPHA;
+      }
     }
 
     ctx.putImageData(image, 0, 0);
