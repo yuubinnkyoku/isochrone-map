@@ -809,22 +809,27 @@ body {
   color: #ff6b6b;
 }
 
-/* Mobile Chromium/WebView can expose 1px gaps between adjacent Leaflet
-   raster tiles while the browser chrome or map zoom is moving. Slightly
-   overlap only filled raster tiles; contour SVGs stay at the exact tile size
-   so contour strokes are not doubled at tile boundaries. */
+/* Mobile Chromium/WebView can expose hairline gaps between opaque base
+   map tiles while browser chrome or zoom is moving, so overlap only those.
+   Never overlap semi-transparent overlay tiles: their alpha would be applied
+   twice at each 256px boundary and appear as a dark grid. */
 @media (pointer: coarse), (max-width: 600px) {
-  .leaflet-tile-pane img.leaflet-tile,
-  .leaflet-overlay-pane svg.isochrone-contour-tile,
-  .leaflet-overlay-pane canvas.isochrone-gradient-tile,
-  .leaflet-overlay-pane canvas.isochrone-departure-threshold-tile {
+  .leaflet-tile-pane img.leaflet-tile {
     width: 257px !important;
     height: 257px !important;
     display: block;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
-    transform: translateZ(0);
-    transform-origin: 0 0;
+  }
+
+  .leaflet-overlay-pane svg.isochrone-contour-tile,
+  .leaflet-overlay-pane canvas.isochrone-gradient-tile,
+  .leaflet-overlay-pane canvas.isochrone-departure-threshold-tile {
+    width: 256px !important;
+    height: 256px !important;
+    display: block;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
   }
 }
 
