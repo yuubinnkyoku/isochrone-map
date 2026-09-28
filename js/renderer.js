@@ -268,40 +268,15 @@
     ctx.lineTo(b[0], b[1]);
   }
 
-  function drawDepartureThresholdTile(tile, gridData, coords, thresholdMinutes) {
+  function drawDepartureThresholdBoundaryTile(tile, gridData, coords, thresholdMinutes) {
     var meta = gridData.meta;
     if (!tileIntersectsGrid(meta, coords)) return;
 
+    // The dark mask itself is rendered as one continuous canvas spanning the
+    // whole precomputed grid. Keep only the colored threshold boundary tiled:
+    // transparent vector-like tiles cannot produce the full-screen grid seams
+    // that a semi-transparent raster mask did on mobile browsers.
     var ctx = tile.getContext('2d', { alpha: true });
-    var image = ctx.createImageData(TILE_SIZE, TILE_SIZE);
-    var data = image.data;
-    var xAxis = buildLongitudeAxis(meta, coords, TILE_SIZE, 1, true);
-    var yAxis = buildLatitudeAxis(meta, coords, TILE_SIZE, 1, true);
-
-    // Dim locations whose latest possible departure is earlier than the selected
-    // time. Feasible locations remain fully transparent so the base map and the
-    // normal isochrone layers stay readable.
-    for (var y = 0; y < TILE_SIZE; y++) {
-      var r0 = yAxis.indices[y];
-      var fr = yAxis.fractions[y];
-      var pixelBase = y * TILE_SIZE * 4;
-      for (var x = 0; x < TILE_SIZE; x++) {
-        var col0 = xAxis.indices[x];
-        if (r0 < 0 || col0 < 0) continue;
-        var minute = samplePrepared(meta, gridData.values, r0, fr, col0, xAxis.fractions[x]);
-        if (!Number.isFinite(minute) || minute >= thresholdMinutes) continue;
-        var offset = pixelBase + x * 4;
-        data[offset] = 0;
-        data[offset + 1] = 0;
-        data[offset + 2] = 0;
-        data[offset + 3] = THRESHOLD_MASK_ALPHA;
-      }
-    }
-    ctx.putImageData(image, 0, 0);
-
-    // Draw the selected departure-time boundary on top of the mask. Reusing the
-    // same scalar field as the normal contours means the highlighted region is
-    // exactly "latest departure >= selected time".
     var step = contourStepForZoom(coords.z);
     var sampled = sampleTileGrid(gridData, coords, step);
     var grid = sampled.values;
@@ -366,6 +341,38 @@
     ctx.lineJoin = 'round';
     ctx.stroke();
     ctx.globalAlpha = 1;
+  }
+
+  function renderDepartureThresholdMask(canvas, gridData, thresholdMinutes) {
+    if (!canvas || !gridData || !gridData.ready || !gridData.meta || !gridData.values) return;
+
+    var meta = gridData.meta;
+    var values = gridData.values;
+    var cols = Number(meta.cols);
+    var rows = Number(meta.rows);
+    if (!Number.isFinite(cols) || !Number.isFinite(rows) || cols < 2 || rows < 2) return;
+
+    if (canvas.width !== cols) canvas.width = cols;
+    if (canvas.height !== rows) canvas.height = rows;
+
+    var ctx = canvas.getContext('2d', { alpha: true });
+    var image = ctx.createImageData(cols, rows);
+    var data = image.data;
+    var scale = Number(meta.scale) || 1;
+    var offsetMinutes = Number(meta.offsetMinutes) || 0;
+    var nodata = meta.nodata;
+
+    // One source-grid pixel becomes one mask pixel. The browser smoothly scales
+    // this single image with the map, so there are no 256px tile boundaries to
+    // expose during Android pan/zoom compositing.
+    for (var i = 0, alphaIndex = 3; i < values.length; i++, alphaIndex += 4) {
+      var raw = values[i];
+      if (raw === nodata) continue;
+      var minute = raw / scale - offsetMinutes;
+      if (minute < thresholdMinutes) data[alphaIndex] = THRESHOLD_MASK_ALPHA;
+    }
+
+    ctx.putImageData(image, 0, 0);
   }
 
   function contourStepForZoom(zoom) {
@@ -771,11 +778,129 @@
     },
   });
 
-  var DepartureThresholdOverlay = L.GridLayer.extend({
+  var DepartureThresholdMaskOverlay = L.Layer.extend({
+    options: {
+      pane: 'overlayPane',
+    },
+
+    initialize: function (opts) {
+      opts = opts || {};
+      L.setOptions(this, opts);
+      this._gridData = opts.grid || null;
+      this._thresholdMinutes = Number.isFinite(opts.thresholdMinutes) ? opts.thresholdMinutes : 420;
+      this._visible = !!opts.visible;
+      this._canvas = null;
+      this._maskDirty = true;
+    },
+
+    onAdd: function (map) {
+      this._map = map;
+      this._zoomAnimated = !!map._zoomAnimated;
+
+      if (!this._canvas) {
+        this._canvas = L.DomUtil.create(
+          'canvas',
+          'isochrone-departure-threshold-mask' + (this._zoomAnimated ? ' leaflet-zoom-animated' : '')
+        );
+        this._canvas.style.position = 'absolute';
+        this._canvas.style.pointerEvents = 'none';
+        this._canvas.style.zIndex = '225';
+        this._canvas.style.transformOrigin = '0 0';
+        this._canvas.style.background = 'transparent';
+      }
+
+      this.getPane().appendChild(this._canvas);
+      this._reset();
+      this._syncVisibility();
+      if (this._visible) this._renderMaskIfNeeded();
+    },
+
+    onRemove: function () {
+      if (this._canvas && this._canvas.parentNode) this._canvas.parentNode.removeChild(this._canvas);
+      this._map = null;
+    },
+
+    getEvents: function () {
+      var events = {
+        zoom: this._reset,
+        viewreset: this._reset,
+      };
+      if (this._zoomAnimated) events.zoomanim = this._animateZoom;
+      return events;
+    },
+
+    _getBounds: function () {
+      var meta = this._gridData && this._gridData.meta;
+      if (!meta) return null;
+      return L.latLngBounds([meta.south, meta.west], [meta.north, meta.east]);
+    },
+
+    _reset: function () {
+      if (!this._map || !this._canvas) return;
+      var bounds = this._getBounds();
+      if (!bounds) return;
+
+      var topLeft = this._map.latLngToLayerPoint(bounds.getNorthWest());
+      var bottomRight = this._map.latLngToLayerPoint(bounds.getSouthEast());
+      var size = bottomRight.subtract(topLeft);
+
+      L.DomUtil.setPosition(this._canvas, topLeft);
+      this._canvas.style.width = Math.max(1, size.x) + 'px';
+      this._canvas.style.height = Math.max(1, size.y) + 'px';
+    },
+
+    _animateZoom: function (e) {
+      if (!this._map || !this._canvas) return;
+      var bounds = this._getBounds();
+      if (!bounds) return;
+      var scale = this._map.getZoomScale(e.zoom);
+      var offset = this._map._latLngBoundsToNewLayerBounds(bounds, e.zoom, e.center).min;
+      L.DomUtil.setTransform(this._canvas, offset, scale);
+    },
+
+    _syncVisibility: function () {
+      if (this._canvas) this._canvas.style.display = this._visible ? 'block' : 'none';
+    },
+
+    _renderMaskIfNeeded: function () {
+      if (!this._maskDirty || !this._visible || !this._canvas) return;
+      renderDepartureThresholdMask(this._canvas, this._gridData, this._thresholdMinutes);
+      this._maskDirty = false;
+      this._reset();
+    },
+
+    setVisible: function (visible) {
+      this._visible = !!visible;
+      this._syncVisibility();
+      if (this._visible) this._renderMaskIfNeeded();
+    },
+
+    setThresholdMinutes: function (minutes) {
+      if (!Number.isFinite(minutes)) return;
+      this._thresholdMinutes = minutes;
+      this._maskDirty = true;
+      this._renderMaskIfNeeded();
+    },
+
+    setGrid: function (grid) {
+      this._gridData = grid;
+      this._maskDirty = true;
+      this._reset();
+      this._renderMaskIfNeeded();
+    },
+
+    refresh: function () {
+      this._maskDirty = true;
+      this._reset();
+      this._renderMaskIfNeeded();
+    },
+  });
+
+  var DepartureThresholdBoundaryOverlay = L.GridLayer.extend({
     options: {
       pane: 'overlayPane',
       tileSize: TILE_SIZE,
-      zIndex: 225,
+      zIndex: 226,
       opacity: 1,
       noWrap: true,
       keepBuffer: 4,
@@ -806,11 +931,11 @@
       scheduleTileRender(function (shouldRender) {
         try {
           if (shouldRender && tileJobCurrent(self, tile, generation, coords)) {
-            drawDepartureThresholdTile(tile, self._gridData, coords, self._thresholdMinutes);
+            drawDepartureThresholdBoundaryTile(tile, self._gridData, coords, self._thresholdMinutes);
           }
           finishTile(done, null, tile);
         } catch (err) {
-          console.error('指定出発時刻範囲タイル描画エラー:', err);
+          console.error('指定出発時刻境界タイル描画エラー:', err);
           finishTile(done, err, tile);
         }
       }, function () {
@@ -848,6 +973,37 @@
       this._invalidateTiles();
     },
   });
+
+  function DepartureThresholdOverlay(opts) {
+    this._maskLayer = new DepartureThresholdMaskOverlay(opts || {});
+    this._boundaryLayer = new DepartureThresholdBoundaryOverlay(opts || {});
+  }
+
+  DepartureThresholdOverlay.prototype.addTo = function (map) {
+    this._maskLayer.addTo(map);
+    this._boundaryLayer.addTo(map);
+    return this;
+  };
+
+  DepartureThresholdOverlay.prototype.setVisible = function (visible) {
+    this._maskLayer.setVisible(visible);
+    this._boundaryLayer.setVisible(visible);
+  };
+
+  DepartureThresholdOverlay.prototype.setThresholdMinutes = function (minutes) {
+    this._maskLayer.setThresholdMinutes(minutes);
+    this._boundaryLayer.setThresholdMinutes(minutes);
+  };
+
+  DepartureThresholdOverlay.prototype.setGrid = function (grid) {
+    this._maskLayer.setGrid(grid);
+    this._boundaryLayer.setGrid(grid);
+  };
+
+  DepartureThresholdOverlay.prototype.refresh = function () {
+    this._maskLayer.refresh();
+    this._boundaryLayer.refresh();
+  };
 
   window.ContourOverlay = ContourOverlay;
   window.GradientOverlay = GradientOverlay;
