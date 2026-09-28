@@ -815,12 +815,16 @@ body {
    so contour strokes are not doubled at tile boundaries. */
 @media (pointer: coarse), (max-width: 600px) {
   .leaflet-tile-pane img.leaflet-tile,
+  .leaflet-overlay-pane svg.isochrone-contour-tile,
   .leaflet-overlay-pane canvas.isochrone-gradient-tile,
   .leaflet-overlay-pane canvas.isochrone-departure-threshold-tile {
     width: 257px !important;
     height: 257px !important;
+    display: block;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
+    transform: translateZ(0);
+    transform-origin: 0 0;
   }
 }
 
